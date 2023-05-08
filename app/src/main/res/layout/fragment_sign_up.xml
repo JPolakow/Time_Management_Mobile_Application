@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/Tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,16 +18,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/imgPanda">
+        android:layout_below="@+id/imgPanda"
+        android:layout_marginRight="34dp"
+        android:layout_marginLeft="34dp">
 
         <TextView
             android:id="@+id/tvTimePanda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:gravity="center"
             android:fontFamily="@font/adamina"
             android:textColor="@color/black"
+            android:gravity="center"
             android:textSize="40dp"/>
 
 
@@ -35,9 +37,7 @@
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="34dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="34dp"
             android:hint="@string/hintName"
             android:minHeight="48dp" />
 
@@ -45,10 +45,32 @@
             android:id="@+id/etSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="34dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="34dp"
             android:hint="@string/hintSurname"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hintUsername"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hintPassword"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hintConfirmPass"
             android:minHeight="48dp" />
 
         <Button
@@ -57,16 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/btnSignIn"/>
-        <TextView
-            android:id="@+id/tvForgotPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/forgotPassword"
-            android:textStyle="italic"
-            android:textColor="@color/black"
-            android:gravity="center"/>
-
-
 
     </LinearLayout>
 
@@ -80,25 +92,25 @@
         android:gravity="center|bottom"
         android:layout_marginBottom="32dp">
 
-    <TextView
-        android:id="@+id/tvDontHaveAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dontHaveAccount"
-        />
+        <TextView
+            android:id="@+id/tvDontHaveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dontHaveAccount"
+            />
 
-    <TextView
-        android:id="@+id/tvSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signUp"
-        android:textStyle="italic|bold"
-        android:textSize="18sp"
-        android:textAppearance="bold"
-        android:textColor="@color/black"
-        android:layout_marginStart="4dp"
-        />
+        <TextView
+            android:id="@+id/tvSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSignIn"
+            android:textStyle="italic|bold"
+            android:textSize="18sp"
+            android:textAppearance="bold"
+            android:textColor="@color/black"
+            android:layout_marginStart="4dp"
+            />
     </LinearLayout>
 
-<!--Parent Layout-->
+    <!--Parent Layout-->
 </RelativeLayout>
