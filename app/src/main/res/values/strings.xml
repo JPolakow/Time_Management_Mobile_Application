@@ -10,6 +10,6 @@
     <string name="dontHaveAccount">Dont have an account?</string>
     <string name="signUp">Sign up</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="dashboardHeading">Dashboard</string>
+    <string name="recentTasksHeading">Recent Tasks</string>
 </resources>
