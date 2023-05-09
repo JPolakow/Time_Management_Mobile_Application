@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/btnSignIn"/>
+
         <TextView
             android:id="@+id/tvForgotPassword"
             android:layout_width="match_parent"
@@ -94,7 +95,6 @@
         android:text="@string/signUp"
         android:textStyle="italic|bold"
         android:textSize="18sp"
-        android:textAppearance="bold"
         android:textColor="@color/black"
         android:layout_marginStart="4dp"
         />
