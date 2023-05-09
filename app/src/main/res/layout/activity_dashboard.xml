@@ -11,55 +11,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-   <LinearLayout
-        android:id="@+id/linearHorizontalTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        >
+        <LinearLayout
+            android:id="@+id/linearHorizontalTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            >
 
-        <ImageView
-            android:id="@+id/imgProfileImg"
-            android:layout_width="48dp"
-            android:src="@drawable/panda"
-            android:layout_height="48dp"/>
+            <ImageView
+                android:id="@+id/imgProfileImg"
+                android:layout_width="48dp"
+                android:src="@drawable/panda"
+                android:layout_height="48dp"/>
+
+            <TextView
+                android:id="@+id/tvDisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/adamina"
+                android:text="@string/dashboardHeading" />
+
+
+
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvDisplayName"
+            android:id="@+id/tvRecentTasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:textColor="@color/black"
+            android:layout_below="@id/linearHorizontalTop"
+            android:text="@string/recentTasksHeading"
             android:fontFamily="@font/adamina"
-            android:text="@string/dashboardHeading" />
+            android:textColor="@color/black"
+            android:layout_marginTop="34dp"
+            android:layout_marginLeft="16dp"/>
+
+        <LinearLayout
+            android:id="@+id/linearProjectCards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tvRecentTasks"
+            android:orientation="vertical">
 
 
-
-
-    </LinearLayout>
-
-    <TextView
-       android:id="@+id/tvRecentTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearHorizontalTop"
-        android:text="@string/recentTasksHeading"
-        android:fontFamily="@font/adamina"
-        android:textColor="@color/black"
-        android:layout_marginTop="34dp"
-        android:layout_marginLeft="16dp"/>
-
-    <LinearLayout
-        android:id="@+id/linearProjectCards"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tvRecentTasks"
-        android:orientation="vertical">
-
-
-    </LinearLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 
