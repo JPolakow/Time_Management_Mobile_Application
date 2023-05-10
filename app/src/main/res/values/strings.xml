@@ -1,15 +1,18 @@
 <resources>
     <string name="app_name">PANDA TIME</string>
-    <string name="hintName">Name</string>
-    <string name="hintSurname">Surname</string>
-    <string name="hintUsername">Username</string>
-    <string name="hintPassword">Password</string>
-    <string name="hintConfirmPass">Confirm Password</string>
+    <string name="hintName"> NAME</string>
+    <string name="hintSurname"> SURNAME</string>
+    <string name="hintUsername"> USERNAME</string>
+    <string name="hintPassword"> PASSWORD</string>
+    <string name="hintConfirmPass"> CONFIRM PASSWORD</string>
     <string name="btnSignIn">Sign in</string>
     <string name="forgotPassword">Forgot Password?</string>
     <string name="dontHaveAccount">Dont have an account?</string>
     <string name="signUp">Sign up</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Dashboard Strings -->
     <string name="dashboardHeading">Dashboard</string>
     <string name="recentTasksHeading">Recent Tasks</string>
+    <string name="categories"><u>Category: College Work</u></string>
+    <!-- TODO: Statistics Strings -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

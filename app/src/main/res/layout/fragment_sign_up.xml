@@ -36,49 +36,86 @@
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="16dp"
             android:hint="@string/hintName"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textColorHint="#60000000"
+            android:inputType="textPersonName"
+            android:background="@drawable/rounded_input_signup"
+            android:paddingLeft="10dp"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etSurname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/hintSurname"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textColorHint="#60000000"
+            android:background="@drawable/rounded_input_signup"
+            android:paddingLeft="10dp"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/hintUsername"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textColorHint="#60000000"
+            android:drawableEnd="@drawable/done"
+            android:background="@drawable/rounded_input_signup"
+            android:paddingRight="16dp"
+            android:paddingLeft="10dp"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/hintPassword"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textColorHint="#60000000"
+            android:drawableEnd="@drawable/visibility_offpx"
+            android:background="@drawable/rounded_input_signup"
+            android:paddingRight="16dp"
+            android:paddingLeft="10dp"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/hintConfirmPass"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textColorHint="#60000000"
+            android:drawableEnd="@drawable/visibility_offpx"
+            android:background="@drawable/rounded_input_signup"
+            android:paddingRight="16dp"
+            android:paddingLeft="10dp"
             android:minHeight="48dp" />
 
         <Button
             android:id="@+id/btnSignIn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/btnSignIn"/>
+            android:text="@string/btnSignIn"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
