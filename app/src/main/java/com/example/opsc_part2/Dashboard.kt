@@ -16,34 +16,35 @@ import java.lang.Exception
 
 class Dashboard : AppCompatActivity() {
 
-    lateinit var bottomNav : BottomNavigationView
+    private lateinit var bottomNav: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        /*bottomNav.background = null  //Removing the background shadow
-        bottomNav.menu.getItem(2).isEnabled = false*/
+        bottomNav = findViewById(R.id.bottomNavView)
 
-       /* loadFragment(Statistics())*/
-
-        bottomNav = findViewById(R.id.bottomNavView) as BottomNavigationView
-
-        bottomNav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.Stats -> {
+        bottomNav.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.Menu_Stats -> {
                     loadFragment(Statistics())
                     true
-                }R.id.Stats -> {
-                startActivity(Intent(this, Dashboard::class.java))
-                true
-            }
-                else -> {false}
+                }
+                R.id.Menu_Dashboard -> {
+                    // Do nothing since you're already on the dashboard
+                    true
+                }
+                else -> false
             }
         }
+
+        // Set the initial fragment
+       // loadFragment(Dashboard())
     }
-    private  fun loadFragment(fragment: Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.relParental,fragment)
-        transaction.commit()
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.relParental, fragment)
+            .commit()
     }
 }

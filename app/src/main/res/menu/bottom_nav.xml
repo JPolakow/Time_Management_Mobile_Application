@@ -2,26 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/Dashboard"
+        android:id="@+id/Menu_Dashboard"
         android:icon="@drawable/baseline_dashboard_24"
         android:title="Dashboard"/>
 
     <item
-        android:id="@+id/Stats"
+        android:id="@+id/Menu_Stats"
         android:icon="@drawable/baseline_auto_graph_24"
         android:title="Statistics"/>
 
     <item
-        android:id="@+id/Placeholder"
+        android:id="@+id/Menu_Placeholder"
         android:title=""/>
 
     <item
-        android:id="@+id/Logs"
+        android:id="@+id/Menu_Logs"
         android:icon="@drawable/baseline_folder_copy_24"
         android:title="Logs"/>
 
     <item
-        android:id="@+id/Settings"
+        android:id="@+id/Menu_Settings"
         android:icon="@drawable/baseline_settings_24"
         android:title="Settings"/>
 
