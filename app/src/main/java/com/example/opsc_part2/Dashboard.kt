@@ -43,7 +43,7 @@ class Dashboard : AppCompatActivity() {
     }
     private  fun loadFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.rlParent,fragment)
+        transaction.replace(R.id.relParental,fragment)
         transaction.commit()
     }
 }
