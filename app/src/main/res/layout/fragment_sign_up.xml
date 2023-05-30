@@ -37,7 +37,7 @@
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_input_signup"
             android:textColorHint="#60000000"
@@ -49,7 +49,7 @@
         <EditText
             android:id="@+id/etSurname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="6dp"
             android:background="@drawable/rounded_input_signup"
             android:textColorHint="#60000000"
@@ -61,7 +61,7 @@
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="6dp"
             android:background="@drawable/rounded_input_signup"
             android:textColorHint="#60000000"
@@ -73,7 +73,7 @@
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="6dp"
             android:background="@drawable/rounded_input_signup"
             android:textColorHint="#60000000"
@@ -85,7 +85,7 @@
         <EditText
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="6dp"
             android:background="@drawable/rounded_input_signup"
             android:textColorHint="#60000000"
