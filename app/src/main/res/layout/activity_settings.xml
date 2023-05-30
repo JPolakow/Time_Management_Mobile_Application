@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- In order to use tabs, coordinator layout is useful-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgBackArrow"
+        android:layout_width="40dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/round_arrow_back_24" />
+
+    <TextView
+        android:id="@+id/tvSettingsHeading"
+        android:layout_width="382dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgBackArrow"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:paddingBottom="10dp"
+        android:text="Settings"
+        android:textColor="@color/black"
+        android:textSize="40sp" />
+
+    <!--This appbarlayout covers the toolbar and tablayout-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSettingsHeading"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <!-- tablayout which contains which is
+            important to show tabs -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#FFF"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- view pager is used to open other fragment by using
+        left or right swip-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/tab_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</RelativeLayout>
