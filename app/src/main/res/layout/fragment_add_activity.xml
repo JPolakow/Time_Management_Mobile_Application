@@ -20,6 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
             android:text="X"
             android:textSize="30sp" />
 
@@ -32,11 +34,13 @@
             android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/tvSubmit"
+            android:id="@+id/ivSubmit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/done"
+            android:clickable="true"
+            android:focusable="true"
             android:text="Tick"
             android:textSize="30sp" />
 
@@ -143,5 +147,17 @@
         android:paddingBottom="16dp"
         android:textColorHint="#70000000"
         android:hint="Tap to set your Icon"/>
+
+    <ImageView
+        android:id="@+id/imgPandaAddActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etIcon"
+        android:src="@drawable/panda"
+        android:rotation="90"
+        >
+
+
+    </ImageView>
 
 </RelativeLayout>

@@ -58,25 +58,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         * Else if fragment is not visible when button clicked, then show fragment
         * */
         actionButt.setOnClickListener{
-
-            if (isFragmentVisible) {
-                val fragmentManager = supportFragmentManager
-
-                val fragment = fragmentManager.findFragmentById(R.id.fragment_container)
-
-                fragment?.let {
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.remove(fragment)
-                    transaction.commit()
-                }
-
-                isFragmentVisible = false   // Setting var to false when hidden
-            } else {
-                val fragmentt = QuickActionPopup()
-                fragmentt.show(supportFragmentManager, "QuickActionPopup")
+                showPopup()
                 //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
-
-            }
         }
 
         // Set the initial fragment
@@ -90,6 +73,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
+    }
+
+    private fun showPopup()
+    {
+        val fragmentt = QuickActionPopup()
+        fragmentt.show(supportFragmentManager, "QuickActionPopup")
+
+
     }
     private fun loadFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
