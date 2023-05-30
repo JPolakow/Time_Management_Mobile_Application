@@ -6,6 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Dashboard">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/container"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/linearHorizontalTop"
@@ -38,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearHorizontalTop"
+            android:textSize="24sp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="34dp"
             android:fontFamily="@font/adamina"
@@ -165,9 +170,13 @@
 
         </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"/>
 
-
-
+    </RelativeLayout>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -201,4 +210,5 @@
             app:layout_anchor="@id/bottomNavView" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </RelativeLayout>

@@ -3,20 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fragment_background"
     tools:context=".Statistics">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/relPieChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="450dp"
+        android:background="@color/teal_200"
+        >
+        <TextView
+            android:id="@+id/tvTempPieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="PIE CHART HERE"
+            android:gravity="center"
+            android:textSize="34sp"
+            />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearProgress"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        >
+
+
+
+    </LinearLayout>
 
 </RelativeLayout>
