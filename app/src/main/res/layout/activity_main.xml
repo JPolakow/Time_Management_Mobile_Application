@@ -7,8 +7,6 @@
     android:id="@+id/relContainer"
     tools:context=".MainActivity">
 
-
-
     <ImageView
         android:id="@+id/imgPanda"
         android:layout_width="match_parent"

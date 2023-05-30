@@ -45,8 +45,6 @@ class SignUp : Fragment() {
         }
 
         return view
-
-
     }
 
     companion object {
