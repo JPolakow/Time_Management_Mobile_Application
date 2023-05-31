@@ -13,32 +13,65 @@ import com.example.opsc_part2.ProfileFragment
 import com.google.android.material.tabs.TabLayout
 
 class Settings : AppCompatActivity() {
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+
+        tabLayout = findViewById(R.id.tabLayout)
+        viewPager = findViewById(R.id.viewPager)
         // Create the object of Toolbar, ViewPager and
         // TabLayout and use “findViewById()” method*/
         //    var tab_toolbar = findViewById<Toolbar>(R.id.toolbar)
-        var tab_viewpager = findViewById<ViewPager>(R.id.tab_viewpager)
-        var tab_tablayout = findViewById<TabLayout>(R.id.tab_tablayout)
+       /* var tab_viewpager = findViewById<ViewPager>(R.id.tab_viewpager)
+        var tab_tablayout = findViewById<TabLayout>(R.id.tab_tablayout)*/
 
         // As we set NoActionBar as theme to this activity
         // so when we run this project then this activity doesn't
         // show title. And for this reason, we need to run
         // setSupportActionBar method
         //  setSupportActionBar(tab_toolbar)
-        setupViewPager(tab_viewpager)
+        //setupViewPager(tab_viewpager)
 
         // If we dont use setupWithViewPager() method then
         // tabs are not used or shown when activity opened
-        tab_tablayout.setupWithViewPager(tab_viewpager)
+       // tab_tablayout.setupWithViewPager(tab_viewpager)
+
+        val adapter = SettingsPagerAdapter(supportFragmentManager)
+        viewPager.adapter = adapter
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     // This function is used to add items in arraylist and assign
     // the adapter to view pager
-    private fun setupViewPager(viewpager: ViewPager) {
+
+    private inner class SettingsPagerAdapter(fm: FragmentManager) :
+        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        override fun getCount(): Int {
+            return 3
+        }
+
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> GeneralFragment()
+                1 -> ProfileFragment()
+                2 -> AchievementsFragment()
+                else -> throw IllegalArgumentException("Invalid position: $position")
+            }
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return when (position) {
+                0 -> "General"
+                1 -> "Profile"
+                2 -> "Achievements"
+                else -> null
+            }
+            /*  private fun setupViewPager(viewpager: ViewPager) {
         var adapter: ViewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
         // LoginFragment is the name of Fragment and the Login
@@ -50,23 +83,23 @@ class Settings : AppCompatActivity() {
 
         // setting adapter to view pager.
         viewpager.setAdapter(adapter)
-    }
+    }*/
 
-    // This "ViewPagerAdapter" class overrides functions which are
-    // necessary to get information about which item is selected
-    // by user, what is title for selected item and so on.*/
-    class ViewPagerAdapter : FragmentPagerAdapter {
+            // This "ViewPagerAdapter" class overrides functions which are
+            // necessary to get information about which item is selected
+            // by user, what is title for selected item and so on.*/
+            // class ViewPagerAdapter : FragmentPagerAdapter {
 
-        // objects of arraylist. One is of Fragment type and
-        // another one is of String type.*/
-        private final var fragmentList1: ArrayList<Fragment> = ArrayList()
-        private final var fragmentTitleList1: ArrayList<String> = ArrayList()
+            // objects of arraylist. One is of Fragment type and
+            // another one is of String type.*/
+            //private final var fragmentList1: ArrayList<Fragment> = ArrayList()
+            //private final var fragmentTitleList1: ArrayList<String> = ArrayList()
 
-        // this is a secondary constructor of ViewPagerAdapter class.
-        public constructor(supportFragmentManager: FragmentManager)
-                : super(supportFragmentManager)
+            // this is a secondary constructor of ViewPagerAdapter class.
+            //public constructor(supportFragmentManager: FragmentManager)
+            //        : super(supportFragmentManager)
 
-        // returns which item is selected from arraylist of fragments.
+            /*  // returns which item is selected from arraylist of fragments.
         override fun getItem(position: Int): Fragment {
             return fragmentList1.get(position)
         }
@@ -85,6 +118,7 @@ class Settings : AppCompatActivity() {
         fun addFragment(fragment: Fragment, title: String) {
             fragmentList1.add(fragment)
             fragmentTitleList1.add(title)
+        }*/
         }
     }
 }
