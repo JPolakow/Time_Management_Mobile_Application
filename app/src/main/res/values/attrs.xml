@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="activityCard">
+
+        <attr name="activityName" format="string"/>
+        <attr name="dateCreated" format="string"/>
+        <attr name="minGoal" format="string"/>
+        <attr name="maxGoal" format="string"/>
+        <attr name="timer" format="string"/>
+   <!--     <attr name="pausePlay" format="string"/>
+        <attr name="edit" format="string"/>-->
+    </declare-styleable>
+</resources>

@@ -54,6 +54,7 @@
             android:layout_marginLeft="34dp"
             android:layout_marginRight="34dp"
             android:textSize="14sp"
+            android:inputType="textPassword"
             android:layout_marginTop="4dp"
             android:textColorHint="#60000000"
             android:paddingStart="10dp"

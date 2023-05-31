@@ -27,24 +27,24 @@
         android:textColor="@color/black"
         android:textSize="40sp" />
 
-    <!--This appbarlayout covers the toolbar and tablayout-->
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <!-- TabLayout for the headings -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSettingsHeading"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="@null"
+        app:tabTextColor="@android:color/black"
+        app:tabSelectedTextColor="@android:color/holo_purple"
+        app:tabIndicatorColor="@android:color/black"
+        app:tabIndicatorHeight="4dp" />
 
-        <!-- tablayout which contains which is
-            important to show tabs -->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="#FFF"
-            app:tabIndicatorHeight="3dp"
-            app:tabMode="fixed" />
-    </com.google.android.material.appbar.AppBarLayout>
+    <!-- ViewPager for the content -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout" />
 
     <!-- view pager is used to open other fragment by using
         left or right swip-->
@@ -52,6 +52,7 @@
         android:id="@+id/tab_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="testt"
         android:layout_marginTop="5dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

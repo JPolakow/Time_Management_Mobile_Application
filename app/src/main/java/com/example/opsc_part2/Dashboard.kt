@@ -48,6 +48,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     startActivity(intent)
                     true
                 }
+                R.id.Menu_Settings -> {
+                    val intent = Intent(this, Settings::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> false
             }
         }

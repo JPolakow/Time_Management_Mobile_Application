@@ -1,19 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This linear layout is used to show elements
      in vertical or in horizontal linear manner -->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
-    <!-- This TextView indicates new fragment is open -->
+    <!-- Need to create attributes for each of these, so that we can change the text -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Profile"
-        android:textSize="25sp"
+        android:text="Name"
+        android:textSize="22sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
         android:textStyle="bold" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tvDisplayUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Angelo"
+        android:textSize="18sp"
+        android:fontFamily="@font/adamina"
+        android:layout_toRightOf="@+id/tvUserName"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="80dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvUserSurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Surname"
+        android:textSize="22sp"
+        android:layout_below="@id/tvUserName"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDisplaySurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Traverso"
+        android:textSize="18sp"
+        android:fontFamily="@font/adamina"
+        android:layout_toRightOf="@+id/tvUserSurname"
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="50dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="22sp"
+        android:layout_below="@id/tvUserSurname"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDisplayEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="atraverso13@gmail.com"
+        android:textSize="18sp"
+        android:fontFamily="@font/adamina"
+        android:layout_below="@id/tvUserSurname"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@id/tvUserEmail"
+        android:layout_marginLeft="85dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tvUserPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="22sp"
+        android:layout_below="@id/tvUserEmail"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDisplayPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="**********"
+        android:textSize="18sp"
+        android:fontFamily="@font/adamina"
+        android:layout_below="@id/tvUserEmail"
+        android:layout_toRightOf="@+id/tvUserPassword"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="45dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
