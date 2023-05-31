@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_background"
+    tools:context=".Statistics">
+
+    <RelativeLayout
+        android:id="@+id/relPieChart"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:background="@color/teal_200"
+        >
+        <TextView
+            android:id="@+id/tvTempPieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="PIE CHART HERE"
+            android:gravity="center"
+            android:textSize="34sp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearProgress"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        >
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

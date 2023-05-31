@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fragment_background"
     tools:context=".MainActivity">
 
     <ImageView
@@ -36,50 +37,72 @@
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_input_signup"
+            android:textColorHint="#60000000"
+            android:textSize="14sp"
+            android:paddingStart="10dp"
             android:hint="@string/hintName"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etSurname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_input_signup"
+            android:textColorHint="#60000000"
+            android:textSize="14sp"
+            android:paddingStart="10dp"
             android:hint="@string/hintSurname"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_input_signup"
+            android:textColorHint="#60000000"
+            android:textSize="14sp"
+            android:paddingStart="10dp"
             android:hint="@string/hintUsername"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_input_signup"
+            android:textColorHint="#60000000"
+            android:textSize="14sp"
+            android:paddingStart="10dp"
             android:hint="@string/hintPassword"
             android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_input_signup"
+            android:textColorHint="#60000000"
+            android:textSize="14sp"
+            android:paddingStart="10dp"
             android:hint="@string/hintConfirmPass"
             android:minHeight="48dp" />
 
         <Button
             android:id="@+id/btnSignIn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/btnSignIn"/>
-
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner"
+            android:text="@string/btnSignIn"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <LinearLayout
@@ -100,16 +123,17 @@
             />
 
         <TextView
-            android:id="@+id/tvSignUp"
+            android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btnSignIn"
-            android:textStyle="italic|bold"
-            android:textSize="18sp"
-            android:textAppearance="bold"
-            android:textColor="@color/black"
             android:layout_marginStart="4dp"
-            />
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="48dp"
+            android:text="@string/btnSignIn"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <!--Parent Layout-->

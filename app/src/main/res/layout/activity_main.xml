@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relContainer"
     tools:context=".MainActivity">
 
     <ImageView
@@ -11,61 +12,79 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/panda"/>
+        android:src="@drawable/panda" />
 
     <LinearLayout
         android:id="@+id/linearInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/imgPanda">
+        android:layout_below="@+id/imgPanda"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvTimePanda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:gravity="center"
             android:fontFamily="@font/adamina"
+            android:gravity="center"
+            android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="40dp"/>
+            android:textSize="40dp" />
+
 
 
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginLeft="34dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="34dp"
+            android:background="@drawable/rounded_name_input"
             android:hint="@string/hintName"
-            android:minHeight="48dp" />
+            android:textColorHint="#60000000"
+            android:paddingStart="10dp"
+            android:minHeight="48dp"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/etSurname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginLeft="34dp"
-            android:layout_marginTop="16dp"
             android:layout_marginRight="34dp"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textColorHint="#60000000"
+            android:paddingStart="10dp"
+            android:background="@drawable/rouned_input"
             android:hint="@string/hintSurname"
             android:minHeight="48dp" />
 
         <Button
             android:id="@+id/btnSignIn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/btnSignIn"/>
+            android:layout_marginLeft="34dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="34dp"
+            android:background="@drawable/rounded_corner"
+            android:text="@string/btnSignIn"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/tvForgotPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minHeight="48dp"
             android:text="@string/forgotPassword"
-            android:textStyle="italic"
             android:textColor="@color/black"
-            android:gravity="center"/>
-
+            android:textStyle="italic" />
 
 
     </LinearLayout>
@@ -75,30 +94,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearInput"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
         android:gravity="center|bottom"
-        android:layout_marginBottom="32dp">
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tvDontHaveAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dontHaveAccount"
-        />
+        <TextView
+            android:id="@+id/tvDontHaveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dontHaveAccount" />
 
-    <TextView
-        android:id="@+id/tvSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signUp"
-        android:textStyle="italic|bold"
-        android:textSize="18sp"
-        android:textAppearance="bold"
-        android:textColor="@color/black"
-        android:layout_marginStart="4dp"
-        />
+        <TextView
+            android:id="@+id/tvSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="48dp"
+            android:text="@string/signUp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="italic|bold" />
     </LinearLayout>
 
-<!--Parent Layout-->
+    <!--Parent Layout-->
 </RelativeLayout>

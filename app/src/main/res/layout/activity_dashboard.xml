@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relParental"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dashboard">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/container"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearHorizontalTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgProfileImg"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/panda" />
+
+            <TextView
+                android:id="@+id/tvDisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/adamina"
+                android:text="@string/dashboardHeading"
+                android:textColor="@color/black"
+                android:textSize="40sp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvRecentTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearHorizontalTop"
+            android:textSize="24sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="34dp"
+            android:fontFamily="@font/adamina"
+            android:text="@string/recentTasksHeading"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRecentTasks"
+            android:layout_marginLeft="16dp"
+            android:text="@string/categories"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/linearProjectCards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tvRecentTasks"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/timer_card"
+                android:backgroundTint="#E1F0F4">
+
+                <TextView
+                    android:id="@+id/tvActivityName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Programming"
+                    android:textColor="#FF000000" />
+
+
+                <TextView
+                    android:id="@+id/txtTimerTick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_toRightOf="@+id/tvActivityName"
+                    android:text="00:20:02"
+                    android:textAlignment="textEnd"
+                    android:textColor="#FF000000" />
+
+            <!--    <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvActivityName"
+                    android:orientation="horizontal">-->
+
+                    <TextView
+                        android:id="@+id/txtDateCreated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_below="@id/tvActivityName"
+                        android:text="12 April 2023"
+                        android:textColor="#80000000" />
+
+                <ImageView
+                    android:id="@+id/ivPausePlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_pause_24"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_below="@id/txtDateCreated" />
+
+                <ImageView
+                    android:id="@+id/tvOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_settings_24"
+                    android:layout_below="@+id/txtDateCreated"
+                    android:layout_toRightOf="@id/ivPausePlay"
+                    android:layout_marginRight="40dp"/>
+
+                    <TextView
+                        android:id="@+id/tvMinGoal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_below="@id/txtDateCreated"
+                        android:text="Min Goal: 02:00:00"
+                        android:textColor="#80000000" />
+
+                <TextView
+                    android:id="@+id/tvMaxGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@id/tvMinGoal"
+                    android:text="Min Goal: 02:00:00"
+                    android:textColor="#80000000" />
+
+
+                    <!--Bad practice-->
+                    <!--<ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/baseline_pause_24"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/edit"/>-->
+
+               <!-- </LinearLayout>-->
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="10dp"
+            app:fabCradleVerticalOffset="10dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/transparent_background"
+                app:menu="@menu/bottom_nav" />
+
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/btnSignIn"
+            android:src="@drawable/baseline_add_24"
+            app:layout_anchor="@id/bottomNavView" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</RelativeLayout>

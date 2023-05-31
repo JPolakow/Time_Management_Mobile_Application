@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:id="@+id/Menu_Dashboard"
+        android:icon="@drawable/baseline_dashboard_24"
+        android:title="Dashboard"/>
+
+    <item
+        android:id="@+id/Menu_Stats"
+        android:icon="@drawable/baseline_auto_graph_24"
+        android:title="Statistics"/>
+
+    <item
+        android:id="@+id/Menu_Placeholder"
+        android:title=""/>
+
+    <item
+        android:id="@+id/Menu_Logs"
+        android:icon="@drawable/baseline_folder_copy_24"
+        android:title="Logs"/>
+
+    <item
+        android:id="@+id/Menu_Settings"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="Settings"/>
+
+
+</menu>
