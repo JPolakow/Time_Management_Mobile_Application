@@ -34,7 +34,6 @@
                 android:textColor="@color/black"
                 android:textSize="40sp" />
 
-
         </LinearLayout>
 
         <TextView
@@ -66,7 +65,7 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <RelativeLayout
+           <!-- <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_marginLeft="24dp"
@@ -97,11 +96,11 @@
                     android:textAlignment="textEnd"
                     android:textColor="#FF000000" />
 
-            <!--    <LinearLayout
+            &lt;!&ndash;    <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvActivityName"
-                    android:orientation="horizontal">-->
+                    android:orientation="horizontal">&ndash;&gt;
 
                     <TextView
                         android:id="@+id/txtDateCreated"
@@ -150,8 +149,8 @@
                     android:textColor="#80000000" />
 
 
-                    <!--Bad practice-->
-                    <!--<ImageView
+                    &lt;!&ndash;Bad practice&ndash;&gt;
+                    &lt;!&ndash;<ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -161,11 +160,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:src="@drawable/edit"/>-->
+                        android:src="@drawable/edit"/>&ndash;&gt;
 
-               <!-- </LinearLayout>-->
+               &lt;!&ndash; </LinearLayout>&ndash;&gt;
 
-            </RelativeLayout>
+            </RelativeLayout>-->
+
+            <com.example.opsc_part2.custom_dashboard_cards
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
 
 
         </LinearLayout>

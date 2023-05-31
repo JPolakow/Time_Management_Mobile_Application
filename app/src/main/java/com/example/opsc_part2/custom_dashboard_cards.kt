@@ -1,49 +1,51 @@
-/*
 package com.example.opsc_part2
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.core.motion.CustomAttribute
+import androidx.core.content.ContextCompat
 
-class custom_dashboard_cards(
+class custom_dashboard_cards @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs) {
     init {
-        inflate(context, R.layout.example, this)
+        LayoutInflater.from(context).inflate(R.layout.custom_dashboard_cards, this, true)
 
-        val customAttributesStyle =
-            context.obtainStyledAttributes(attrs, R., 0, 0)
-
-
-        // ------------------------------------- Bind TextViews ------------------------------------- //
-        val activityName = findViewById<TextView>(R.id.tvActivityName)
-        val dateCreated = findViewById<TextView>(R.id.tvDateCreated)
-        val minGoal = findViewById<TextView>(R.id.tvMinGoal)
-        val maxGoal = findViewById<TextView>(R.id.tvMaxGoal)
-        val timerTick = findViewById<TextView>(R.id.txtTimerTick)
-
-
-        try {
-
-            activityName.text = customAttributesStyle.getString(R.styleable.CustomAttribute)
-            button1.text =
-                customAttributesStyle.getString(R.styleable.CustomButtonLayout_button1Text)
-            button2.text =
-                customAttributesStyle.getString(R.styleable.CustomButtonLayout_button2Text)
-
-        } finally {
-            customAttributesStyle.recycle()
-        }
-
-        button1.setOnClickListener {
-            // Handle button1 click event...
-        }
-
-        button2.setOnClickListener {
-            // Handle button2 click event...
-        }
+        // Perform any initialization or customization here
+        // You can access and modify the views within the custom component layout
     }
-}*/
+
+    // Used to set activity Name
+    fun setActivityName(name: String) {
+        // Update the activity name view
+        val activityName = findViewById<TextView>(R.id.tvActivityName)
+
+        activityName.text = name;
+    }
+
+    // Used to set activity start Date
+    fun setActivityStartDate(startDate: String) {
+        val actStartDate = findViewById<TextView>(R.id.tvDateCreated)
+
+        actStartDate.text = startDate;
+    }
+
+    // Used to set the background color of card
+    fun setCardColor(selectedColor: String) {
+        val colorResource = when (selectedColor) {
+            "purple" -> R.color.purple_500
+            "blue" -> androidx.appcompat.R.color.material_blue_grey_800
+            "green" -> R.color.teal_200
+            else -> R.color.black // Replace with your default color resource ID
+        }
+        val colorToSet = ContextCompat.getColorStateList(context, colorResource)
+        val cardLayout = findViewById<RelativeLayout>(R.id.relCard)
+        cardLayout.backgroundTintList = colorToSet
+    }
+}
+// These methods are called within the dahsboard activity

@@ -4,16 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.opsc_part2.Dashboard
-import com.example.opsc_part2.Statistics
-import com.example.opsc_part2.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.lang.Exception
+import android.widget.LinearLayout
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
@@ -56,6 +50,18 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 else -> false
             }
         }
+
+
+        // ----------------- Creating a new card with custom attributes ----------------- //
+
+        val activityCard1 = custom_dashboard_cards(this)
+        activityCard1.setActivityName("Testeroo")
+        activityCard1.setActivityStartDate("2023/04/05")
+        activityCard1.setCardColor("green")
+        val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView.addView(activityCard1)
+
+        // ----------------- END OF CUSTOM CARD ----------------- //
 
 
         /*
