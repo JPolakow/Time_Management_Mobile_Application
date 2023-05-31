@@ -1,5 +1,7 @@
 package com.example.opsc_part2
 
+import Classes.ActiveUserClass
+import Classes.PasswordHandler
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            intent = Intent(this, Dashboard::class.java)
+           // intent = Intent(this, Dashboard::class.java)
            // startActivity(intent)
 
             val errToast = Toast.makeText(applicationContext,"Incorrect username or password",Toast.LENGTH_LONG)
