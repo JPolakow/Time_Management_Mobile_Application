@@ -7,23 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
+    <!--Main content-->
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--Title-->
         <LinearLayout
             android:id="@+id/linearHorizontalTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/imgProfileImg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:contentDescription="@string/dashimageprofile"
                 android:src="@drawable/panda" />
 
             <TextView
@@ -34,168 +38,168 @@
                 android:text="@string/dashboardHeading"
                 android:textColor="@color/black"
                 android:textSize="40sp" />
-
         </LinearLayout>
+        <!--End of title-->
 
+        <!--Headings-->
         <TextView
             android:id="@+id/tvRecentTasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearHorizontalTop"
-            android:textSize="24sp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="34dp"
             android:fontFamily="@font/adamina"
             android:text="@string/recentTasksHeading"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvRecentTasks"
-            android:textSize="18sp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:text="@string/categories"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <!--End of headings-->
 
+        <!--Activity scroll view-->
         <ScrollView
             android:id="@+id/svCards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="scrollViewCards"
             android:layout_below="@id/tvCategory"
-            >
+            android:contentDescription="@string/dashscrollview">
 
-        <LinearLayout
-            android:id="@+id/linearProjectCards"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tvRecentTasks"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-
-
-
-
-
-
-           <!-- <RelativeLayout
+            <LinearLayout
+                android:id="@+id/linearProjectCards"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginLeft="24dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/timer_card"
-                android:backgroundTint="#E1F0F4">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvActivityName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
-                    android:text="Programming"
-                    android:textColor="#FF000000" />
+                <!-- <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="140dp"
+     android:layout_marginLeft="24dp"
+     android:layout_marginTop="16dp"
+     android:layout_marginRight="24dp"
+     android:background="@drawable/timer_card"
+     android:backgroundTint="#E1F0F4">
 
-
-                <TextView
-                    android:id="@+id/txtTimerTick"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_toRightOf="@+id/tvActivityName"
-                    android:text="00:20:02"
-                    android:textAlignment="textEnd"
-                    android:textColor="#FF000000" />
-
-            &lt;!&ndash;    <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvActivityName"
-                    android:orientation="horizontal">&ndash;&gt;
-
-                    <TextView
-                        android:id="@+id/txtDateCreated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_below="@id/tvActivityName"
-                        android:text="12 April 2023"
-                        android:textColor="#80000000" />
-
-                <ImageView
-                    android:id="@+id/ivPausePlay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_pause_24"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="40dp"
-                    android:layout_below="@id/txtDateCreated" />
-
-                <ImageView
-                    android:id="@+id/tvOptions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_settings_24"
-                    android:layout_below="@+id/txtDateCreated"
-                    android:layout_toRightOf="@id/ivPausePlay"
-                    android:layout_marginRight="40dp"/>
-
-                    <TextView
-                        android:id="@+id/tvMinGoal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_below="@id/txtDateCreated"
-                        android:text="Min Goal: 02:00:00"
-                        android:textColor="#80000000" />
-
-                <TextView
-                    android:id="@+id/tvMaxGoal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/tvMinGoal"
-                    android:text="Min Goal: 02:00:00"
-                    android:textColor="#80000000" />
+     <TextView
+         android:id="@+id/tvActivityName"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="10dp"
+         android:layout_marginTop="30dp"
+         android:text="Programming"
+         android:textColor="#FF000000" />
 
 
-                    &lt;!&ndash;Bad practice&ndash;&gt;
-                    &lt;!&ndash;<ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+     <TextView
+         android:id="@+id/txtTimerTick"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="10dp"
+         android:layout_marginTop="30dp"
+         android:layout_marginRight="15dp"
+         android:layout_toRightOf="@+id/tvActivityName"
+         android:text="00:20:02"
+         android:textAlignment="textEnd"
+         android:textColor="#FF000000" />
 
-                        android:src="@drawable/baseline_pause_24"/>
+ &lt;!&ndash;    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/tvActivityName"
+         android:orientation="horizontal">&ndash;&gt;
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+         <TextView
+             android:id="@+id/txtDateCreated"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="10dp"
+             android:layout_below="@id/tvActivityName"
+             android:text="12 April 2023"
+             android:textColor="#80000000" />
 
-                        android:src="@drawable/edit"/>&ndash;&gt;
+     <ImageView
+         android:id="@+id/ivPausePlay"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/baseline_pause_24"
+         android:layout_alignParentEnd="true"
+         android:layout_marginRight="40dp"
+         android:layout_below="@id/txtDateCreated" />
 
-               &lt;!&ndash; </LinearLayout>&ndash;&gt;
+     <ImageView
+         android:id="@+id/tvOptions"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/baseline_settings_24"
+         android:layout_below="@+id/txtDateCreated"
+         android:layout_toRightOf="@id/ivPausePlay"
+         android:layout_marginRight="40dp"/>
 
-            </RelativeLayout>-->
+         <TextView
+             android:id="@+id/tvMinGoal"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:layout_marginLeft="10dp"
+             android:layout_below="@id/txtDateCreated"
+             android:text="Min Goal: 02:00:00"
+             android:textColor="#80000000" />
 
-           <!-- <com.example.opsc_part2.custom_dashboard_cards
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />-->
+     <TextView
+         android:id="@+id/tvMaxGoal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="10dp"
+         android:layout_below="@id/tvMinGoal"
+         android:text="Min Goal: 02:00:00"
+         android:textColor="#80000000" />
 
 
-        </LinearLayout>
+         &lt;!&ndash;Bad practice&ndash;&gt;
+         &lt;!&ndash;<ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+
+             android:src="@drawable/baseline_pause_24"/>
+
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+
+             android:src="@drawable/edit"/>&ndash;&gt;
+
+    &lt;!&ndash; </LinearLayout>&ndash;&gt;
+
+ </RelativeLayout>
+
+                 <com.example.opsc_part2.custom_dashboard_cards
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />-->
+
+            </LinearLayout>
+
         </ScrollView>
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_alignParentBottom="true"/>
+        <!--end of scroll view-->
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
+    <!--End of main content-->
+
+    <!--bottom nav-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -217,17 +221,19 @@
                 android:background="@drawable/transparent_background"
                 app:menu="@menu/bottom_nav" />
 
-
         </com.google.android.material.bottomappbar.BottomAppBar>
+        <!--end of bottom nav-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnPlus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/btnSignIn"
+            android:contentDescription="@string/dashaddnew"
             android:src="@drawable/baseline_add_24"
-            app:layout_anchor="@id/bottomNavView" />
+            app:layout_anchor="@id/bottomNavView"
+            tools:ignore="ImageContrastCheck" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--end of bottom nav-->
 
 </RelativeLayout>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-                <!--This is the custom component layout-->
+
+    <!--This is the custom component layout-->
+    <!--Main component-->
     <RelativeLayout
         android:id="@+id/relCard"
         android:layout_width="match_parent"
@@ -11,13 +14,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="24dp"
         android:background="@drawable/timer_card"
-        android:backgroundTint="#E1F0F4">
+        android:backgroundTint="#E1F0F4"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/tvActivityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:text="Programming"
             android:textColor="#FF000000" />
@@ -26,26 +30,20 @@
             android:id="@+id/txtTimerTick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="15dp"
-            android:layout_toRightOf="@+id/tvActivityName"
+            android:layout_marginEnd="15dp"
+            android:layout_toEndOf="@+id/tvActivityName"
             android:text="00:20:02"
             android:textAlignment="textEnd"
             android:textColor="#FF000000" />
-
-        <!--    <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvActivityName"
-                android:orientation="horizontal">-->
 
         <TextView
             android:id="@+id/tvDateCreated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_below="@id/tvActivityName"
+            android:layout_marginStart="10dp"
             android:text="12 April 2023"
             android:textColor="#80000000" />
 
@@ -53,28 +51,28 @@
             android:id="@+id/ivPausePlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_pause_24"
+            android:layout_below="@id/tvDateCreated"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
             android:background="@null"
-            android:layout_marginRight="40dp"
-            android:layout_below="@id/tvDateCreated" />
+            android:src="@drawable/baseline_pause_24" />
 
         <ImageView
             android:id="@+id/tvOptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_settings_24"
             android:layout_below="@+id/tvDateCreated"
-            android:layout_toRightOf="@id/ivPausePlay"
-            android:layout_marginRight="40dp"/>
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@id/ivPausePlay"
+            android:src="@drawable/baseline_settings_24" />
 
         <TextView
             android:id="@+id/tvMinGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_below="@id/tvDateCreated"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:text="Min Goal: 02:00:00"
             android:textColor="#80000000" />
 
@@ -82,27 +80,12 @@
             android:id="@+id/tvMaxGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_below="@id/tvMinGoal"
+            android:layout_marginStart="10dp"
             android:text="Min Goal: 02:00:00"
             android:textColor="#80000000" />
 
-
-        <!--Bad practice-->
-        <!--<ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:src="@drawable/baseline_pause_24"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:src="@drawable/edit"/>-->
-
-        <!-- </LinearLayout>-->
-
     </RelativeLayout>
+    <!--End of main content-->
 
 </RelativeLayout>
