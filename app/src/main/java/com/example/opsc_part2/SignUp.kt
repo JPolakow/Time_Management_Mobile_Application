@@ -42,6 +42,8 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        //in oncreateview
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
         NameInput = binding.etName
@@ -106,7 +108,7 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
             valid = false
         }
         if (TextUtils.isEmpty(username)) {
-            UsernameInput.setError("Username is required")
+            UsernameInput.setError("Password is required")
             valid = false
         }
         if (DoesUsernameExist((username))) {
