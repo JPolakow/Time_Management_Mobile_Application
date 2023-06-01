@@ -26,9 +26,7 @@ class AddActivity : Fragment() {
     }
 
     private fun showPopupFragment() {
-        val popupFragment = SetGoal()
-        childFragmentManager.beginTransaction()
-            .add(R.id.popup_container, popupFragment)
-            .commit()
+        val fragment = SetGoal()
+        fragment.show(childFragmentManager, "QuickActionPopup")
     }
 }

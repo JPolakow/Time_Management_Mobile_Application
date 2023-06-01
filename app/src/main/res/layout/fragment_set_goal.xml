@@ -4,15 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuickActionPopup"
-    android:gravity="bottom">
+    >
 
     <RelativeLayout
         android:id="@+id/linearParent"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:background="@color/fragmentActivity"
-        android:gravity="top"
-        android:layout_marginBottom="50dp">
+        android:gravity="top">
 
         <TextView
             android:id="@+id/tvMinDailyGoalHeading"
