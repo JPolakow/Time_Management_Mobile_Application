@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuickActionPopup">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/linearParent"
+        android:gravity="top"
+        android:background="@color/fragmentActivity">
+
+        <TextView
+            android:id="@+id/tvMinDailyGoalHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="Set your goal"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/tvSetGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Minimum Daily Goal"
+            android:layout_below="@+id/tvMinDailyGoalHeading"
+            android:textColor="@color/white"
+            />
+
+        <EditText
+            android:id="@+id/etTapToSetMinGoal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingLeft="16dp"
+            android:layout_below="@+id/tvSetGoal"
+            android:hint="Tap to set time"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            />
+
+
+        <TextView
+            android:id="@+id/tvSetMaxGoalHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Minimum Daily Goal"
+            android:layout_below="@+id/etTapToSetMinGoal"
+            android:textColor="@color/white"
+            />
+
+        <EditText
+            android:id="@+id/etSetMaxGoal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingLeft="16dp"
+            android:layout_below="@+id/tvSetMaxGoalHeading"
+            android:hint="Tap to set time"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/tvWorkingDaysHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Minimum Daily Goal"
+            android:layout_below="@+id/etSetMaxGoal"
+            android:textColor="@color/white"
+            />
+
+        <EditText
+            android:id="@+id/etTapWorkingDays"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingLeft="16dp"
+            android:layout_below="@+id/tvWorkingDaysHeading"
+            android:hint="Tap to set time"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            />
+
+        <Button
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="68dp"
+            android:layout_below="@+id/etTapWorkingDays"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="68dp"
+            android:background="@drawable/rounded_corner"
+            android:text="Save"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

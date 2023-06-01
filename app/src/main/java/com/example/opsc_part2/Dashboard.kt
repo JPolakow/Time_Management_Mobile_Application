@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.LinearLayout
-
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
     private lateinit var bottomNav: BottomNavigationView
@@ -24,6 +23,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         val fragment = QuickActionPopup()
         var isFragmentVisible = false // Var to hold fragment visibility state
         // ---------- End Declarations ----------
+
+
 
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -52,7 +53,12 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             }
         }
 
-
+      /*  override fun onAddActivityFragmentRequested(fragment: Fragment) {
+            // Replace the current fragment on the dashboard with the requested fragment
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit()
+        }*/
         // ----------------- Creating a new card with custom attributes ----------------- //
 
         val activityCard1 = custom_dashboard_cards(this)
@@ -97,6 +103,27 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard6)
 
+        /*val activityCard2 = custom_dashboard_cards(this)
+        activityCard2.setActivityName("Testeroo")
+        activityCard2.setActivityStartDate("2023/04/05")
+        activityCard2.setCardColor("green")
+        val linView2 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView2.addView(activityCard1)*/
+
+       /* val activityCard3 = custom_dashboard_cards(this)
+        activityCard3.setActivityName("Testeroo")
+        activityCard3.setActivityStartDate("2023/04/05")
+        activityCard3.setCardColor("green")
+        val linView3 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView3.addView(activityCard1)
+
+        val activityCard4 = custom_dashboard_cards(this)
+        activityCard4.setActivityName("Testeroo")
+        activityCard4.setActivityStartDate("2023/04/05")
+        activityCard4.setCardColor("green")
+        val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView4.addView(activityCard1)*/
+
         // ----------------- END OF CUSTOM CARD ----------------- //
 
 
@@ -129,6 +156,12 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
 
     }
+   /* override fun onAddActivityFragmentRequested (fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }*/
     private fun loadFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()

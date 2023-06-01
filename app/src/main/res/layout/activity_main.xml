@@ -47,6 +47,18 @@
             android:minHeight="48dp"
             android:textSize="14sp" />
 
+
+        <!--TextInputLayout is making black line under password input-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleDrawable="@drawable/visibility_offpx"
+            app:passwordToggleTint="@color/black">
+
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
@@ -61,6 +73,7 @@
             android:background="@drawable/rouned_input"
             android:hint="@string/hintPassword"
             android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSignIn"

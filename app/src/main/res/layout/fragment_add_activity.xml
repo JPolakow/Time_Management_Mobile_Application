@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/tvClose"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:clickable="true"
@@ -36,8 +36,9 @@
         <ImageView
             android:id="@+id/ivSubmit"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:layout_weight="1"
+            android:contentDescription="Poopie"
             android:src="@drawable/done"
             android:clickable="true"
             android:focusable="true"
@@ -54,7 +55,7 @@
         android:layout_below="@+id/linearTopSection"
         android:id="@+id/tvName"
         android:textSize="24sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:text="Name"/>
 
@@ -74,7 +75,7 @@
         android:layout_below="@+id/etName"
         android:id="@+id/tvGoal"
         android:textSize="24sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:text="Goal"/>
 
@@ -94,7 +95,7 @@
         android:layout_below="@+id/etGoal"
         android:id="@+id/tvCategory"
         android:textSize="24sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:text="Category"/>
 
@@ -114,7 +115,7 @@
         android:layout_below="@+id/etCategory"
         android:id="@+id/tvColor"
         android:textSize="24sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:text="Color"/>
 
@@ -134,7 +135,7 @@
         android:layout_below="@+id/etColor"
         android:id="@+id/tvIcon"
         android:textSize="24sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:text="Icon"/>
 
