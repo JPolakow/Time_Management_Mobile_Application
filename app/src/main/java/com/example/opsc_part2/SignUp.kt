@@ -1,7 +1,5 @@
 package com.example.opsc_part2
 
-//this line is reqired
-//FragmentSignUpBinding is auto generated
 import Classes.ActiveUserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
@@ -19,10 +17,9 @@ import androidx.fragment.app.Fragment
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import java.util.jar.Attributes.Name
 
-
 class SignUp : Fragment(R.layout.fragment_sign_up) {
 
-    //bind things to things
+    //bind the front end, making it accessible
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
@@ -38,9 +35,7 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
     private lateinit var btnSignUp: Button
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         //in oncreateview
@@ -53,15 +48,12 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         ConfirmPasswordInput = binding.etConfirmPassword
 
         btnSignUp = binding.btnSignUp
-        btnSignUp.setOnClickListener()
-        {
-            if (validateForm())
-                RegisterUser()
+        btnSignUp.setOnClickListener() {
+            if (validateForm()) RegisterUser()
         }
 
         tvSignInClick = binding.tvSignIn
-        tvSignInClick.setOnClickListener()
-        {
+        tvSignInClick.setOnClickListener() {
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
         }
@@ -77,10 +69,6 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
 
     //custom method
     private fun RegisterUser() {
-
-        val toast = Toast.makeText(requireContext(), "message", Toast.LENGTH_SHORT)
-        toast.show()
-
         val activeUserClass = ActiveUserClass(
             NameInput.text.toString().trim(),
             SurnameInput.text.toString().trim(),
@@ -89,6 +77,9 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         )
 
         ToolBox.UsersList.add(activeUserClass)
+
+        val toast = Toast.makeText(requireContext(), "Account created", Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     private fun validateForm(): Boolean {

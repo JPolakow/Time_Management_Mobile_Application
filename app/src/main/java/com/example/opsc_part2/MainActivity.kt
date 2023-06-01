@@ -16,20 +16,20 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var UsernameInput: EditText
     private lateinit var PasswordInput: EditText
-    private lateinit var btnGoToDash: Button
+    private lateinit var btnSignIn: Button
     private lateinit var signUpClick: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnGoToDash = findViewById(R.id.btnSignIn)
+        btnSignIn = findViewById(R.id.btnSignIn)
         signUpClick = findViewById(R.id.tvSignUp)
 
         UsernameInput = findViewById(R.id.etUsername)
         PasswordInput = findViewById(R.id.etPassword)
 
-        btnGoToDash.setOnClickListener {
+        btnSignIn.setOnClickListener {
             UserLogin()
         }
 
@@ -43,24 +43,26 @@ class MainActivity : AppCompatActivity() {
 
     fun UserLogin() {
 
-        val person =
-            ToolBox.UsersList.find { it.UserUsername == UsernameInput.text.toString().trim() }
-        if (person == null) {
+        //default login
+        if (UsernameInput.text.toString().trim().equals("user") && PasswordInput.text.toString().trim().equals("pass")) {
+            intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+            return
+        }
+
+        //if username does not exist
+        val user = ToolBox.UsersList.find { it.UserUsername == UsernameInput.text.toString().trim() }
+        if (user == null) {
             val errToast = Toast.makeText(
-                applicationContext,
-                "Incorrect username or password",
-                Toast.LENGTH_LONG
+                applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
             )
             errToast.setGravity(Gravity.BOTTOM, 0, 25)
             errToast.show()
             return
         }
 
-        //default login
-        if (UsernameInput.text.toString() == "user1" && PasswordInput.text.toString() == "password1") {
-            intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
-        } else if (person.UserPasswordHash == PasswordHandler.hashPassword(
+        //check password
+        if (user.UserPasswordHash == PasswordHandler.hashPassword(
                 PasswordInput.text.toString().trim()
             )
         ) {
@@ -68,9 +70,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             val errToast = Toast.makeText(
-                applicationContext,
-                "Incorrect username or password",
-                Toast.LENGTH_LONG
+                applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
             )
             errToast.setGravity(Gravity.BOTTOM, 0, 25)
             errToast.show()
