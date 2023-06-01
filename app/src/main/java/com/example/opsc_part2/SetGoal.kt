@@ -10,12 +10,13 @@ import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SetGoal : BottomSheetDialogFragment() {
+
+    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_set_goal, container, false)
     }
 }

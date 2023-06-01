@@ -12,11 +12,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class QuickActionPopup : BottomSheetDialogFragment() {
 
+    //ui vars
     private lateinit var btnCreateActivity: Button
     private lateinit var btnCreateGroup: Button
     private lateinit var listener: DashboardFragmentListener
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    //============================================================================
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_quick_action_popup, container, false)
 
         // Find the buttons in the inflated view
@@ -34,14 +40,15 @@ class QuickActionPopup : BottomSheetDialogFragment() {
             // Handle Create Group button click
             // Perform the desired action
         }
-
         return view
     }
 
+    //============================================================================
     interface DashboardFragmentListener {
         fun onFragmentRequested(fragment: Fragment)
     }
 
+    //============================================================================
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is DashboardFragmentListener) {

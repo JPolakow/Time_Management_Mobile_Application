@@ -13,6 +13,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import java.util.jar.Attributes.Name
@@ -34,6 +36,7 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
     private lateinit var tvSignInClick: TextView
     private lateinit var btnSignUp: Button
 
+    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -55,19 +58,22 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         tvSignInClick = binding.tvSignIn
         tvSignInClick.setOnClickListener() {
             val intent = Intent(requireActivity(), MainActivity::class.java)
-            startActivity(intent)
+            val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
+            ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
         }
 
         return binding.root
     }
 
+    //============================================================================
     //needed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    //custom method
+    //============================================================================
+    //take user inputs and create new user instance
     private fun RegisterUser() {
         val activeUserClass = ActiveUserClass(
             NameInput.text.toString().trim(),
@@ -82,6 +88,8 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         toast.show()
     }
 
+    //============================================================================
+    //ensure user has inouted valid data
     private fun validateForm(): Boolean {
         var valid = true
         val name: String = NameInput.getText().toString().trim()
@@ -122,6 +130,8 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         return valid
     }
 
+    //============================================================================
+    //try find if the existing username exists
     private fun DoesUsernameExist(NameToFind: String): Boolean {
         val person = ToolBox.UsersList.find { it.UserUsername == NameToFind }
         return person != null

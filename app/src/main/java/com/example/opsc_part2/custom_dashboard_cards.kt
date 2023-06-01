@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 
 class custom_dashboard_cards @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs) {
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_dashboard_cards, this, true)
@@ -20,6 +18,9 @@ class custom_dashboard_cards @JvmOverloads constructor(
         // You can access and modify the views within the custom component layout
     }
 
+    // These methods are called within the dahsboard activity
+
+    //============================================================================
     // Used to set activity Name
     fun setActivityName(name: String) {
         // Update the activity name view
@@ -28,6 +29,7 @@ class custom_dashboard_cards @JvmOverloads constructor(
         activityName.text = name;
     }
 
+    //============================================================================
     // Used to set activity start Date
     fun setActivityStartDate(startDate: String) {
         val actStartDate = findViewById<TextView>(R.id.tvDateCreated)
@@ -35,6 +37,7 @@ class custom_dashboard_cards @JvmOverloads constructor(
         actStartDate.text = startDate;
     }
 
+    //============================================================================
     // Used to set the background color of card
     fun setCardColor(selectedColor: String) {
         val colorResource = when (selectedColor) {
@@ -48,4 +51,3 @@ class custom_dashboard_cards @JvmOverloads constructor(
         cardLayout.backgroundTintList = colorToSet
     }
 }
-// These methods are called within the dahsboard activity

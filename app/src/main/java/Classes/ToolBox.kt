@@ -5,6 +5,8 @@ class ToolBox {
         val ActiveUserID = Int
         val ActivitiesList = mutableListOf<ActivityObject>()
         val WorkEntriesList = mutableListOf<WorkEntriesObject>()
-        val UsersList = mutableListOf<ActiveUserClass>()
+        val UsersList = mutableListOf<ActiveUserClass>(
+           // ActiveUserClass()
+        )
     }
 }

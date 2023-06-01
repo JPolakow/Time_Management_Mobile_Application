@@ -11,8 +11,10 @@ import android.widget.LinearLayout
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
+    //ui vars
     private lateinit var bottomNav: BottomNavigationView
 
+    //============================================================================
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -96,6 +98,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
     }
 
+    //============================================================================
     override fun onFragmentRequested(fragment: Fragment) {
         // Replace the current fragment on the dashboard with the requested fragment
         supportFragmentManager.beginTransaction()
@@ -103,11 +106,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             .commit()
     }
 
+    //============================================================================
     private fun showPopup() {
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")
     }
 
+    //============================================================================
     private fun loadFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()

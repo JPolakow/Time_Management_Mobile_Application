@@ -14,11 +14,13 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
+    //ui vars
     private lateinit var UsernameInput: EditText
     private lateinit var PasswordInput: EditText
     private lateinit var btnSignIn: Button
     private lateinit var signUpClick: TextView
 
+    //============================================================================
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //============================================================================
     fun UserLogin() {
 
         //default login
@@ -77,12 +80,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-/*
-To do
-    sign n sign up
-        move to sing in after signed up
- */
 
 /*
 To do
