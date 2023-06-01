@@ -38,10 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:contentDescription="Poopie"
-            android:src="@drawable/done"
             android:clickable="true"
+            android:contentDescription="Poopie"
             android:focusable="true"
+            android:src="@drawable/done"
             android:text="Tick"
             android:textSize="30sp" />
 
@@ -50,115 +50,116 @@
 
 
     <TextView
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearTopSection"
-        android:id="@+id/tvName"
-        android:textSize="24sp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:text="Name"/>
+        android:layout_marginTop="8dp"
+        android:text="Name"
+        android:textSize="24sp" />
 
     <EditText
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etName"
         android:layout_below="@+id/tvName"
+        android:hint="Tap to set name"
         android:paddingStart="16dp"
         android:paddingBottom="16dp"
-        android:textColorHint="#70000000"
-        android:hint="Tap to set name"/>
+        android:textColorHint="#70000000" />
 
     <TextView
+        android:id="@+id/tvGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etName"
-        android:id="@+id/tvGoal"
-        android:textSize="24sp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:text="Goal"/>
+        android:layout_marginTop="8dp"
+        android:text="Goal"
+        android:textSize="24sp" />
 
     <EditText
+        android:id="@+id/etGoal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etGoal"
         android:layout_below="@+id/tvGoal"
+        android:hint="Tap to set your goal"
         android:paddingStart="16dp"
         android:paddingBottom="16dp"
-        android:textColorHint="#70000000"
-        android:hint="Tap to set your goal"/>
+        android:textColorHint="#70000000" />
 
     <TextView
+        android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etGoal"
-        android:id="@+id/tvCategory"
-        android:textSize="24sp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:text="Category"/>
+        android:layout_marginTop="8dp"
+        android:text="Category"
+        android:textSize="24sp" />
 
     <EditText
+        android:id="@+id/etCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etCategory"
         android:layout_below="@+id/tvCategory"
+        android:hint="Tap to set your Category"
         android:paddingStart="16dp"
         android:paddingBottom="16dp"
-        android:textColorHint="#70000000"
-        android:hint="Tap to set your Category"/>
+        android:textColorHint="#70000000" />
 
     <TextView
+        android:id="@+id/tvColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etCategory"
-        android:id="@+id/tvColor"
-        android:textSize="24sp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:text="Color"/>
+        android:layout_marginTop="8dp"
+        android:text="Color"
+        android:textSize="24sp" />
 
     <EditText
+        android:id="@+id/etColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etColor"
         android:layout_below="@+id/tvColor"
+        android:hint="Tap to set your Colour"
         android:paddingStart="16dp"
         android:paddingBottom="16dp"
-        android:textColorHint="#70000000"
-        android:hint="Tap to set your Colour"/>
+        android:textColorHint="#70000000" />
 
     <TextView
+        android:id="@+id/tvIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etColor"
-        android:id="@+id/tvIcon"
-        android:textSize="24sp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:text="Icon"/>
+        android:layout_marginTop="8dp"
+        android:text="Icon"
+        android:textSize="24sp" />
 
     <EditText
+        android:id="@+id/etIcon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etIcon"
         android:layout_below="@+id/tvIcon"
+        android:hint="Tap to set your Icon"
         android:paddingStart="16dp"
         android:paddingBottom="16dp"
-        android:textColorHint="#70000000"
-        android:hint="Tap to set your Icon"/>
+        android:textColorHint="#70000000" />
 
     <ImageView
         android:id="@+id/imgPandaAddActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etIcon"
-        android:src="@drawable/panda"
         android:rotation="90"
-        >
+        android:src="@drawable/panda" />
 
-
-    </ImageView>
+    <FrameLayout
+        android:id="@+id/popup_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

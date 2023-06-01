@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.LinearLayout
+
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
     private lateinit var bottomNav: BottomNavigationView
@@ -24,8 +25,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         var isFragmentVisible = false // Var to hold fragment visibility state
         // ---------- End Declarations ----------
 
-
-
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
@@ -33,10 +32,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     val transaction = fragmentManager.beginTransaction()
                     transaction.add(R.id.container, Statistics())
                     transaction.commit()
-                    // Load fragment to select activity or group
-                    //loadFragment(fragment)
-                    Log.d("ANGELO-------------------------------", "loadFragment is being executed!")
-                    //loadFragment(Statistics())
                     true
                 }
                 R.id.Menu_Dashboard -> {
@@ -53,94 +48,53 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             }
         }
 
-      /*  override fun onAddActivityFragmentRequested(fragment: Fragment) {
-            // Replace the current fragment on the dashboard with the requested fragment
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit()
-        }*/
         // ----------------- Creating a new card with custom attributes ----------------- //
-
         val activityCard1 = custom_dashboard_cards(this)
         activityCard1.setActivityName("Testeroo")
         activityCard1.setActivityStartDate("2023/04/05")
         activityCard1.setCardColor("green")
-            //val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard1)
 
         val activityCard2 = custom_dashboard_cards(this)
         activityCard2.setActivityName("One")
         activityCard2.setActivityStartDate("2023/04/05")
         activityCard2.setCardColor("green")
-        //val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard2)
 
         val activityCard3 = custom_dashboard_cards(this)
         activityCard3.setActivityName("Two")
         activityCard3.setActivityStartDate("2023/04/05")
         activityCard3.setCardColor("green")
-        //val linView3 = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard3)
 
         val activityCard4 = custom_dashboard_cards(this)
         activityCard4.setActivityName("Three")
         activityCard4.setActivityStartDate("2023/04/05")
         activityCard4.setCardColor("green")
-      //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard4)
 
         val activityCard5 = custom_dashboard_cards(this)
         activityCard5.setActivityName("Three")
         activityCard5.setActivityStartDate("2023/04/05")
         activityCard5.setCardColor("green")
-        //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard5)
 
         val activityCard6 = custom_dashboard_cards(this)
         activityCard6.setActivityName("Three")
         activityCard6.setActivityStartDate("2023/04/05")
         activityCard6.setCardColor("green")
-        //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard6)
-
-        /*val activityCard2 = custom_dashboard_cards(this)
-        activityCard2.setActivityName("Testeroo")
-        activityCard2.setActivityStartDate("2023/04/05")
-        activityCard2.setCardColor("green")
-        val linView2 = findViewById<LinearLayout>(R.id.linearProjectCards)
-        linView2.addView(activityCard1)*/
-
-       /* val activityCard3 = custom_dashboard_cards(this)
-        activityCard3.setActivityName("Testeroo")
-        activityCard3.setActivityStartDate("2023/04/05")
-        activityCard3.setCardColor("green")
-        val linView3 = findViewById<LinearLayout>(R.id.linearProjectCards)
-        linView3.addView(activityCard1)
-
-        val activityCard4 = custom_dashboard_cards(this)
-        activityCard4.setActivityName("Testeroo")
-        activityCard4.setActivityStartDate("2023/04/05")
-        activityCard4.setCardColor("green")
-        val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
-        linView4.addView(activityCard1)*/
-
         // ----------------- END OF CUSTOM CARD ----------------- //
-
 
         /*
         * If fragment is visible, hide when button is clicked
         * Else if fragment is not visible when button clicked, then show fragment
         * */
-        actionButt.setOnClickListener{
-                showPopup()
-                //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
+        actionButt.setOnClickListener {
+            showPopup()
+            //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
         }
-
-        // Set the initial fragment
-       // loadFragment(Dashboard())
     }
-
-
 
     override fun onFragmentRequested(fragment: Fragment) {
         // Replace the current fragment on the dashboard with the requested fragment
@@ -149,19 +103,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             .commit()
     }
 
-    private fun showPopup()
-    {
-        val fragmentt = QuickActionPopup()
-        fragmentt.show(supportFragmentManager, "QuickActionPopup")
-
-
+    private fun showPopup() {
+        val fragment = QuickActionPopup()
+        fragment.show(supportFragmentManager, "QuickActionPopup")
     }
-   /* override fun onAddActivityFragmentRequested (fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }*/
+
     private fun loadFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
@@ -169,13 +115,3 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         transaction.commit()
     }
 }
-// ------------------------ OLD WAY TO LOAD FRAGMENT | DOES WORK ------------------------ //
-/* val fragmentManager = supportFragmentManager
-                 val transaction = fragmentManager.beginTransaction()
-                 transaction.add(R.id.fragment_container, fragment)
-                 transaction.commit()
-                 // Load fragment to select activity or group
-                 //loadFragment(fragment)
-                 Log.d("ANGELO-------------------------------", "loadFragment is being executed!")
-                 isFragmentVisible = true*/
-// ------------------------------------------------------------------------------------- //
