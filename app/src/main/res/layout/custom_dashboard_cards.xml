@@ -49,12 +49,13 @@
             android:text="12 April 2023"
             android:textColor="#80000000" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/ivPausePlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_pause_24"
             android:layout_alignParentEnd="true"
+            android:background="@null"
             android:layout_marginRight="40dp"
             android:layout_below="@id/tvDateCreated" />
 

@@ -20,6 +20,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // ---------- Declarations ---------- //
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
+        val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
         val fragment = QuickActionPopup()
         var isFragmentVisible = false // Var to hold fragment visibility state
         // ---------- End Declarations ----------
@@ -58,8 +59,43 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         activityCard1.setActivityName("Testeroo")
         activityCard1.setActivityStartDate("2023/04/05")
         activityCard1.setCardColor("green")
-        val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
+            //val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
         linView.addView(activityCard1)
+
+        val activityCard2 = custom_dashboard_cards(this)
+        activityCard2.setActivityName("One")
+        activityCard2.setActivityStartDate("2023/04/05")
+        activityCard2.setCardColor("green")
+        //val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView.addView(activityCard2)
+
+        val activityCard3 = custom_dashboard_cards(this)
+        activityCard3.setActivityName("Two")
+        activityCard3.setActivityStartDate("2023/04/05")
+        activityCard3.setCardColor("green")
+        //val linView3 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView.addView(activityCard3)
+
+        val activityCard4 = custom_dashboard_cards(this)
+        activityCard4.setActivityName("Three")
+        activityCard4.setActivityStartDate("2023/04/05")
+        activityCard4.setCardColor("green")
+      //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView.addView(activityCard4)
+
+        val activityCard5 = custom_dashboard_cards(this)
+        activityCard5.setActivityName("Three")
+        activityCard5.setActivityStartDate("2023/04/05")
+        activityCard5.setCardColor("green")
+        //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView.addView(activityCard5)
+
+        val activityCard6 = custom_dashboard_cards(this)
+        activityCard6.setActivityName("Three")
+        activityCard6.setActivityStartDate("2023/04/05")
+        activityCard6.setCardColor("green")
+        //  val linView4 = findViewById<LinearLayout>(R.id.linearProjectCards)
+        linView.addView(activityCard6)
 
         // ----------------- END OF CUSTOM CARD ----------------- //
 
