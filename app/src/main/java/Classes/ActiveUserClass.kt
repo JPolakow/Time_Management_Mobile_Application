@@ -7,3 +7,5 @@ class ActiveUserClass(
     val UserPasswordHash: String
 ) {
 }
+
+

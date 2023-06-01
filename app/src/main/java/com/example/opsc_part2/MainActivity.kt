@@ -30,9 +30,7 @@ class MainActivity : AppCompatActivity() {
         PasswordInput = findViewById(R.id.etPassword)
 
         btnGoToDash.setOnClickListener {
-           // UserLogin()
-            intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
+            UserLogin()
         }
 
         signUpClick.setOnClickListener {

@@ -1,105 +1,142 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This linear layout is used to show elements
+<?xml version="1.0" encoding="utf-8"?><!-- This linear layout is used to show elements
      in vertical or in horizontal linear manner -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- Need to create attributes for each of these, so that we can change the text -->
     <TextView
-        android:id="@+id/tvUserName"
+        android:id="@+id/tvNameHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="22sp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
+        android:text="@string/profileNameHeading"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tvDisplayUserName"
+        android:id="@+id/tvSurnameHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Angelo"
-        android:textSize="18sp"
-        android:fontFamily="@font/adamina"
-        android:layout_toRightOf="@+id/tvUserName"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="80dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvUserSurname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Surname"
-        android:textSize="22sp"
-        android:layout_below="@id/tvUserName"
+        android:layout_below="@id/tvNameHeading"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="30dp"
+        android:text="@string/profileSurnameHeading"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvUsernameHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSurnameHeading"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/profileUsernameHeading"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmailHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvUsernameHeading"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/profileEmailHeading"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPasswordHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEmailHeading"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/profilePasswordHeading"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tvDisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/tvNameHeading"
+        android:fontFamily="@font/adamina"
+        android:text="@string/profileDisplayName"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvDisplaySurname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Traverso"
-        android:textSize="18sp"
-        android:fontFamily="@font/adamina"
-        android:layout_toRightOf="@+id/tvUserSurname"
-        android:layout_below="@+id/tvUserName"
+        android:layout_below="@+id/tvDisplayName"
+        android:layout_marginStart="43dp"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="50dp"
+        android:layout_toEndOf="@+id/tvSurnameHeading"
+        android:fontFamily="@font/adamina"
+        android:text="@string/profileDisplaySurname"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tvUserEmail"
+        android:id="@+id/tvDisplayUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
-        android:textSize="22sp"
-        android:layout_below="@id/tvUserSurname"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/tvDisplaySurname"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/tvUsernameHeading"
+        android:fontFamily="@font/adamina"
+        android:text="@string/profileDisplayUsername"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvDisplayEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="atraverso13@gmail.com"
-        android:textSize="18sp"
+        android:layout_below="@id/tvDisplayUsername"
+        android:layout_marginStart="77dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/tvEmailHeading"
         android:fontFamily="@font/adamina"
-        android:layout_below="@id/tvUserSurname"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@id/tvUserEmail"
-        android:layout_marginLeft="85dp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/tvUserPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password"
-        android:textSize="22sp"
-        android:layout_below="@id/tvUserEmail"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="30dp"
+        android:text="@string/profileDisplayEmail"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvDisplayPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="**********"
-        android:textSize="18sp"
+        android:layout_below="@id/tvDisplayEmail"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/tvPasswordHeading"
         android:fontFamily="@font/adamina"
-        android:layout_below="@id/tvUserEmail"
-        android:layout_toRightOf="@+id/tvUserPassword"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="45dp"
+        android:text="@string/profileDisplayPassword"
+        android:textSize="20sp"
         android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDisplayPassword"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30sp"
+        android:height="50dp"
+        android:width="170dp"
+        android:textSize="20dp"
+        android:background="@drawable/rounded_corner"
+        android:text="@string/profileLogout"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

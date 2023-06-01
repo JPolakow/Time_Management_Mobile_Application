@@ -16,4 +16,17 @@
     <string name="categories"><u>Category: College Work</u></string>
     <!-- Statistics-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--profile-->
+    <string name="profileLogout">Logout</string>
+    <string name="profileDisplayEmail">atraverso13@gmail.com</string>
+    <string name="profileDisplaySurname">Traverso</string>
+    <string name="profileDisplayName">Angelo</string>
+    <string name="profileDisplayPassword">**********</string>
+    <string name="profilePasswordHeading">Password</string>
+    <string name="profileEmailHeading">Email</string>
+    <string name="profileSurnameHeading">Surname</string>
+    <string name="profileNameHeading">Name</string>
+    <string name="profileUsernameHeading">Username</string>
+    <string name="profileDisplayUsername">ATraverso</string>
+    <!---->
 </resources>
