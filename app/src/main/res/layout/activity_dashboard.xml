@@ -57,6 +57,13 @@
             android:text="@string/categories"
             android:textColor="@color/black" />
 
+        <ScrollView
+            android:id="@+id/svCards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="scrollViewCards"
+            android:layout_below="@id/tvCategory"
+            >
         <LinearLayout
             android:id="@+id/linearProjectCards"
             android:layout_width="match_parent"
@@ -64,6 +71,12 @@
             android:layout_below="@+id/tvRecentTasks"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
+
+
+
+
+
+
 
            <!-- <RelativeLayout
                 android:layout_width="match_parent"
@@ -166,14 +179,14 @@
 
             </RelativeLayout>-->
 
-            <com.example.opsc_part2.custom_dashboard_cards
+           <!-- <com.example.opsc_part2.custom_dashboard_cards
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
 
 
 
         </LinearLayout>
-
+        </ScrollView>
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
