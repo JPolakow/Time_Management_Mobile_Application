@@ -46,13 +46,6 @@ class MainActivity : AppCompatActivity() {
     //============================================================================
     fun UserLogin() {
 
-        //default login
-        if (UsernameInput.text.toString().trim().equals("user") && PasswordInput.text.toString().trim().equals("pass")) {
-            intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
-            return
-        }
-
         //if username does not exist
         val user = ToolBox.UsersList.find { it.UserUsername == UsernameInput.text.toString().trim() }
         if (user == null) {
