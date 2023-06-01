@@ -66,6 +66,7 @@
             android:contentDescription="scrollViewCards"
             android:layout_below="@id/tvCategory"
             >
+
         <LinearLayout
             android:id="@+id/linearProjectCards"
             android:layout_width="match_parent"
