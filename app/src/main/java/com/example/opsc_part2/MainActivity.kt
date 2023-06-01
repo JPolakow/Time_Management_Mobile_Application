@@ -2,6 +2,7 @@ package com.example.opsc_part2
 
 import Classes.ActiveUserClass
 import Classes.PasswordHandler
+import Classes.ToolBox
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,11 +29,11 @@ class MainActivity : AppCompatActivity() {
         UsernameInput = findViewById(R.id.etUsername)
         PasswordInput = findViewById(R.id.etPassword)
 
-        btnGoToDash.setOnClickListener{
+        btnGoToDash.setOnClickListener {
             UserLogin()
         }
 
-        signUpClick.setOnClickListener{
+        signUpClick.setOnClickListener {
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.add(R.id.relContainer, SignUp())
@@ -40,32 +41,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun UserLogin()
-    {
-        if (UsernameInput.text.toString() == "user1" && PasswordInput.text.toString() == "password1")
-        {
+    fun UserLogin() {
+
+        val person =
+            ToolBox.UsersList.find { it.UserUsername == UsernameInput.text.toString().trim() }
+        if (person == null) {
+            val errToast = Toast.makeText(
+                applicationContext,
+                "Incorrect username or password",
+                Toast.LENGTH_LONG
+            )
+            errToast.setGravity(Gravity.BOTTOM, 0, 25)
+            errToast.show()
+            return
+        }
+
+        //default login
+        if (UsernameInput.text.toString() == "user1" && PasswordInput.text.toString() == "password1") {
             intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
-        }
-        else
-        {
-           // intent = Intent(this, Dashboard::class.java)
-           // startActivity(intent)
-
-            val errToast = Toast.makeText(applicationContext,"Incorrect username or password",Toast.LENGTH_LONG)
-            errToast.setGravity(Gravity.BOTTOM,0,25)
+        } else if (person.UserPasswordHash == PasswordHandler.hashPassword(
+                PasswordInput.text.toString().trim()
+            )
+        ) {
+            intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        } else {
+            val errToast = Toast.makeText(
+                applicationContext,
+                "Incorrect username or password",
+                Toast.LENGTH_LONG
+            )
+            errToast.setGravity(Gravity.BOTTOM, 0, 25)
             errToast.show()
         }
     }
 }
-
-/*
-    to do
-        login
-            error message
-            valadate with db?
-
-
-
-
- */

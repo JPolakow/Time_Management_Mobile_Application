@@ -98,15 +98,15 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         val confirmPassword: String = ConfirmPasswordInput.getText().toString().trim()
 
         if (TextUtils.isEmpty(name)) {
-            NameInput.setError("Password is required")
+            NameInput.setError("Name is required")
             valid = false
         }
         if (TextUtils.isEmpty(surname)) {
-            SurnameInput.setError("Password is required")
+            SurnameInput.setError("Surname is required")
             valid = false
         }
         if (TextUtils.isEmpty(username)) {
-            UsernameInput.setError("Password is required")
+            UsernameInput.setError("Username is required")
             valid = false
         }
         if (DoesUsernameExist((username))) {
