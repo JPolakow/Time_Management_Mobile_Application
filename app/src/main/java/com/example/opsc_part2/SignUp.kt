@@ -4,6 +4,7 @@ package com.example.opsc_part2
 //FragmentSignUpBinding is auto generated
 import Classes.ActiveUserClass
 import Classes.PasswordHandler
+import Classes.ToolBox
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -78,14 +79,14 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         val toast = Toast.makeText(requireContext(), "message", Toast.LENGTH_SHORT)
         toast.show()
 
-        //save data
-        ActiveUserClass.UserName = NameInput.text.toString().trim()
-        ActiveUserClass.UserSurname = SurnameInput.text.toString().trim()
-        ActiveUserClass.UserUsername = UsernameInput.text.toString().trim()
-        ActiveUserClass.UserPasswordHash =
+        val activeUserClass = ActiveUserClass(
+            NameInput.text.toString().trim(),
+            SurnameInput.text.toString().trim(),
+            UsernameInput.text.toString().trim(),
             PasswordHandler.hashPassword(PasswordInput.text.toString().trim())
+        )
 
-        var a = 0;
+        ToolBox.UsersList.add(activeUserClass)
     }
 
     private fun validateForm(): Boolean {
@@ -95,6 +96,23 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         val username: String = UsernameInput.getText().toString().trim()
         val password: String = PasswordInput.getText().toString().trim()
         val confirmPassword: String = ConfirmPasswordInput.getText().toString().trim()
+
+        if (TextUtils.isEmpty(name)) {
+            NameInput.setError("Password is required")
+            valid = false
+        }
+        if (TextUtils.isEmpty(surname)) {
+            SurnameInput.setError("Password is required")
+            valid = false
+        }
+        if (TextUtils.isEmpty(username)) {
+            UsernameInput.setError("Password is required")
+            valid = false
+        }
+        if (DoesUsernameExist((username))) {
+            UsernameInput.setError("Username already exists")
+            valid = false
+        }
 
         if (TextUtils.isEmpty(password)) {
             PasswordInput.setError("Password is required")
@@ -111,4 +129,8 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         return valid
     }
 
+    private fun DoesUsernameExist(NameToFind: String): Boolean {
+        val person = ToolBox.UsersList.find { it.UserUsername == NameToFind }
+        return person != null
+    }
 }
