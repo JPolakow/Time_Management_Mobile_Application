@@ -60,7 +60,6 @@ class custom_dashboard_cards @JvmOverloads constructor(
 
     }
 
-
     //============================================================================
     // Used to set the background color of card
     fun setCardColor(selectedColor: String) {

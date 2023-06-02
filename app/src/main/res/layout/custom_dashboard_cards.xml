@@ -29,12 +29,11 @@
 
         <TextView
             android:id="@+id/txtTimerTick"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:layout_marginStart="80dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="15dp"
-            android:layout_toEndOf="@+id/tvActivityName"
+            android:layout_toRightOf="@+id/tvActivityName"
             android:text="00:20:02"
             android:textSize="26sp"
             android:textAlignment="textEnd"
