@@ -29,13 +29,14 @@
 
         <TextView
             android:id="@+id/txtTimerTick"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+           android:layout_marginStart="80dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="15dp"
             android:layout_toEndOf="@+id/tvActivityName"
             android:text="00:20:02"
+            android:textSize="26sp"
             android:textAlignment="textEnd"
             android:textColor="#FF000000" />
 
@@ -49,24 +50,15 @@
             android:textColor="#80000000" />
 
         <ImageButton
-            android:id="@+id/ivPausePlay"
+            android:id="@+id/ibPausePlay"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_below="@id/tvDateCreated"
+            android:layout_below="@id/txtTimerTick"
             android:contentDescription="Text"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="30dp"
             android:background="@null"
-            android:src="@drawable/baseline_pause_24" />
-
-        <ImageView
-            android:id="@+id/tvOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDateCreated"
-            android:layout_marginEnd="40dp"
-            android:layout_toEndOf="@id/ivPausePlay"
-            android:src="@drawable/baseline_settings_24" />
+            android:src="@drawable/baseline_pause_24"/>
 
         <TextView
             android:id="@+id/tvMinGoal"

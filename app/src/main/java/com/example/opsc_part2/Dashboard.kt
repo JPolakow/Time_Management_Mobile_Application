@@ -6,11 +6,14 @@ import android.graphics.Matrix
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -72,6 +75,18 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             customCard.setCardColor("green") // not dynamically added
             customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
             customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
+
+
+            val timerText = customCard.findViewById<TextView>(R.id.txtTimerTick)
+            timerText.text = "00:00:00";
+
+            val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+
+
+            play.setOnClickListener {
+                startTimer(customCard, timerText)
+            }
+
             linView.addView(customCard)
 
         }
@@ -132,4 +147,26 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         transaction.add(R.id.fragment_container, Fragment())
         transaction.commit()
     }
+
+    private fun startTimer(customCard: custom_dashboard_cards,  timerText: TextView) {
+        val handler = Handler()
+        var seconds = 0
+
+        val runnable = object : Runnable {
+            override fun run() {
+                val hours = seconds / 3600
+                val minutes = (seconds % 3600) / 60
+                val secondsText = (seconds % 60).toString().padStart(2, '0')
+                val timerValue = "$hours:$minutes:$secondsText"
+
+                timerText.text = timerValue
+
+                seconds++
+                handler.postDelayed(this, 1000)
+            }
+        }
+
+        handler.post(runnable)
+    }
+    //============================================================================
 }
