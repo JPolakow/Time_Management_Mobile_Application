@@ -110,7 +110,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //============================================================================
     // Method to Initialise object list - Is being called on page start
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createActivityObjects(){
+    private fun createActivityObjects() {
 
         // Creating correct date format
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
@@ -153,5 +153,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 val secondsText = (seconds % 60).toString().padStart(2, '0')
                 val timerValue = "$hours:$minutes:$secondsText"
 
-    //============================================================================
+                //============================================================================
+            }
+        }
+    }
 }
