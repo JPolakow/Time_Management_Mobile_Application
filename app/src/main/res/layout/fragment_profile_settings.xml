@@ -126,11 +126,12 @@
 
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDisplayPassword"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="200dp"
         android:layout_marginTop="30sp"
         android:height="50dp"
         android:width="170dp"
