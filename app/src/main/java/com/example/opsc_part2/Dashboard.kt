@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
+import Classes.ToolBox
 import android.content.Intent
 import android.graphics.Matrix
 import android.os.Build
@@ -31,18 +32,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         setContentView(R.layout.activity_dashboard)
 
         // ======================= Declarations ======================= //
-
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
         val fragment = QuickActionPopup()
         // Var to hold fragment visibility state
         var isFragmentVisible = false
-        // Initialising object list to a new Val
-        val listActivities = createActivityObjects()
+        // Initialising object list
+        createActivityObjects()
 
         // ======================= End Declarations ======================= //
-
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
@@ -67,8 +66,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
 
         // ----------------- Creating a new card with custom attributes ----------------- //
-
-        for (card in listActivities) {
+        for (card in ToolBox.ActivitiesList) {
             val customCard = custom_dashboard_cards(this)
             customCard.setActivityName(card.ActivityName)
             customCard.setActivityStartDate(card.DateCreated)
@@ -76,19 +74,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
             customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
-
             val timerText = customCard.findViewById<TextView>(R.id.txtTimerTick)
             timerText.text = "00:00:00";
 
             val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
-
 
             play.setOnClickListener {
                 startTimer(customCard, timerText)
             }
 
             linView.addView(customCard)
-
         }
 
         /*
@@ -110,26 +105,22 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-
-
     // Method to Initialise object list - Is being called on page start
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createActivityObjects(): List<ActivityObject> {
+    private fun createActivityObjects(){
 
         // Creating correct date format
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
         val current = LocalDateTime.now().format(formatter)
 
-        // Initialising values for object list
-        val ActivityObjectList = listOf(
-            ActivityObject("1", "1", "Open-Source", current, "2", "4"),
-            ActivityObject("2", "2", "Programming", current, "6", "8"),
-            ActivityObject("3", "3", "Research", current, "1", "3"),
-            ActivityObject("4", "4", "Project Management", current, "3", "6")
-        )
-
-        // Returning Object List
-        return ActivityObjectList
+        val newActitivy = ActivityObject("1", "1", "Open-Source", current, "2", "4")
+        ToolBox.ActivitiesList.add(newActitivy)
+        val newActitivy2 = ActivityObject("2", "2", "Programming", current, "6", "8")
+        ToolBox.ActivitiesList.add(newActitivy2)
+        val newActitivy3 = ActivityObject("3", "3", "Research", current, "1", "3")
+        ToolBox.ActivitiesList.add(newActitivy3)
+        val newActitivy4 = ActivityObject("4", "4", "Project Management", current, "3", "6")
+        ToolBox.ActivitiesList.add(newActitivy4)
     }
 
     //============================================================================
@@ -148,7 +139,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         transaction.commit()
     }
 
-    private fun startTimer(customCard: custom_dashboard_cards,  timerText: TextView) {
+    private fun startTimer(customCard: custom_dashboard_cards, timerText: TextView) {
         val handler = Handler()
         var seconds = 0
 

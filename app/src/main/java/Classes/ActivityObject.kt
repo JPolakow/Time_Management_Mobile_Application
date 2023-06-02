@@ -10,11 +10,9 @@ class ActivityObject(
     val DateCreated: String,
     val ActivityMinGoal: String,
     val ActivityMaxGoal: String,
-   // val ActivityCatagory: String,
-  //  val ActivityColor: R.color,
+    // val ActivityCatagory: String,
+    // val ActivityColor: Int,
     //val ActivityIcon: String
-
-
 
 
 ) {

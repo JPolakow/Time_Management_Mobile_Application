@@ -2,6 +2,8 @@
     <!--General-->
     <string name="app_name">PANDA TIME</string>
     <string name="PandaLogo">PandaLogo</string>
+    <string name="X">X</string>
+    <string name="tick">Tick</string>
     <!--Sing in & Sign up-->
     <string name="hintName"> NAME</string>
     <string name="hintSurname"> SURNAME</string>
@@ -39,7 +41,19 @@
     <string name="profileNameHeading">Name</string>
     <string name="profileUsernameHeading">Username</string>
     <string name="profileDisplayUsername">ATraverso</string>
-
+    <!--add activity-->
+    <string name="aaColorHeading">Color</string>
+    <string name="aaCatagoryInout">Tap to set your Category</string>
+    <string name="aaCatagoryHeading">Category</string>
+    <string name="aaGoalInput">Tap to set your goal</string>
+    <string name="aaGoalHeading">Goal</string>
+    <string name="aaNameInput">Tap to set name</string>
+    <string name="aaNameHeading">Name</string>
+    <string name="aaHeading">Add New Activity</string>
+    <string name="aaCheckDone">CheckDone</string>
+    <string name="aaColorInput">Tap to set your Colour</string>
+    <string name="aaIconInput">Tap to set your Icon</string>
+    <string name="aaIconHeading">Icon</string>
 
 
 </resources>
