@@ -14,9 +14,9 @@ class ActivityObject(
     var timer: Timer? = null
    // val ActivityCatagory: String,
   //  val ActivityColor: R.color,
+    // val ActivityCatagory: String,
+    // val ActivityColor: Int,
     //val ActivityIcon: String
-
-
 
 
 ) {
