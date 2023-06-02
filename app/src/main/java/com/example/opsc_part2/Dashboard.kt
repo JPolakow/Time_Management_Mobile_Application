@@ -127,8 +127,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-
-
     private fun showPopup() {
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")
@@ -142,6 +140,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         transaction.commit()
     }
 
+    //============================================================================
     private fun startTimer(customCard: custom_dashboard_cards, timerText: TextView) {
         val handler = Handler()
         var seconds = 0

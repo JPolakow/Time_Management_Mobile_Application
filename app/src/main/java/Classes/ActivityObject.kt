@@ -12,10 +12,8 @@ class ActivityObject(
     val ActivityMinGoal: String,
     val ActivityMaxGoal: String,
     var timer: Timer? = null
-   // val ActivityCatagory: String,
-  //  val ActivityColor: R.color,
     // val ActivityCatagory: String,
-    // val ActivityColor: Int,
+    //  val ActivityColor: R.color,
     //val ActivityIcon: String
 
 
