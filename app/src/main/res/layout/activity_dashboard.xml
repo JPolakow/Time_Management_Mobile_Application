@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
+    <ImageView
+        android:id="@+id/pandaImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/panda"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"/>
+
     <!--Main content-->
     <RelativeLayout
         android:id="@+id/container"
@@ -34,10 +43,10 @@
                 android:id="@+id/tvDisplayName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/adamina"
+                android:fontFamily="sans-serif"
                 android:text="@string/dashboardHeading"
                 android:textColor="@color/black"
-                android:textSize="40sp" />
+                android:textSize="44sp" />
         </LinearLayout>
         <!--End of title-->
 
@@ -49,10 +58,9 @@
             android:layout_below="@id/linearHorizontalTop"
             android:layout_marginStart="16dp"
             android:layout_marginTop="34dp"
-            android:fontFamily="@font/adamina"
             android:text="@string/recentTasksHeading"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvCategory"
@@ -62,7 +70,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/categories"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="22sp" />
         <!--End of headings-->
 
         <!--Activity scroll view-->

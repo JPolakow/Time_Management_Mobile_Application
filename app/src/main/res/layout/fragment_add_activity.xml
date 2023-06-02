@@ -88,6 +88,8 @@
         android:hint="Tap to set your goal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:clickable="false"
+        android:focusable="false"
         android:paddingBottom="16dp"
         android:textColorHint="#70000000" />
 

@@ -55,7 +55,7 @@
             android:layout_below="@id/tvDateCreated"
             android:contentDescription="Text"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="30dp"
             android:background="@null"
             android:src="@drawable/baseline_pause_24" />
 

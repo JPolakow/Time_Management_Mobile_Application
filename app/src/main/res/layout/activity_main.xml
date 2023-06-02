@@ -53,20 +53,25 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="password_toggle"
+            android:layout_height="55dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="34dp"
+            android:minHeight="48dp"
             app:hintEnabled="false"
+            android:textColorHint="#60000000"
+            android:textSize="14sp"
+            android:background="@drawable/rouned_input"
+            app:endIconMode="password_toggle"
             app:passwordToggleDrawable="@drawable/visibility_offpx"
             app:passwordToggleEnabled="true"
+
             app:passwordToggleTint="@color/black">
 
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginLeft="34dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="34dp"
                 android:autofillHints=""
                 android:background="@drawable/rouned_input"
                 android:hint="@string/hintPassword"
