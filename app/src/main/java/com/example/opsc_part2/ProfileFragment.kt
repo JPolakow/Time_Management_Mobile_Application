@@ -18,12 +18,12 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_settings, container, false)
 
+        // Binding val signOutClick to UI Element btnLogout
         val signOutClick = view.findViewById<Button>(R.id.btnLogout)
 
 
         // ------------ SIGN OUT CLICK ------------ //
         // Add functionality for clearing user data
-
         signOutClick.setOnClickListener{
 
             // Creating a new Dialog

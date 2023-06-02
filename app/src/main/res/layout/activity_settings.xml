@@ -7,12 +7,13 @@
     android:layout_height="match_parent">
 
     <!--Title-->
-    <ImageView
-        android:id="@+id/imgBackArrow"
-        android:layout_width="40dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="25dp"
+    <ImageButton
+        android:id="@+id/imageBtnBackArrow"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
+        android:background="@color/white"
         android:contentDescription="@string/settingsBackArrow"
         app:srcCompat="@drawable/round_arrow_back_24" />
 
@@ -20,7 +21,7 @@
         android:id="@+id/tvSettingsHeading"
         android:layout_width="382dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imgBackArrow"
+        android:layout_below="@id/imageBtnBackArrow"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:gravity="start"
@@ -33,6 +34,7 @@
     <!-- TabLayout for the headings -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
+        android:contentDescription="TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSettingsHeading"
@@ -46,6 +48,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
+        android:contentDescription="PageView"
         android:layout_height="match_parent"
         android:layout_below="@id/tabLayout" />
 

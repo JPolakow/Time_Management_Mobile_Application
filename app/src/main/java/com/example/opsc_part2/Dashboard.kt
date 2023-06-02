@@ -1,15 +1,18 @@
 package com.example.opsc_part2
 
+import Classes.ActivityObject
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
@@ -17,17 +20,23 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var bottomNav: BottomNavigationView
 
     //============================================================================
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        // ---------- Declarations ---------- //
+        // ======================= Declarations ======================= //
+
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
         val fragment = QuickActionPopup()
-        var isFragmentVisible = false // Var to hold fragment visibility state
-        // ---------- End Declarations ----------
+        // Var to hold fragment visibility state
+        var isFragmentVisible = false
+        // Initialising object list to a new Val
+        val listActivities = createActivityObjects()
+
+        // ======================= End Declarations ======================= //
 
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -53,42 +62,17 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
 
         // ----------------- Creating a new card with custom attributes ----------------- //
-        val activityCard1 = custom_dashboard_cards(this)
-        activityCard1.setActivityName("Testeroo")
-        activityCard1.setActivityStartDate("2023/04/05")
-        activityCard1.setCardColor("green")
-        linView.addView(activityCard1)
 
-        val activityCard2 = custom_dashboard_cards(this)
-        activityCard2.setActivityName("One")
-        activityCard2.setActivityStartDate("2023/04/05")
-        activityCard2.setCardColor("green")
-        linView.addView(activityCard2)
+        for (card in listActivities) {
+            val customCard = custom_dashboard_cards(this)
+            customCard.setActivityName(card.ActivityName)
+            customCard.setActivityStartDate(card.DateCreated)
+            customCard.setCardColor("green") // not dynamically added
+            customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
+            customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
+            linView.addView(customCard)
 
-        val activityCard3 = custom_dashboard_cards(this)
-        activityCard3.setActivityName("Two")
-        activityCard3.setActivityStartDate("2023/04/05")
-        activityCard3.setCardColor("green")
-        linView.addView(activityCard3)
-
-        val activityCard4 = custom_dashboard_cards(this)
-        activityCard4.setActivityName("Three")
-        activityCard4.setActivityStartDate("2023/04/05")
-        activityCard4.setCardColor("green")
-        linView.addView(activityCard4)
-
-        val activityCard5 = custom_dashboard_cards(this)
-        activityCard5.setActivityName("Three")
-        activityCard5.setActivityStartDate("2023/04/05")
-        activityCard5.setCardColor("green")
-        linView.addView(activityCard5)
-
-        val activityCard6 = custom_dashboard_cards(this)
-        activityCard6.setActivityName("Three")
-        activityCard6.setActivityStartDate("2023/04/05")
-        activityCard6.setCardColor("green")
-        linView.addView(activityCard6)
-        // ----------------- END OF CUSTOM CARD ----------------- //
+        }
 
         /*
         * If fragment is visible, hide when button is clicked
@@ -109,6 +93,31 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
+
+
+    // Method to Initialise object list - Is being called on page start
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createActivityObjects(): List<ActivityObject> {
+
+        // Creating correct date format
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+        val current = LocalDateTime.now().format(formatter)
+
+        // Initialising values for object list
+        val ActivityObjectList = listOf(
+            ActivityObject("1", "1", "Open-Source", current, "2", "4"),
+            ActivityObject("2", "2", "Programming", current, "6", "8"),
+            ActivityObject("3", "3", "Research", current, "1", "3"),
+            ActivityObject("4", "4", "Project Management", current, "3", "6")
+        )
+
+        // Returning Object List
+        return ActivityObjectList
+    }
+
+    //============================================================================
+
+
     private fun showPopup() {
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")

@@ -1,5 +1,8 @@
 package Classes
 
+import com.example.opsc_part2.R
+import java.time.LocalDate
+
 class ActivityObject(
     val ActivityID: String,
     val ActivityUserID: String,
@@ -8,7 +11,11 @@ class ActivityObject(
     val ActivityMinGoal: String,
     val ActivityMaxGoal: String,
    // val ActivityCatagory: String,
-    val ActivityColor: String,
+  //  val ActivityColor: R.color,
     //val ActivityIcon: String
+
+
+
+
 ) {
 }

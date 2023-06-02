@@ -7,6 +7,9 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class custom_dashboard_cards @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -32,10 +35,31 @@ class custom_dashboard_cards @JvmOverloads constructor(
     //============================================================================
     // Used to set activity start Date
     fun setActivityStartDate(startDate: String) {
+
         val actStartDate = findViewById<TextView>(R.id.tvDateCreated)
 
         actStartDate.text = startDate;
     }
+    //============================================================================
+
+    fun setActivityMinGoal(minGoal: String)
+    {
+
+        val minGoalDisplay = findViewById<TextView>(R.id.tvMinGoal)
+
+        minGoalDisplay.text =   minGoal
+
+    }
+    //============================================================================
+    fun setActivityMaxGoal(maxGoal: String)
+    {
+
+        val maxGoalDisplay = findViewById<TextView>(R.id.tvMaxGoal)
+
+        maxGoalDisplay.text = maxGoal
+
+    }
+
 
     //============================================================================
     // Used to set the background color of card
