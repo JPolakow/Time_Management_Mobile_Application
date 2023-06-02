@@ -1,5 +1,3 @@
-
-
 import android.os.Handler
 import android.widget.TextView
 import com.example.opsc_part2.custom_dashboard_cards
@@ -8,10 +6,12 @@ object TimerManager {
     private var handler: Handler? = null
     private var seconds: Int = 0
     private var startTime: Long = 0
-fun startTimer(timerText: TextView) {
+
+    fun startTimer(timerText: TextView) {
         if (handler != null) {
             stopTimer()
         }
+
         startTime = System.currentTimeMillis()
 
         handler = Handler()
@@ -43,7 +43,7 @@ fun startTimer(timerText: TextView) {
         seconds = 0
     }
 
-     fun startTimer(customCard: custom_dashboard_cards, timerText: TextView) {
+    fun startTimer(customCard: custom_dashboard_cards, timerText: TextView) {
         val handler = Handler()
         var seconds = 0
 
