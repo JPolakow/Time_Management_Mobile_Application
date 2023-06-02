@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
+import TimerManager
 import Classes.ToolBox
 import android.content.Intent
 import android.graphics.Matrix
@@ -32,9 +33,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         setContentView(R.layout.activity_dashboard)
 
         // ======================= Declarations ======================= //
+
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
+
         val fragment = QuickActionPopup()
         // Var to hold fragment visibility state
         var isFragmentVisible = false
@@ -80,7 +83,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
 
             play.setOnClickListener {
-                startTimer(customCard, timerText)
+                TimerManager.startTimer(customCard, timerText)
             }
 
             linView.addView(customCard)
@@ -150,14 +153,5 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 val secondsText = (seconds % 60).toString().padStart(2, '0')
                 val timerValue = "$hours:$minutes:$secondsText"
 
-                timerText.text = timerValue
-
-                seconds++
-                handler.postDelayed(this, 1000)
-            }
-        }
-
-        handler.post(runnable)
-    }
     //============================================================================
 }
