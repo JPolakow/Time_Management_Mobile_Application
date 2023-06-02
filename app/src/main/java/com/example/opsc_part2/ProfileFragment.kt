@@ -26,12 +26,16 @@ class ProfileFragment : Fragment() {
 
         signOutClick.setOnClickListener{
 
+            // Creating a new Dialog
             val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+
                 when (which) {
+                    // When User selects "Yes"
                     DialogInterface.BUTTON_POSITIVE -> {
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                     }
+                    // When User selects "No"
                     DialogInterface.BUTTON_NEGATIVE -> {
                         // No button clicked
                         // DO nothing
@@ -39,10 +43,15 @@ class ProfileFragment : Fragment() {
                 }
             }
 
+            // Building a new alert
             val builder = AlertDialog.Builder(context)
+            // Setting alert message
             builder.setMessage("Are you sure you want to logout?\nYou will lose all progress!")
+                    // Setting text for positive button
                 .setPositiveButton("Yes", dialogClickListener)
+                    // Setting text for negative button
                 .setNegativeButton("No", dialogClickListener)
+                    // Showing dialog
                 .show()
 
 
