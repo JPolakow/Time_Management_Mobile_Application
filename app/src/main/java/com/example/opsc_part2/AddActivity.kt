@@ -75,6 +75,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         ivSubmit = view.findViewById<ImageView>(R.id.ivSubmit)
         tvClose = view.findViewById<TextView>(R.id.tvClose)
         DescriptionInput = view.findViewById(R.id.etDescription)
+        CatagoryInput = view.findViewById(R.id.etCategory)
 
         //add goal
         GoalInput.setOnClickListener {
@@ -122,11 +123,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             valid = false
         }
         if (SelectedColor.equals("")) {
-            ColorInput.setError("Surname is required")
+            ColorInput.setError("Color is required")
             valid = false
         }
-        if (ToolBox.StartDate.equals("") || ToolBox.EndDate.equals("")) {
-            GoalInput.setError("Surname is required")
+        if (ToolBox.MinGoal.equals("") || ToolBox.MaxGoal.equals("")) {
+            GoalInput.setError("Goal is required")
             valid = false
         }
 
@@ -139,6 +140,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
     private fun AddActivityToList() {
+
         // Creating correct date format
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
         val current = LocalDateTime.now().format(formatter)
@@ -149,7 +151,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val name = NameInput.text.toString().trim()
 
         val newActitivy =
-            ActivityObject(activityID, currentUser, name, current, "2", "4", SelectedColor)
+            ActivityObject(activityID, currentUser, name, current, ToolBox.MinGoal, ToolBox.MaxGoal, SelectedColor)
         ToolBox.ActivitiesList.add(newActitivy)
     }
 
@@ -174,7 +176,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     }
 
     //============================================================================
-    //calls the setgoal popup
+    //calls the set goal popup
     private fun showPopupFragment() {
         val fragment = SetGoal()
         fragment.show(childFragmentManager, "QuickActionPopup")

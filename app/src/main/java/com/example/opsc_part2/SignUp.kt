@@ -41,7 +41,6 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        //in oncreateview
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
         NameInput = binding.etName

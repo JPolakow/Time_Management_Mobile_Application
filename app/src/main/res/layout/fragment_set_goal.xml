@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuickActionPopup"
-    >
+    tools:context=".QuickActionPopup">
 
     <RelativeLayout
         android:id="@+id/linearParent"
@@ -30,59 +29,61 @@
             android:layout_below="@+id/tvMinDailyGoalHeading"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:textSize="20sp"
             android:text="Minimum Daily Goal"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/etTapToSetMinGoal"
+            android:id="@+id/etMinTime"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@+id/tvSetGoal"
             android:backgroundTint="@color/white"
+            android:digits="0123456789"
             android:hint="Tap to set time"
             android:inputType="number"
+            android:paddingLeft="16dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:paddingLeft="16dp" />
+            android:textColorHint="@color/white" />
 
 
         <TextView
             android:id="@+id/tvSetMaxGoalHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etTapToSetMinGoal"
+            android:layout_below="@+id/etMinTime"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:textSize="20sp"
             android:text="Maximum Daily Goal"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/etSetMaxGoal"
+            android:id="@+id/etMaxTime"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@+id/tvSetMaxGoalHeading"
             android:backgroundTint="@color/white"
+            android:digits="0123456789"
             android:hint="Tap to set time"
-            android:textColor="@color/white"
             android:inputType="number"
             android:paddingLeft="16dp"
+            android:textColor="@color/white"
             android:textColorHint="@color/white" />
 
         <ImageButton
-            android:id="@+id/btnSignIn"
+            android:id="@+id/ibSubmit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/etSetMaxGoal"
+            android:layout_below="@+id/etMaxTime"
             android:layout_gravity="center"
-            android:contentDescription="btnSignIn"
             android:layout_marginLeft="120dp"
-            android:src="@drawable/baseline_save_24"
             android:layout_marginTop="16dp"
             android:layout_marginRight="120dp"
             android:background="@drawable/rounded_corner"
-            android:textColor="@color/black"/>
+            android:contentDescription="Submit"
+            android:src="@drawable/baseline_save_24"
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
