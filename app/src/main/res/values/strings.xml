@@ -19,7 +19,7 @@
     <!-- Dashboard -->
     <string name="dashboardHeading">Dashboard</string>
     <string name="recentTasksHeading">Recent Tasks</string>
-    <string name="categories"><u>Category: College Work</u></string>
+    <string name="categories">Category: College Work</string>
     <string name="dashimageprofile">dashboardImageProfile</string>
     <string name="dashscrollview">ScrollView</string>
     <string name="dashaddnew">Add new activity</string>

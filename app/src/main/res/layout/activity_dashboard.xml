@@ -22,31 +22,36 @@
         android:layout_height="match_parent">
 
         <!--Title-->
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/linearHorizontalTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
+            tools:ignore="UseCompoundDrawables">-->
 
-            <ImageView
-                android:id="@+id/imgProfileImg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/dashimageprofile"
-                android:src="@drawable/panda" />
+        <ImageView
+            android:id="@+id/imgProfileImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/dashimageprofile"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
-            <TextView
-                android:id="@+id/tvDisplayName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="@string/dashboardHeading"
-                android:textColor="@color/black"
-                android:textSize="44sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/dashboardHeading"
+            android:textColor="@color/black"
+            android:textSize="44sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true" />
+        <!--</LinearLayout>-->
         <!--End of title-->
 
         <!--Headings-->
@@ -54,7 +59,7 @@
             android:id="@+id/tvRecentTasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linearHorizontalTop"
+            android:layout_below="@id/tvDisplayName"
             android:layout_marginStart="16dp"
             android:layout_marginTop="34dp"
             android:text="@string/recentTasksHeading"
@@ -68,6 +73,7 @@
             android:layout_below="@+id/tvRecentTasks"
             android:layout_marginStart="16dp"
             android:text="@string/categories"
+            android:alpha="0.7"
             android:textColor="@color/black"
             android:textSize="22sp" />
         <!--End of headings-->
@@ -78,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvCategory"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/dashscrollview">
 
             <LinearLayout

@@ -4,7 +4,8 @@ import Classes.ActivityObject
 import TimerManager
 import Classes.ToolBox
 import android.content.Intent
-import android.graphics.Matrix
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,11 +16,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Collections.min
+import kotlin.math.min
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
@@ -45,6 +49,38 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         createActivityObjects()
 
         // ======================= End Declarations ======================= //
+        // Obtain a reference to the ImageView
+        val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
+
+// Create a Bitmap from the image drawable
+        val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
+        val bitmap = drawable.bitmap
+
+// Calculate the desired size for the circular ImageView
+        val targetSize = min(bitmap.width, bitmap.height)
+
+// Create a circular Bitmap with the desired size
+        val circularBitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(circularBitmap)
+
+// Create a Paint object to define the circular shape
+        val paint = Paint()
+        paint.isAntiAlias = true
+        paint.shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+
+// Draw a circular shape on the canvas using the Paint
+        val radius = targetSize / 2f
+        canvas.drawCircle(radius, radius, radius, paint)
+
+// Set the circular Bitmap as the new image for the ImageView
+        imgProfileImg.setImageBitmap(circularBitmap)
+
+// Set the dimensions of the ImageView to match the circular Bitmap
+        val params = RelativeLayout.LayoutParams(targetSize, targetSize)
+        imgProfileImg.layoutParams = params
+
+
+
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
@@ -66,6 +102,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 }
                 else -> false
             }
+
+
         }
 
         // ----------------- Creating a new card with custom attributes ----------------- //
