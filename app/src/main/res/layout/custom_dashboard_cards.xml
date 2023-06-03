@@ -50,17 +50,30 @@
             android:textColor="#80000000"
             android:textSize="18sp" />
 
-        <ImageButton
-            android:id="@+id/ibPausePlay"
+        <!--<ImageButton
+            android:id="@+id/ibPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txtTimerTick"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="29dp"
+            android:background="@null"
+            android:contentDescription="Text"
+            android:src="@drawable/baseline_play_arrow_24" />-->
+
+        <!--android:layout_toRightOf="@id/ibPlay"-->
+        <ImageButton
+            android:id="@+id/ibPausePlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTimerTick"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
             android:background="@null"
             android:contentDescription="Text"
             android:src="@drawable/baseline_pause_24" />
+
+
 
         <TextView
             android:id="@+id/tvMinGoal"
