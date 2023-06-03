@@ -10,8 +10,8 @@ class ToolBox {
         var ActiveUserID: Int = -1
 
         //used to move data between addgoal and addactivity
-        var EndDate: String = ""
-        var StartDate: String = ""
+        var MinGoal: Int = -1
+        var MaxGoal: Int = -1
 
         //object arrays
         val WorkEntriesList = mutableListOf<WorkEntriesObject>()
@@ -31,8 +31,8 @@ class ToolBox {
                 1,
                 "Open-Source",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
-                "2",
-                "4",
+                2,
+                4,
                 "Yellow"
             ),
             ActivityObject(
@@ -40,8 +40,8 @@ class ToolBox {
                 2,
                 "Programming",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
-                "6",
-                "8",
+                6,
+                8,
                 "Cyan"
             ),
             ActivityObject(
@@ -49,8 +49,8 @@ class ToolBox {
                 3,
                 "Research",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
-                "1",
-                "3",
+                1,
+                3,
                 "Lime"
             ),
             ActivityObject(
@@ -58,8 +58,8 @@ class ToolBox {
                 4,
                 "Project Management",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
-                "3",
-                "6",
+                3,
+                7,
                 "Magenta"
             )
         )
