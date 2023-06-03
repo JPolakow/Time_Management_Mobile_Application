@@ -23,10 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textSize="24sp"
             android:layout_marginTop="16dp"
             android:text="Programming"
-            android:textColor="#FF000000" />
+            android:textColor="#FF000000"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/txtTimerTick"
@@ -36,9 +36,9 @@
             android:layout_marginEnd="15dp"
             android:layout_toRightOf="@+id/tvActivityName"
             android:text="00:20:02"
-            android:textSize="26sp"
             android:textAlignment="textEnd"
-            android:textColor="#FF000000" />
+            android:textColor="#FF000000"
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/tvDateCreated"
@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvActivityName"
             android:layout_marginStart="10dp"
-            android:textSize="18sp"
             android:text="12 April 2023"
-            android:textColor="#80000000" />
+            android:textColor="#80000000"
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/ibPausePlay"

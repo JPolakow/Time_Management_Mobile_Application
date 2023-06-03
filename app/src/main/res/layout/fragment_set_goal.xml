@@ -41,6 +41,8 @@
             android:layout_below="@+id/tvSetGoal"
             android:backgroundTint="@color/white"
             android:hint="Tap to set time"
+            android:inputType="number"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:paddingLeft="16dp" />
 
@@ -63,22 +65,24 @@
             android:layout_below="@+id/tvSetMaxGoalHeading"
             android:backgroundTint="@color/white"
             android:hint="Tap to set time"
-
+            android:textColor="@color/white"
+            android:inputType="number"
             android:paddingLeft="16dp"
             android:textColorHint="@color/white" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_below="@+id/etSetMaxGoal"
             android:layout_gravity="center"
-            android:layout_marginLeft="68dp"
+            android:contentDescription="btnSignIn"
+            android:layout_marginLeft="120dp"
+            android:src="@drawable/baseline_save_24"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="68dp"
+            android:layout_marginRight="120dp"
             android:background="@drawable/rounded_corner"
-            android:text="Save"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"/>
 
     </RelativeLayout>
 

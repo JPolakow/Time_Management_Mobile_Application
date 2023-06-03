@@ -47,7 +47,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // Var to hold fragment visibility state
         var isFragmentVisible = false
 
-
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
         // Create a Bitmap from the image drawable
