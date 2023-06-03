@@ -14,6 +14,10 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
+
+
+
+
     //ui vars
     private lateinit var UsernameInput: EditText
     private lateinit var PasswordInput: EditText
@@ -82,4 +86,6 @@ To do
         move to sing in after signed up
     add activity
         description
+    profile
+        make camera not suck
  */
