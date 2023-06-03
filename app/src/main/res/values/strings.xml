@@ -43,17 +43,18 @@
     <string name="profileDisplayUsername">ATraverso</string>
     <!--add activity-->
     <string name="aaColorHeading">Color</string>
-    <string name="aaCatagoryInout">Tap to set your Category</string>
+    <string name="aaCatagoryInout">Tap to set the Category</string>
     <string name="aaCatagoryHeading">Category</string>
-    <string name="aaGoalInput">Tap to set your goal</string>
+    <string name="aaGoalInput">Tap to set the goal</string>
     <string name="aaGoalHeading">Goal</string>
-    <string name="aaNameInput">Tap to set name</string>
+    <string name="aaNameInput">Tap to set the name</string>
     <string name="aaNameHeading">Name</string>
     <string name="aaHeading">Add New Activity</string>
-    <string name="aaCheckDone">CheckDone</string>
-    <string name="aaColorInput">Tap to set your Colour</string>
-    <string name="aaIconInput">Tap to set your Icon</string>
+    <string name="aaColorInput">Tap to set the Colour</string>
+    <string name="aaIconInput">Tap to set the Icon</string>
     <string name="aaIconHeading">Icon</string>
+    <string name="aaDescHeading">Description</string>
+    <string name="aaDescInput">Tap to set the description</string>
 
 
 </resources>

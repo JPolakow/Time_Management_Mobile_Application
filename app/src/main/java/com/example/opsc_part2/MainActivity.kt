@@ -80,4 +80,6 @@ class MainActivity : AppCompatActivity() {
 To do
     sign n sign up
         move to sing in after signed up
+    add activity
+        description
  */

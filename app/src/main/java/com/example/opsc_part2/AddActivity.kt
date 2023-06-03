@@ -4,6 +4,7 @@ import Classes.ActivityObject
 import Classes.ToolBox
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -18,6 +19,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -47,14 +50,15 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
 
     //inputs
     private lateinit var NameInput: EditText
-    private lateinit var DateInput: EditText
     private lateinit var CatagoryInput: EditText
-    private lateinit var MinGaol: EditText
-    private lateinit var MaxGoal: EditText
-    private lateinit var SelectedColor: String
+    private lateinit var ColorInput: EditText
+    private lateinit var GoalInput: EditText
+    private lateinit var DescriptionInput: EditText
+    private var SelectedColor: String = ""
 
     //pressables
-    private lateinit var imgAdd: ImageView
+    private lateinit var ivSubmit: ImageView
+    private lateinit var tvClose: TextView
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -66,26 +70,37 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
 
         NameInput = view.findViewById(R.id.etName)
-        CatagoryInput = view.findViewById(R.id.etCategory)
-
+        GoalInput = view.findViewById<EditText>(R.id.etGoal)
+        ColorInput = view.findViewById<EditText>(R.id.etColor)
+        ivSubmit = view.findViewById<ImageView>(R.id.ivSubmit)
+        tvClose = view.findViewById<TextView>(R.id.tvClose)
+        DescriptionInput = view.findViewById(R.id.etDescription)
 
         //add goal
-        val etGoalClick = view.findViewById<EditText>(R.id.etGoal)
-        etGoalClick.setOnClickListener {
+        GoalInput.setOnClickListener {
             showPopupFragment()
         }
 
         //pick color
-        val etPickColor = view.findViewById<EditText>(R.id.etColor)
-        etPickColor.setOnClickListener {
+        ColorInput.setOnClickListener {
             showColorPickerDialog()
         }
 
         //submit button
-        val ivSubmit = view.findViewById<ImageView>(R.id.ivSubmit)
         ivSubmit.setOnClickListener() {
-            if (validateForm())
+            if (validateForm()) {
                 AddActivityToList()
+                val intent = Intent(requireActivity(), Dashboard::class.java)
+                val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
+                ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
+            }
+        }
+
+        //close button
+        tvClose.setOnClickListener() {
+            val intent = Intent(requireActivity(), Dashboard::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
+            ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
         }
 
         return view
@@ -98,7 +113,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val name: String = NameInput.getText().toString().trim()
         val catagory: String = CatagoryInput.getText().toString().trim()
 
-        //user text inputs
         if (TextUtils.isEmpty(name)) {
             NameInput.setError("Name is required")
             valid = false
@@ -107,14 +121,16 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             CatagoryInput.setError("Catagory is required")
             valid = false
         }
+        if (SelectedColor.equals("")) {
+            ColorInput.setError("Surname is required")
+            valid = false
+        }
+        if (ToolBox.StartDate.equals("") || ToolBox.EndDate.equals("")) {
+            GoalInput.setError("Surname is required")
+            valid = false
+        }
 
-//        //user selects
-//        if (SelectedColor == -1) {
-//            DateInput.setError("Surname is required")
-//            valid = false
-//        }
         //add icon
-        //NEED TO VALADATE GOAL
 
         return valid
     }
@@ -132,7 +148,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         //get user inputs
         val name = NameInput.text.toString().trim()
 
-        val newActitivy = ActivityObject(activityID, currentUser, name, current, "2", "4", SelectedColor)
+        val newActitivy =
+            ActivityObject(activityID, currentUser, name, current, "2", "4", SelectedColor)
         ToolBox.ActivitiesList.add(newActitivy)
     }
 
@@ -146,6 +163,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
                 val selectedColor = which
 
                 SelectedColor = colorNames[selectedColor]
+                ColorInput.setText(SelectedColor)
 
                 dialog.dismiss()
             }
@@ -156,7 +174,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     }
 
     //============================================================================
-    //
+    //calls the setgoal popup
     private fun showPopupFragment() {
         val fragment = SetGoal()
         fragment.show(childFragmentManager, "QuickActionPopup")

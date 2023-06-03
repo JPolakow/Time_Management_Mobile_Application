@@ -39,10 +39,9 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:clickable="true"
-            android:contentDescription="@string/aaCheckDone"
+            android:contentDescription="@string/tick"
             android:focusable="true"
             android:src="@drawable/done"
-            android:text="@string/tick"
             android:textSize="30sp" />
 
 
@@ -174,12 +173,36 @@
         android:paddingBottom="16dp"
         android:textColorHint="#70000000" />
 
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etIcon"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/aaDescHeading"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDescription"
+        android:autofillHints=""
+        android:hint="@string/aaDescInput"
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textColorHint="#70000000" />
+
     <ImageView
         android:id="@+id/imgPandaAddActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etIcon"
-        android:layout_marginBottom="-20dp"
+        android:layout_below="@+id/etDescription"
+        android:layout_marginTop="4dp"
         android:contentDescription="@string/PandaLogo"
         android:rotation="90"
         android:src="@drawable/panda" />

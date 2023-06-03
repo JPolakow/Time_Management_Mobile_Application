@@ -14,6 +14,7 @@ class ActivityObject(
     val ActivityMaxGoal: String,
     //val ActivityIcon: String
     val ActivityColor: String,
+    //val ActivityDescription: String,
     var timer: Timer? = null,
     ) {
 }

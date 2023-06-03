@@ -9,6 +9,21 @@ class ToolBox {
     companion object {
         var ActiveUserID: Int = -1
 
+        //used to move data between addgoal and addactivity
+        var EndDate: String = ""
+        var StartDate: String = ""
+
+        //object arrays
+        val WorkEntriesList = mutableListOf<WorkEntriesObject>()
+        val UsersList = mutableListOf<ActiveUserClass>(
+            //default user, password = pass
+            ActiveUserClass(
+                "Name",
+                "Surname",
+                "user",
+                "D74FF0EE8DA3B9806B18C877DBF29BBDE50B5BD8E4DAD7A3A725000FEB82E8F1"
+            )
+        )
         @RequiresApi(Build.VERSION_CODES.O)
         val ActivitiesList = mutableListOf<ActivityObject>(
             ActivityObject(
@@ -18,7 +33,7 @@ class ToolBox {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 "2",
                 "4",
-                "Pink"
+                "Yellow"
             ),
             ActivityObject(
                 2,
@@ -36,7 +51,7 @@ class ToolBox {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 "1",
                 "3",
-                "Green"
+                "Lime"
             ),
             ActivityObject(
                 4,
@@ -46,16 +61,6 @@ class ToolBox {
                 "3",
                 "6",
                 "Magenta"
-            )
-        )
-        val WorkEntriesList = mutableListOf<WorkEntriesObject>()
-        val UsersList = mutableListOf<ActiveUserClass>(
-            //default user, password = pass
-            ActiveUserClass(
-                "Name",
-                "Surname",
-                "user",
-                "D74FF0EE8DA3B9806B18C877DBF29BBDE50B5BD8E4DAD7A3A725000FEB82E8F1"
             )
         )
     }
