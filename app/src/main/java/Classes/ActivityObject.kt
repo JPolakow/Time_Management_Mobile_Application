@@ -5,8 +5,8 @@ import java.time.LocalDate
 import java.util.*
 
 class ActivityObject(
-    val ActivityID: String,
-    val ActivityUserID: String,
+    val ActivityID: Int,
+    val ActivityUserID: Int,
     val ActivityName: String,
     val DateCreated: String,
     val ActivityMinGoal: String,

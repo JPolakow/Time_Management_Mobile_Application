@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                 PasswordInput.text.toString().trim()
             )
         ) {
+            ToolBox.ActiveUserID = ToolBox.UsersList.indexOfFirst { it.UserUsername == user.UserUsername }
+
             intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         } else {

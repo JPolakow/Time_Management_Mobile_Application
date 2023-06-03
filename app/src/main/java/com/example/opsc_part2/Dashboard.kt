@@ -37,7 +37,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         setContentView(R.layout.activity_dashboard)
 
         // ======================= Declarations ======================= //
-
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
@@ -45,21 +44,17 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         val fragment = QuickActionPopup()
         // Var to hold fragment visibility state
         var isFragmentVisible = false
-        // Initialising object list
-        createActivityObjects()
 
         // ======================= End Declarations ======================= //
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
         // Define the maximum size for the image (in pixels)
         val maxImageSize = 140 // Set your desired maximum size value here
-
-
-// Create a Bitmap from the image drawable
+        // Create a Bitmap from the image drawable
         val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
         val bitmap = drawable.bitmap
 
-// Calculate the desired size for the circular ImageView, considering the maximum size
+        // Calculate the desired size for the circular ImageView, considering the maximum size
         val imageSize = min(bitmap.width, bitmap.height)
         val scaleFactor = maxImageSize.toFloat() / imageSize.toFloat()
         val targetSize = (imageSize * scaleFactor).toInt()
@@ -67,31 +62,27 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // Resize the original image bitmap to the target size
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetSize, targetSize, true)
 
-
-// Create a circular Bitmap with the desired size
+        // Create a circular Bitmap with the desired size
         val circularBitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(circularBitmap)
 
-
-// Create a Paint object to define the circular shape
+        // Create a Paint object to define the circular shape
         val paint = Paint()
         paint.isAntiAlias = true
         paint.shader = BitmapShader(resizedBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
-// Draw a circular shape on the canvas using the Paint
+        // Draw a circular shape on the canvas using the Paint
         val radius = targetSize / 2f
         canvas.drawCircle(radius, radius, radius, paint)
 
-// Set the circular Bitmap as the new image for the ImageView
+        // Set the circular Bitmap as the new image for the ImageView
         imgProfileImg.setImageBitmap(circularBitmap)
 
-// Set the dimensions of the ImageView to match the circular Bitmap
+        // Set the dimensions of the ImageView to match the circular Bitmap
         val params = RelativeLayout.LayoutParams(targetSize, targetSize)
         params.leftMargin = 30
         params.topMargin = 10
         imgProfileImg.layoutParams = params
-
-
 
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -114,8 +105,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 }
                 else -> false
             }
-
-
         }
 
         // ----------------- Creating a new card with custom attributes ----------------- //
@@ -158,25 +147,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    // Method to Initialise object list - Is being called on page start
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createActivityObjects() {
-
-        // Creating correct date format
-        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
-        val current = LocalDateTime.now().format(formatter)
-
-        val newActitivy = ActivityObject("1", "1", "Open-Source", current, "2", "4")
-        ToolBox.ActivitiesList.add(newActitivy)
-        val newActitivy2 = ActivityObject("2", "2", "Programming", current, "6", "8")
-        ToolBox.ActivitiesList.add(newActitivy2)
-        val newActitivy3 = ActivityObject("3", "3", "Research", current, "1", "3")
-        ToolBox.ActivitiesList.add(newActitivy3)
-        val newActitivy4 = ActivityObject("4", "4", "Project Management", current, "3", "6")
-        ToolBox.ActivitiesList.add(newActitivy4)
-    }
-
-    //============================================================================
     private fun showPopup() {
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")
@@ -202,7 +172,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 val secondsText = (seconds % 60).toString().padStart(2, '0')
                 val timerValue = "$hours:$minutes:$secondsText"
 
-                //============================================================================
             }
         }
     }

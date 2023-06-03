@@ -12,11 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.graphics.Color
 import android.media.Image
+import android.os.Build
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.appcompat.app.AlertDialog
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AddActivity : Fragment(R.layout.fragment_add_activity) {
 
@@ -73,12 +77,17 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private lateinit var imgAdd: ImageView
 
     //============================================================================
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
+
+        NameInput = view.findViewById(R.id.etName)
+        CatagoryInput = view.findViewById(R.id.etCategory)
+
 
         //add goal
         val etGoalClick = view.findViewById<EditText>(R.id.etGoal)
@@ -95,8 +104,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         //submit button
         val ivSubmit = view.findViewById<ImageView>(R.id.ivSubmit)
         ivSubmit.setOnClickListener() {
-           if (validateForm())
-               AddActivityToList()
+            if (validateForm())
+                AddActivityToList()
         }
 
         return view
@@ -107,15 +116,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private fun validateForm(): Boolean {
         var valid = true
         val name: String = NameInput.getText().toString().trim()
-        val date: String = DateInput.getText().toString().trim()
         val catagory: String = CatagoryInput.getText().toString().trim()
 
+        //user text inputs
         if (TextUtils.isEmpty(name)) {
             NameInput.setError("Name is required")
-            valid = false
-        }
-        if (TextUtils.isEmpty(date)) {
-            DateInput.setError("Surname is required")
             valid = false
         }
         if (TextUtils.isEmpty(catagory)) {
@@ -123,11 +128,12 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             valid = false
         }
 
-        if (SelectedColor == -1)
-        {
-            DateInput.setError("Surname is required")
-            valid = false
-        }
+//        //user selects
+//        if (SelectedColor == -1) {
+//            DateInput.setError("Surname is required")
+//            valid = false
+//        }
+        //add icon
         //NEED TO VALADATE GOAL
 
         return valid
@@ -135,10 +141,19 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
 
     //============================================================================
     //add the new entry to the list
-    private fun AddActivityToList()
-    {
-       // val activityObject = ActivityObject()
-       // ToolBox.ActivitiesList.add(activityObject)
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun AddActivityToList() {
+        // Creating correct date format
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+        val current = LocalDateTime.now().format(formatter)
+        //get external data
+        val currentUser = ToolBox.ActiveUserID
+        val activityID = (ToolBox.ActivitiesList.count() + 1)
+        //get user inputs
+        val name = NameInput.text.toString().trim()
+
+        val newActitivy = ActivityObject(activityID, currentUser, name, current, "2", "4")
+        ToolBox.ActivitiesList.add(newActitivy)
     }
 
     //============================================================================
