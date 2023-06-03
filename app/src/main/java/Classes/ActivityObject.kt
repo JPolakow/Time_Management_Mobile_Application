@@ -8,14 +8,12 @@ class ActivityObject(
     val ActivityID: Int,
     val ActivityUserID: Int,
     val ActivityName: String,
+    // val ActivityCatagory: String,
     val DateCreated: String,
     val ActivityMinGoal: String,
     val ActivityMaxGoal: String,
-    var timer: Timer? = null
-    // val ActivityCatagory: String,
-    //  val ActivityColor: R.color,
     //val ActivityIcon: String
-
-
-) {
+    val ActivityColor: String,
+    var timer: Timer? = null,
+    ) {
 }

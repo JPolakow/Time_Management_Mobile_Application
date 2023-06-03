@@ -13,5 +13,20 @@
     <color name="fragmentActivity">#121212</color>
     <color name="fragment_background">#F5F5F5</color>
     <color name="cardColor_blue">#E1F0F4</color>
-    <color name="cardColor_pink">#FFEEED</color>
+
+    <color name="Red">#ff0000</color>
+    <color name="Blue">#0000ff</color>
+    <color name="Green">#008000</color>
+    <color name="Yellow">#ffff00</color>
+    <color name="Cyan">#00ffff</color>
+    <color name="Magenta">#ff00ff</color>
+    <color name="Orange">#ffa500</color>
+    <color name="Purple">#800080</color>
+    <color name="Lime">#00ff00</color>
+    <color name="Teal">#008080</color>
+    <color name="Olive">#808000</color>
+    <color name="Maroon">#800000</color>
+    <color name="Navy">#000080</color>
+    <color name="Pink">#ff00ff</color>
+
 </resources>

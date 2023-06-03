@@ -121,7 +121,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             val customCard = custom_dashboard_cards(this)
             customCard.setActivityName(card.ActivityName)
             customCard.setActivityStartDate(card.DateCreated)
-            customCard.setCardColor("pink") // not dynamically added
+            customCard.setCardColor(card.ActivityColor) // not dynamically added
             customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
             customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
