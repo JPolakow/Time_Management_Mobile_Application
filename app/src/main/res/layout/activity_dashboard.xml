@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/dashimageprofile"
             android:scaleType="centerCrop"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
 

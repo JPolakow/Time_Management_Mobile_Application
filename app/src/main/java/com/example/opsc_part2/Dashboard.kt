@@ -51,22 +51,32 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // ======================= End Declarations ======================= //
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
+        // Define the maximum size for the image (in pixels)
+        val maxImageSize = 140 // Set your desired maximum size value here
+
 
 // Create a Bitmap from the image drawable
         val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
         val bitmap = drawable.bitmap
 
-// Calculate the desired size for the circular ImageView
-        val targetSize = min(bitmap.width, bitmap.height)
+// Calculate the desired size for the circular ImageView, considering the maximum size
+        val imageSize = min(bitmap.width, bitmap.height)
+        val scaleFactor = maxImageSize.toFloat() / imageSize.toFloat()
+        val targetSize = (imageSize * scaleFactor).toInt()
+
+        // Resize the original image bitmap to the target size
+        val resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetSize, targetSize, true)
+
 
 // Create a circular Bitmap with the desired size
         val circularBitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(circularBitmap)
 
+
 // Create a Paint object to define the circular shape
         val paint = Paint()
         paint.isAntiAlias = true
-        paint.shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        paint.shader = BitmapShader(resizedBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
 // Draw a circular shape on the canvas using the Paint
         val radius = targetSize / 2f
@@ -77,6 +87,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
 // Set the dimensions of the ImageView to match the circular Bitmap
         val params = RelativeLayout.LayoutParams(targetSize, targetSize)
+        params.leftMargin = 30
+        params.topMargin = 10
         imgProfileImg.layoutParams = params
 
 
