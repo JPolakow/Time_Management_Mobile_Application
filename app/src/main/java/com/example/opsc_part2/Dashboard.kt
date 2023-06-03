@@ -136,6 +136,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             linView.addView(customCard)
         }
 
+
         /*
         * If fragment is visible, hide when button is clicked
         * Else if fragment is not visible when button clicked, then show fragment

@@ -22,16 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--Title-->
-        <!--<LinearLayout
-            android:id="@+id/linearHorizontalTop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">-->
-
         <ImageView
             android:id="@+id/imgProfileImg"
             android:layout_width="wrap_content"
@@ -86,7 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvCategory"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/dashscrollview">
+            android:contentDescription="@string/dashscrollview"
+            android:paddingBottom="58dp">
 
             <LinearLayout
                 android:id="@+id/linearProjectCards"

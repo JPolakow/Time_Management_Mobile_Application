@@ -24,6 +24,7 @@ class ToolBox {
                 "D74FF0EE8DA3B9806B18C877DBF29BBDE50B5BD8E4DAD7A3A725000FEB82E8F1"
             )
         )
+
         @RequiresApi(Build.VERSION_CODES.O)
         val ActivitiesList = mutableListOf<ActivityObject>(
             ActivityObject(

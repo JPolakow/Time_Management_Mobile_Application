@@ -153,6 +153,9 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val newActitivy =
             ActivityObject(activityID, currentUser, name, current, ToolBox.MinGoal, ToolBox.MaxGoal, SelectedColor)
         ToolBox.ActivitiesList.add(newActitivy)
+
+        ToolBox.MinGoal = -1
+        ToolBox.MaxGoal = -1
     }
 
     //============================================================================
