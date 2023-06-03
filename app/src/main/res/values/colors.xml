@@ -12,4 +12,6 @@
     <color name="carret_brush">#FFD500</color>
     <color name="fragmentActivity">#121212</color>
     <color name="fragment_background">#F5F5F5</color>
+    <color name="cardColor_blue">#E1F0F4</color>
+    <color name="cardColor_pink">#FFEEED</color>
 </resources>

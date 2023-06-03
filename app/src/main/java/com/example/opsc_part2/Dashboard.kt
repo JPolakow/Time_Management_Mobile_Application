@@ -45,12 +45,19 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // Var to hold fragment visibility state
         var isFragmentVisible = false
 
-        // ======================= End Declarations ======================= //
+
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
-        // Define the maximum size for the image (in pixels)
-        val maxImageSize = 140 // Set your desired maximum size value here
         // Create a Bitmap from the image drawable
+        // This is where you change size of image
+        val maxImageSize = 140
+        // ======================= End Declarations ======================= //
+        imgProfileImg.setOnClickListener {
+            val intent = Intent(this, Settings::class.java)
+            startActivity(intent)
+        }
+
+// Create a Bitmap from the image drawable
         val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
         val bitmap = drawable.bitmap
 
@@ -80,8 +87,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
         // Set the dimensions of the ImageView to match the circular Bitmap
         val params = RelativeLayout.LayoutParams(targetSize, targetSize)
-        params.leftMargin = 30
-        params.topMargin = 10
+        params.leftMargin = 50
+        params.topMargin = 25
         imgProfileImg.layoutParams = params
 
         bottomNav.setOnItemSelectedListener { menuItem ->
@@ -112,7 +119,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             val customCard = custom_dashboard_cards(this)
             customCard.setActivityName(card.ActivityName)
             customCard.setActivityStartDate(card.DateCreated)
-            customCard.setCardColor("green") // not dynamically added
+            customCard.setCardColor("pink") // not dynamically added
             customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
             customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
@@ -150,29 +157,5 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun showPopup() {
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")
-    }
-
-    //============================================================================
-    private fun loadFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, Fragment())
-        transaction.commit()
-    }
-
-    //============================================================================
-    private fun startTimer(customCard: custom_dashboard_cards, timerText: TextView) {
-        val handler = Handler()
-        var seconds = 0
-
-        val runnable = object : Runnable {
-            override fun run() {
-                val hours = seconds / 3600
-                val minutes = (seconds % 3600) / 60
-                val secondsText = (seconds % 60).toString().padStart(2, '0')
-                val timerValue = "$hours:$minutes:$secondsText"
-
-            }
-        }
     }
 }

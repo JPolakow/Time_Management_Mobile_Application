@@ -10,11 +10,12 @@
         android:id="@+id/relCard"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="22dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginRight="22dp"
         android:background="@drawable/timer_card"
         android:backgroundTint="#E1F0F4"
+        android:elevation="8dp"
         tools:ignore="UselessParent">
 
         <TextView
@@ -66,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvDateCreated"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="10dp"
             android:text="Min Goal: 02:00:00"
             android:textColor="#80000000" />
@@ -76,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvMinGoal"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="12dp"
             android:text="Min Goal: 02:00:00"
             android:textColor="#80000000" />
 

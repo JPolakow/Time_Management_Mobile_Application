@@ -2,11 +2,14 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
+    <solid android:color="#E1F0F4" />
+    <!-- Background color for the view -->
+
     <corners
         android:radius="25dp" />
     <stroke android:width="0.9dp"
         android:color="@color/black" />
-    <!--  stroke for defining a border for view -->
+    <!-- Stroke for defining a border for the view -->
 
     <size
         android:height="40dp"
