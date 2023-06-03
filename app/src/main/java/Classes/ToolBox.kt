@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 class ToolBox {
     companion object {
         var ActiveUserID: Int = -1
+
         @RequiresApi(Build.VERSION_CODES.O)
         val ActivitiesList = mutableListOf<ActivityObject>(
             ActivityObject(
@@ -16,7 +17,8 @@ class ToolBox {
                 "Open-Source",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 "2",
-                "4"
+                "4",
+                "Pink"
             ),
             ActivityObject(
                 2,
@@ -24,7 +26,8 @@ class ToolBox {
                 "Programming",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 "6",
-                "8"
+                "8",
+                "Cyan"
             ),
             ActivityObject(
                 3,
@@ -32,7 +35,8 @@ class ToolBox {
                 "Research",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 "1",
-                "3"
+                "3",
+                "Green"
             ),
             ActivityObject(
                 4,
@@ -40,7 +44,8 @@ class ToolBox {
                 "Project Management",
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 "3",
-                "6"
+                "6",
+                "Magenta"
             )
         )
         val WorkEntriesList = mutableListOf<WorkEntriesObject>()

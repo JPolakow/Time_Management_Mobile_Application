@@ -24,24 +24,6 @@ import java.time.format.DateTimeFormatter
 
 class AddActivity : Fragment(R.layout.fragment_add_activity) {
 
-    private val colors = arrayOf(
-        Color.RED,
-        Color.BLUE,
-        Color.GREEN,
-        Color.YELLOW,
-        Color.CYAN,
-        Color.MAGENTA,
-        Color.WHITE,
-        Color.rgb(255, 165, 0), // Orange
-        Color.rgb(128, 0, 128), // Purple
-        Color.rgb(0, 128, 0), // Lime
-        Color.rgb(0, 128, 128), // Teal
-        Color.rgb(128, 128, 0), // Olive
-        Color.rgb(128, 0, 0), // Maroon
-        Color.rgb(0, 0, 128), // Navy
-        Color.rgb(0, 255, 0), // Fuchsia
-        Color.rgb(0, 0, 0) // Aqua
-    )
     private val colorNames = arrayOf(
         "Red",
         "Blue",
@@ -49,7 +31,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         "Yellow",
         "Cyan",
         "Magenta",
-        "White",
         "Orange",
         "Purple",
         "Lime",
@@ -57,8 +38,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         "Olive",
         "Maroon",
         "Navy",
-        "Fuchsia",
-        "Aqua"
+        "Pink",
     )
 
     //bind the front end, making it accessible
@@ -71,7 +51,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private lateinit var CatagoryInput: EditText
     private lateinit var MinGaol: EditText
     private lateinit var MaxGoal: EditText
-    private var SelectedColor: Int = -1
+    private lateinit var SelectedColor: String
 
     //pressables
     private lateinit var imgAdd: ImageView
@@ -152,7 +132,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         //get user inputs
         val name = NameInput.text.toString().trim()
 
-        val newActitivy = ActivityObject(activityID, currentUser, name, current, "2", "4")
+        val newActitivy = ActivityObject(activityID, currentUser, name, current, "2", "4", SelectedColor)
         ToolBox.ActivitiesList.add(newActitivy)
     }
 
@@ -165,7 +145,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             .setItems(colorNames) { dialog: DialogInterface, which: Int ->
                 val selectedColor = which
 
-                SelectedColor = colors[selectedColor]
+                SelectedColor = colorNames[selectedColor]
 
                 dialog.dismiss()
             }
