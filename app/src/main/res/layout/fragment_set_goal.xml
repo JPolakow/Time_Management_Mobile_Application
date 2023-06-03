@@ -30,6 +30,7 @@
             android:layout_below="@+id/tvMinDailyGoalHeading"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:textSize="20sp"
             android:text="Minimum Daily Goal"
             android:textColor="@color/white" />
 
@@ -40,8 +41,8 @@
             android:layout_below="@+id/tvSetGoal"
             android:backgroundTint="@color/white"
             android:hint="Tap to set time"
-            android:paddingLeft="16dp"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/white"
+            android:paddingLeft="16dp" />
 
 
         <TextView
@@ -51,7 +52,8 @@
             android:layout_below="@+id/etTapToSetMinGoal"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="Minimum Daily Goal"
+            android:textSize="20sp"
+            android:text="Maximum Daily Goal"
             android:textColor="@color/white" />
 
         <EditText
@@ -61,26 +63,7 @@
             android:layout_below="@+id/tvSetMaxGoalHeading"
             android:backgroundTint="@color/white"
             android:hint="Tap to set time"
-            android:paddingLeft="16dp"
-            android:textColorHint="@color/white" />
 
-        <TextView
-            android:id="@+id/tvWorkingDaysHeading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etSetMaxGoal"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Minimum Daily Goal"
-            android:textColor="@color/white" />
-
-        <EditText
-            android:id="@+id/etTapWorkingDays"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@+id/tvWorkingDaysHeading"
-            android:backgroundTint="@color/white"
-            android:hint="Tap to set time"
             android:paddingLeft="16dp"
             android:textColorHint="@color/white" />
 
@@ -88,7 +71,7 @@
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etTapWorkingDays"
+            android:layout_below="@+id/etSetMaxGoal"
             android:layout_gravity="center"
             android:layout_marginLeft="68dp"
             android:layout_marginTop="16dp"

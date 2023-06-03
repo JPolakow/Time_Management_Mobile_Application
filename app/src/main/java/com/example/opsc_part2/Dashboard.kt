@@ -3,6 +3,7 @@ package com.example.opsc_part2
 import Classes.ActivityObject
 import TimerManager
 import Classes.ToolBox
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -31,6 +32,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var bottomNav: BottomNavigationView
 
     //============================================================================
+    @SuppressLint("UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             startActivity(intent)
         }
 
-// Create a Bitmap from the image drawable
+        // Create a Bitmap from the image drawable
         val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
         val bitmap = drawable.bitmap
 
