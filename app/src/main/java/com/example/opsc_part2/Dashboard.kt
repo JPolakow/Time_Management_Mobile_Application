@@ -48,12 +48,17 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // Initialising object list
         createActivityObjects()
 
-        // ======================= End Declarations ======================= //
+
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
         // Define the maximum size for the image (in pixels)
-        val maxImageSize = 140 // Set your desired maximum size value here
-
+        // This is where you change size of image
+        val maxImageSize = 140
+        // ======================= End Declarations ======================= //
+        imgProfileImg.setOnClickListener{
+            val intent = Intent(this, Settings::class.java)
+            startActivity(intent)
+        }
 
 // Create a Bitmap from the image drawable
         val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
@@ -87,8 +92,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
 // Set the dimensions of the ImageView to match the circular Bitmap
         val params = RelativeLayout.LayoutParams(targetSize, targetSize)
-        params.leftMargin = 30
-        params.topMargin = 10
+        params.leftMargin = 50
+        params.topMargin = 25
         imgProfileImg.layoutParams = params
 
 
@@ -123,7 +128,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             val customCard = custom_dashboard_cards(this)
             customCard.setActivityName(card.ActivityName)
             customCard.setActivityStartDate(card.DateCreated)
-            customCard.setCardColor("green") // not dynamically added
+            customCard.setCardColor("pink") // not dynamically added
             customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
             customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
@@ -166,14 +171,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
         val current = LocalDateTime.now().format(formatter)
 
-        val newActitivy = ActivityObject("1", "1", "Open-Source", current, "2", "4")
-        ToolBox.ActivitiesList.add(newActitivy)
-        val newActitivy2 = ActivityObject("2", "2", "Programming", current, "6", "8")
-        ToolBox.ActivitiesList.add(newActitivy2)
-        val newActitivy3 = ActivityObject("3", "3", "Research", current, "1", "3")
-        ToolBox.ActivitiesList.add(newActitivy3)
-        val newActitivy4 = ActivityObject("4", "4", "Project Management", current, "3", "6")
-        ToolBox.ActivitiesList.add(newActitivy4)
+        val newActivity = ActivityObject("1", "1", "Open-Source", current, "2", "4")
+        ToolBox.ActivitiesList.add(newActivity)
+        val newActivity2 = ActivityObject("2", "2", "Programming", current, "6", "8")
+        ToolBox.ActivitiesList.add(newActivity2)
+        val newActivity3 = ActivityObject("3", "3", "Research", current, "1", "3")
+        ToolBox.ActivitiesList.add(newActivity3)
+        val newActivity4 = ActivityObject("4", "4", "Project Management", current, "3", "6")
+        ToolBox.ActivitiesList.add(newActivity4)
     }
 
     //============================================================================
@@ -181,29 +186,5 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")
     }
-
     //============================================================================
-    private fun loadFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, Fragment())
-        transaction.commit()
-    }
-
-    //============================================================================
-    private fun startTimer(customCard: custom_dashboard_cards, timerText: TextView) {
-        val handler = Handler()
-        var seconds = 0
-
-        val runnable = object : Runnable {
-            override fun run() {
-                val hours = seconds / 3600
-                val minutes = (seconds % 3600) / 60
-                val secondsText = (seconds % 60).toString().padStart(2, '0')
-                val timerValue = "$hours:$minutes:$secondsText"
-
-                //============================================================================
-            }
-        }
-    }
 }

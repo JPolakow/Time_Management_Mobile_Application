@@ -64,8 +64,8 @@ class custom_dashboard_cards @JvmOverloads constructor(
     // Used to set the background color of card
     fun setCardColor(selectedColor: String) {
         val colorResource = when (selectedColor) {
-            "purple" -> R.color.purple_500
-            "blue" -> androidx.appcompat.R.color.material_blue_grey_800
+            "pink" -> R.color.cardColor_pink
+            "blue" -> R.color.cardColor_blue
             "green" -> R.color.teal_200
             else -> R.color.black // Replace with your default color resource ID
         }
