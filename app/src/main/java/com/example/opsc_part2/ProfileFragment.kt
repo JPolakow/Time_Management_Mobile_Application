@@ -8,9 +8,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileFragment : Fragment() {
+
+    companion object {
+        private const val CAMERA_PERMISSION_CODE = 100
+        private const val CAMERA_REQUEST_CODE = 200
+    }
+
+    private lateinit var imageView: ImageView
 
     //============================================================================
     override fun onCreateView(
@@ -21,10 +45,20 @@ class ProfileFragment : Fragment() {
         // Binding val signOutClick to UI Element btnLogout
         val signOutClick = view.findViewById<Button>(R.id.btnLogout)
 
+        val test = view.findViewById<TextView>(R.id.tvDisplayName)
+        imageView = view.findViewById(R.id.imageView)
+        test.setOnClickListener()
+        {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                startCamera()
+            } else {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
+            }
+        }
 
         // ------------ SIGN OUT CLICK ------------ //
         // Add functionality for clearing user data
-        signOutClick.setOnClickListener{
+        signOutClick.setOnClickListener {
 
             // Creating a new Dialog
             val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
@@ -47,19 +81,56 @@ class ProfileFragment : Fragment() {
             val builder = AlertDialog.Builder(context)
             // Setting alert message
             builder.setMessage("Are you sure you want to logout?\nYou will lose all progress!")
-                    // Setting text for positive button
+                // Setting text for positive button
                 .setPositiveButton("Yes", dialogClickListener)
-                    // Setting text for negative button
+                // Setting text for negative button
                 .setNegativeButton("No", dialogClickListener)
-                    // Showing dialog
+                // Showing dialog
                 .show()
-
-
+            // ------------ END SIGN OUT CLICK ------------ //
         }
-
-        // ------------ END SIGN OUT CLICK ------------ //
-
 
         return view
     }
+
+    private fun startCamera() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
+        } else {
+            Toast.makeText(requireContext(), "Camera is not available", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap?
+            imageView.setImageBitmap(imageBitmap)
+
+            // Save the image locally
+            saveImageLocally(imageBitmap)
+        }
+    }
+
+    private fun saveImageLocally(imageBitmap: Bitmap?) {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_$timeStamp.jpg"
+
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File(storageDir, imageFileName)
+
+        try {
+            val fileOutputStream = FileOutputStream(imageFile)
+            imageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+            fileOutputStream.close()
+
+            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 }
