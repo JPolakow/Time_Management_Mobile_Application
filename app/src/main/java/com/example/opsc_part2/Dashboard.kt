@@ -1,29 +1,19 @@
 package com.example.opsc_part2
 
-import Classes.ActivityObject
-import TimerManager
 import Classes.ToolBox
+import TimerManager
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Collections.min
 import kotlin.math.min
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {

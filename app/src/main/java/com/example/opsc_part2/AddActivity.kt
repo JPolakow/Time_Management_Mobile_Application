@@ -2,28 +2,23 @@ package com.example.opsc_part2
 
 import Classes.ActivityObject
 import Classes.ToolBox
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.graphics.Color
-import android.media.Image
-import android.os.Build
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.Fragment
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddActivity : Fragment(R.layout.fragment_add_activity) {
 
@@ -133,8 +128,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private fun AddActivityToList() {
 
         // Creating correct date format
-        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
-        val current = LocalDateTime.now().format(formatter)
+        val time = SimpleDateFormat("dd/MM/yyy", Locale.getDefault()).format(Date())
         //get external data
         val currentUser = ToolBox.ActiveUserID
         val activityID = (ToolBox.ActivitiesList.count() + 1)
@@ -142,7 +136,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val name = NameInput.text.toString().trim()
 
         val newActitivy =
-            ActivityObject(activityID, currentUser, name, current, ToolBox.MinGoal, ToolBox.MaxGoal, SelectedColor)
+            ActivityObject(activityID, currentUser, name, time, ToolBox.MinGoal, ToolBox.MaxGoal, SelectedColor)
         ToolBox.ActivitiesList.add(newActitivy)
 
         ToolBox.MinGoal = -1
