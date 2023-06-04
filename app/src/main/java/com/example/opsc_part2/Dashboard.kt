@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,6 +33,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
+
+
 
         val fragment = QuickActionPopup()
         // Var to hold fragment visibility state

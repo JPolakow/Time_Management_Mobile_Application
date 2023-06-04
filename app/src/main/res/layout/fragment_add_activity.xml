@@ -14,35 +14,36 @@
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvClose"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
+        <ImageButton
+            android:id="@+id/ibClose"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="2dp"
+            android:background="@null"
             android:clickable="true"
+            android:contentDescription="ibClose"
             android:focusable="true"
-            android:text="@string/X"
-            android:textSize="30sp" />
+            android:src="@drawable/close_48px"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/tvHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
             android:text="@string/aaHeading"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/ivSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:clickable="true"
+            android:background="@null"
             android:contentDescription="@string/tick"
             android:focusable="true"
-            android:src="@drawable/done"
-            android:textSize="30sp" />
+            android:src="@drawable/done_48px" />
 
 
     </LinearLayout>
@@ -58,20 +59,20 @@
         android:layout_marginTop="8dp"
         android:text="@string/aaNameHeading"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/tvName"
         android:autofillHints=""
         android:hint="@string/aaNameInput"
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColorHint="#70000000" />
+        android:textColorHint="#70000000"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tvGoal"
@@ -82,7 +83,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/aaGoalHeading"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etGoal"
@@ -96,8 +97,8 @@
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColorHint="#70000000" />
+        android:textColorHint="#70000000"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tvCategory"
@@ -108,7 +109,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/aaCatagoryHeading"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etCategory"
@@ -120,8 +121,8 @@
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColorHint="#70000000" />
+        android:textColorHint="#70000000"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tvColor"
@@ -132,7 +133,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/aaColorHeading"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etColor"
@@ -140,14 +141,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvColor"
         android:autofillHints=""
+        android:clickable="false"
+        android:focusable="false"
         android:hint="@string/aaColorInput"
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
         android:textColorHint="#70000000"
-        android:clickable="false"
-        android:focusable="false"/>
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tvIcon"
@@ -158,7 +159,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/aaIconHeading"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etIcon"
@@ -170,8 +171,8 @@
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColorHint="#70000000" />
+        android:textColorHint="#70000000"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tvDescription"
@@ -182,7 +183,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/aaDescHeading"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etDescription"
@@ -194,8 +195,8 @@
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textColorHint="#70000000" />
+        android:textColorHint="#70000000"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imgPandaAddActivity"

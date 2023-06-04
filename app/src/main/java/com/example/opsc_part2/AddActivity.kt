@@ -43,8 +43,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private var SelectedColor: String = ""
 
     //pressables
-    private lateinit var ivSubmit: ImageView
-    private lateinit var tvClose: TextView
+    private lateinit var ivSubmit: ImageButton
+    private lateinit var tvClose: ImageButton
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -58,8 +58,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         NameInput = view.findViewById(R.id.etName)
         GoalInput = view.findViewById<EditText>(R.id.etGoal)
         ColorInput = view.findViewById<EditText>(R.id.etColor)
-        ivSubmit = view.findViewById<ImageView>(R.id.ivSubmit)
-        tvClose = view.findViewById<TextView>(R.id.tvClose)
+        ivSubmit = view.findViewById<ImageButton>(R.id.ivSubmit)
+        tvClose = view.findViewById<ImageButton>(R.id.ibClose)
         DescriptionInput = view.findViewById(R.id.etDescription)
         CatagoryInput = view.findViewById(R.id.etCategory)
 
@@ -147,13 +147,16 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //color picker
     private fun showColorPickerDialog() {
 
+        var displaySelected = "Color: ";
+
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a color")
             .setItems(colorNames) { dialog: DialogInterface, which: Int ->
                 val selectedColor = which
 
                 SelectedColor = colorNames[selectedColor]
-                ColorInput.setText(SelectedColor)
+                displaySelected += SelectedColor
+                ColorInput.setText(displaySelected)
 
                 dialog.dismiss()
             }

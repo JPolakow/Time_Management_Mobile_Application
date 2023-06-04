@@ -28,7 +28,7 @@ class ToolBox {
                 1,
                 1,
                 "Open-Source",
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 2,
                 4,
                 "Light-Blue"
@@ -37,7 +37,7 @@ class ToolBox {
                 2,
                 2,
                 "Programming",
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 6,
                 8,
                 "Red"
@@ -46,7 +46,7 @@ class ToolBox {
                 3,
                 3,
                 "Research",
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 1,
                 3,
                 "Pink"
@@ -55,7 +55,7 @@ class ToolBox {
                 4,
                 4,
                 "Project Management",
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 3,
                 7,
                 "Blue"

@@ -3,9 +3,11 @@ package com.example.opsc_part2
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import java.time.LocalDateTime
@@ -13,6 +15,7 @@ import java.time.format.DateTimeFormatter
 
 class custom_dashboard_cards @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+
 ) : LinearLayout(context, attrs) {
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_dashboard_cards, this, true)
@@ -21,7 +24,7 @@ class custom_dashboard_cards @JvmOverloads constructor(
         // You can access and modify the views within the custom component layout
     }
 
-    // These methods are called within the dahsboard activity
+    // These methods are called within the dashboard activity
 
     //============================================================================
     // Used to set activity Name
@@ -72,7 +75,7 @@ class custom_dashboard_cards @JvmOverloads constructor(
             else -> R.color.Blue // Replace with your default color resource ID
         }
         val colorToSet = ContextCompat.getColorStateList(context, colorResource)
-        val cardLayout = findViewById<RelativeLayout>(R.id.relCard)
+        val cardLayout = findViewById<androidx.cardview.widget.CardView>(R.id.cardView)
         cardLayout.backgroundTintList = colorToSet
     }
 }
