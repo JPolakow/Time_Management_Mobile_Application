@@ -36,11 +36,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
 
-
         val fragment = QuickActionPopup()
         // Var to hold fragment visibility state
         var isFragmentVisible = false
-
 
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)

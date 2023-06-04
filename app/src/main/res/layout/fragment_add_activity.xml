@@ -11,16 +11,19 @@
     <LinearLayout
         android:id="@+id/linearTopSection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_height="60dp"
+        android:elevation="16dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:background="@color/bluePastel">
 
         <ImageButton
             android:id="@+id/ibClose"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:background="@null"
+            android:layout_weight="1"
             android:clickable="true"
             android:contentDescription="@string/X"
             android:focusable="true"
@@ -30,21 +33,25 @@
         <TextView
             android:id="@+id/tvHeading"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="32dp"
             android:text="@string/aaHeading"
+            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
         <ImageButton
             android:id="@+id/ivSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:background="@null"
             android:clickable="true"
+            android:layout_weight="1"
             android:contentDescription="@string/tick"
             android:focusable="true"
-            android:src="@drawable/done_48px" />
+            android:src="@drawable/done_48px"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
     <!--End of heading-->
 
@@ -54,8 +61,9 @@
         android:id="@+id/svInput"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearTopSection">
-
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/linearTopSection"
+        >
         <LinearLayout
             android:id="@+id/linearAddActivity"
             android:layout_width="match_parent"
@@ -181,14 +189,15 @@
                 android:textColorHint="#70000000"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageView
-                android:id="@+id/imgPandaAddActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="@string/PandaLogo"
-                android:rotation="90"
-                android:src="@drawable/panda" />
+    <ImageView
+        android:id="@+id/imgPandaAddActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="230dp"
+        android:layout_below="@+id/etDescription"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/PandaLogo"
+        android:rotation="90"
+        android:src="@drawable/panda" />
         </LinearLayout>
 
     </ScrollView>

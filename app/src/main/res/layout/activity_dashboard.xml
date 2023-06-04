@@ -75,15 +75,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvCategory"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:contentDescription="@string/dashscrollview"
-            android:paddingBottom="58dp">
+            >
 
             <LinearLayout
                 android:id="@+id/linearProjectCards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:paddingBottom="80dp"
                 android:orientation="vertical">
 
             </LinearLayout>
