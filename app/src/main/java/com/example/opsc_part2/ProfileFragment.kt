@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -54,13 +55,26 @@ class ProfileFragment : Fragment() {
         imageView = view.findViewById(R.id.imageView)
         test.setOnClickListener()
         {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 startCamera()
             } else {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_CODE
+                )
             }
         }
 
+        // Initialize the ViewModel
+        imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
+        imageViewModel.getSavedImage()?.let { image ->
+            imageView.setImageBitmap(image)
+        }
         //-=-=-=-=-END OF CAMERA-=-=-=-=-
 
         // ------------ SIGN OUT CLICK ------------ //
