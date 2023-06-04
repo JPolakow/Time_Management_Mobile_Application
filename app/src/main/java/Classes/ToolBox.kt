@@ -1,9 +1,7 @@
 package Classes
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ToolBox {
     companion object {
@@ -25,13 +23,12 @@ class ToolBox {
             )
         )
 
-        @RequiresApi(Build.VERSION_CODES.O)
         val ActivitiesList = mutableListOf<ActivityObject>(
             ActivityObject(
                 1,
                 1,
                 "Open-Source",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 2,
                 4,
                 "Yellow"
@@ -40,7 +37,7 @@ class ToolBox {
                 2,
                 2,
                 "Programming",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 6,
                 8,
                 "Cyan"
@@ -49,7 +46,7 @@ class ToolBox {
                 3,
                 3,
                 "Research",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 1,
                 3,
                 "Lime"
@@ -58,7 +55,7 @@ class ToolBox {
                 4,
                 4,
                 "Project Management",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 3,
                 7,
                 "Magenta"
