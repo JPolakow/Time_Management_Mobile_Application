@@ -9,6 +9,9 @@ class WorkEntriesObject(
     val WEUserID: Int,
     val WERating: Int,
     val WEDateEnded: String,
+    val WEDuration: String,
+    val WEColor: String,
+
 
     ) {
     private var savedImage: Bitmap? = null

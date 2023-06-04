@@ -108,6 +108,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     ActivityCompat.startActivity(this, intent, options.toBundle())
                     true
                 }
+                R.id.Menu_Logs -> {
+                    val fragmentManager = supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.add(R.id.container, Logs())
+                    transaction.commit()
+                    true
+                }
                 else -> false
             }
         }
@@ -132,26 +139,18 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             }
 
             completeActivity.setOnClickListener {
-
-                // Call fragment
-
                 val fragmentManager = supportFragmentManager
                 val transaction = fragmentManager.beginTransaction()
-
-                // Create an instance of the fragment
                 val fragment = complete_activity()
 
-                // Create a bundle to hold the data
+                // put data into fragment
                 val args = Bundle()
-                args.putInt("param1", card.ActivityID)
+                args.putInt("id", card.ActivityID)
+                args.putString("duration", "2")
+                args.putString("color", card.ActivityColor)
 
-                // Set the arguments bundle to the fragment
                 fragment.arguments = args
-
-                // Add the fragment to the container
                 transaction.add(R.id.container, fragment)
-
-                // Commit the transaction
                 transaction.commit()
             }
 

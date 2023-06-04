@@ -23,20 +23,24 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val paraActivityIDIn = -1
+private const val paraDurationIn = ""
+private const val paraColorIn = ""
 
 class complete_activity : BottomSheetDialogFragment() {
     private var paraActivityID: Int? = null
-    private var paraTime: String? = null
+    private var paraDuration: String? = null
+    private var paraColor: String? = null
+
     private lateinit var btnAddImage: Button
     private lateinit var btnSave: Button
     private var image: Bitmap? = null
-
-    // private lateinit var newWorkEntriesObject: WorkEntriesObject
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             paraActivityID = it.getInt(paraActivityIDIn.toString())
+            paraDuration = it.getString(paraDurationIn.toString())
+            paraColor = it.getString(paraColorIn.toString())
         }
     }
 
@@ -45,7 +49,6 @@ class complete_activity : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val View = inflater.inflate(R.layout.fragment_complete_activity, container, false)
-
 
         btnSave = View.findViewById<Button>(R.id.btnSave)
         btnSave.setOnClickListener()
@@ -98,24 +101,38 @@ class complete_activity : BottomSheetDialogFragment() {
     //============================================================================
     //add data to object array
     private fun AddEntry() {
-        val newWorkEntriesObject =
-            WorkEntriesObject(paraActivityID!!, ToolBox.ActiveUserID, 3, "time")
+        try {
+            val newWorkEntriesObject =
+                WorkEntriesObject(
+                    paraActivityID!!,
+                    ToolBox.ActiveUserID,
+                    3,
+                    "time",
+                    paraDuration!!,
+                    paraColor!!
+                )
 
-        image?.let { bitmap ->
-            if (bitmap.isMutable) {
-                newWorkEntriesObject.saveImage(bitmap)
+            image?.let { bitmap ->
+                if (bitmap.isMutable) {
+                    newWorkEntriesObject.saveImage(bitmap)
+                }
             }
-        }
 
-        ToolBox.WorkEntriesList.add(newWorkEntriesObject)
+            ToolBox.WorkEntriesList.add(newWorkEntriesObject)
+        } catch (Ex: java.lang.Exception) {
+        }
     }
 
+    //============================================================================
+    //constructor
     companion object {
         @JvmStatic
-        fun newInstance(param1: Int) =
+        fun newInstance(IDIN: Int, DurationIN: String, colorIN: String) =
             complete_activity().apply {
                 arguments = Bundle().apply {
-                    putInt(paraActivityID.toString(), param1)
+                    putInt(paraActivityID.toString(), IDIN)
+                    putString(paraDuration.toString(), DurationIN)
+                    putString(paraColor.toString(), colorIN)
                 }
             }
 

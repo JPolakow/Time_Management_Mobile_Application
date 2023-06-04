@@ -1,60 +1,49 @@
 package com.example.opsc_part2
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 
-class custom_dashboard_cards @JvmOverloads constructor(
+class custom_logs_cards @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
 ) : LinearLayout(context, attrs) {
     init {
-        LayoutInflater.from(context).inflate(R.layout.custom_dashboard_cards, this, true)
+        LayoutInflater.from(context).inflate(R.layout.custom_logs_cards, this, true)
 
-        // Perform any initialization or customization here
-        // You can access and modify the views within the custom component layout
     }
-
-    // These methods are called within the dashboard activity
 
     //============================================================================
     // Used to set activity Name
     fun setActivityName(name: String) {
-        // Update the activity name view
         val activityName = findViewById<TextView>(R.id.tvActivityName)
-
         activityName.text = name;
     }
 
     //============================================================================
-    // Used to set activity start Date
-    fun setActivityStartDate(startDate: String) {
-
-        val actStartDate = findViewById<TextView>(R.id.tvDateCreated)
-
-        actStartDate.text = startDate;
+    // Used to set image
+    fun SetImage(image: Bitmap) {
+        val imgActivity = findViewById<ImageView>(R.id.imgActivity)
+        imgActivity.setImageBitmap(image)
     }
+
     //============================================================================
-
-    fun setActivityMinGoal(minGoal: String)
-    {
-
-        val minGoalDisplay = findViewById<TextView>(R.id.tvMinGoal)
-
-        minGoalDisplay.text =   minGoal
-
+    // Used to set duration
+    fun setActivityDuaration(Duration: String) {
+        val txtDuration = findViewById<TextView>(R.id.txtDuration)
+        txtDuration.text = Duration;
     }
+
     //============================================================================
-    fun setActivityMaxGoal(maxGoal: String)
-    {
-
-        val maxGoalDisplay = findViewById<TextView>(R.id.tvMaxGoal)
-
-        maxGoalDisplay.text = maxGoal
-
+    // Used to set end date
+    fun setActivityEndDate(EndDate: String) {
+        val tvDateEnded = findViewById<TextView>(R.id.tvDateEnded)
+        tvDateEnded.text = EndDate;
     }
 
     //============================================================================
