@@ -6,6 +6,7 @@ import java.util.*
 class WorkEntriesObject(
    // val WEID: Int,
     val WEActivityID: Int,
+    val WEActivityName: String,
     val WEUserID: Int,
     val WERating: Int,
     val WEDateEnded: String,

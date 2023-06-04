@@ -1,6 +1,5 @@
 package com.example.opsc_part2
 
-import Classes.ProfileImageManager
 import Classes.ToolBox
 import Classes.WorkEntriesObject
 import android.Manifest
@@ -10,7 +9,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +17,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.text.SimpleDateFormat
-import java.util.*
 
 private const val paraActivityIDIn = -1
 private const val paraDurationIn = ""
@@ -30,25 +26,23 @@ class complete_activity : BottomSheetDialogFragment() {
     private var paraActivityID: Int? = null
     private var paraDuration: String? = null
     private var paraColor: String? = null
+    private var paraName:String? =null
 
     private lateinit var btnAddImage: Button
     private lateinit var btnSave: Button
     private var image: Bitmap? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            paraActivityID = it.getInt(paraActivityIDIn.toString())
-            paraDuration = it.getString(paraDurationIn.toString())
-            paraColor = it.getString(paraColorIn.toString())
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val View = inflater.inflate(R.layout.fragment_complete_activity, container, false)
+
+        paraColor = arguments?.getString("color")
+        paraDuration = arguments?.getString("duration")
+        paraActivityID = arguments?.getInt("id")
+        paraName = arguments?.getString("name")
 
         btnSave = View.findViewById<Button>(R.id.btnSave)
         btnSave.setOnClickListener()
@@ -105,6 +99,7 @@ class complete_activity : BottomSheetDialogFragment() {
             val newWorkEntriesObject =
                 WorkEntriesObject(
                     paraActivityID!!,
+                    paraName!!,
                     ToolBox.ActiveUserID,
                     3,
                     "time",
@@ -120,22 +115,13 @@ class complete_activity : BottomSheetDialogFragment() {
 
             ToolBox.WorkEntriesList.add(newWorkEntriesObject)
         } catch (Ex: java.lang.Exception) {
+            var a = Ex
         }
     }
 
     //============================================================================
     //constructor
     companion object {
-        @JvmStatic
-        fun newInstance(IDIN: Int, DurationIN: String, colorIN: String) =
-            complete_activity().apply {
-                arguments = Bundle().apply {
-                    putInt(paraActivityID.toString(), IDIN)
-                    putString(paraDuration.toString(), DurationIN)
-                    putString(paraColor.toString(), colorIN)
-                }
-            }
-
         private const val CAMERA_PERMISSION_CODE = 100
         private const val CAMERA_REQUEST_CODE = 200
     }
