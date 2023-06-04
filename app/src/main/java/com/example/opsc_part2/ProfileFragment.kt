@@ -46,15 +46,16 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_settings, container, false)
 
+        imageView = view.findViewById(R.id.imageView)
+
         //-=-=-=-=-CAMERA-=-=-=-=-
 
         // Binding val signOutClick to UI Element btnLogout
         val signOutClick = view.findViewById<Button>(R.id.btnLogout)
 
         val test = view.findViewById<TextView>(R.id.tvDisplayName)
-        imageView = view.findViewById(R.id.imageView)
-        test.setOnClickListener()
-        {
+        val captureButton: Button = view.findViewById(R.id.captureButton)
+        captureButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.CAMERA
@@ -153,7 +154,8 @@ class ProfileFragment : Fragment() {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
             fileOutputStream.close()
 
-            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT)
+                .show()
         } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
