@@ -7,7 +7,7 @@ class ToolBox {
     companion object {
         var ActiveUserID: Int = -1
 
-        //used to move data between addgoal and addactivity
+        //used to move data between addGoal and addActivity
         var MinGoal: Int = -1
         var MaxGoal: Int = -1
 

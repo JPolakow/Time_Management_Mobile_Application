@@ -62,11 +62,10 @@
             app:hintEnabled="false"
             android:textColorHint="#60000000"
             android:textSize="14sp"
-            android:background="@drawable/rouned_input"
+            android:backgroundTint="@android:color/transparent"
             app:endIconMode="password_toggle"
             app:passwordToggleDrawable="@drawable/visibility_offpx"
             app:passwordToggleEnabled="true"
-
             app:passwordToggleTint="@color/black">
 
             <EditText
