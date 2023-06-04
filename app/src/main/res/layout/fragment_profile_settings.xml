@@ -126,20 +126,35 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDisplayPassword"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="30sp"
+        android:height="50dp"
+        android:width="170dp"
+        android:layout_toRightOf="@+id/captureButton"
+        android:textSize="20dp"
+        android:background="@drawable/rounded_corner"
+        android:text="@string/profileLogout"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/captureButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDisplayPassword"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginTop="30sp"
         android:height="50dp"
         android:width="170dp"
         android:textSize="20dp"
         android:background="@drawable/rounded_corner"
-        android:text="@string/profileLogout"
+        android:text="Picture"
         android:textColor="@color/black" />
 
     <ImageView
@@ -147,13 +162,7 @@
         android:layout_width="400dp"
         android:layout_height="400dp"
         tools:srcCompat="@tools:sample/avatars"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/btnLogout"/>
-
-    <Button
-        android:id="@+id/captureButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 </RelativeLayout>
