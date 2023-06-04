@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +25,7 @@
             android:background="@null"
             android:layout_weight="1"
             android:clickable="true"
-            android:contentDescription="ibClose"
+            android:contentDescription="@string/X"
             android:focusable="true"
             android:src="@drawable/close_48px"
             tools:ignore="TouchTargetSizeCheck" />
@@ -66,135 +67,127 @@
         <LinearLayout
             android:id="@+id/linearAddActivity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearTopSection"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:drawableLeft="@drawable/act_name_48px"
-        android:text="@string/aaNameHeading"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/tvName"
-        android:autofillHints=""
-        android:hint="@string/aaNameInput"
-        android:inputType="text"
-        android:paddingStart="48dp"
-        android:textColorHint="#70000000"
-        tools:ignore="TouchTargetSizeCheck" />
-    <TextView
-        android:id="@+id/tvGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etName"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/sports_score_48px"
-        android:text="@string/aaGoalHeading"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/aaNameHeading"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/act_name_48px" />
 
-    <EditText
-        android:id="@+id/etGoal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGoal"
-        android:autofillHints=""
-        android:clickable="false"
-        android:focusable="false"
-        android:hint="@string/aaGoalInput"
-        android:inputType="text"
-        android:paddingStart="48dp"
-        android:paddingEnd="16dp"
-        android:textColorHint="#70000000"
-        tools:ignore="TouchTargetSizeCheck" />
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:autofillHints=""
+                android:hint="@string/aaNameInput"
+                android:inputType="text"
+                android:paddingStart="48dp"
+                android:paddingEnd="16dp"
+                android:textColorHint="#70000000"
+                tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/tvCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etGoal"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/category_48px"
-        android:text="@string/aaCatagoryHeading"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/aaGoalHeading"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/sports_score_48px" />
 
-    <EditText
-        android:id="@+id/etCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCategory"
-        android:autofillHints=""
-        android:hint="@string/aaCatagoryInout"
-        android:inputType="text"
-        android:paddingStart="48dp"
-        android:paddingEnd="16dp"
-        android:textColorHint="#70000000"
-        tools:ignore="TouchTargetSizeCheck" />
+            <EditText
+                android:id="@+id/etGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/aaGoalInput"
+                android:inputType="text"
+                android:paddingStart="48dp"
+                android:paddingEnd="16dp"
+                android:textColorHint="#70000000"
+                tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/tvColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etCategory"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/palette_48px"
-        android:text="@string/aaColorHeading"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/aaCatagoryHeading"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/category_48px" />
 
-    <EditText
-        android:id="@+id/etColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvColor"
-        android:autofillHints=""
-        android:clickable="false"
-        android:focusable="false"
-        android:hint="@string/aaColorInput"
-        android:inputType="text"
-        android:paddingStart="48dp"
-        android:paddingEnd="16dp"
-        android:textColorHint="#70000000"
-        tools:ignore="TouchTargetSizeCheck" />
+            <EditText
+                android:id="@+id/etCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/aaCatagoryInout"
+                android:inputType="text"
+                android:paddingStart="48dp"
+                android:paddingEnd="16dp"
+                android:textColorHint="#70000000"
+                tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etColor"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/aaDescHeading"
-        android:drawableLeft="@drawable/edit_note_48px"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/aaColorHeading"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/palette_48px" />
 
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDescription"
-        android:autofillHints=""
-        android:hint="@string/aaDescInput"
-        android:inputType="text"
-        android:paddingStart="48dp"
-        android:paddingEnd="16dp"
-        android:textColorHint="#70000000"
-        tools:ignore="TouchTargetSizeCheck" />
+            <EditText
+                android:id="@+id/etColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/aaColorInput"
+                android:inputType="text"
+                android:paddingStart="48dp"
+                android:paddingEnd="16dp"
+                android:textColorHint="#70000000"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/aaDescHeading"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/edit_note_48px" />
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/aaDescInput"
+                android:inputType="text"
+                android:paddingStart="48dp"
+                android:paddingEnd="16dp"
+                android:textColorHint="#70000000"
+                tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imgPandaAddActivity"
