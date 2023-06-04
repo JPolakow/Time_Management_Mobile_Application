@@ -29,4 +29,11 @@
     <color name="Navy">#000080</color>
     <color name="Pink">#ff00ff</color>
 
+    <!--PASTEL COLLOR PALETTE-->
+    <color name="purplePastel">#cdb4db</color>
+    <color name="pinkPastel">#ffc8dd</color>
+    <color name="redPastel">#ffafcc</color>
+    <color name="lightBluePastel">#bde0fe</color>
+    <color name="bluePastel">#a2d2ff</color>
+
 </resources>

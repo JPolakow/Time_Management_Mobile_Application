@@ -64,20 +64,11 @@ class custom_dashboard_cards @JvmOverloads constructor(
     // Used to set the background color of card
     fun setCardColor(selectedColor: String) {
         val colorResource = when (selectedColor) {
-            "Red" -> R.color.Red
-            "Blue" -> R.color.Blue
-            "Green" -> R.color.Green
-            "Yellow" -> R.color.Yellow
-            "Cyan" -> R.color.Cyan
-            "Magenta" -> R.color.Magenta
-            "Orange" -> R.color.Orange
-            "Purple" -> R.color.Purple
-            "Lime" -> R.color.Lime
-            "Teal" -> R.color.Teal
-            "Olive" -> R.color.Olive
-            "Maroon" -> R.color.Maroon
-            "Navy" -> R.color.Navy
-            "Pink" -> R.color.Pink
+            "Red" -> R.color.redPastel
+            "Blue" -> R.color.bluePastel
+            "Purple" -> R.color.purplePastel
+            "Pink" -> R.color.pinkPastel
+            "Light-Blue" -> R.color.lightBluePastel
             else -> R.color.Blue // Replace with your default color resource ID
         }
         val colorToSet = ContextCompat.getColorStateList(context, colorResource)

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_marginLeft="22dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="22dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/timer_card"
@@ -62,18 +63,19 @@
             android:src="@drawable/baseline_play_arrow_24" />-->
 
         <!--android:layout_toRightOf="@id/ibPlay"-->
+
+
         <ImageButton
             android:id="@+id/ibPausePlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_below="@+id/txtTimerTick"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginEnd="76dp"
             android:background="@null"
             android:contentDescription="Text"
-            android:src="@drawable/baseline_pause_24" />
-
-
+            android:src="@drawable/pause_circle_48px" />
 
         <TextView
             android:id="@+id/tvMinGoal"

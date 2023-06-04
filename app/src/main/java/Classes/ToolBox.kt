@@ -31,7 +31,7 @@ class ToolBox {
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 2,
                 4,
-                "Yellow"
+                "Light-Blue"
             ),
             ActivityObject(
                 2,
@@ -40,7 +40,7 @@ class ToolBox {
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 6,
                 8,
-                "Cyan"
+                "Red"
             ),
             ActivityObject(
                 3,
@@ -49,7 +49,7 @@ class ToolBox {
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 1,
                 3,
-                "Lime"
+                "Pink"
             ),
             ActivityObject(
                 4,
@@ -58,7 +58,7 @@ class ToolBox {
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 3,
                 7,
-                "Magenta"
+                "Blue"
             )
         )
     }
