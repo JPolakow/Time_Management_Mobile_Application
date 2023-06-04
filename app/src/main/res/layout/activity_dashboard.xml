@@ -39,7 +39,7 @@
             android:fontFamily="@font/opensans_regular"
             android:text="@string/dashboardHeading"
             android:textColor="@color/black"
-            android:textSize="44sp"
+            android:textSize="40sp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true" />
         <!--</LinearLayout>-->

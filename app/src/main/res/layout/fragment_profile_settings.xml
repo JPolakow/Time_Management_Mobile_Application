@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/opensans_bold"
         android:text="@string/profileNameHeading"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/tvSurnameHeading"
@@ -24,9 +24,9 @@
         android:layout_below="@id/tvNameHeading"
         android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/opensans_bold"
         android:text="@string/profileSurnameHeading"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/tvUsernameHeading"
@@ -36,8 +36,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
         android:text="@string/profileUsernameHeading"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/opensans_bold"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/tvEmailHeading"
@@ -48,7 +48,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/profileEmailHeading"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/opensans_bold" />
 
     <TextView
         android:id="@+id/tvPasswordHeading"
@@ -59,20 +59,19 @@
         android:layout_marginTop="16dp"
         android:text="@string/profilePasswordHeading"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/opensans_bold"/>
 
 
     <TextView
         android:id="@+id/tvDisplayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="30dp"
         android:layout_toEndOf="@+id/tvNameHeading"
-        android:fontFamily="@font/adamina"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/profileDisplayName"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvDisplaySurname"
@@ -82,10 +81,9 @@
         android:layout_marginStart="43dp"
         android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/tvSurnameHeading"
-        android:fontFamily="@font/adamina"
         android:text="@string/profileDisplaySurname"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/opensans_regular" />
 
     <TextView
         android:id="@+id/tvDisplayUsername"
@@ -95,37 +93,34 @@
         android:layout_marginStart="31dp"
         android:layout_marginTop="23dp"
         android:layout_toEndOf="@+id/tvUsernameHeading"
-        android:fontFamily="@font/adamina"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/profileDisplayUsername"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvDisplayEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDisplayUsername"
-        android:layout_marginStart="77dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="14dp"
         android:layout_toEndOf="@id/tvEmailHeading"
-        android:fontFamily="@font/adamina"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/profileDisplayEmail"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
+
 
     <TextView
         android:id="@+id/tvDisplayPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDisplayEmail"
-        android:layout_marginStart="33dp"
+        android:layout_marginStart="38dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/tvPasswordHeading"
-        android:fontFamily="@font/adamina"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/profileDisplayPassword"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnLogout"

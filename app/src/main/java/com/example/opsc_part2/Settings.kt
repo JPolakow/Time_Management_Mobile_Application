@@ -1,14 +1,19 @@
 package com.example.opsc_part2
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.viewpager.widget.ViewPager
 import com.example.opsc_part2.AchievementsFragment
 import com.example.opsc_part2.GeneralFragment
@@ -35,6 +40,12 @@ class Settings : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
         val btnBack = findViewById<ImageButton>(R.id.imageBtnBackArrow)
 
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+
+        val customTabSelectedListener = CustomTabSelectedListener(tabLayout)
+        tabLayout.setSelectedTabIndicator(R.drawable.tab_indicator_anim)
+        tabLayout.addOnTabSelectedListener(customTabSelectedListener)
+
 
         btnBack.setOnClickListener{
             val intent = Intent(this, Dashboard::class.java )
@@ -52,7 +63,7 @@ class Settings : AppCompatActivity() {
             return 3
         }
 
-        //popualte the tabs
+        //populate the tabs
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> GeneralFragment()
@@ -74,6 +85,59 @@ class Settings : AppCompatActivity() {
         }
     }
 }
+
+class CustomTabSelectedListener(private val tabLayout: TabLayout) : TabLayout.OnTabSelectedListener {
+    private val animationDuration = 300L // Animation duration in milliseconds
+
+    override fun onTabSelected(tab: TabLayout.Tab) {
+        val selectedColor = ContextCompat.getColor(tabLayout.context, R.color.black)
+        val textView =
+            tab.customView?.findViewById<TextView>(R.id.tabLayout) // Replace R.id.tab_title with the ID of your tab title TextView
+
+        textView?.setTextColor(selectedColor)
+
+        val view = tab.view
+        view?.let {
+            val scaleXAnimator = ObjectAnimator.ofFloat(it, View.SCALE_X, 1f)
+            scaleXAnimator.duration = animationDuration
+            scaleXAnimator.interpolator = FastOutSlowInInterpolator()
+            scaleXAnimator.start()
+
+            val scaleYAnimator = ObjectAnimator.ofFloat(it, View.SCALE_Y, 1f)
+            scaleYAnimator.duration = animationDuration
+            scaleYAnimator.interpolator = FastOutSlowInInterpolator()
+            scaleYAnimator.start()
+        }
+    }
+
+
+    override fun onTabUnselected(tab: TabLayout.Tab) {
+        val defaultColor = ContextCompat.getColor(tabLayout.context, R.color.black)
+        val textView = tab.customView?.findViewById<TextView>(R.id.tabLayout) // Replace R.id.tab_title with the ID of your tab title TextView
+
+        textView?.setTextColor(defaultColor)
+
+        val view = tab.view
+        view?.let {
+            val scaleXAnimator = ObjectAnimator.ofFloat(it, View.SCALE_X, 0.8f)
+            scaleXAnimator.duration = animationDuration
+            scaleXAnimator.interpolator = FastOutSlowInInterpolator()
+            scaleXAnimator.start()
+
+            val scaleYAnimator = ObjectAnimator.ofFloat(it, View.SCALE_Y, 0.8f)
+            scaleYAnimator.duration = animationDuration
+            scaleYAnimator.interpolator = FastOutSlowInInterpolator()
+            scaleYAnimator.start()
+        }
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab) {
+        val viewPager = tabLayout.rootView.findViewById<ViewPager>(R.id.viewPager)
+        viewPager?.setCurrentItem(tab.position, true)
+    }
+}
+
+
 
 // Create the object of Toolbar, ViewPager and
 // TabLayout and use “findViewById()” method*/
