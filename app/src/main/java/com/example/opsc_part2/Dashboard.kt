@@ -12,6 +12,8 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -33,7 +35,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         bottomNav = findViewById(R.id.bottomNavView)
         val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
-
 
 
         val fragment = QuickActionPopup()
@@ -97,12 +98,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 }
                 R.id.Menu_Dashboard -> {
                     val intent = Intent(this, Dashboard::class.java)
-                    startActivity(intent)
+                    val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
+                    ActivityCompat.startActivity(this, intent, options.toBundle())
                     true
                 }
                 R.id.Menu_Settings -> {
                     val intent = Intent(this, Settings::class.java)
-                    startActivity(intent)
+                    val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
+                    ActivityCompat.startActivity(this, intent, options.toBundle())
                     true
                 }
                 else -> false
@@ -128,12 +131,29 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 TimerManager.startTimer(customCard, timerText)
             }
 
-            completeActivity.setOnClickListener{
+            completeActivity.setOnClickListener {
 
                 // Call fragment
+
+                val fragmentManager = supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+
+                // Create an instance of the fragment
+                val fragment = complete_activity()
+
+                // Create a bundle to hold the data
+                val args = Bundle()
+                args.putInt("param1", card.ActivityID)
+
+                // Set the arguments bundle to the fragment
+                fragment.arguments = args
+
+                // Add the fragment to the container
+                transaction.add(R.id.container, fragment)
+
+                // Commit the transaction
+                transaction.commit()
             }
-
-
 
             linView.addView(customCard)
         }

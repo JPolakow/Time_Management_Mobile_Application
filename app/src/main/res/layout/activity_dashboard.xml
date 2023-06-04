@@ -137,4 +137,11 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!--end of bottom nav-->
 
+    <!--FrameLayout to show popup-->
+    <FrameLayout
+        android:id="@+id/popup_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--end of FrameLayout-->
+
 </RelativeLayout>
