@@ -122,10 +122,18 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             timerText.text = "00:00:00";
 
             val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+            val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
 
             play.setOnClickListener {
                 TimerManager.startTimer(customCard, timerText)
             }
+
+            completeActivity.setOnClickListener{
+
+                // Call fragment
+            }
+
+
 
             linView.addView(customCard)
         }

@@ -50,13 +50,18 @@
     <!--End of heading-->
 
     <!--Body-->
+
+
+
+
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearTopSection"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:drawableLeft="@drawable/sports_score_48px"
         android:text="@string/aaNameHeading"
         android:textColor="@color/black"
         android:textSize="20sp" />
@@ -69,11 +74,9 @@
         android:autofillHints=""
         android:hint="@string/aaNameInput"
         android:inputType="text"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="48dp"
         android:textColorHint="#70000000"
         tools:ignore="TouchTargetSizeCheck" />
-
     <TextView
         android:id="@+id/tvGoal"
         android:layout_width="wrap_content"

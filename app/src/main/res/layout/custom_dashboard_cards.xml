@@ -35,6 +35,18 @@
                 android:textColor="#80000000"
                 android:textSize="18sp" />
 
+            <ImageButton
+                android:id="@+id/ibFinsih"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="6dp"
+                android:contentDescription="swd"
+                android:layout_above="@id/txtTimerTick"
+                android:layout_marginLeft="350dp"
+                android:src="@drawable/close_48px"
+                android:background="@null"
+                />
+
 
             <TextView
                 android:id="@+id/txtTimerTick"
@@ -106,7 +118,7 @@
                 android:layout_below="@id/tvMinGoal"
                 android:layout_marginStart="12dp"
                 android:textSize="18sp"
-                android:text="Min Goal: 02:00:00"
+                android:text="Max Goal: 04:00:00"
                 android:textColor="#90000000" />
 
         </RelativeLayout>
