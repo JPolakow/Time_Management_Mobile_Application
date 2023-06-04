@@ -1,5 +1,6 @@
 package com.example.opsc_part2
 
+import Classes.ImageManager
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -30,7 +31,6 @@ import java.util.*
 
 class ProfileFragment : Fragment() {
 
-    ////-=-=-=-=-CAMERA-=-=-=-=-
     private lateinit var imageView: ImageView
     private lateinit var imageViewModel: ImageViewModel
 
@@ -38,9 +38,7 @@ class ProfileFragment : Fragment() {
         private const val CAMERA_PERMISSION_CODE = 100
         private const val CAMERA_REQUEST_CODE = 200
     }
-    //-=-=-=-=-END OF CAMERA-=-=-=-=-
 
-    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -48,12 +46,9 @@ class ProfileFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageView)
 
-        //-=-=-=-=-CAMERA-=-=-=-=-
+        // Initialize the ViewModel
+        imageViewModel = ViewModelProvider(requireActivity()).get(ImageViewModel::class.java)
 
-        // Binding val signOutClick to UI Element btnLogout
-        val signOutClick = view.findViewById<Button>(R.id.btnLogout)
-
-        val test = view.findViewById<TextView>(R.id.tvDisplayName)
         val captureButton: Button = view.findViewById(R.id.captureButton)
         captureButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -71,15 +66,9 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // Initialize the ViewModel
-        imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
-        imageViewModel.getSavedImage()?.let { image ->
-            imageView.setImageBitmap(image)
-        }
-        //-=-=-=-=-END OF CAMERA-=-=-=-=-
-
         // ------------ SIGN OUT CLICK ------------ //
         // Add functionality for clearing user data
+        val signOutClick = view.findViewById<Button>(R.id.btnLogout)
         signOutClick.setOnClickListener {
 
             // Creating a new Dialog
@@ -115,9 +104,19 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    //============================================================================
-    //============================================================================
-    //============================================================================
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Load the image if it exists in the ViewModel
+        imageViewModel.getSavedImage()?.let { image ->
+            imageView.setImageBitmap(image)
+        }
+
+        // Load the image if it exists in the ImageManager
+        ImageManager.loadImage()?.let { image ->
+            imageView.setImageBitmap(image)
+        }
+    }
 
     private fun startCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -134,10 +133,10 @@ class ProfileFragment : Fragment() {
             val imageBitmap = data?.extras?.get("data") as Bitmap?
             imageView.setImageBitmap(imageBitmap)
 
-            // Save the image locally and update ViewModel
             imageBitmap?.let {
                 saveImageLocally(it)
                 imageViewModel.saveImage(it)
+                ImageManager.saveImage(it)
             }
         }
     }
@@ -154,8 +153,7 @@ class ProfileFragment : Fragment() {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
             fileOutputStream.close()
 
-            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(requireContext(), "Image saved successfully", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
