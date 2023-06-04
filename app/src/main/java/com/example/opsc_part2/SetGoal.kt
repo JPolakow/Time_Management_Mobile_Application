@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ToolBox
+import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import android.widget.ImageButton
 import com.example.opsc_part2.databinding.FragmentSetGoalBinding
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.util.*
 
 class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     //bind the front end, making it accessible
@@ -43,8 +45,21 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
             }
         }
 
+
+        min.setOnClickListener{
+
+            showTimePickerDialogMin();
+
+        }
+
+        max.setOnClickListener{
+
+            showTimePickerDialogMax();
+
+        }
         return binding.root
     }
+
 
     //============================================================================
     private fun Valadate(): Boolean
@@ -64,6 +79,37 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
         return valid
     }
+
+    //============================================================================
+    // Function to show dialog and set text of editText
+    private fun showTimePickerDialogMin() {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(requireContext(), { _, hourOfDay, minute ->
+            val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
+            min.setText(selectedTime)
+        }, currentHour, currentMinute, true)
+
+        timePickerDialog.show()
+    }
+
+    //============================================================================
+    // Function to show dialog and set text of editText
+    private fun showTimePickerDialogMax() {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(requireContext(), { _, hourOfDay, minute ->
+            val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
+            max.setText(selectedTime)
+        }, currentHour, currentMinute, true)
+
+        timePickerDialog.show()
+    }
+
 
 
 }
