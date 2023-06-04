@@ -30,18 +30,9 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private val colorNames = arrayOf(
         "Red",
         "Blue",
-        "Green",
-        "Yellow",
-        "Cyan",
-        "Magenta",
-        "Orange",
         "Purple",
-        "Lime",
-        "Teal",
-        "Olive",
-        "Maroon",
-        "Navy",
         "Pink",
+        "Light-Blue"
     )
 
     //bind the front end, making it accessible

@@ -34,7 +34,7 @@ class ToolBox {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 2,
                 4,
-                "Yellow"
+                "Light-Blue"
             ),
             ActivityObject(
                 2,
@@ -43,7 +43,7 @@ class ToolBox {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 6,
                 8,
-                "Cyan"
+                "Red"
             ),
             ActivityObject(
                 3,
@@ -52,7 +52,7 @@ class ToolBox {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 1,
                 3,
-                "Lime"
+                "Pink"
             ),
             ActivityObject(
                 4,
@@ -61,7 +61,7 @@ class ToolBox {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                 3,
                 7,
-                "Magenta"
+                "Blue"
             )
         )
     }
