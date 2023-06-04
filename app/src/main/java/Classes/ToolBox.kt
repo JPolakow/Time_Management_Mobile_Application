@@ -12,7 +12,10 @@ class ToolBox {
         var MaxGoal: Int = -1
 
         //object arrays
-        val WorkEntriesList = mutableListOf<WorkEntriesObject>()
+        val WorkEntriesList = mutableListOf<WorkEntriesObject>(
+            WorkEntriesObject(1, "Name",1, 5, "1/1/12", "4", "Red")
+        )
+
         val UsersList = mutableListOf<ActiveUserClass>(
             //default user, password = pass
             ActiveUserClass(

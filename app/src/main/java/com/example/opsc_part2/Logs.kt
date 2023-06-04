@@ -29,18 +29,15 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
     private fun Populate() {
         // ----------------- Creating a new card with custom attributes ----------------- //
-        var counter = 0
         for (card in ToolBox.WorkEntriesList) {
 
             val customCard = custom_logs_cards(requireContext())
-            customCard.setActivityName(ToolBox.ActivitiesList.get(counter).ActivityName)
+            customCard.setActivityName(card.WEActivityName)
             customCard.setCardColor(card.WEColor)
             customCard.setActivityDuaration(card.WEDuration)
             customCard.setActivityEndDate(card.WEDateEnded)
 
             linView.addView(customCard)
-            counter++
-
         }
     }
 }

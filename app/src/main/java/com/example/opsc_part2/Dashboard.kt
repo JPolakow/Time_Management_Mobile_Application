@@ -143,9 +143,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 // put data into fragment
                 val args = Bundle()
-                args.putInt("id", card.ActivityID)
-                args.putString("duration", "2")
+
                 args.putString("color", card.ActivityColor)
+                args.putString("duration", "2")
+                args.putInt("id", card.ActivityID)
+                args.putString("name", card.ActivityName)
+
+                var a = 0
 
                 fragment.arguments = args
                 transaction.add(R.id.container, fragment)
