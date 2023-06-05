@@ -33,7 +33,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var tvCategory: TextView
     private lateinit var linView: LinearLayout
-    private lateinit var tvRecentTasks: TextView
+    private lateinit var tvActNameTime: TextView
 
     private var TimerOutput: String = "00:00:00"
     private var TimerName: String = ""
@@ -64,7 +64,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         actionButt = findViewById(R.id.btnPlus)
         tvCategory = findViewById(R.id.tvCategory)
         linView = findViewById(R.id.linearProjectCards)
-        tvRecentTasks = findViewById(R.id.tvRecentTasks)
+        tvActNameTime = findViewById(R.id.tvDisplayTime)
 
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
@@ -196,6 +196,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
 
+
                 //complete the activity
                 completeActivity.setOnClickListener {
                     val fragment = complete_activity()
@@ -219,6 +220,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     if (timerStarted && card.ActivityName.equals(TimerName)) {
                         stopTimer()
                         Log.d("timer", "started")
+                        ibPausePlay.setImageResource(R.drawable.play_circle_48px)
                     } else if (timerStarted) {
                         stopTimer()
                         resetTimer()
@@ -227,6 +229,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     } else {
                         TimerName = card.ActivityName
                         startTimer()
+                        ibPausePlay.setImageResource(R.drawable.pause_circle_48px)
                     }
                 }
 
@@ -260,7 +263,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         override fun onReceive(context: Context, intent: Intent) {
             Log.d("timer", "updating")
             time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
-            tvRecentTasks.text = getTimeStringFromDouble(time)
+            tvActNameTime.text = getTimeStringFromDouble(time)
             Log.d("timer", "updating2")
         }
     }
