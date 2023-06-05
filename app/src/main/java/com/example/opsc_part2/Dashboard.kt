@@ -219,7 +219,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 {
                     if (timerStarted && card.ActivityName.equals(TimerName)) {
                         stopTimer()
-                        Log.d("timer", "started")
                         ibPausePlay.setImageResource(R.drawable.play_circle_48px)
                     } else if (timerStarted) {
                         stopTimer()
@@ -243,11 +242,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //============================================================================
     //start the timer
     private fun startTimer() {
-        Log.d("timer", "started1")
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
         startService(serviceIntent)
         timerStarted = true
-        Log.d("timer", "started2")
     }
 
     //============================================================================
@@ -261,10 +258,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            Log.d("timer", "updating")
             time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
             tvActNameTime.text = getTimeStringFromDouble(time)
-            Log.d("timer", "updating2")
         }
     }
 

@@ -19,6 +19,7 @@ class WorkEntriesObject(
 
     fun saveImage(image: Bitmap) {
         savedImage = image
+        var a = 0
     }
 
     fun getSavedImage(): Bitmap? {

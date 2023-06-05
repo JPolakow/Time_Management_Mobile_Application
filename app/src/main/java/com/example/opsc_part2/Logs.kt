@@ -2,6 +2,7 @@ package com.example.opsc_part2
 
 import Classes.ToolBox
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,13 +32,23 @@ class Logs : Fragment(R.layout.fragment_logs) {
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.WorkEntriesList) {
 
+            Log.w("log", "adding card")
+
             val customCard = custom_logs_cards(requireContext())
             customCard.setActivityName(card.WEActivityName)
             customCard.setCardColor(card.WEColor)
             customCard.setActivityDuaration(card.WEDuration)
             customCard.setActivityEndDate(card.WEDateEnded)
 
+            if (card.getSavedImage() != null)
+            {
+                Log.w("log", "there be an image")
+                customCard.SetImage(card.getSavedImage()!!)
+                Log.w("log", "added image")
+            }
+
             linView.addView(customCard)
+            Log.w("log", "card added ")
         }
     }
 }
