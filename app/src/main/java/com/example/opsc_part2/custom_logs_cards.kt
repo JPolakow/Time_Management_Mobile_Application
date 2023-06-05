@@ -17,7 +17,6 @@ import org.w3c.dom.Text
 
 class custom_logs_cards @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-
 ) : LinearLayout(context, attrs) {
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_logs_cards, this, true)

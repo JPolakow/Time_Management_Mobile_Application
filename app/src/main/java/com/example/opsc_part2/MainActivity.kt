@@ -84,8 +84,9 @@ class MainActivity : AppCompatActivity() {
 To do
     sign n sign up
         move to sing in after signed up
+        signup is borked
     add activity
-        description
+        goal must populate textview
     profile
-        make camera not suck
+        make not suck
  */
