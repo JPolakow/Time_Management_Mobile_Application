@@ -61,6 +61,7 @@
             android:minHeight="48dp"
             app:hintEnabled="false"
             android:textColorHint="#60000000"
+            app:boxBackgroundMode="none"
             android:textSize="14sp"
             android:backgroundTint="@android:color/transparent"
             app:endIconMode="password_toggle"
