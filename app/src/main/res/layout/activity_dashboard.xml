@@ -5,178 +5,102 @@
     android:id="@+id/relParental"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fragment_background"
     tools:context=".Dashboard">
+
+    <ImageView
+        android:id="@+id/pandaImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="310dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/cornerpanda" />
+
+    <!--Main content-->
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearHorizontalTop"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imgProfileImg"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:contentDescription="@string/dashimageprofile"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tvDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/dashboardHeading"
+            android:textColor="@color/black"
+            android:textSize="40sp" />
+        <!--</LinearLayout>-->
+        <!--End of title-->
 
-            <ImageView
-                android:id="@+id/imgProfileImg"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/panda" />
-
-            <TextView
-                android:id="@+id/tvDisplayName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/adamina"
-                android:text="@string/dashboardHeading"
-                android:textColor="@color/black"
-                android:textSize="40sp" />
-
-
-        </LinearLayout>
-
+        <!--Headings-->
         <TextView
             android:id="@+id/tvRecentTasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linearHorizontalTop"
-            android:textSize="24sp"
-            android:layout_marginLeft="16dp"
+            android:layout_below="@id/tvDisplayName"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="34dp"
-            android:fontFamily="@font/adamina"
             android:text="@string/recentTasksHeading"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvRecentTasks"
-            android:layout_marginLeft="16dp"
-            android:text="@string/categories"
-            android:textColor="@color/black" />
+            android:layout_marginStart="16dp"
+            android:alpha="0.7"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
 
-        <LinearLayout
-            android:id="@+id/linearProjectCards"
+        <!--End of headings-->
+
+        <!--Activity scroll view-->
+        <ScrollView
+            android:id="@+id/svCards"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tvRecentTasks"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCategory"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/dashscrollview">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/linearProjectCards"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginLeft="24dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/timer_card"
-                android:backgroundTint="#E1F0F4">
+                android:orientation="vertical"
+                android:paddingBottom="80dp">
 
-                <TextView
-                    android:id="@+id/tvActivityName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
-                    android:text="Programming"
-                    android:textColor="#FF000000" />
+            </LinearLayout>
 
+        </ScrollView>
+        <!--end of scroll view-->
 
-                <TextView
-                    android:id="@+id/txtTimerTick"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_toRightOf="@+id/tvActivityName"
-                    android:text="00:20:02"
-                    android:textAlignment="textEnd"
-                    android:textColor="#FF000000" />
-
-            <!--    <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvActivityName"
-                    android:orientation="horizontal">-->
-
-                    <TextView
-                        android:id="@+id/txtDateCreated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_below="@id/tvActivityName"
-                        android:text="12 April 2023"
-                        android:textColor="#80000000" />
-
-                <ImageView
-                    android:id="@+id/ivPausePlay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_pause_24"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="40dp"
-                    android:layout_below="@id/txtDateCreated" />
-
-                <ImageView
-                    android:id="@+id/tvOptions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_settings_24"
-                    android:layout_below="@+id/txtDateCreated"
-                    android:layout_toRightOf="@id/ivPausePlay"
-                    android:layout_marginRight="40dp"/>
-
-                    <TextView
-                        android:id="@+id/tvMinGoal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_below="@id/txtDateCreated"
-                        android:text="Min Goal: 02:00:00"
-                        android:textColor="#80000000" />
-
-                <TextView
-                    android:id="@+id/tvMaxGoal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/tvMinGoal"
-                    android:text="Min Goal: 02:00:00"
-                    android:textColor="#80000000" />
-
-
-                    <!--Bad practice-->
-                    <!--<ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:src="@drawable/baseline_pause_24"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:src="@drawable/edit"/>-->
-
-               <!-- </LinearLayout>-->
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_alignParentBottom="true"/>
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
+    <!--End of main content-->
+
+    <!--bottom nav-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -198,17 +122,26 @@
                 android:background="@drawable/transparent_background"
                 app:menu="@menu/bottom_nav" />
 
-
         </com.google.android.material.bottomappbar.BottomAppBar>
+        <!--end of bottom nav-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnPlus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/btnSignIn"
+            android:contentDescription="@string/dashaddnew"
             android:src="@drawable/baseline_add_24"
-            app:layout_anchor="@id/bottomNavView" />
+            app:layout_anchor="@id/bottomNavView"
+            tools:ignore="ImageContrastCheck" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--end of bottom nav-->
+
+    <!--FrameLayout to show popup-->
+    <FrameLayout
+        android:id="@+id/popup_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--end of FrameLayout-->
 
 </RelativeLayout>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- CardView as the main container -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
+
+        <!-- The main content layout -->
+        <RelativeLayout
+            android:id="@+id/relCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#E1F0F4"
+            android:elevation="12dp">
+
+            <TextView
+                android:id="@+id/tvDateCreated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:text="12 April 2023"
+                android:textColor="#80000000"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/ibFinsih"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="6dp"
+                android:tooltipText="Complete Activity"
+                android:contentDescription="swd"
+                android:layout_above="@id/txtTimerTick"
+                android:layout_marginLeft="350dp"
+                android:src="@drawable/add_task_48px"
+                android:background="@null"
+                />
+
+
+            <TextView
+                android:id="@+id/txtTimerTick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@id/tvActivityName"
+                android:layout_below="@+id/tvDateCreated"
+                android:drawableLeft="@drawable/timer_48px"
+                android:gravity="end"
+                android:text="00:20:02"
+                android:textColor="#FF000000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tvActivityName"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/opensans_bold"
+                android:layout_below="@id/tvDateCreated"
+                android:textAllCaps="true"
+                android:text="Programming"
+                android:textColor="#FF000000"
+                android:textSize="18sp" />
+
+            <!--<ImageButton
+                android:id="@+id/ibPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtTimerTick"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp"
+                android:background="@null"
+                android:contentDescription="Text"
+                android:src="@drawable/baseline_play_arrow_24" />-->
+
+            <!--android:layout_toRightOf="@id/ibPlay"-->
+
+
+            <ImageButton
+                android:id="@+id/ibPausePlay"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_below="@+id/txtTimerTick"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="70dp"
+                android:background="@null"
+                android:contentDescription="Text"
+                android:src="@drawable/play_circle_48px" />
+
+            <TextView
+                android:id="@+id/tvMinGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvActivityName"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                android:text="Min Goal: 02:00:00"
+                android:textColor="#90000000" />
+
+            <TextView
+                android:id="@+id/tvMaxGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvMinGoal"
+                android:layout_marginStart="12dp"
+                android:textSize="18sp"
+                android:text="Max Goal: 04:00:00"
+                android:textColor="#90000000" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

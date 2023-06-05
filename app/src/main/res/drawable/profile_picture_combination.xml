@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/circle_background"
+        android:drawable="@drawable/circular_profilepicture" />
+    <item
+        android:id="@+id/profile_picture"
+        android:drawable="@drawable/panda"
+        android:gravity="center"/>
+</layer-list>

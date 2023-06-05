@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relContainer"
     tools:context=".MainActivity">
 
     <ImageView
@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
+        android:contentDescription="@string/PandaLogo"
         android:src="@drawable/panda" />
 
     <LinearLayout
@@ -29,37 +30,60 @@
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="40dp" />
-
-
+            android:textSize="40sp" />
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="34dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="34dp"
+            android:autofillHints=""
             android:background="@drawable/rounded_name_input"
-            android:hint="@string/hintName"
-            android:textColorHint="#60000000"
-            android:paddingStart="10dp"
+            android:hint="@string/hintUsername"
+            android:inputType="text"
+            android:text="user"
             android:minHeight="48dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColorHint="#60000000"
             android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/etSurname"
+        <!--TextInputLayout is making black line under password input-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputPassword"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="34dp"
-            android:layout_marginRight="34dp"
-            android:textSize="14sp"
             android:layout_marginTop="4dp"
+            android:layout_marginRight="34dp"
+            android:minHeight="48dp"
+            app:hintEnabled="false"
             android:textColorHint="#60000000"
-            android:paddingStart="10dp"
-            android:background="@drawable/rouned_input"
-            android:hint="@string/hintSurname"
-            android:minHeight="48dp" />
+            android:textSize="14sp"
+            android:backgroundTint="@android:color/transparent"
+            app:endIconMode="password_toggle"
+            app:passwordToggleDrawable="@drawable/visibility_offpx"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:autofillHints=""
+                android:background="@drawable/rouned_input"
+                android:hint="@string/hintPassword"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:text="pass"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColorHint="#60000000"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSignIn"
@@ -70,7 +94,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="34dp"
             android:background="@drawable/rounded_corner"
-            android:text="@string/btnSignIn"
+            android:text="@string/SignIn"
             android:textColor="@color/black" />
 
         <TextView
@@ -82,7 +106,7 @@
             android:focusable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:text="@string/forgotPassword"
+            android:text="@string/signInForgotPassword"
             android:textColor="@color/black"
             android:textStyle="italic" />
 
@@ -103,7 +127,7 @@
             android:id="@+id/tvDontHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dontHaveAccount" />
+            android:text="@string/SignInDontHaveAccount" />
 
         <TextView
             android:id="@+id/tvSignUp"

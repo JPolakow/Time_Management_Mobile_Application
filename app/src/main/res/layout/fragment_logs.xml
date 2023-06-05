@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fragment_background"
+    tools:context=".Logs">
+
+
+    <ImageButton
+        android:id="@+id/ibFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="wwha"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:src="@drawable/filter_48px"/>
+
+    <TextView
+        android:id="@+id/tvLogsHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LogsHeading"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/opensans_bold"
+        android:textSize="30sp"
+        />
+
+    <!--Activity scroll view-->
+    <ScrollView
+        android:id="@+id/svCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/tvLogsHeading"
+        android:contentDescription="@string/dashscrollview"
+        android:paddingBottom="58dp">
+
+        <LinearLayout
+            android:id="@+id/linearProjectCards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </ScrollView>
+    <!--end of scroll view-->
+
+
+
+</RelativeLayout>
