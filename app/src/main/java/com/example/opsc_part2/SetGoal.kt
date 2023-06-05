@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ToolBox
+import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.NumberPicker
 import com.example.opsc_part2.databinding.FragmentSetGoalBinding
 import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -109,31 +112,86 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMin() {
-        val calendar = Calendar.getInstance()
-        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
-        val currentMinute = calendar.get(Calendar.MINUTE)
+        val hours = arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+        val minutes = arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
 
-        val timePickerDialog = TimePickerDialog(requireContext(), { _, hourOfDay, minute ->
-            val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
-            min.setText(selectedTime)
-        }, currentHour, currentMinute, true)
+        val hourPicker = NumberPicker(requireContext())
+        hourPicker.apply {
+            minValue = 0
+            maxValue = hours.size - 1
+            displayedValues = hours
+            wrapSelectorWheel = true
+        }
 
-        timePickerDialog.show()
+        val minutePicker = NumberPicker(requireContext())
+        minutePicker.apply {
+            minValue = 0
+            maxValue = minutes.size - 1
+            displayedValues = minutes
+            wrapSelectorWheel = true
+        }
+
+        val layout = LinearLayout(requireContext())
+        layout.orientation = LinearLayout.HORIZONTAL
+        layout.addView(hourPicker)
+        layout.addView(minutePicker)
+
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Select Time")
+            .setView(layout)
+            .setPositiveButton("OK") { _, _ ->
+                val selectedHour = hours[hourPicker.value]
+                val selectedMinute = minutes[minutePicker.value]
+                val selectedTime = "$selectedHour:$selectedMinute"
+                min.setText(selectedTime)
+                // Use the selectedTime as needed
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        alertDialog.show()
     }
 
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMax() {
-        val calendar = Calendar.getInstance()
+        val hours = arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+        val minutes = arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
 
-        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
-        val currentMinute = calendar.get(Calendar.MINUTE)
+        val hourPicker = NumberPicker(requireContext())
+        hourPicker.apply {
+            minValue = 0
+            maxValue = hours.size - 1
+            displayedValues = hours
+            wrapSelectorWheel = true
+        }
 
-        val timePickerDialog = TimePickerDialog(requireContext(), { _, hourOfDay, minute ->
-            val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
-            max.setText(selectedTime)
-        }, currentHour, currentMinute, true)
+        val minutePicker = NumberPicker(requireContext())
+        minutePicker.apply {
+            minValue = 0
+            maxValue = minutes.size - 1
+            displayedValues = minutes
+            wrapSelectorWheel = true
+        }
 
-        timePickerDialog.show()
+        val layout = LinearLayout(requireContext())
+        layout.orientation = LinearLayout.HORIZONTAL
+        layout.addView(hourPicker)
+        layout.addView(minutePicker)
+
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Select Time")
+            .setView(layout)
+            .setPositiveButton("OK") { _, _ ->
+                val selectedHour = hours[hourPicker.value]
+                val selectedMinute = minutes[minutePicker.value]
+                val selectedTime = "$selectedHour:$selectedMinute"
+                max.setText(selectedTime)
+                // Use the selectedTime as needed
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        alertDialog.show()
     }
 }

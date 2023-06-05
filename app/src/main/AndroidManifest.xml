@@ -10,7 +10,7 @@
         android:icon="@drawable/panda"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Opsc_part2"
+        android:theme="@style/Theme.Opsc_part2Light"
         tools:targetApi="31">
         <activity
             android:name=".Settings"
