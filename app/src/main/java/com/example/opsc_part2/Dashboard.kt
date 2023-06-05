@@ -3,6 +3,8 @@ package com.example.opsc_part2
 import Classes.ToolBox
 import android.annotation.SuppressLint
 import android.content.*
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
