@@ -11,7 +11,7 @@ class PasswordHandler {
             return Companion.bytesToHex(encodedHash)
         }
 
-        fun bytesToHex(bytes: ByteArray): String {
+        private fun bytesToHex(bytes: ByteArray): String {
             val hexChars = "0123456789ABCDEF"
             val hexString = StringBuilder(bytes.size * 2)
             for (byte in bytes) {

@@ -20,9 +20,6 @@ import androidx.fragment.app.Fragment
 import com.example.opsc_part2.databinding.ActivityDashboardBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.Timer
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -84,12 +81,15 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             startActivity(intent)
         }
 
-        tvCategory.text = "Category: ${ToolBox.SelectedCatagory}"
+
+        val displayCategoryText = "Category: ${ToolBox.SelectedCategory}"
+        tvCategory.text = displayCategoryText
         tvCategory.setOnClickListener {
             showCategoryPickerDialog { selectedCategory ->
-                tvCategory.text = "Category: $selectedCategory"
+                val showCategoryText = "Category: $selectedCategory"
+                tvCategory.text = showCategoryText
 
-                LoadCustomUI()
+                loadCustomUI()
             }
         }
 
@@ -169,7 +169,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         //endregion
         // ----------------- END OF MENU -----------------------------------
 
-        LoadCustomUI()
+        loadCustomUI()
 
         actionButt.setOnClickListener {
             showPopup()
@@ -178,13 +178,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
     //=========================================================
     //load custom ui elements
-    private fun LoadCustomUI() {
+    private fun loadCustomUI() {
         linView.removeAllViews()
 
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.ActivitiesList) {
-            if (card.ActivityUserID == ToolBox.ActiveUserID && card.ActivityCatagory.equals(
-                    ToolBox.SelectedCatagory
+            if (card.ActivityUserID == ToolBox.ActiveUserID && card.ActivityCategory.equals(
+                    ToolBox.SelectedCategory
                 )
             ) {
                 val customCard = custom_dashboard_cards(this)
@@ -194,7 +194,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
                 customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
-                val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
+                val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinish)
 
 
                 //complete the activity
@@ -306,8 +306,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
         val catagoryNames = mutableListOf<String>()
 
-        for (item in ToolBox.CatagoryList) {
-            val secondIndexEntry = item.CatagoryName
+        for (item in ToolBox.CategoryList) {
+            val secondIndexEntry = item.CategoryName
             catagoryNames.add(secondIndexEntry)
         }
 
@@ -318,10 +318,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             .setItems(catagoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
                 val selectedCatagory = which
 
-                ToolBox.SelectedCatagory = catagoryNames[selectedCatagory]
-                displaySelected += ToolBox.SelectedCatagory
+                ToolBox.SelectedCategory = catagoryNames[selectedCatagory]
+                displaySelected += ToolBox.SelectedCategory
                 tvCategory.setText(displaySelected)
-                callback(ToolBox.SelectedCatagory)
+                callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
             }.setCancelable(false)

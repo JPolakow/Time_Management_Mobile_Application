@@ -1,10 +1,8 @@
 package com.example.opsc_part2
 
-import Classes.CatagoryObject
+import Classes.CategoryObject
 import Classes.ToolBox
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class Add_Catagory : BottomSheetDialogFragment() {
 
     //ui vars
-    private lateinit var btnAddCatagory: Button
-    private lateinit var etCatagoryInput: EditText
+    private lateinit var btnAddCategory: Button
+    private lateinit var etCategoryInput: EditText
 
     //============================================================================
     override fun onCreateView(
@@ -27,14 +25,14 @@ class Add_Catagory : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_add__catagory, container, false)
 
         // Find the buttons in the inflated view
-        btnAddCatagory = view.findViewById(R.id.btnAddCatagory)
-        etCatagoryInput = view.findViewById(R.id.etCatagoryInput)
+        btnAddCategory = view.findViewById(R.id.btnAddCatagory)
+        etCategoryInput = view.findViewById(R.id.etCatagoryInput)
 
         // Set click listeners for the buttons
-        btnAddCatagory.setOnClickListener {
-            if (!etCatagoryInput.text.toString().trim().equals("")) {
-                var catagory = CatagoryObject(etCatagoryInput.text.toString().trim(), ToolBox.ActiveUserID)
-                ToolBox.CatagoryList.add(catagory)
+        btnAddCategory.setOnClickListener {
+            if (etCategoryInput.text.toString().trim() != "") {
+                var catagory = CategoryObject(etCategoryInput.text.toString().trim(), ToolBox.ActiveUserID)
+                ToolBox.CategoryList.add(catagory)
                 dismiss()
             }
         }

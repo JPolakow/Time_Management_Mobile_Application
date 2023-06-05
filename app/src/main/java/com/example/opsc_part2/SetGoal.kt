@@ -2,10 +2,7 @@ package com.example.opsc_part2
 
 import Classes.ToolBox
 import android.app.AlertDialog
-import android.app.TimePickerDialog
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +11,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import com.example.opsc_part2.databinding.FragmentSetGoalBinding
-import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.util.*
 
 class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     //bind the front end, making it accessible
@@ -41,7 +36,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
         submit.setOnClickListener()
         {
-            if (Valadate()) {
+            if (validate()) {
 
                 ToolBox.MinGoal = formatGoalInput(min.text.toString())
                 ToolBox.MaxGoal = formatGoalInput(max.text.toString())
@@ -67,7 +62,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
 
     //============================================================================
-    private fun Valadate(): Boolean {
+    private fun validate(): Boolean {
         var valid = true
 
         if (min.text.toString().trim() == "") {

@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:text="12 April 2023"
+                android:text="@string/textDate"
                 android:textColor="#80000000"
                 android:textSize="18sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_below="@+id/tvActivityName"
                 android:gravity="end"
-                android:text="00:20:02"
+                android:text="@string/textDuration"
                 android:textColor="#FF000000"
                 android:textSize="22sp"
                 app:drawableLeftCompat="@drawable/timer_48px" />
@@ -58,7 +58,7 @@
                 android:fontFamily="@font/opensans_bold"
                 android:layout_below="@id/tvDateEnded"
                 android:textAllCaps="true"
-                android:text="Programming"
+                android:text="@string/activityName"
                 android:textColor="#FF000000"
                 android:textSize="18sp" />
 
@@ -68,7 +68,7 @@
                 android:paddingTop="5dp"
                 android:layout_height="150dp"
                 tools:srcCompat="@tools:sample/avatars"
-                android:layout_toRightOf="@+id/tvActivityName"/>
+                android:layout_toEndOf="@+id/tvActivityName"/>
 
 
         </RelativeLayout>

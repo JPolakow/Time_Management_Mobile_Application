@@ -23,6 +23,8 @@
     <string name="dashimageprofile">dashboardImageProfile</string>
     <string name="dashscrollview">ScrollView</string>
     <string name="dashaddnew">Add new activity</string>
+    <string name="activityName">Programming</string>
+    <string name="timerDefault">00:00:00</string>
     <!-- Statistics-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--Settings-->
@@ -58,6 +60,16 @@
 
     <!--Logs-->
     <string name="LogsHeading">Logs</string>
+    <string name="contentDesFilter">Filter Logs</string>
+    <string name="textDate">12 April 2023</string>
+    <string name="textDuration">00:20:02</string>
+
+    <!--Custom Dashboard-->
+    <string name="DateCreatedText">12 April 2023</string>
+    <string name="contentDesFinish">Complete Activity</string>
+    <string name="contentDesPausePlay">Complete Activity</string>
+    <string name="minGoal">Min Goal: 02:00:00</string>
+    <string name="maxGoal">Max Goal: 04:00:00</string>
 
 
 

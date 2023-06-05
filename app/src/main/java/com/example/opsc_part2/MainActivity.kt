@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 
 
     //ui vars
-    private lateinit var UsernameInput: EditText
-    private lateinit var PasswordInput: EditText
+    private lateinit var usernameInput: EditText
+    private lateinit var passwordInput: EditText
     private lateinit var btnSignIn: Button
     private lateinit var signUpClick: TextView
 
@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         btnSignIn = findViewById(R.id.btnSignIn)
         signUpClick = findViewById(R.id.tvSignUp)
 
-        UsernameInput = findViewById(R.id.etUsername)
-        PasswordInput = findViewById(R.id.etPassword)
+        usernameInput = findViewById(R.id.etUsername)
+        passwordInput = findViewById(R.id.etPassword)
 
         btnSignIn.setOnClickListener {
             UserLogin()
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     fun UserLogin() {
 
         //if username does not exist
-        val user = ToolBox.UsersList.find { it.UserUsername == UsernameInput.text.toString().trim() }
+        val user = ToolBox.UsersList.find { it.UserUsername == usernameInput.text.toString().trim() }
         if (user == null) {
             val errToast = Toast.makeText(
                 applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         //check password
         if (user.UserPasswordHash == PasswordHandler.hashPassword(
-                PasswordInput.text.toString().trim()
+                passwordInput.text.toString().trim()
             )
         ) {
             ToolBox.ActiveUserID = ToolBox.UsersList.indexOfFirst { it.UserUsername == user.UserUsername }

@@ -1,5 +1,6 @@
 package Classes
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,16 +12,16 @@ class ToolBox {
         var MinGoal: Int = -1
         var MaxGoal: Int = -1
 
-        //used to store selected catagory
-        var SelectedCatagory: String = "None"
+        //used to store selected category
+        var SelectedCategory: String = "None"
 
         //object arrays
         val WorkEntriesList = mutableListOf<WorkEntriesObject>(
             WorkEntriesObject(1, "Name",1, 5, "1/1/12", "4", "Red")
         )
 
-        val CatagoryList = mutableListOf<CatagoryObject>(
-            CatagoryObject("Collage", 1)
+        val CategoryList = mutableListOf<CategoryObject>(
+            CategoryObject("Collage", 1)
         )
 
         val UsersList = mutableListOf<ActiveUserClass>(
@@ -33,6 +34,7 @@ class ToolBox {
             )
         )
 
+        @SuppressLint("ConstantLocale")
         val ActivitiesList = mutableListOf<ActivityObject>(
             ActivityObject(
                 0,

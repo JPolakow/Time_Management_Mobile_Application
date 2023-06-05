@@ -12,7 +12,7 @@
         android:id="@+id/ibFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="wwha"
+        android:contentDescription="@string/contentDesFilter"
         android:layout_marginTop="16dp"
         android:background="@null"
         android:src="@drawable/filter_48px"/>

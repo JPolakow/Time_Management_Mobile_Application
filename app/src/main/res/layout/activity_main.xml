@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:autofillHints=""
-                android:background="@drawable/rouned_input"
+                android:background="@drawable/rounded_input"
                 android:hint="@string/hintPassword"
                 android:inputType="textPassword"
                 android:minHeight="48dp"

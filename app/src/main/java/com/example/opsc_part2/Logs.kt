@@ -22,12 +22,12 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
         linView = view.findViewById(R.id.linearProjectCards)
 
-        Populate()
+        populate()
 
         return view
     }
 
-    private fun Populate() {
+    private fun populate() {
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.WorkEntriesList) {
 

@@ -12,7 +12,7 @@
         android:id="@+id/pandaImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="310dp"
+        android:layout_marginStart="310dp"
         android:adjustViewBounds="true"
         android:src="@drawable/cornerpanda" />
 
@@ -30,7 +30,8 @@
             android:layout_alignParentTop="true"
             android:clickable="true"
             android:contentDescription="@string/dashimageprofile"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/tvDisplayName"
@@ -59,9 +60,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Programmming"
-                android:layout_marginLeft="16dp"
-                android:layout_below="@id/tvCategory"
+                android:text="@string/activityName"
+                android:layout_marginStart="16dp"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 />
@@ -71,7 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="00:00:00"
+                android:text="@string/timerDefault"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 />

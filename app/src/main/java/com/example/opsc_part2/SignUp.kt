@@ -26,13 +26,13 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
     private val binding get() = _binding!!
 
     //inputs
-    private lateinit var NameInput: EditText
-    private lateinit var SurnameInput: EditText
-    private lateinit var UsernameInput: EditText
-    private lateinit var PasswordInput: EditText
-    private lateinit var ConfirmPasswordInput: EditText
+    private lateinit var nameInput: EditText
+    private lateinit var surnameInput: EditText
+    private lateinit var usernameInput: EditText
+    private lateinit var passwordInput: EditText
+    private lateinit var confirmPasswordInput: EditText
 
-    //pressables
+    //press ables
     private lateinit var tvSignInClick: TextView
     private lateinit var btnSignUp: Button
 
@@ -43,11 +43,11 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
 
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
-        NameInput = binding.etName
-        SurnameInput = binding.etSurname
-        UsernameInput = binding.etUsername
-        PasswordInput = binding.etPassword
-        ConfirmPasswordInput = binding.etConfirmPassword
+        nameInput = binding.etName
+        surnameInput = binding.etSurname
+        usernameInput = binding.etUsername
+        passwordInput = binding.etPassword
+        confirmPasswordInput = binding.etConfirmPassword
 
         btnSignUp = binding.btnSignUp
         btnSignUp.setOnClickListener() {
@@ -75,10 +75,10 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
     //take user inputs and create new user instance
     private fun RegisterUser() {
         val activeUserClass = ActiveUserClass(
-            NameInput.text.toString().trim(),
-            SurnameInput.text.toString().trim(),
-            UsernameInput.text.toString().trim(),
-            PasswordHandler.hashPassword(PasswordInput.text.toString().trim())
+            nameInput.text.toString().trim(),
+            surnameInput.text.toString().trim(),
+            usernameInput.text.toString().trim(),
+            PasswordHandler.hashPassword(passwordInput.text.toString().trim())
         )
 
         ToolBox.UsersList.add(activeUserClass)
@@ -91,39 +91,39 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
     //ensure user has inouted valid data
     private fun validateForm(): Boolean {
         var valid = true
-        val name: String = NameInput.getText().toString().trim()
-        val surname: String = SurnameInput.getText().toString().trim()
-        val username: String = UsernameInput.getText().toString().trim()
-        val password: String = PasswordInput.getText().toString().trim()
-        val confirmPassword: String = ConfirmPasswordInput.getText().toString().trim()
+        val name: String = nameInput.getText().toString().trim()
+        val surname: String = surnameInput.getText().toString().trim()
+        val username: String = usernameInput.getText().toString().trim()
+        val password: String = passwordInput.getText().toString().trim()
+        val confirmPassword: String = confirmPasswordInput.getText().toString().trim()
 
         if (TextUtils.isEmpty(name)) {
-            NameInput.setError("Name is required")
+            nameInput.error = "Name is required"
             valid = false
         }
         if (TextUtils.isEmpty(surname)) {
-            SurnameInput.setError("Surname is required")
+            surnameInput.error = "Surname is required"
             valid = false
         }
         if (TextUtils.isEmpty(username)) {
-            UsernameInput.setError("Password is required")
+            usernameInput.error = ("Password is required")
             valid = false
         }
-        if (DoesUsernameExist((username))) {
-            UsernameInput.setError("Username already exists")
+        if (doesUsernameExist((username))) {
+            usernameInput.error = ("Username already exists")
             valid = false
         }
 
         if (TextUtils.isEmpty(password)) {
-            PasswordInput.setError("Password is required")
+            passwordInput.error = ("Password is required")
             valid = false
         }
         if (TextUtils.isEmpty(confirmPassword)) {
-            ConfirmPasswordInput.setError("Confirm password is required")
+            confirmPasswordInput.error = ("Confirm password is required")
             valid = false
         }
         if (!TextUtils.equals(password, confirmPassword)) {
-            ConfirmPasswordInput.setError("Passwords must match")
+            confirmPasswordInput.error = ("Passwords must match")
             valid = false
         }
         return valid
@@ -131,7 +131,7 @@ class SignUp : Fragment(R.layout.fragment_sign_up) {
 
     //============================================================================
     //try find if the existing username exists
-    private fun DoesUsernameExist(NameToFind: String): Boolean {
+    private fun doesUsernameExist(NameToFind: String): Boolean {
         val person = ToolBox.UsersList.find { it.UserUsername == NameToFind }
         return person != null
     }

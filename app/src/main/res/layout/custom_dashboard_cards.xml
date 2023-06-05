@@ -31,19 +31,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:text="12 April 2023"
+                android:text="@string/DateCreatedText"
                 android:textColor="#80000000"
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/ibFinsih"
+                android:id="@+id/ibFinish"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="6dp"
-                android:tooltipText="Complete Activity"
-                android:contentDescription="swd"
+                android:contentDescription="@string/contentDesFinish"
                 android:layout_above="@id/txtTimerTick"
-                android:layout_marginLeft="350dp"
+                android:layout_marginStart="350dp"
                 android:src="@drawable/add_task_48px"
                 android:background="@null"
                 />
@@ -53,15 +52,15 @@
                 android:id="@+id/txtTimerTick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="0dp"
-                android:layout_toRightOf="@id/tvActivityName"
+                android:layout_toEndOf="@id/tvActivityName"
                 android:layout_below="@+id/tvDateCreated"
-                android:drawableLeft="@drawable/timer_48px"
                 android:gravity="end"
-                android:text="00:20:02"
+                android:text="@string/timerDefault"
                 android:textColor="#FF000000"
-                android:textSize="22sp"/>
+                android:textSize="22sp"
+                app:drawableLeftCompat="@drawable/timer_48px" />
 
             <TextView
                 android:id="@+id/tvActivityName"
@@ -72,23 +71,9 @@
                 android:fontFamily="@font/opensans_bold"
                 android:layout_below="@id/tvDateCreated"
                 android:textAllCaps="true"
-                android:text="Programming"
+                android:text="@string/activityName"
                 android:textColor="#FF000000"
                 android:textSize="18sp" />
-
-            <!--<ImageButton
-                android:id="@+id/ibPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtTimerTick"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="0dp"
-                android:background="@null"
-                android:contentDescription="Text"
-                android:src="@drawable/baseline_play_arrow_24" />-->
-
-            <!--android:layout_toRightOf="@id/ibPlay"-->
-
 
             <ImageButton
                 android:id="@+id/ibPausePlay"
@@ -96,9 +81,9 @@
                 android:layout_height="48dp"
                 android:layout_below="@+id/txtTimerTick"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="70dp"
+                android:layout_marginEnd="70dp"
                 android:background="@null"
-                android:contentDescription="Text"
+                android:contentDescription="@string/contentDesPausePlay"
                 android:src="@drawable/play_circle_48px" />
 
             <TextView
@@ -109,7 +94,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
                 android:textSize="18sp"
-                android:text="Min Goal: 02:00:00"
+                android:text="@string/minGoal"
                 android:textColor="#90000000" />
 
             <TextView
@@ -119,7 +104,7 @@
                 android:layout_below="@id/tvMinGoal"
                 android:layout_marginStart="12dp"
                 android:textSize="18sp"
-                android:text="Max Goal: 04:00:00"
+                android:text="@string/maxGoal"
                 android:textColor="#90000000" />
 
         </RelativeLayout>

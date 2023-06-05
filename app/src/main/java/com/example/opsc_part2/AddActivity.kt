@@ -1,7 +1,6 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
-import Classes.CatagoryObject
 import Classes.ToolBox
 import android.content.DialogInterface
 import android.content.Intent
@@ -36,15 +35,15 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private val binding get() = _binding!!
 
     //inputs
-    private lateinit var NameInput: EditText
-    private lateinit var CatagoryInput: EditText
-    private lateinit var ColorInput: EditText
-    private lateinit var GoalInput: EditText
-    private lateinit var DescriptionInput: EditText
+    private lateinit var nameInput: EditText
+    private lateinit var categoryInput: EditText
+    private lateinit var colorInput: EditText
+    private lateinit var goalInput: EditText
+    private lateinit var descriptionInput: EditText
     private var SelectedColor: String = ""
     private var SelectedCatagory: String = ""
 
-    //pressables
+    //Press-ables
     private lateinit var ivSubmit: ImageButton
     private lateinit var tvClose: ImageButton
 
@@ -57,32 +56,32 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
 
-        NameInput = view.findViewById(R.id.etName)
-        GoalInput = view.findViewById<EditText>(R.id.etGoal)
-        ColorInput = view.findViewById<EditText>(R.id.etColor)
+        nameInput = view.findViewById(R.id.etName)
+        goalInput = view.findViewById<EditText>(R.id.etGoal)
+        colorInput = view.findViewById<EditText>(R.id.etColor)
         ivSubmit = view.findViewById<ImageButton>(R.id.ivSubmit)
         tvClose = view.findViewById<ImageButton>(R.id.ibClose)
-        CatagoryInput = view.findViewById(R.id.etCategory)
+        categoryInput = view.findViewById(R.id.etCategory)
 
         //add goal
-        GoalInput.setOnClickListener {
+        goalInput.setOnClickListener {
             showPopupFragment()
         }
 
         //pick color
-        ColorInput.setOnClickListener {
+        colorInput.setOnClickListener {
             showColorPickerDialog()
         }
 
         //pick category
-        CatagoryInput.setOnClickListener {
+        categoryInput.setOnClickListener {
             showCategoryPickerDialog()
         }
 
         //submit button
         ivSubmit.setOnClickListener() {
             if (validateForm()) {
-                AddActivityToList()
+                addActivityToList()
                 val intent = Intent(requireActivity(), Dashboard::class.java)
                 val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
                 ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
@@ -100,27 +99,27 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     }
 
     //============================================================================
-    //ensure user has inputed valid data
+    //ensure user has Inputed valid data
     private fun validateForm(): Boolean {
         var valid = true
-        val name: String = NameInput.getText().toString().trim()
-        val catagory: String = CatagoryInput.getText().toString().trim()
+        val name: String = nameInput.getText().toString().trim()
+        val catagory: String = categoryInput.getText().toString().trim()
 
 
         if (TextUtils.isEmpty(name)) {
-            NameInput.setError("Name is required")
+            nameInput.setError("Name is required")
             valid = false
         }
         if (TextUtils.isEmpty(catagory)) {
-            CatagoryInput.setError("Catagory is required")
+            categoryInput.setError("Catagory is required")
             valid = false
         }
         if (SelectedColor.equals("")) {
-            ColorInput.setError("Color is required")
+            colorInput.setError("Color is required")
             valid = false
         }
         if (ToolBox.MinGoal.equals("") || ToolBox.MaxGoal.equals("")) {
-            GoalInput.setError("Goal is required")
+            goalInput.setError("Goal is required")
             valid = false
         }
 
@@ -132,7 +131,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //============================================================================
     //add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun AddActivityToList() {
+    private fun addActivityToList() {
 
         // Creating correct date format
         val time = SimpleDateFormat("dd/MM/yyy", Locale.getDefault()).format(Date())
@@ -140,7 +139,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val currentUser = ToolBox.ActiveUserID
         val activityID = (ToolBox.ActivitiesList.count() + 1)
         //get user inputs
-        val name = NameInput.text.toString().trim()
+        val name = nameInput.text.toString().trim()
 
         val newActitivy =
             ActivityObject(
@@ -168,11 +167,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a color")
             .setItems(colorNames) { dialog: DialogInterface, which: Int ->
-                val selectedColor = which
 
-                SelectedColor = colorNames[selectedColor]
+                SelectedColor = colorNames[which]
                 displaySelected += SelectedColor
-                ColorInput.setText(displaySelected)
+                colorInput.setText(displaySelected)
 
                 dialog.dismiss()
             }
@@ -186,23 +184,22 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //catagory picker
     private fun showCategoryPickerDialog() {
 
-        val catagoryNames = mutableListOf<String>()
+        val categoryNames = mutableListOf<String>()
 
-        for (item in ToolBox.CatagoryList) {
-            val secondIndexEntry = item.CatagoryName
-            catagoryNames.add(secondIndexEntry)
+        for (item in ToolBox.CategoryList) {
+            val secondIndexEntry = item.CategoryName
+            categoryNames.add(secondIndexEntry)
         }
 
         var displaySelected = "";
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a catagory")
-            .setItems(catagoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
-                val selectedCatagory = which
+            .setItems(categoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
-                SelectedCatagory = catagoryNames[selectedCatagory]
+                SelectedCatagory = categoryNames[which]
                 displaySelected += SelectedCatagory
-                CatagoryInput.setText(displaySelected)
+                categoryInput.setText(displaySelected)
 
                 dialog.dismiss()
             }
