@@ -141,7 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btnPlus"
             android:layout_alignEnd="@id/btnPlus"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_activity"

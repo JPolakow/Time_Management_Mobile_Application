@@ -176,14 +176,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         * */
         actionButt.setOnClickListener {
             actionButt.setOnClickListener {
-                if (isFabExpanded) {
+              /*  if (isFabExpanded) {
                     collapseFabMenu()
                 } else {
                     expandFabMenu()
-                }
+                }*/
             }
 
-            //showPopup()
+            showPopup()
             //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
         }
         fabAddActivity.setOnClickListener {
@@ -195,7 +195,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
     }
 
-    private fun expandFabMenu() {
+   /* private fun expandFabMenu() {
         val animatorSet = AnimatorSet()
         animatorSet.playTogether(
             ObjectAnimator.ofFloat(actionButt, "rotation", 0f, 45f),
@@ -223,7 +223,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         animatorSet.start()
 
         isFabExpanded = false
-    }
+    }*/
 
     //============================================================================
     override fun onFragmentRequested(fragment: Fragment) {
