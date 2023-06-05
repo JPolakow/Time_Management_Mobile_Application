@@ -28,10 +28,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //ui vars
     private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
-    private lateinit var fabAddActivity: FloatingActionButton
-    private lateinit var fabAddCategory: FloatingActionButton
-    private lateinit var buttonsLayout: View
-    private var isFabExpanded = false
 
     //============================================================================
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -43,9 +39,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // ======================= Declarations ======================= //
         bottomNav = findViewById(R.id.bottomNavView)
         actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
-        fabAddActivity = findViewById(R.id.fab_add_activity)
-        fabAddCategory = findViewById(R.id.fab_add_category)
-        buttonsLayout = findViewById(R.id.buttonsLayout)
 
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
 
@@ -175,23 +168,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         * Else if fragment is not visible when button clicked, then show fragment
         * */
         actionButt.setOnClickListener {
-            actionButt.setOnClickListener {
-              /*  if (isFabExpanded) {
-                    collapseFabMenu()
-                } else {
-                    expandFabMenu()
-                }*/
-            }
 
             showPopup()
             //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
-        }
-        fabAddActivity.setOnClickListener {
-            // Handle add activity button click
-        }
-
-        fabAddCategory.setOnClickListener {
-            // Handle add category button click
         }
     }
 

@@ -135,37 +135,6 @@
             app:layout_anchor="@id/bottomNavView"
             tools:ignore="ImageContrastCheck" />
 
-        <LinearLayout
-            android:id="@+id/buttonsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/btnPlus"
-            android:layout_alignEnd="@id/btnPlus"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_add_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="p"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/category_48px"
-                app:backgroundTint="@color/Yellow"
-                app:borderWidth="0dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_add_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="blah"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/edit_note_48px"
-                app:backgroundTint="@color/teal_200"
-                app:borderWidth="0dp" />
-
-        </LinearLayout>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!--end of bottom nav-->
 
