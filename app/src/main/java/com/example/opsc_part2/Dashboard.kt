@@ -1,13 +1,13 @@
 package com.example.opsc_part2
 
 import Classes.ToolBox
-import TimerManager
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.content.*
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -15,11 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
+import com.example.opsc_part2.databinding.ActivityDashboardBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
@@ -27,7 +29,19 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var tvCategory: TextView
+    private var TimerOutput: String = "00:00:00"
     private lateinit var linView: LinearLayout
+    private lateinit var tvRecentTasks: TextView
+
+    //timer vars
+    private fun makeTimeString(hour: Int, min: Int, sec: Int): String =
+        String.format("%02d:%02d:%02d", hour, min, sec)
+
+    private lateinit var binding: ActivityDashboardBinding
+    private var timerStarted = false
+    private lateinit var serviceIntent: Intent
+    private var time = 0.0
+    private lateinit var helpme: custom_dashboard_cards
 
     //============================================================================
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -37,10 +51,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         setContentView(R.layout.activity_dashboard)
 
         // ======================= Declarations ======================= //
+        //binding
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        //ui
         bottomNav = findViewById(R.id.bottomNavView)
         actionButt = findViewById(R.id.btnPlus)
         tvCategory = findViewById(R.id.tvCategory)
         linView = findViewById(R.id.linearProjectCards)
+        tvRecentTasks = findViewById(R.id.tvRecentTasks)
 
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
@@ -48,6 +68,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // Create a Bitmap from the image drawable
         // This is where you change size of image
         val maxImageSize = 140
+
+        //timer decs
+        serviceIntent = Intent(this, TimerService::class.java)
+        registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
+
         // ======================= End Declarations ======================= //
 
         imgProfileImg.setOnClickListener {
@@ -65,6 +90,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
 
         //---------------------------SET UP BOTTOM UI-------------------------
+        //region
         // Create a Bitmap from the image drawable
         val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
         val bitmap = drawable.bitmap
@@ -98,9 +124,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         params.leftMargin = 50
         params.topMargin = 25
         imgProfileImg.layoutParams = params
+        //endregion
         //------------------------------------END OF BOTTOM UI---------------------------------
 
         // ----------------- MENU ----------------------------
+        //region
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
@@ -134,6 +162,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 else -> false
             }
         }
+        //endregion
         // ----------------- END OF MENU -----------------------------------
 
         LoadCustomUI()
@@ -161,44 +190,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
                 customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
-                val timerText = customCard.findViewById<TextView>(R.id.txtTimerTick)
-                timerText.text = "00:00:00";
-
-                val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
                 val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
-                // Retrieve the timer data from shared preferences and restore the timer state
-                val startTime = TimerManager.getStartTime(this, customCard)
-                val accumulatedTime = TimerManager.getAccumulatedTime(this, customCard)
 
-                if (startTime > 0 && accumulatedTime > 0) {
-                    // Calculate the elapsed time since the start time
-                    val elapsedTime = System.currentTimeMillis() - startTime
-
-                    // Restore the timer state
-                    TimerManager.startTimer(this, customCard, timerText)
-                    TimerManager.pauseTimer(this, customCard)
-                } else {
-                    // Timer was not running before, initialize the timer state
-                    TimerManager.stopTimer(customCard)
-                    timerText.text = "00:00:00"
-                }
-
-                play.setOnClickListener {
-                    if (customCard.isTimerRunning) {
-                        // Pause the timer
-                        TimerManager.pauseTimer(this, customCard)
-                        play.setImageResource(R.drawable.play_circle_48px)
-                        customCard.isTimerRunning = true
-                    } else {
-                        // Start the timer
-                        TimerManager.startTimer(this, customCard, timerText)
-                        play.setImageResource(R.drawable.pause_circle_48px)
-                        customCard.isTimerRunning = false
-
-                    }
-                    customCard.isTimerRunning = !customCard.isTimerRunning
-                }
-
+                //complete the activity
                 completeActivity.setOnClickListener {
                     val fragment = complete_activity()
 
@@ -214,10 +208,69 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     fragment.show(supportFragmentManager, "completeActivity")
                 }
 
+                //timer
+                val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+                ibPausePlay.setOnClickListener()
+                {
+                    if (timerStarted) {
+                        stopTimer()
+                        Log.d("timer", "started")
+                    } else {
+                        startTimer()
+                    }
+                }
+
+                //add to the page
                 linView.addView(customCard)
             }
         }
         // ----------------- END OF CUSTOM CARDS -------------------
+    }
+
+    //============================================================================
+    //start the timer
+    private fun startTimer() {
+        Log.d("timer", "started1")
+        serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
+        startService(serviceIntent)
+        timerStarted = true
+        Log.d("timer", "started2")
+    }
+
+    //============================================================================
+    //stop the timer
+    private fun stopTimer() {
+        stopService(serviceIntent)
+        timerStarted = false
+    }
+
+    //============================================================================
+    //get the data form the service and update textview
+    private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            Log.d("timer", "updating")
+            time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
+            tvRecentTasks.text = getTimeStringFromDouble(time)
+            Log.d("timer", "updating2")
+        }
+    }
+
+    //============================================================================
+    //reset the timer
+    private fun resetTimer() {
+        stopTimer()
+        time = 0.0
+        TimerOutput = getTimeStringFromDouble(time)
+    }
+
+    //============================================================================
+    private fun getTimeStringFromDouble(time: Double): String {
+        val resultInt = time.roundToInt()
+        val hours = resultInt % 86400 / 3600
+        val minutes = resultInt % 86400 % 3600 / 60
+        val seconds = resultInt % 86400 % 3600 % 60
+
+        return makeTimeString(hours, minutes, seconds)
     }
 
     //============================================================================
