@@ -75,9 +75,9 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             showColorPickerDialog()
         }
 
-        //pick catagory
+        //pick category
         CatagoryInput.setOnClickListener {
-            showCatagoryPickerDialog()
+            showCategoryPickerDialog()
         }
 
         //submit button
@@ -154,8 +154,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             )
         ToolBox.ActivitiesList.add(newActitivy)
 
-        ToolBox.MinGoal = -1
-        ToolBox.MaxGoal = -1
+        ToolBox.MinGoal = 1
+        ToolBox.MaxGoal = 1
     }
 
     //============================================================================
@@ -183,7 +183,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
 
     //============================================================================
     //catagory picker
-    private fun showCatagoryPickerDialog() {
+    private fun showCategoryPickerDialog() {
 
         val catagoryNames = mutableListOf<String>()
 

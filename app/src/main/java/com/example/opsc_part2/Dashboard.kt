@@ -2,12 +2,16 @@ package com.example.opsc_part2
 
 import Classes.ToolBox
 import TimerManager
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +26,12 @@ import kotlin.math.min
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
     //ui vars
+    private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
+    private lateinit var fabAddActivity: FloatingActionButton
+    private lateinit var fabAddCategory: FloatingActionButton
+    private lateinit var buttonsLayout: View
+    private var isFabExpanded = false
 
     //============================================================================
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -33,7 +42,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
         // ======================= Declarations ======================= //
         bottomNav = findViewById(R.id.bottomNavView)
-        val actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
+        actionButt = findViewById<FloatingActionButton>(R.id.btnPlus)
+        fabAddActivity = findViewById(R.id.fab_add_activity)
+        fabAddCategory = findViewById(R.id.fab_add_category)
+        buttonsLayout = findViewById(R.id.buttonsLayout)
+
         val linView = findViewById<LinearLayout>(R.id.linearProjectCards)
 
         val fragment = QuickActionPopup()
@@ -162,9 +175,54 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         * Else if fragment is not visible when button clicked, then show fragment
         * */
         actionButt.setOnClickListener {
-            showPopup()
+            actionButt.setOnClickListener {
+                if (isFabExpanded) {
+                    collapseFabMenu()
+                } else {
+                    expandFabMenu()
+                }
+            }
+
+            //showPopup()
             //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
         }
+        fabAddActivity.setOnClickListener {
+            // Handle add activity button click
+        }
+
+        fabAddCategory.setOnClickListener {
+            // Handle add category button click
+        }
+    }
+
+    private fun expandFabMenu() {
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(
+            ObjectAnimator.ofFloat(actionButt, "rotation", 0f, 45f),
+            ObjectAnimator.ofFloat(fabAddActivity, "translationY", 0f, -resources.getDimension(R.dimen.fab_margin)),
+            ObjectAnimator.ofFloat(fabAddCategory, "translationY", 0f, -2 * resources.getDimension(R.dimen.fab_margin)),
+        )
+        animatorSet.interpolator = AccelerateInterpolator()
+        animatorSet.duration = 300
+        buttonsLayout.visibility = View.VISIBLE
+        animatorSet.start()
+
+        isFabExpanded = true
+    }
+
+    private fun collapseFabMenu() {
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(
+            ObjectAnimator.ofFloat(actionButt, "rotation", 45f, 0f),
+            ObjectAnimator.ofFloat(fabAddActivity, "translationY", -resources.getDimension(R.dimen.fab_margin), 0f),
+            ObjectAnimator.ofFloat(fabAddCategory, "translationY", -2 * resources.getDimension(R.dimen.fab_margin), 0f),
+        )
+        animatorSet.interpolator = AccelerateInterpolator()
+        animatorSet.duration = 300
+        buttonsLayout.visibility = View.GONE
+        animatorSet.start()
+
+        isFabExpanded = false
     }
 
     //============================================================================

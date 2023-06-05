@@ -38,21 +38,23 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
         submit.setOnClickListener()
         {
-            if (Valadate())
-            {
-                ToolBox.MinGoal = min.text.toString().toInt()
-                ToolBox.MaxGoal = max.text.toString().toInt()
+            if (Valadate()) {
+
+                ToolBox.MinGoal = formatGoalInput(min.text.toString())
+                ToolBox.MaxGoal = formatGoalInput(max.text.toString())
+
+                dismiss()
             }
         }
 
 
-        min.setOnClickListener{
+        min.setOnClickListener {
 
             showTimePickerDialogMin();
 
         }
 
-        max.setOnClickListener{
+        max.setOnClickListener {
 
             showTimePickerDialogMax();
 
@@ -62,22 +64,46 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
 
     //============================================================================
-    private fun Valadate(): Boolean
-    {
+    private fun Valadate(): Boolean {
         var valid = true
 
-        if (min.text.toString().trim().equals(""))
-        {
-            min.setError("Surname is required")
+        if (min.text.toString().trim() == "") {
+            min.error = "Surname is required"
             valid = false
         }
-        if (max.text.toString().trim().equals(""))
-        {
-            max.setError("Surname is required")
+        if (max.text.toString().trim() == "") {
+            max.error = "Surname is required"
             valid = false
         }
 
         return valid
+    }
+
+    //============================================================================
+    // Function to add values to edit text - forgot the edit text isnt on this fragment
+    private fun addTimeToEditText(min: Int, max: Int, goalText: EditText) {
+        val textToSet = "Min: $min | Max: $max";
+        goalText.setText(textToSet)
+
+    }
+
+    //============================================================================
+    private fun formatGoalInput(inputValue: String): Int {
+        // Val to store value to split at
+        val valToSplit = inputValue.split(":")
+
+        // val to store hours of string
+        val hours = valToSplit[0].toInt()
+
+        // val to store minutes of string
+        val minutes = valToSplit[1].toInt()
+
+        // val to store total minutes
+        val totalMinutes = hours * 60 + minutes
+
+        // returning total minutes
+        return totalMinutes
+
     }
 
     //============================================================================
@@ -99,6 +125,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMax() {
         val calendar = Calendar.getInstance()
+
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute = calendar.get(Calendar.MINUTE)
 
@@ -109,7 +136,4 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
         timePickerDialog.show()
     }
-
-
-
 }
