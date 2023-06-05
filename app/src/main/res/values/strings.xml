@@ -56,5 +56,9 @@
     <string name="aaDescHeading">Description</string>
     <string name="aaDescInput">Tap to set the description</string>
 
+    <!--Logs-->
+    <string name="LogsHeading">Logs</string>
+
+
 
 </resources>

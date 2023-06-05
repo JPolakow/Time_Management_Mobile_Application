@@ -3,21 +3,15 @@ package com.example.opsc_part2
 import Classes.ToolBox
 
 import TimerManager
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.animation.AccelerateInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
@@ -148,7 +142,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 play.setOnClickListener {
                     if (customCard.isTimerRunning) {
                         // Pause the timer
-                        TimerManager.pauseTimer(this ,customCard)
+                        TimerManager.pauseTimer(this, customCard)
                         play.setImageResource(R.drawable.play_circle_48px)
                         customCard.isTimerRunning = true
                     } else {
