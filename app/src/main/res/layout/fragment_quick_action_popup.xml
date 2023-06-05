@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuickActionPopup">
+
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:background="@android:color/transparent"
             android:layout_marginBottom="16dp"
             android:text="Create Activity" />
@@ -29,7 +30,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_below="@id/btnCreateActivity"
             android:background="@android:color/transparent"
             android:text="Create Category" />

@@ -91,13 +91,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         params.topMargin = 25
         imgProfileImg.layoutParams = params
 
+        // ----------------- MENU ----------------------------
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
-                    val fragmentManager = supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.add(R.id.container, Statistics())
-                    transaction.commit()
+                    var toast = Toast.makeText(
+                        this,
+                        "Stats feature not available in prototype",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
                     true
                 }
                 R.id.Menu_Dashboard -> {
@@ -122,45 +125,47 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 else -> false
             }
         }
+        // ----------------- END OF MENU -----------------------------------
 
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.ActivitiesList) {
-            val customCard = custom_dashboard_cards(this)
-            customCard.setActivityName(card.ActivityName)
-            customCard.setActivityStartDate(card.DateCreated)
-            customCard.setCardColor(card.ActivityColor) // not dynamically added
-            customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
-            customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
+            if (card.ActivityUserID == ToolBox.ActiveUserID) {
+                val customCard = custom_dashboard_cards(this)
+                customCard.setActivityName(card.ActivityName)
+                customCard.setActivityStartDate(card.DateCreated)
+                customCard.setCardColor(card.ActivityColor) // not dynamically added
+                customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
+                customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
-            val timerText = customCard.findViewById<TextView>(R.id.txtTimerTick)
-            timerText.text = "00:00:00";
+                val timerText = customCard.findViewById<TextView>(R.id.txtTimerTick)
+                timerText.text = "00:00:00";
 
-            val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
-            val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
+                val play = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+                val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
 
-            play.setOnClickListener {
-                TimerManager.startTimer(customCard, timerText)
+                play.setOnClickListener {
+                    TimerManager.startTimer(customCard, timerText)
+                }
+
+                completeActivity.setOnClickListener {
+                    val fragment = complete_activity()
+
+                    // put data into fragment
+                    val args = Bundle()
+
+                    args.putString("color", card.ActivityColor)
+                    args.putString("duration", "2")
+                    args.putInt("id", card.ActivityID)
+                    args.putString("name", card.ActivityName)
+
+                    fragment.arguments = args
+                    fragment.show(supportFragmentManager, "completeActivity")
+                }
+
+                linView.addView(customCard)
             }
-
-            completeActivity.setOnClickListener {
-                val fragment = complete_activity()
-
-                // put data into fragment
-                val args = Bundle()
-
-                args.putString("color", card.ActivityColor)
-                args.putString("duration", "2")
-                args.putInt("id", card.ActivityID)
-                args.putString("name", card.ActivityName)
-
-                var a = 0
-
-                fragment.arguments = args
-                fragment.show(supportFragmentManager, "completeActivity")
-            }
-
-            linView.addView(customCard)
         }
+        // ----------------- END OF CUSTOM CARDS -------------------
 
 
         /*
@@ -168,41 +173,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         * Else if fragment is not visible when button clicked, then show fragment
         * */
         actionButt.setOnClickListener {
-
             showPopup()
             //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
         }
     }
-
-   /* private fun expandFabMenu() {
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(
-            ObjectAnimator.ofFloat(actionButt, "rotation", 0f, 45f),
-            ObjectAnimator.ofFloat(fabAddActivity, "translationY", 0f, -resources.getDimension(R.dimen.fab_margin)),
-            ObjectAnimator.ofFloat(fabAddCategory, "translationY", 0f, -2 * resources.getDimension(R.dimen.fab_margin)),
-        )
-        animatorSet.interpolator = AccelerateInterpolator()
-        animatorSet.duration = 300
-        buttonsLayout.visibility = View.VISIBLE
-        animatorSet.start()
-
-        isFabExpanded = true
-    }
-
-    private fun collapseFabMenu() {
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(
-            ObjectAnimator.ofFloat(actionButt, "rotation", 45f, 0f),
-            ObjectAnimator.ofFloat(fabAddActivity, "translationY", -resources.getDimension(R.dimen.fab_margin), 0f),
-            ObjectAnimator.ofFloat(fabAddCategory, "translationY", -2 * resources.getDimension(R.dimen.fab_margin), 0f),
-        )
-        animatorSet.interpolator = AccelerateInterpolator()
-        animatorSet.duration = 300
-        buttonsLayout.visibility = View.GONE
-        animatorSet.start()
-
-        isFabExpanded = false
-    }*/
 
     //============================================================================
     override fun onFragmentRequested(fragment: Fragment) {

@@ -37,8 +37,9 @@ class QuickActionPopup : BottomSheetDialogFragment() {
         }
 
         btnCreateGroup.setOnClickListener {
-            // Handle Create Group button click
-            // Perform the desired action
+            val fragment = Add_Catagory()
+            fragment.show(parentFragmentManager, "QuickActionPopup")
+            dismiss()
         }
         return view
     }

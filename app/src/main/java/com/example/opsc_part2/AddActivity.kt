@@ -62,7 +62,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         ColorInput = view.findViewById<EditText>(R.id.etColor)
         ivSubmit = view.findViewById<ImageButton>(R.id.ivSubmit)
         tvClose = view.findViewById<ImageButton>(R.id.ibClose)
-        DescriptionInput = view.findViewById(R.id.etDescription)
         CatagoryInput = view.findViewById(R.id.etCategory)
 
         //add goal
@@ -107,6 +106,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val name: String = NameInput.getText().toString().trim()
         val catagory: String = CatagoryInput.getText().toString().trim()
 
+
         if (TextUtils.isEmpty(name)) {
             NameInput.setError("Name is required")
             valid = false
@@ -141,6 +141,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val activityID = (ToolBox.ActivitiesList.count() + 1)
         //get user inputs
         val name = NameInput.text.toString().trim()
+        val catagory = CatagoryInput.text.toString().trim()
 
         val newActitivy =
             ActivityObject(
@@ -148,6 +149,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
                 currentUser,
                 name,
                 time,
+                catagory,
                 ToolBox.MinGoal,
                 ToolBox.MaxGoal,
                 SelectedColor

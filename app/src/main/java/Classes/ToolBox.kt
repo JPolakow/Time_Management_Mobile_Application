@@ -32,36 +32,40 @@ class ToolBox {
 
         val ActivitiesList = mutableListOf<ActivityObject>(
             ActivityObject(
-                1,
-                1,
+                0,
+                0,
                 "Open-Source",
+                "Collage",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 2,
                 4,
                 "Light-Blue"
             ),
             ActivityObject(
-                2,
-                2,
+                1,
+                0,
                 "Programming",
+                "Collage",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 6,
                 8,
                 "Red"
             ),
             ActivityObject(
-                3,
-                3,
+                2,
+                0,
                 "Research",
+                "Collage",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 1,
                 3,
                 "Pink"
             ),
             ActivityObject(
-                4,
-                4,
+                3,
+                0,
                 "Project Management",
+                "Collage",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 3,
                 7,
