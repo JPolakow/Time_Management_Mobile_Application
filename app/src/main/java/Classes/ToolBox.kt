@@ -16,6 +16,10 @@ class ToolBox {
             WorkEntriesObject(1, "Name",1, 5, "1/1/12", "4", "Red")
         )
 
+        val CatagoryList = mutableListOf<CatagoryObject>(
+            CatagoryObject("Collage", 1)
+        )
+
         val UsersList = mutableListOf<ActiveUserClass>(
             //default user, password = pass
             ActiveUserClass(

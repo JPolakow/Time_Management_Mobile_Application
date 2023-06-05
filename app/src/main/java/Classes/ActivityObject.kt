@@ -16,9 +16,5 @@ class ActivityObject(
     val ActivityColor: String,
     //val ActivityDescription: String,
     var timer: Timer? = null,
-
-
-
-
     ) {
 }

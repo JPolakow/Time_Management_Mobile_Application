@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
+import Classes.CatagoryObject
 import Classes.ToolBox
 import android.content.DialogInterface
 import android.content.Intent
@@ -41,6 +42,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private lateinit var GoalInput: EditText
     private lateinit var DescriptionInput: EditText
     private var SelectedColor: String = ""
+    private var SelectedCatagory: String = ""
 
     //pressables
     private lateinit var ivSubmit: ImageButton
@@ -71,6 +73,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         //pick color
         ColorInput.setOnClickListener {
             showColorPickerDialog()
+        }
+
+        //pick catagory
+        CatagoryInput.setOnClickListener {
+            showCatagoryPickerDialog()
         }
 
         //submit button
@@ -136,7 +143,15 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val name = NameInput.text.toString().trim()
 
         val newActitivy =
-            ActivityObject(activityID, currentUser, name, time, ToolBox.MinGoal, ToolBox.MaxGoal, SelectedColor)
+            ActivityObject(
+                activityID,
+                currentUser,
+                name,
+                time,
+                ToolBox.MinGoal,
+                ToolBox.MaxGoal,
+                SelectedColor
+            )
         ToolBox.ActivitiesList.add(newActitivy)
 
         ToolBox.MinGoal = -1
@@ -157,6 +172,36 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
                 SelectedColor = colorNames[selectedColor]
                 displaySelected += SelectedColor
                 ColorInput.setText(displaySelected)
+
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //============================================================================
+    //catagory picker
+    private fun showCatagoryPickerDialog() {
+
+        val catagoryNames = mutableListOf<String>()
+
+        for (item in ToolBox.CatagoryList) {
+            val secondIndexEntry = item.CatagoryName
+            catagoryNames.add(secondIndexEntry)
+        }
+
+        var displaySelected = "Catagory: ";
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Pick a catagory")
+            .setItems(catagoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
+                val selectedCatagory = which
+
+                SelectedCatagory = catagoryNames[selectedCatagory]
+                displaySelected += SelectedCatagory
+                CatagoryInput.setText(displaySelected)
 
                 dialog.dismiss()
             }

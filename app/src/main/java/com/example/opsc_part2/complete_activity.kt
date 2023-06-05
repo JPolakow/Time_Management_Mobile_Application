@@ -26,33 +26,30 @@ class complete_activity : BottomSheetDialogFragment() {
     private var paraActivityID: Int? = null
     private var paraDuration: String? = null
     private var paraColor: String? = null
-    private var paraName:String? =null
+    private var paraName: String? = null
 
     private lateinit var btnAddImage: Button
     private lateinit var btnSave: Button
     private var image: Bitmap? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val View = inflater.inflate(R.layout.fragment_complete_activity, container, false)
+        val view = inflater.inflate(R.layout.fragment_complete_activity, container, false)
 
         paraColor = arguments?.getString("color")
         paraDuration = arguments?.getString("duration")
         paraActivityID = arguments?.getInt("id")
         paraName = arguments?.getString("name")
 
-        btnSave = View.findViewById<Button>(R.id.btnSave)
-        btnSave.setOnClickListener()
-        {
+        btnSave = view.findViewById<Button>(R.id.btnSave)
+        btnSave.setOnClickListener {
             AddEntry()
         }
 
-        btnAddImage = View.findViewById<Button>(R.id.btnAddImage)
-        btnAddImage.setOnClickListener()
-        {
+        btnAddImage = view.findViewById<Button>(R.id.btnAddImage)
+        btnAddImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.CAMERA
@@ -68,11 +65,11 @@ class complete_activity : BottomSheetDialogFragment() {
             }
         }
 
-        return View
+        return view
     }
 
     //============================================================================
-    //call the camera
+    // call the camera
     private fun startCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
@@ -83,7 +80,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //when camera is done get the image
+    // when the camera is done get the image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ProfileFragment.CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -93,7 +90,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //add data to object array
+    // add data to object array
     private fun AddEntry() {
         try {
             val newWorkEntriesObject =
@@ -114,13 +111,14 @@ class complete_activity : BottomSheetDialogFragment() {
             }
 
             ToolBox.WorkEntriesList.add(newWorkEntriesObject)
-        } catch (Ex: java.lang.Exception) {
-            var a = Ex
+            dismiss()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
     }
 
     //============================================================================
-    //constructor
+    // constructor
     companion object {
         private const val CAMERA_PERMISSION_CODE = 100
         private const val CAMERA_REQUEST_CODE = 200

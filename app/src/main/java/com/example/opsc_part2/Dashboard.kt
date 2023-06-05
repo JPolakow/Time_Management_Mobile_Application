@@ -137,6 +137,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             }
 
             completeActivity.setOnClickListener {
+                val fragment = complete_activity()
 
                 // put data into fragment
                 val args = Bundle()
@@ -149,7 +150,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 var a = 0
 
                 fragment.arguments = args
-                showEndActivity()
+                fragment.show(supportFragmentManager, "completeActivity")
             }
 
             linView.addView(customCard)
@@ -178,13 +179,5 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun showPopup() {
         val fragment = QuickActionPopup()
         fragment.show(supportFragmentManager, "QuickActionPopup")
-    }
-
-    private fun showEndActivity()
-    {
-        val fragment = complete_activity()
-        fragment.show(supportFragmentManager, "completeActivity")
-
-
     }
 }
