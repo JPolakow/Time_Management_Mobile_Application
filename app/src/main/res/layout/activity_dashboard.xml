@@ -46,26 +46,47 @@
         <!--End of title-->
 
         <!--Headings-->
-        <TextView
-            android:id="@+id/tvRecentTasks"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearTimerStuff"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvDisplayName"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="34dp"
-            android:text="@string/recentTasksHeading"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="48dp"
+            android:layout_below="@+id/tvDisplayName"
+            >
+            <TextView
+                android:id="@+id/tvActivityNameTimer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Programmming"
+                android:layout_marginLeft="16dp"
+                android:layout_below="@id/tvCategory"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                />
+
+            <TextView
+                android:id="@+id/tvDisplayTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="00:00:00"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvRecentTasks"
+            android:layout_below="@+id/linearTimerStuff"
             android:layout_marginStart="16dp"
             android:alpha="0.7"
             android:textColor="@color/black"
             android:textSize="22sp" />
+
 
         <!--End of headings-->
 
