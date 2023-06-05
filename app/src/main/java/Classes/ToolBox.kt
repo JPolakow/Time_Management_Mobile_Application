@@ -11,6 +11,9 @@ class ToolBox {
         var MinGoal: Int = -1
         var MaxGoal: Int = -1
 
+        //used to store selected catagory
+        var SelectedCatagory: String = "None"
+
         //object arrays
         val WorkEntriesList = mutableListOf<WorkEntriesObject>(
             WorkEntriesObject(1, "Name",1, 5, "1/1/12", "4", "Red")
