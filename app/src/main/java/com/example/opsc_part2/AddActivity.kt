@@ -141,15 +141,14 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         val activityID = (ToolBox.ActivitiesList.count() + 1)
         //get user inputs
         val name = NameInput.text.toString().trim()
-        val catagory = CatagoryInput.text.toString().trim()
 
         val newActitivy =
             ActivityObject(
                 activityID,
                 currentUser,
                 name,
+                SelectedCatagory,
                 time,
-                catagory,
                 ToolBox.MinGoal,
                 ToolBox.MaxGoal,
                 SelectedColor
@@ -164,7 +163,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //color picker
     private fun showColorPickerDialog() {
 
-        var displaySelected = "Color: ";
+        var displaySelected = "";
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a color")
@@ -194,7 +193,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             catagoryNames.add(secondIndexEntry)
         }
 
-        var displaySelected = "Catagory: ";
+        var displaySelected = "";
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a catagory")
