@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.Timer
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -31,9 +32,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var tvCategory: TextView
-    private var TimerOutput: String = "00:00:00"
     private lateinit var linView: LinearLayout
     private lateinit var tvRecentTasks: TextView
+
+    private var TimerOutput: String = "00:00:00"
+    private var TimerName: String = ""
 
     //timer vars
     private fun makeTimeString(hour: Int, min: Int, sec: Int): String =
@@ -43,7 +46,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private var timerStarted = false
     private lateinit var serviceIntent: Intent
     private var time = 0.0
-    private lateinit var helpme: custom_dashboard_cards
 
     //============================================================================
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -214,10 +216,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
                 ibPausePlay.setOnClickListener()
                 {
-                    if (timerStarted) {
+                    if (timerStarted && card.ActivityName.equals(TimerName)) {
                         stopTimer()
                         Log.d("timer", "started")
+                    } else if (timerStarted) {
+                        stopTimer()
+                        resetTimer()
+                        TimerName = card.ActivityName
+                        startTimer()
                     } else {
+                        TimerName = card.ActivityName
                         startTimer()
                     }
                 }
