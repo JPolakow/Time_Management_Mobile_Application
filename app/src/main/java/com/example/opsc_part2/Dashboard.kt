@@ -137,9 +137,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             }
 
             completeActivity.setOnClickListener {
-                val fragmentManager = supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-                val fragment = complete_activity()
 
                 // put data into fragment
                 val args = Bundle()
@@ -152,8 +149,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 var a = 0
 
                 fragment.arguments = args
-                transaction.add(R.id.container, fragment)
-                transaction.commit()
                 showEndActivity()
             }
 
