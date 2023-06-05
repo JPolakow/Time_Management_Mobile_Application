@@ -144,8 +144,21 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinsih)
 
                 play.setOnClickListener {
-                    TimerManager.startTimer(customCard, timerText)
+                    if (customCard.isTimerRunning) {
+                        // Pause the timer
+                        TimerManager.pauseTimer(customCard)
+                        play.setImageResource(R.drawable.play_circle_48px)
+                        customCard.isTimerRunning = true
+                    } else {
+                        // Start the timer
+                        TimerManager.startTimer(customCard, timerText)
+                        play.setImageResource(R.drawable.pause_circle_48px)
+                        customCard.isTimerRunning = false
+
+                    }
+                    customCard.isTimerRunning = !customCard.isTimerRunning
                 }
+
 
                 completeActivity.setOnClickListener {
                     val fragment = complete_activity()
@@ -164,31 +177,30 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 linView.addView(customCard)
             }
-        }
+            }
         // ----------------- END OF CUSTOM CARDS -------------------
 
 
-        /*
-        * If fragment is visible, hide when button is clicked
-        * Else if fragment is not visible when button clicked, then show fragment
-        * */
-        actionButt.setOnClickListener {
-            showPopup()
-            //isFragmentVisible = true  // Setting visible to true if fragment is shown | Was only used with other load method
+            /*
+            * If fragment is visible, hide when button is clicked
+            * Else if fragment is not visible when button clicked, then show fragment
+            * */
+            actionButt.setOnClickListener {
+                showPopup()
+            }
+        }
+
+        //============================================================================
+        override fun onFragmentRequested(fragment: Fragment) {
+            // Replace the current fragment on the dashboard with the requested fragment
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit()
+        }
+
+        //============================================================================
+        private fun showPopup() {
+            val fragment = QuickActionPopup()
+            fragment.show(supportFragmentManager, "QuickActionPopup")
         }
     }
-
-    //============================================================================
-    override fun onFragmentRequested(fragment: Fragment) {
-        // Replace the current fragment on the dashboard with the requested fragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
-    }
-
-    //============================================================================
-    private fun showPopup() {
-        val fragment = QuickActionPopup()
-        fragment.show(supportFragmentManager, "QuickActionPopup")
-    }
-}

@@ -37,13 +37,14 @@
 
             <ImageButton
                 android:id="@+id/ibFinsih"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="6dp"
+                android:tooltipText="Complete Activity"
                 android:contentDescription="swd"
                 android:layout_above="@id/txtTimerTick"
                 android:layout_marginLeft="350dp"
-                android:src="@drawable/close_48px"
+                android:src="@drawable/add_task_48px"
                 android:background="@null"
                 />
 

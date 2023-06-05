@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 
 class custom_dashboard_cards @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,  var isTimerRunning: Boolean = false
+
 
 ) : LinearLayout(context, attrs) {
     init {
@@ -72,4 +73,6 @@ class custom_dashboard_cards @JvmOverloads constructor(
         val cardLayout = findViewById<androidx.cardview.widget.CardView>(R.id.cardView)
         cardLayout.backgroundTintList = colorToSet
     }
+
+
 }
