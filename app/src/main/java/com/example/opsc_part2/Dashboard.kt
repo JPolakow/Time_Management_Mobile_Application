@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ToolBox
+import Classes.WorkEntriesObject
 import android.annotation.SuppressLint
 import android.content.*
 import android.content.DialogInterface
@@ -180,6 +181,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //load custom ui elements
     private fun loadCustomUI() {
         linView.removeAllViews()
+
 
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.ActivitiesList) {

@@ -17,7 +17,7 @@ class ToolBox {
 
         //object arrays
         val WorkEntriesList = mutableListOf<WorkEntriesObject>(
-            WorkEntriesObject(1, "Name",1, 5, "1/1/12", "4", "Red")
+            WorkEntriesObject(1, "Name", "College",1, 5, "1/1/12", "4", "Red")
         )
 
         val CategoryList = mutableListOf<CategoryObject>(

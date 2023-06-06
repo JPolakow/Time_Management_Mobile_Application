@@ -14,10 +14,6 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
-
-
-
-
     //ui vars
     private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
