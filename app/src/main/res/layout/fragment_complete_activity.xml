@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuickActionPopup">
+
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:text="Activity Complete"
             android:gravity="center"
-            android:textSize="24sp"
+            android:textSize="27sp"
             android:textColor="@color/white"
             />
 
@@ -32,9 +33,10 @@
             android:layout_marginStart="40dp"
             android:layout_below="@+id/tvActivityComplete"
             android:layout_marginEnd="40dp"
-            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
             android:background="@android:color/transparent"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="14dp"
             android:text="Add Image" />
 
 
@@ -131,7 +133,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_below="@id/linearRating"
             android:background="@android:color/transparent"
             android:text="Save" />
