@@ -34,6 +34,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var tvCategory: TextView
     private lateinit var linView: LinearLayout
     private lateinit var tvActNameTime: TextView
+    private lateinit var tvDisplayActivityName: TextView
 
     //timer vars
     private fun makeTimeString(hour: Int, min: Int, sec: Int): String =

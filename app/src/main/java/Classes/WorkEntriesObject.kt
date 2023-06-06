@@ -10,7 +10,7 @@ class WorkEntriesObject(
     val WEUserID: Int,
     val WERating: Int,
     val WEDateEnded: String,
-    val WEDuration: String,
+    val WEDuration: Double,
     val WEColor: String,
     ) {
 
