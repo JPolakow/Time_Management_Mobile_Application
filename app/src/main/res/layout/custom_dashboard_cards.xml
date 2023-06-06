@@ -35,32 +35,7 @@
                 android:textColor="#80000000"
                 android:textSize="18sp" />
 
-            <ImageButton
-                android:id="@+id/ibFinish"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="6dp"
-                android:contentDescription="@string/contentDesFinish"
-                android:layout_above="@id/txtTimerTick"
-                android:layout_marginStart="350dp"
-                android:src="@drawable/add_task_48px"
-                android:background="@null"
-                />
 
-
-            <TextView
-                android:id="@+id/txtTimerTick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="0dp"
-                android:layout_toEndOf="@id/tvActivityName"
-                android:layout_below="@+id/tvDateCreated"
-                android:gravity="end"
-                android:text="@string/timerDefault"
-                android:textColor="#FF000000"
-                android:textSize="22sp"
-                app:drawableLeftCompat="@drawable/timer_48px" />
 
             <TextView
                 android:id="@+id/tvActivityName"
@@ -75,16 +50,46 @@
                 android:textColor="#FF000000"
                 android:textSize="18sp" />
 
+            <LinearLayout
+                android:id="@+id/linearIcons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1" />
+
             <ImageButton
                 android:id="@+id/ibPausePlay"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_below="@+id/txtTimerTick"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="70dp"
                 android:background="@null"
                 android:contentDescription="@string/contentDesPausePlay"
                 android:src="@drawable/play_circle_48px" />
+
+                <ImageButton
+                    android:id="@+id/ibPause"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:contentDescription="@string/contentDesPausePlay"
+                    android:src="@drawable/pause_circle_48px" />
+
+                <ImageButton
+                    android:id="@+id/ibStop"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="70dp"
+                    android:background="@null"
+                    android:contentDescription="@string/contentDesPausePlay"
+                    android:src="@drawable/stop_circle_48px" />
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvMinGoal"

@@ -17,12 +17,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.opsc_part2.databinding.FragmentLogsBinding
+import android.app.DatePickerDialog
+import android.widget.EditText
+import java.util.*
 
 class Logs : Fragment(R.layout.fragment_logs) {
-
     private lateinit var linView: LinearLayout
-    private lateinit var selectCatagory: TextView
-    private var filterSelectedCatagory: String = ""
+    private lateinit var  etStartDatePick: EditText
+    private lateinit var etEndDatePick: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,22 +32,67 @@ class Logs : Fragment(R.layout.fragment_logs) {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_logs, container, false)
 
-        linView = view.findViewById(R.id.linearProjectCards)
-        selectCatagory = view.findViewById(R.id.tvLogsHeading)
-        selectCatagory.setOnClickListener()
-        {
-            showCategoryPickerDialog { selectedCategory ->
-                selectCatagory.text = "Category: $selectedCategory"
-            }
+        etStartDatePick = view.findViewById(R.id.etStartDate)
+
+        etStartDatePick.setOnClickListener{
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    etStartDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
+                },
+                year,
+                month,
+                day
+            )
+            datePickerDialog.show()
         }
+
+        etEndDatePick = view.findViewById(R.id.etEndDate)
+
+        etStartDatePick.setOnClickListener{
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    etEndDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
+                },
+                year,
+                month,
+                day
+            )
+            datePickerDialog.show()
+        }
+
+        linView = view.findViewById(R.id.linearProjectCards)
 
         populate()
 
         return view
     }
 
-    //============================================================================
-    //catagory picker
+    private fun populate() {
+        // ----------------- Creating a new card with custom attributes ----------------- //
+        for (card in ToolBox.WorkEntriesList) {
+
+            val customCard = custom_logs_cards(requireContext())
+            customCard.setActivityName(card.WEActivityName)
+            customCard.setCardColor(card.WEColor)
+            customCard.setActivityDuaration(card.WEDuration)
+            customCard.setActivityEndDate(card.WEDateEnded)
+
+            linView.addView(customCard)
+        }
+    }
+
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
         val catagoryNames = mutableListOf<String>()
@@ -62,8 +109,10 @@ class Logs : Fragment(R.layout.fragment_logs) {
             .setItems(catagoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
                 val selectedCatagory = which
 
-                filterSelectedCatagory = catagoryNames[selectedCatagory]
-                callback(filterSelectedCatagory)
+                ToolBox.SelectedCategory = catagoryNames[selectedCatagory]
+                displaySelected += ToolBox.SelectedCategory
+//                tvCategory.setText(displaySelected)
+                callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
             }.setCancelable(false)

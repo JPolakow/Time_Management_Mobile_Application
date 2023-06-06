@@ -1,7 +1,6 @@
 package com.example.opsc_part2
 
 import Classes.ToolBox
-import Classes.WorkEntriesObject
 import android.annotation.SuppressLint
 import android.content.*
 import android.content.DialogInterface
@@ -182,7 +181,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun loadCustomUI() {
         linView.removeAllViews()
 
-
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.ActivitiesList) {
             if (card.ActivityUserID == ToolBox.ActiveUserID && card.ActivityCategory.equals(
@@ -196,11 +194,17 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
                 customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
-                val completeActivity = customCard.findViewById<ImageButton>(R.id.ibFinish)
+                val completeActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
 
 
                 //complete the activity
                 completeActivity.setOnClickListener {
+
+                    stopTimer()
+                    resetTimer() // Check this
+                    TimerName = card.ActivityName
+                    //startTimer()
+
                     val fragment = complete_activity()
 
                     // put data into fragment
@@ -214,25 +218,25 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                     fragment.arguments = args
                     fragment.show(supportFragmentManager, "completeActivity")
+
+
+                }
+
+
+                val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
+
+                ibPause.setOnClickListener{
+                    stopTimer()
+                    Log.d("timer", "started")
+
                 }
 
                 //timer
                 val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
                 ibPausePlay.setOnClickListener()
                 {
-                    if (timerStarted && card.ActivityName.equals(TimerName)) {
-                        stopTimer()
-                        ibPausePlay.setImageResource(R.drawable.play_circle_48px)
-                    } else if (timerStarted) {
-                        stopTimer()
-                        resetTimer()
-                        TimerName = card.ActivityName
-                        startTimer()
-                    } else {
-                        TimerName = card.ActivityName
-                        startTimer()
-                        ibPausePlay.setImageResource(R.drawable.pause_circle_48px)
-                    }
+                    TimerName = card.ActivityName
+                    startTimer()
                 }
 
                 //add to the page
@@ -245,9 +249,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //============================================================================
     //start the timer
     private fun startTimer() {
+        Log.d("timer", "started1")
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
         startService(serviceIntent)
         timerStarted = true
+        Log.d("timer", "started2")
     }
 
     //============================================================================
@@ -261,8 +267,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
+            Log.d("timer", "updating")
             time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
             tvActNameTime.text = getTimeStringFromDouble(time)
+            Log.d("timer", "updating2")
         }
     }
 
