@@ -44,7 +44,8 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 60.0,
                 180.0,
-                "Light-Blue"
+                "Light-Blue",
+                "A whole lot of nonsense"
             ),
             ActivityObject(
                 1,
@@ -54,7 +55,8 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 40.0,
                 120.0,
-                "Red"
+                "Red",
+                "Best subject ever!"
             ),
             ActivityObject(
                 2,
@@ -64,7 +66,8 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 120.0,
                 240.0,
-                "Pink"
+                "Pink",
+                "Worst Subject Ever!"
             ),
             ActivityObject(
                 3,
@@ -74,7 +77,8 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 30.0,
                 60.0,
-                "Blue"
+                "Blue",
+                "A waste of Time!"
             )
         )
     }
