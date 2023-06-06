@@ -27,174 +27,130 @@ class Logs : Fragment(R.layout.fragment_logs) {
     private lateinit var btnSelectCategory: Button
     private lateinit var btnFilter: Button
     private var SelectedCatagory = String()
+    private lateinit var btnClear: Button
 
     //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_logs, container, false)
-        linView = view.findViewById(R.id.linearProjectCards)
 
-        btnFilter = view.findViewById(R.id.btnFilter)
-        btnFilter.setOnClickListener() {
-            LoadFilters()
-        }
+        try {
+            linView = view.findViewById(R.id.linearProjectCards)
 
-        btnSelectCategory = view.findViewById(R.id.btnSelectCategory)
-        btnSelectCategory.setOnClickListener() {
-            showCategoryPickerDialog(0) { selectedCategory ->
-                val showCategoryText = "Category: $selectedCategory"
-                btnSelectCategory.text = showCategoryText
+            btnFilter = view.findViewById(R.id.btnFilter)
+            btnFilter.setOnClickListener() {
+                LoadFilters()
             }
+
+            btnSelectCategory = view.findViewById(R.id.btnSelectCategory)
+            btnSelectCategory.setOnClickListener() {
+                showCategoryPickerDialog(0) { selectedCategory ->
+                    val showCategoryText = "Category: $selectedCategory"
+                    btnSelectCategory.text = showCategoryText
+                }
+            }
+
+            etStartDatePick = view.findViewById(R.id.etStartDate)
+            etStartDatePick.setOnClickListener {
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                        etStartDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
+                    }, year, month, day
+                )
+                datePickerDialog.show()
+            }
+
+            etEndDatePick = view.findViewById(R.id.etEndDate)
+            etEndDatePick.setOnClickListener {
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                        etEndDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
+                    }, year, month, day
+                )
+                datePickerDialog.show()
+            }
+
+            btnClear = view.findViewById(R.id.btnClear)
+            btnClear.setOnClickListener()
+            {
+                linView.removeAllViews()
+                LoadFilters()
+                SelectedCatagory = String()
+                etEndDatePick.text.clear()
+                etStartDatePick.text.clear()
+
+            }
+
+            LoadFilters()
+
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
-
-        etStartDatePick = view.findViewById(R.id.etStartDate)
-        etStartDatePick.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(
-                requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                    etStartDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
-                }, year, month, day
-            )
-            datePickerDialog.show()
-        }
-
-        etEndDatePick = view.findViewById(R.id.etEndDate)
-        etEndDatePick.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(
-                requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                    etEndDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
-                }, year, month, day
-            )
-            datePickerDialog.show()
-        }
-
-        LoadFilters()
 
         return view
     }
 
     //============================================================================
-    private fun filterDatesAndCategory(
-        workEntries: List<WorkEntriesObject>,
-        startDate: String,
-        endDate: String,
-        selectedCategory: String
-    ): List<WorkEntriesObject> {
-
-        val filteredList = mutableListOf<WorkEntriesObject>()
-        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val startDateTime = dateFormatter.parse(startDate)
-        val endDateTime = dateFormatter.parse(endDate)
-
-        for (entry in workEntries) {
-            val entryDate = dateFormatter.parse(entry.WEDateEnded)
-            if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory) {
-                filteredList.add(entry)
-            }
-        }
-        return filteredList
-    }
-
-    //============================================================================
-    private fun filterDates(
-        workEntries: List<WorkEntriesObject>, startDate: String, endDate: String
-    ): List<WorkEntriesObject> {
-
-        val filteredList = mutableListOf<WorkEntriesObject>()
-        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val startDateTime = dateFormatter.parse(startDate)
-        val endDateTime = dateFormatter.parse(endDate)
-
-        for (entry in workEntries) {
-            val entryDate = dateFormatter.parse(entry.WEDateEnded)
-            if (entryDate in startDateTime..endDateTime) {
-                filteredList.add(entry)
-            }
-        }
-        return filteredList
-    }
-
-    //============================================================================
-    private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
-
-        var uniqueCatagoriesIN = ToolBox.CategoryList
-            .filter { it.CategoryUserID == ToolBox.ActiveUserID }
-            .map { it.CategoryName }
-            .distinct()
-
-        val uniqueCatagories = listOf<String>("None", *uniqueCatagoriesIN.toTypedArray())
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pick a catagory").setSingleChoiceItems(
-            uniqueCatagories.toTypedArray(), defaultIndex
-        ) { dialog: DialogInterface, which: Int ->
-            val selectedCatagory = which
-
-            SelectedCatagory = uniqueCatagories[selectedCatagory]
-            callback(SelectedCatagory)
-
-            dialog.dismiss()
-        }.setCancelable(false)
-
-        val dialog = builder.create()
-        dialog.show()
-    }
-
-    //============================================================================
-
     private fun LoadFilters() {
-        linView.removeAllViews()
-        var dateFilerBool = false
+        try {
+            linView.removeAllViews()
+            var dateFilerBool = false
 
-        if (etEndDatePick.text.isNotEmpty() && etStartDatePick.text.isNotEmpty()) {
-            dateFilerBool = true
+            if (etEndDatePick.text.isNotEmpty() && etStartDatePick.text.isNotEmpty()) {
+                dateFilerBool = true
+            }
+            val filtered: List<WorkEntriesObject>
+
+            if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool) {
+                //category and date
+                filtered = filterDatesAndCategory(
+                    ToolBox.WorkEntriesList,
+                    etStartDatePick.text.toString(),
+                    etEndDatePick.text.toString(),
+                    SelectedCatagory
+                )
+                populate(filtered)
+                return
+            } else if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool == false) {
+                //only category
+                filtered = filterWorkEntries(ToolBox.WorkEntriesList, SelectedCatagory, null)
+                populate(filtered)
+                return
+            } else if (SelectedCatagory == "None" && dateFilerBool) {
+                //only Dates
+                filtered = filterDates(
+                    ToolBox.WorkEntriesList,
+                    etStartDatePick.text.toString(),
+                    etEndDatePick.text.toString()
+                )
+                populate(filtered)
+                return
+            } else {
+                //no filter
+                filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
+                populate(filtered)
+
+                return
+            }
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
-        val filtered: List<WorkEntriesObject>
-
-        if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool) {
-            //category and date
-            filtered = filterDatesAndCategory(
-                ToolBox.WorkEntriesList,
-                etStartDatePick.text.toString(),
-                etEndDatePick.text.toString(),
-                SelectedCatagory
-            )
-            populate(filtered)
-            return
-        } else if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool == false) {
-            //only category
-            filtered = filterWorkEntries(ToolBox.WorkEntriesList, SelectedCatagory, null)
-            populate(filtered)
-            return
-        } else if (SelectedCatagory == "None" && dateFilerBool) {
-            //only Dates
-            filtered = filterDates(
-                ToolBox.WorkEntriesList,
-                etStartDatePick.text.toString(),
-                etEndDatePick.text.toString()
-            )
-            populate(filtered)
-            return
-        } else {
-            //no filter
-            filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
-            populate(filtered)
-
-            return
-        }
-
     }
 
+    //============================================================================
     // Function to filter work entries based on the provided filters
     fun filterWorkEntries(
         entries: List<WorkEntriesObject>, selectedCategory: String?, selectedTime: String?
@@ -214,50 +170,140 @@ class Logs : Fragment(R.layout.fragment_logs) {
         }
     }
 
-
     //============================================================================
     //load custom cards
     private fun populate(filtered: List<WorkEntriesObject>) {
-        // ----------------- Creating a new card with custom attributes ----------------- //
-        for (card in filtered) {
-            val customCard = custom_logs_cards(requireContext())
-            customCard.setActivityName(card.WEActivityName)
-            customCard.setCardColor(card.WEColor)
-            customCard.setActivityDuaration(card.WEDuration)
-            customCard.setActivityEndDate(card.WEDateEnded.toString())
+        try {
+            // ----------------- Creating a new card with custom attributes ----------------- //
+            for (card in filtered) {
+                val customCard = custom_logs_cards(requireContext())
+                customCard.setActivityName(card.WEActivityName)
+                customCard.setCardColor(card.WEColor)
+                customCard.setActivityDuaration(card.WEDuration)
+                customCard.setActivityEndDate(card.WEDateEnded.toString())
+                customCard.setRating(card.WERating)
+                customCard.setRatingColor(card.WERating)
 
-            if (card.getSavedImage() != null) {
-                customCard.SetImage(card.getSavedImage()!!)
+                if (card.getSavedImage() != null) {
+                    customCard.SetImage(card.getSavedImage()!!)
+                }
+
+                var imgActivity = customCard.findViewById<ImageView>(R.id.imgActivity)
+                imgActivity.setOnClickListener {
+                    enlargeImage(imgActivity)
+                }
+
+                linView.addView(customCard)
             }
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
+    }
 
-            var imgActivity = customCard.findViewById<ImageView>(R.id.imgActivity)
-            imgActivity.setOnClickListener {
-                enlargeImage(imgActivity)
-            }
+    //============================================================================
+    private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
+        try {
+            var uniqueCatagoriesIN = ToolBox.CategoryList
+                .filter { it.CategoryUserID == ToolBox.ActiveUserID }
+                .map { it.CategoryName }
+                .distinct()
 
-            linView.addView(customCard)
+            val uniqueCatagories = listOf<String>("None", *uniqueCatagoriesIN.toTypedArray())
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Pick a catagory").setSingleChoiceItems(
+                uniqueCatagories.toTypedArray(), defaultIndex
+            ) { dialog: DialogInterface, which: Int ->
+                val selectedCatagory = which
+
+                SelectedCatagory = uniqueCatagories[selectedCatagory]
+                callback(SelectedCatagory)
+
+                dialog.dismiss()
+            }.setCancelable(false)
+
+            val dialog = builder.create()
+            dialog.show()
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
     }
 
     //============================================================================
     //maximise and minimise the image on click
     private fun enlargeImage(imageView: ImageView) {
-        if (imageView.drawable == null) {
-            // No image present, do nothing
-            return
+        try {
+            if (imageView.drawable == null) {
+                // No image present, do nothing
+                return
+            }
+
+            val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+            dialog.setContentView(R.layout.enlarged_image)
+
+            val enlargedImageView = dialog.findViewById<ImageView>(R.id.enlargedImageView)
+            enlargedImageView.setImageDrawable(imageView.drawable)
+            enlargedImageView.scaleType = ImageView.ScaleType.FIT_CENTER
+
+            enlargedImageView.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialog.show()
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
+    }
 
-        val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-        dialog.setContentView(R.layout.enlarged_image)
+    //============================================================================
+    private fun filterDatesAndCategory(
+        workEntries: List<WorkEntriesObject>,
+        startDate: String,
+        endDate: String,
+        selectedCategory: String
+    ): List<WorkEntriesObject> {
+        val filteredList = mutableListOf<WorkEntriesObject>()
+        try {
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val startDateTime = dateFormatter.parse(startDate)
+            val endDateTime = dateFormatter.parse(endDate)
 
-        val enlargedImageView = dialog.findViewById<ImageView>(R.id.enlargedImageView)
-        enlargedImageView.setImageDrawable(imageView.drawable)
-        enlargedImageView.scaleType = ImageView.ScaleType.FIT_CENTER
-
-        enlargedImageView.setOnClickListener {
-            dialog.dismiss()
+            for (entry in workEntries) {
+                val entryDate = dateFormatter.parse(entry.WEDateEnded)
+                if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory) {
+                    filteredList.add(entry)
+                }
+            }
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
+        return filteredList
+    }
 
-        dialog.show()
+    //============================================================================
+    private fun filterDates(
+        workEntries: List<WorkEntriesObject>, startDate: String, endDate: String
+    ): List<WorkEntriesObject> {
+        val filteredList = mutableListOf<WorkEntriesObject>()
+        try {
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val startDateTime = dateFormatter.parse(startDate)
+            val endDateTime = dateFormatter.parse(endDate)
+
+            for (entry in workEntries) {
+                val entryDate = dateFormatter.parse(entry.WEDateEnded)
+                if (entryDate in startDateTime..endDateTime) {
+                    filteredList.add(entry)
+                }
+            }
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
+        return filteredList
     }
 }
