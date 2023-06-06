@@ -28,8 +28,11 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     //============================================================================
     private fun populate() {
-        // ----------------- Creating a new card with custom attributes ----------------- //
-        for (card in ToolBox.CategoryList) {
+        val filteredCatagories = ToolBox.CategoryList.filter { activity ->
+            activity.CategoryUserID == ToolBox.ActiveUserID
+        }
+
+        for (card in filteredCatagories) {
             val customCard = custom_stats_cards(requireContext())
             customCard.setCatagoryName("Name: ${card.CategoryName}")
 
