@@ -183,95 +183,98 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun loadCustomUI() {
         linView.removeAllViews()
 
+
+        val filteredBooks = ToolBox.ActivitiesList.filter { activity ->
+            activity.ActivityUserID == ToolBox.ActiveUserID
+        }.filter { activity ->
+            ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
+        }
+
+
         // ----------------- Creating a new card with custom attributes ----------------- //
-        for (card in ToolBox.ActivitiesList) {
-            if (card.ActivityUserID == ToolBox.ActiveUserID && card.ActivityCategory.equals(
-                    ToolBox.SelectedCategory
-                )
-            ) {
-                val customCard = custom_dashboard_cards(this)
-                customCard.setActivityName(card.ActivityName)
-                customCard.setActivityStartDate(card.DateCreated)
-                customCard.setCardColor(card.ActivityColor) // not dynamically added
-                customCard.setActivityMinGoal(
-                    "Min Goal: " + String.format(
-                        "%.1f", card.ActivityMinGoal / 60
-                    ) + "hrs"
-                )
-                customCard.setActivityMaxGoal(
-                    "Max Goal: " + String.format(
-                        "%.1f", card.ActivityMaxGoal / 60
-                    ) + "hrs"
-                )
+        for (card in filteredBooks) {
+            val customCard = custom_dashboard_cards(this)
+            customCard.setActivityName(card.ActivityName)
+            customCard.setActivityStartDate(card.DateCreated)
+            customCard.setCardColor(card.ActivityColor) // not dynamically added
+            customCard.setActivityMinGoal(
+                "Min Goal: " + String.format(
+                    "%.1f", card.ActivityMinGoal / 60
+                ) + "hrs"
+            )
+            customCard.setActivityMaxGoal(
+                "Max Goal: " + String.format(
+                    "%.1f", card.ActivityMaxGoal / 60
+                ) + "hrs"
+            )
 
-                val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
-                //complete the activity
-                stopActivity.setOnClickListener {
+            val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
+            //complete the activity
+            stopActivity.setOnClickListener {
 
-                    stopTimer()
-                    resetTimer() // Check this
+                stopTimer()
+                resetTimer() // Check this
 
-                    //startTimer()
+                //startTimer()
 
-                    val fragment = complete_activity()
+                val fragment = complete_activity()
 
-                    // put data into fragment
-                    val args = Bundle()
+                // put data into fragment
+                val args = Bundle()
 
-                    args.putString("color", card.ActivityColor)
-                    args.putString("duration", "2")
-                    args.putInt("id", card.ActivityID)
-                    args.putString("name", card.ActivityName)
-                    args.putString("category", card.ActivityCategory)
+                args.putString("color", card.ActivityColor)
+                args.putString("duration", "2")
+                args.putInt("id", card.ActivityID)
+                args.putString("name", card.ActivityName)
+                args.putString("category", card.ActivityCategory)
 
-                    fragment.arguments = args
-                    fragment.show(supportFragmentManager, "completeActivity")
-                }
-
-                val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
-                addNewEntry.setOnClickListener {
-                    val fragment = complete_activity()
-
-
-                    GlobalScope.launch {
-                        val returnType = showTimePickerDialogMin()
-
-                        withContext(Dispatchers.Main) {
-                            // Put data into fragment
-                            val args = Bundle()
-                            args.putString("color", card.ActivityColor)
-                            args.putString("duration", returnType)
-                            args.putInt("id", card.ActivityID)
-                            args.putString("name", card.ActivityName)
-                            args.putString("category", card.ActivityCategory)
-
-                            fragment.arguments = args
-                            fragment.show(supportFragmentManager, "completeActivity")
-                        }
-                    }
-
-
-                }
-
-                val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
-
-                ibPause.setOnClickListener() {
-                    stopTimer()
-                    Log.d("timer", "started")
-
-                }
-
-                //timer
-                val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
-                ibPausePlay.setOnClickListener() {
-                    tvDisplayActivityName.text = card.ActivityName
-                    startTimer()
-
-                }
-
-                //add to the page
-                linView.addView(customCard)
+                fragment.arguments = args
+                fragment.show(supportFragmentManager, "completeActivity")
             }
+
+            val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
+            addNewEntry.setOnClickListener {
+                val fragment = complete_activity()
+
+
+                GlobalScope.launch {
+                    val returnType = showTimePickerDialogMin()
+
+                    withContext(Dispatchers.Main) {
+                        // Put data into fragment
+                        val args = Bundle()
+                        args.putString("color", card.ActivityColor)
+                        args.putString("duration", returnType)
+                        args.putInt("id", card.ActivityID)
+                        args.putString("name", card.ActivityName)
+                        args.putString("category", card.ActivityCategory)
+
+                        fragment.arguments = args
+                        fragment.show(supportFragmentManager, "completeActivity")
+                    }
+                }
+
+
+            }
+
+            val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
+
+            ibPause.setOnClickListener() {
+                stopTimer()
+                Log.d("timer", "started")
+
+            }
+
+            //timer
+            val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+            ibPausePlay.setOnClickListener() {
+                tvDisplayActivityName.text = card.ActivityName
+                startTimer()
+
+            }
+
+            //add to the page
+            linView.addView(customCard)
         }
     }
 
@@ -341,10 +344,12 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
         val catagoryNames = mutableListOf<String>()
+        catagoryNames.add("None")
 
-        for (item in ToolBox.CategoryList) {
-            val secondIndexEntry = item.CategoryName
-            catagoryNames.add(secondIndexEntry)
+        ToolBox.CategoryList.forEach { catagory ->
+            if (catagory.CategoryUserID.equals(ToolBox.ActiveUserID)) {
+                catagoryNames.add(catagory.CategoryName)
+            }
         }
 
         var displaySelected = "Catagory: ";

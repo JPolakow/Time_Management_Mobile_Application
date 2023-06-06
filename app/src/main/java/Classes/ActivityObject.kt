@@ -11,5 +11,6 @@ class ActivityObject(
     val ActivityMinGoal: Double,
     val ActivityMaxGoal: Double,
     val ActivityColor: String,
+    val ActivityDescription: String,
     ) {
 }

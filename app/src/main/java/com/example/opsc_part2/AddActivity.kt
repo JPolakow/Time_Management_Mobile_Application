@@ -17,7 +17,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
-import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,10 +29,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         "Pink",
         "Light-Blue"
     )
-
-    //bind the front end, making it accessible
-    private var _binding: FragmentSignUpBinding? = null
-    private val binding get() = _binding!!
 
     //inputs
     private lateinit var nameInput: EditText
@@ -72,6 +67,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         ivSubmit = view.findViewById<ImageButton>(R.id.ivSubmit)
         tvClose = view.findViewById<ImageButton>(R.id.ibClose)
         categoryInput = view.findViewById(R.id.etCategory)
+
+
+
+        descriptionInput = view.findViewById(R.id.etName)
 
         //add goal
         goalInput.setOnClickListener {
@@ -140,8 +139,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             valid = false
         }
 
-        //add icon
-
         return valid
     }
 
@@ -163,6 +160,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val activityID = (ToolBox.ActivitiesList.count() + 1)
         //get user inputs
         val name = nameInput.text.toString().trim()
+        val desc = descriptionInput.text.toString().trim()
 
         val newActitivy =
             ActivityObject(
@@ -173,7 +171,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                 time,
                 minTime.toDouble(),
                 maxTime.toDouble(),
-                SelectedColor
+                SelectedColor,
+                desc,
             )
         ToolBox.ActivitiesList.add(newActitivy)
     }
