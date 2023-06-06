@@ -71,6 +71,9 @@
     <string name="minGoal">Min Goal: 02:00:00</string>
     <string name="maxGoal">Max Goal: 04:00:00</string>
 
+    <!-- profile settings-->
+    <string name="profileInformation">Information</string>
+
 
 
 </resources>
