@@ -113,9 +113,10 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMin() {
-        val hours = arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-        val minutes = arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
-
+        //HOURS
+        val hours = arrayOf(
+            "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
+        )
         val hourPicker = NumberPicker(requireContext())
         hourPicker.apply {
             minValue = 0
@@ -124,6 +125,9 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
             wrapSelectorWheel = true
         }
 
+        //MINUTES
+        val minutes =
+            arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
         val minutePicker = NumberPicker(requireContext())
         minutePicker.apply {
             minValue = 0
@@ -137,7 +141,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
         layout.addView(hourPicker)
         layout.addView(minutePicker)
 
-        val alertDialog = AlertDialog.Builder(requireContext())
+        val alertDialog = AlertDialog.Builder(requireContext(), R.style.CenteredDialog)
             .setTitle("Select Time")
             .setView(layout)
             .setPositiveButton("OK") { _, _ ->
@@ -156,9 +160,10 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMax() {
-        val hours = arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-        val minutes = arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
-
+        //HOURS
+        val hours = arrayOf(
+            "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
+        )
         val hourPicker = NumberPicker(requireContext())
         hourPicker.apply {
             minValue = 0
@@ -167,6 +172,9 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
             wrapSelectorWheel = true
         }
 
+        //MINUTES
+        val minutes =
+            arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
         val minutePicker = NumberPicker(requireContext())
         minutePicker.apply {
             minValue = 0
@@ -180,7 +188,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
         layout.addView(hourPicker)
         layout.addView(minutePicker)
 
-        val alertDialog = AlertDialog.Builder(requireContext())
+        val alertDialog = AlertDialog.Builder(requireContext(), R.style.CenteredDialog)
             .setTitle("Select Time")
             .setView(layout)
             .setPositiveButton("OK") { _, _ ->
