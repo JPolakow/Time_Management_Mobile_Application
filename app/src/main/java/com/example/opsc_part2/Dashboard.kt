@@ -258,7 +258,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 ibPause.setOnClickListener() {
                     stopTimer()
                     Log.d("timer", "started")
-
                 }
 
                 //timer
@@ -266,9 +265,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 ibPausePlay.setOnClickListener() {
                     tvDisplayActivityName.text = card.ActivityName
                     startTimer()
-
                 }
-
                 //add to the page
                 linView.addView(customCard)
             }
