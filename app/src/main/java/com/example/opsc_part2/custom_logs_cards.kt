@@ -53,6 +53,31 @@ class custom_logs_cards @JvmOverloads constructor(
     }
 
     //============================================================================
+    // Used to set the rating user has selected
+    fun setRating(ratingInt: Int) {
+        val tvRating = findViewById<TextView>(R.id.tvRating)
+
+        tvRating.text = ratingInt.toString()
+    }
+
+    //============================================================================
+    // Uses to set rating color
+    fun setRatingColor(ratingNumber: Int) {
+        val tvRating = findViewById<TextView>(R.id.tvRating)
+
+        val colorResource = when (ratingNumber) {
+            1 -> R.color.Red
+            2 -> R.color.Orange
+            3 -> R.color.Yellow
+            4 -> R.color.Green
+            5 -> R.color.Blue
+            else -> R.color.Blue // Replace with your default color resource ID
+        }
+        val colorToSet = ContextCompat.getColorStateList(context, colorResource)
+        tvRating.backgroundTintList = colorToSet
+    }
+
+    //============================================================================
     // Used to set the background color of card
     fun setCardColor(selectedColor: String) {
         val colorResource = when (selectedColor) {

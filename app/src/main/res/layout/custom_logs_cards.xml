@@ -50,6 +50,19 @@
                 app:drawableLeftCompat="@drawable/timer_48px" />
 
             <TextView
+                android:id="@+id/tvMyRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/txtDuration"
+                android:gravity="end"
+                android:text="My Rating: 1"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:fontFamily="@font/inter_regular" />
+
+            <TextView
                 android:id="@+id/tvActivityName"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
