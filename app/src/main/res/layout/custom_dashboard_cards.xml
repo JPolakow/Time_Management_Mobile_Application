@@ -54,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="16dp"
                 android:orientation="horizontal">
 
                 <Space
@@ -112,15 +113,17 @@
                 android:textColor="#90000000"
                 android:textSize="18sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/AddNewEntry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearIcons"
-                android:layout_marginLeft="60dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/tvMaxGoal"
-                android:text="Add New Entry" />
+                android:layout_marginEnd="16dp"
+                android:text="Add New Entry"
+                android:textSize="11sp"
+                app:icon="@drawable/add_48px" />
 
         </RelativeLayout>
 
