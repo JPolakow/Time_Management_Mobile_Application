@@ -220,27 +220,22 @@ class Logs : Fragment(R.layout.fragment_logs) {
     //load custom cards
     private fun populate(filtered: List<WorkEntriesObject>) {
         // ----------------- Creating a new card with custom attributes ----------------- //
-        Log.w("Log", "4")
         for (card in filtered) {
-            Log.w("Log", "5")
             val customCard = custom_logs_cards(requireContext())
             customCard.setActivityName(card.WEActivityName)
             customCard.setCardColor(card.WEColor)
             customCard.setActivityDuaration(card.WEDuration)
             customCard.setActivityEndDate(card.WEDateEnded.toString())
 
-            Log.w("Log", "6")
             if (card.getSavedImage() != null) {
                 customCard.SetImage(card.getSavedImage()!!)
             }
 
-            Log.w("Log", "7")
             var imgActivity = customCard.findViewById<ImageView>(R.id.imgActivity)
             imgActivity.setOnClickListener {
                 enlargeImage(imgActivity)
             }
 
-            Log.w("Log", "8")
             linView.addView(customCard)
         }
     }
