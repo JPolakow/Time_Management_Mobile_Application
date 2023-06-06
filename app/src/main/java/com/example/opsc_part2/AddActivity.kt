@@ -56,8 +56,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
 
         try {
 
-        }catch (ex: Exception)
-        {
+        } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
         }
@@ -112,8 +111,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     private fun validateForm(): Boolean {
         try {
 
-        }catch (ex: Exception)
-        {
+        } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
         }
@@ -148,8 +146,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     private fun addActivityToList() {
         try {
 
-        }catch (ex: Exception)
-        {
+        } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
         }
@@ -207,20 +204,20 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //catagory picker
     private fun showCategoryPickerDialog() {
         try {
-            val categoryNames = mutableListOf<String>()
+           // val categoryNames = mutableListOf<String>()
 
-            for (item in ToolBox.CategoryList) {
-                val secondIndexEntry = item.CategoryName
-                categoryNames.add(secondIndexEntry)
-            }
+            val uniqueCatagories = ToolBox.CategoryList
+                .filter { it.CategoryUserID == ToolBox.ActiveUserID }
+                .map { it.CategoryName }
+                .distinct()
 
             var displaySelected = "";
 
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("Pick a catagory")
-                .setItems(categoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
+                .setItems(uniqueCatagories.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
-                    SelectedCatagory = categoryNames[which]
+                    SelectedCatagory = uniqueCatagories[which]
                     displaySelected += SelectedCatagory
                     categoryInput.setText(displaySelected)
 

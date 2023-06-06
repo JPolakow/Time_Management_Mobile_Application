@@ -129,6 +129,12 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
         val categoryNames = mutableListOf<String>()
 
+        val uniqueCatagories = ToolBox.CategoryList
+            .filter { it.CategoryUserID == ToolBox.ActiveUserID }
+            .map { it.CategoryName }
+            .distinct()
+
+
         categoryNames.add("None")
 
         for (item in ToolBox.CategoryList) {

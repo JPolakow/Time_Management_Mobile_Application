@@ -21,7 +21,7 @@ class ToolBox {
         )
 
         val CategoryList = mutableListOf<CategoryObject>(
-            CategoryObject("College", 1)
+            CategoryObject("College", 0)
         )
 
         val UsersList = mutableListOf<ActiveUserClass>(
@@ -44,7 +44,8 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 60.0,
                 180.0,
-                "Light-Blue"
+                "Light-Blue",
+            ""
             ),
             ActivityObject(
                 1,
@@ -54,7 +55,7 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 40.0,
                 120.0,
-                "Red"
+                "Red",""
             ),
             ActivityObject(
                 2,
@@ -64,7 +65,7 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 120.0,
                 240.0,
-                "Pink"
+                "Pink",""
             ),
             ActivityObject(
                 3,
@@ -74,7 +75,7 @@ class ToolBox {
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
                 30.0,
                 60.0,
-                "Blue"
+                "Blue",""
             )
         )
     }

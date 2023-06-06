@@ -183,16 +183,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun loadCustomUI() {
         linView.removeAllViews()
 
-
-        val filteredBooks = ToolBox.ActivitiesList.filter { activity ->
+        val filteredCatagories = ToolBox.ActivitiesList.filter { activity ->
             activity.ActivityUserID == ToolBox.ActiveUserID
         }.filter { activity ->
             ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
         }
 
-
         // ----------------- Creating a new card with custom attributes ----------------- //
-        for (card in filteredBooks) {
+        for (card in filteredCatagories) {
             val customCard = custom_dashboard_cards(this)
             customCard.setActivityName(card.ActivityName)
             customCard.setActivityStartDate(card.DateCreated)
