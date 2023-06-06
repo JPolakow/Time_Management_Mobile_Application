@@ -259,27 +259,27 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
             val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
 
-                ibPause.setOnClickListener() {
-                    stopTimer()
-                    Log.d("timer", "started")
-                }
-
-                //timer
-                val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
-                ibPausePlay.setOnClickListener() {
-                    tvDisplayActivityName.text = card.ActivityName
-                    startTimer()
-                }
-                //add to the page
-                linView.addView(customCard)
+            ibPause.setOnClickListener() {
+                stopTimer()
+                Log.d("timer", "started")
             }
+
+            //timer
+            val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+            ibPausePlay.setOnClickListener() {
+                tvDisplayActivityName.text = card.ActivityName
+                startTimer()
+            }
+            //add to the page
+            linView.addView(customCard)
         }
+
     }
 
     //TIMERS
-    //region
-    //============================================================================
-    //start the timer
+//region
+//============================================================================
+//start the timer
     private fun startTimer() {
         Log.d("timer", "started1")
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
@@ -289,14 +289,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //stop the timer
+//stop the timer
     private fun stopTimer() {
         stopService(serviceIntent)
         timerStarted = false
     }
 
     //============================================================================
-    //get the data form the service and update textview
+//get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             Log.d("timer", "updating")
@@ -307,13 +307,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //reset the timer
+//reset the timer
     private fun resetTimer() {
         stopTimer()
         time = 0.0
         TimerOutput = getTimeStringFromDouble(time)
     }
-    //endregion
+//endregion
 
     //============================================================================
     private fun getTimeStringFromDouble(time: Double): String {
@@ -338,7 +338,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //catagory picker
+//catagory picker
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
         val catagoryNames = mutableListOf<String>()
@@ -370,7 +370,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //time picker
+//time picker
     private suspend fun showTimePickerDialogMin(): String {
         //creates a puase to prevent the other popup from executing until this one is done
         return withContext(Dispatchers.Main) {
@@ -427,5 +427,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             selectedTimeDeferred.await()
         }
     }
-
 }
+
+
+
