@@ -7,7 +7,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:id="@+id/linearParent"
         android:gravity="top"
         android:background="@color/fragmentActivity">
@@ -23,6 +23,8 @@
             android:textColor="@color/white"
             />
 
+
+
         <Button
             android:id="@+id/btnAddImage"
             android:layout_width="match_parent"
@@ -35,6 +37,94 @@
             android:layout_marginBottom="16dp"
             android:text="Add Image" />
 
+
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rate your Activity"
+            android:layout_below="@+id/btnAddImage"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            />
+
+        <LinearLayout
+            android:id="@+id/linearRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_below="@+id/tvRating"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            >
+
+            <Button
+                android:id="@+id/btnOne"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@drawable/button_selector"
+                android:text="1"
+                />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btnTwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@drawable/button_selector"
+                android:text="2"
+                />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btnThree"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@drawable/button_selector"
+                android:text="3"
+                />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btnFour"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@drawable/button_selector"
+                android:text="4"
+                />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btnFive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@drawable/button_selector"
+                android:text="5"
+                />
+
+        </LinearLayout>
+
+
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
@@ -42,7 +132,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:textSize="16sp"
-            android:layout_below="@id/btnAddImage"
+            android:layout_below="@id/linearRating"
             android:background="@android:color/transparent"
             android:text="Save" />
 

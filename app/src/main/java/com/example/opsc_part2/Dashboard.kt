@@ -259,22 +259,20 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
             val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
 
-            ibPause.setOnClickListener() {
-                stopTimer()
-                Log.d("timer", "started")
+                ibPause.setOnClickListener() {
+                    stopTimer()
+                    Log.d("timer", "started")
+                }
 
+                //timer
+                val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
+                ibPausePlay.setOnClickListener() {
+                    tvDisplayActivityName.text = card.ActivityName
+                    startTimer()
+                }
+                //add to the page
+                linView.addView(customCard)
             }
-
-            //timer
-            val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
-            ibPausePlay.setOnClickListener() {
-                tvDisplayActivityName.text = card.ActivityName
-                startTimer()
-
-            }
-
-            //add to the page
-            linView.addView(customCard)
         }
     }
 
