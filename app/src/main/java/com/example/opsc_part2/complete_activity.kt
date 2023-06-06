@@ -138,7 +138,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 WorkEntriesObject(
                     paraActivityID!!,
                     paraName!!,
-                    "",
+                    paraCatagory!!,
                     ToolBox.ActiveUserID,
                     3,
                     time,

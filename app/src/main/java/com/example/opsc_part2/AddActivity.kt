@@ -21,7 +21,7 @@ import com.example.opsc_part2.databinding.FragmentSignUpBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddActivity : Fragment(R.layout.fragment_add_activity) {
+class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
     private val colorNames = arrayOf(
         "Red",
@@ -43,6 +43,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private lateinit var descriptionInput: EditText
     private var SelectedColor: String = ""
     private var SelectedCatagory: String = ""
+    private var minTime = -1
+    private var maxTime = -1
 
     //Press-ables
     private lateinit var ivSubmit: ImageButton
@@ -133,7 +135,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
             colorInput.setError("Color is required")
             valid = false
         }
-        if (ToolBox.MinGoal.equals("") || ToolBox.MaxGoal.equals("")) {
+        if (minTime == -1 || maxTime == -1) {
             goalInput.setError("Goal is required")
             valid = false
         }
@@ -169,14 +171,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
                 name,
                 SelectedCatagory,
                 time,
-                ToolBox.MinGoal,
-                ToolBox.MaxGoal,
+                minTime.toDouble(),
+                maxTime.toDouble(),
                 SelectedColor
             )
         ToolBox.ActivitiesList.add(newActitivy)
-
-        ToolBox.MinGoal = 1
-        ToolBox.MaxGoal = 1
     }
 
     //============================================================================
@@ -243,5 +242,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     private fun showPopupFragment() {
         val fragment = SetGoal()
         fragment.show(childFragmentManager, "QuickActionPopup")
+    }
+
+    override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
+        minTime = minGoal
+        maxTime = maxGoal
     }
 }

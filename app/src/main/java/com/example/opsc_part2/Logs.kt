@@ -35,8 +35,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
         linView = view.findViewById(R.id.linearProjectCards)
 
         btnFilter = view.findViewById(R.id.btnFilter)
-        btnFilter.setOnClickListener()
-        {
+        btnFilter.setOnClickListener() {
             LoadFilters()
         }
 
@@ -83,7 +82,6 @@ class Logs : Fragment(R.layout.fragment_logs) {
         return view
     }
 
-
     private fun filterDatesAndCategory(
         workEntries: List<WorkEntriesObject>,
         startDate: String,
@@ -106,16 +104,13 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     private fun filterDates(
-        workEntries: List<WorkEntriesObject>,
-        startDate: String,
-        endDate: String
+        workEntries: List<WorkEntriesObject>, startDate: String, endDate: String
     ): List<WorkEntriesObject> {
 
         val filteredList = mutableListOf<WorkEntriesObject>()
         val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val startDateTime = dateFormatter.parse(startDate)
         val endDateTime = dateFormatter.parse(endDate)
-
 
         for (entry in workEntries) {
             val entryDate = dateFormatter.parse(entry.WEDateEnded)
@@ -138,8 +133,9 @@ class Logs : Fragment(R.layout.fragment_logs) {
         }
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pick a catagory")
-            .setSingleChoiceItems(categoryNames.toTypedArray(), defaultIndex) { dialog: DialogInterface, which: Int ->
+        builder.setTitle("Pick a catagory").setSingleChoiceItems(
+                categoryNames.toTypedArray(), defaultIndex
+            ) { dialog: DialogInterface, which: Int ->
                 val selectedCatagory = which
 
                 SelectedCatagory = categoryNames[selectedCatagory]
@@ -168,7 +164,12 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
         if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool) {
             //category and date
-            filtered =filterDatesAndCategory(ToolBox.WorkEntriesList, etStartDatePick.text.toString(), etEndDatePick.text.toString(), SelectedCatagory)
+            filtered = filterDatesAndCategory(
+                ToolBox.WorkEntriesList,
+                etStartDatePick.text.toString(),
+                etEndDatePick.text.toString(),
+                SelectedCatagory
+            )
             populate(filtered)
             return
         } else if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool == false) {
@@ -178,19 +179,14 @@ class Logs : Fragment(R.layout.fragment_logs) {
             return
         } else if (SelectedCatagory == "None" && dateFilerBool) {
             //only Dates
-            filtered = filterDates(ToolBox.WorkEntriesList, etStartDatePick.text.toString(), etEndDatePick.text.toString())
+            filtered = filterDates(
+                ToolBox.WorkEntriesList,
+                etStartDatePick.text.toString(),
+                etEndDatePick.text.toString()
+            )
             populate(filtered)
             return
-        } /*else if (SelectedCatagory.isNotEmpty() && SelectedCatagory != "None" && dateFilerBool) {
-            filtered =
-          *//*  populate(filtered)
-            Log.w(
-                "aa",
-                "IT WORKERINO'ED"
-            )*//*
-        }*/
-
-        else {
+        } else {
             //no filter
             filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
             populate(filtered)

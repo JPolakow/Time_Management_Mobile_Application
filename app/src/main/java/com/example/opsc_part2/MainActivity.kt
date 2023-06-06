@@ -76,14 +76,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-/*
-To do
-    sign n sign up
-        move to sing in after signed up
-        signup is borked
-    add activity
-        goal must populate textview
-    profile
-        make not suck
- */

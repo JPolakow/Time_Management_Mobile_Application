@@ -193,8 +193,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityName(card.ActivityName)
                 customCard.setActivityStartDate(card.DateCreated)
                 customCard.setCardColor(card.ActivityColor) // not dynamically added
-                customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
-                customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
+                customCard.setActivityMinGoal("Min Goal: " + String.format("%.1f", card.ActivityMinGoal/60) + "hrs")
+                customCard.setActivityMaxGoal("Max Goal: " + String.format("%.1f", card.ActivityMaxGoal/60) + "hrs")
 
                 val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
                 //complete the activity

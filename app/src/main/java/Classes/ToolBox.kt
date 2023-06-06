@@ -8,10 +8,6 @@ class ToolBox {
     companion object {
         var ActiveUserID: Int = -1
 
-        //used to move data between addGoal and addActivity
-        var MinGoal: Int = -1
-        var MaxGoal: Int = -1
-
         //used to store selected category
         var SelectedCategory: String = "None"
 
@@ -46,8 +42,8 @@ class ToolBox {
                 "Open-Source",
                 "College",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
-                2,
-                4,
+                60.0,
+                180.0,
                 "Light-Blue"
             ),
             ActivityObject(
@@ -56,8 +52,8 @@ class ToolBox {
                 "Programming",
                 "College",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
-                6,
-                8,
+                40.0,
+                120.0,
                 "Red"
             ),
             ActivityObject(
@@ -66,8 +62,8 @@ class ToolBox {
                 "Research",
                 "College",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
-                1,
-                3,
+                120.0,
+                240.0,
                 "Pink"
             ),
             ActivityObject(
@@ -76,8 +72,8 @@ class ToolBox {
                 "Project Management",
                 "College",
                 SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date()),
-                3,
-                7,
+                30.0,
+                60.0,
                 "Blue"
             )
         )

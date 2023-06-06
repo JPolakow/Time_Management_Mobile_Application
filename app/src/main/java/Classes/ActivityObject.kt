@@ -8,8 +8,8 @@ class ActivityObject(
     val ActivityName: String,
     val ActivityCategory: String,
     val DateCreated: String,
-    val ActivityMinGoal: Int,
-    val ActivityMaxGoal: Int,
+    val ActivityMinGoal: Double,
+    val ActivityMaxGoal: Double,
     //val ActivityIcon: String
     val ActivityColor: String,
     var timer: Timer? = null,

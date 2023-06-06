@@ -22,6 +22,8 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     private lateinit var min: EditText
     private lateinit var max: EditText
 
+    private var goalPopupListener: GoalPopupListener? = null
+
     //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,12 +36,16 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
         min = binding.etMinTime
         max = binding.etMaxTime
 
+        goalPopupListener = parentFragment as? GoalPopupListener
+
         submit.setOnClickListener()
         {
             if (validate()) {
 
-                ToolBox.MinGoal = formatGoalInput(min.text.toString())
-                ToolBox.MaxGoal = formatGoalInput(max.text.toString())
+                val minGoal = formatGoalInput(min.text.toString())
+                val maxGoal = formatGoalInput(max.text.toString())
+
+                goalPopupListener?.onGoalSubmitted(minGoal, maxGoal)
 
                 dismiss()
             }
@@ -58,6 +64,11 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
         }
         return binding.root
+    }
+
+    //============================================================================
+    interface GoalPopupListener {
+        fun onGoalSubmitted(minGoal: Int, maxGoal: Int)
     }
 
 
