@@ -255,13 +255,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
 
                 GlobalScope.launch {
-                    val returnType = showTimePickerDialogMin()
+                    val returnType = showTimePickerDialogMin().toDouble()
 
                     withContext(Dispatchers.Main) {
                         // Put data into fragment
                         val args = Bundle()
                         args.putString("color", card.ActivityColor)
-                        args.putString("duration", returnType)
+                        args.putDouble("duration", returnType)
                         args.putInt("id", card.ActivityID)
                         args.putString("name", card.ActivityName)
                         args.putString("category", card.ActivityCategory)
