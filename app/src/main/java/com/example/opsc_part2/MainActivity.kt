@@ -14,10 +14,6 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
-
-
-
-
     //ui vars
     private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
@@ -84,8 +80,9 @@ class MainActivity : AppCompatActivity() {
 To do
     sign n sign up
         move to sing in after signed up
+        signup is borked
     add activity
-        description
+        goal must populate textview
     profile
-        make camera not suck
+        make not suck
  */

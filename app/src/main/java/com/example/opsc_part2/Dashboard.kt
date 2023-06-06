@@ -1,7 +1,6 @@
 package com.example.opsc_part2
 
 import Classes.ToolBox
-import Logs
 import android.annotation.SuppressLint
 import android.content.*
 import android.content.DialogInterface
