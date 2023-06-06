@@ -31,15 +31,25 @@ class complete_activity : BottomSheetDialogFragment() {
         internal const val CAMERA_REQUEST_CODE = 200
     }
 
+    //arguments inputs
     private var paraActivityID: Int? = null
     private var paraDuration: Double? = null
     private var paraColor: String? = null
     private var paraName: String? = null
     private var paraCatagory: String? = null
 
+    //UI
     private lateinit var btnAddImage: Button
     private lateinit var btnSave: Button
     private var image: Bitmap? = null
+    private lateinit var btnOne: Button
+    private lateinit var btnTwo: Button
+    private lateinit var btnThree: Button
+    private lateinit var btnFour: Button
+    private lateinit var btnFive: Button
+
+    //regular
+    private var rating: Int = 1
 
     //============================================================================
     override fun onCreateView(
@@ -76,6 +86,21 @@ class complete_activity : BottomSheetDialogFragment() {
                         complete_activity.CAMERA_PERMISSION_CODE
                     )
                 }
+
+                btnOne = view.findViewById(R.id.btnOne)
+                btnOne.setOnClickListener(){rating = 1}
+
+                btnTwo = view.findViewById(R.id.btnTwo)
+                btnTwo.setOnClickListener(){rating = 2}
+
+                btnThree = view.findViewById(R.id.btnThree)
+                btnThree.setOnClickListener(){rating = 3}
+
+                btnFour = view.findViewById(R.id.btnFour)
+                btnFour.setOnClickListener(){rating = 4}
+
+                btnFive = view.findViewById(R.id.btnFive)
+                btnFive.setOnClickListener(){rating = 5}
             }
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
@@ -141,7 +166,7 @@ class complete_activity : BottomSheetDialogFragment() {
                     paraName!!,
                     paraCatagory!!,
                     ToolBox.ActiveUserID,
-                    3,
+                    rating,
                     time,
                     paraDuration!!,
                     paraColor!!
