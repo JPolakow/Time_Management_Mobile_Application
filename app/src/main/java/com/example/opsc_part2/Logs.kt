@@ -127,32 +127,24 @@ class Logs : Fragment(R.layout.fragment_logs) {
     //============================================================================
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
 
-        val categoryNames = mutableListOf<String>()
-
-        val uniqueCatagories = ToolBox.CategoryList
+        var uniqueCatagoriesIN = ToolBox.CategoryList
             .filter { it.CategoryUserID == ToolBox.ActiveUserID }
             .map { it.CategoryName }
             .distinct()
 
-
-        categoryNames.add("None")
-
-        for (item in ToolBox.CategoryList) {
-            val secondIndexEntry = item.CategoryName
-            categoryNames.add(secondIndexEntry)
-        }
+        val uniqueCatagories = listOf<String>("None", *uniqueCatagoriesIN.toTypedArray())
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a catagory").setSingleChoiceItems(
-                categoryNames.toTypedArray(), defaultIndex
-            ) { dialog: DialogInterface, which: Int ->
-                val selectedCatagory = which
+            uniqueCatagories.toTypedArray(), defaultIndex
+        ) { dialog: DialogInterface, which: Int ->
+            val selectedCatagory = which
 
-                SelectedCatagory = categoryNames[selectedCatagory]
-                callback(SelectedCatagory)
+            SelectedCatagory = uniqueCatagories[selectedCatagory]
+            callback(SelectedCatagory)
 
-                dialog.dismiss()
-            }.setCancelable(false)
+            dialog.dismiss()
+        }.setCancelable(false)
 
         val dialog = builder.create()
         dialog.show()
@@ -208,16 +200,17 @@ class Logs : Fragment(R.layout.fragment_logs) {
         entries: List<WorkEntriesObject>, selectedCategory: String?, selectedTime: String?
     ): List<WorkEntriesObject> {
         return entries.filter { entry ->
-            Log.w("Log", "1")
             // Check if the selected category is null or matches the entry's category
             val categoryFilter =
                 selectedCategory == null || entry.WEActivityCategory == selectedCategory
-            Log.w("Log", "2")
+
             // Check if the selected time is null or matches the entry's time
             val timeFilter = selectedTime == null || entry.WEDateEnded.toString() == selectedTime
-            Log.w("Log", "3")
+
+            val userFilter = entry.WEUserID == ToolBox.ActiveUserID
+
             // Return true only if both filters pass
-            categoryFilter && timeFilter
+            categoryFilter && timeFilter && userFilter
         }
     }
 
