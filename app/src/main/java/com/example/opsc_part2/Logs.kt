@@ -89,7 +89,6 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 SelectedCatagory = String()
                 etEndDatePick.text.clear()
                 etStartDatePick.text.clear()
-
             }
 
             LoadFilters()

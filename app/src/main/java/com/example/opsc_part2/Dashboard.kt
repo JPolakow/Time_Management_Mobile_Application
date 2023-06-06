@@ -231,28 +231,29 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 stopTimer()
                 resetTimer() // Check this
-
-                //startTimer()
-
                 val fragment = complete_activity()
 
-                // put data into fragment
-                val args = Bundle()
+                GlobalScope.launch {
+                    val returnType = showTimePickerDialogMin()
 
-                args.putString("color", card.ActivityColor)
-                args.putString("duration", "2")
-                args.putInt("id", card.ActivityID)
-                args.putString("name", card.ActivityName)
-                args.putString("category", card.ActivityCategory)
+                    withContext(Dispatchers.Main) {
+                        // Put data into fragment
+                        val args = Bundle()
+                        args.putString("color", card.ActivityColor)
+                        args.putDouble("duration", returnType)
+                        args.putInt("id", card.ActivityID)
+                        args.putString("name", card.ActivityName)
+                        args.putString("category", card.ActivityCategory)
 
-                fragment.arguments = args
-                fragment.show(supportFragmentManager, "completeActivity")
+                        fragment.arguments = args
+                        fragment.show(supportFragmentManager, "completeActivity")
+                    }
+                }
             }
 
             val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
             addNewEntry.setOnClickListener {
                 val fragment = complete_activity()
-
 
                 GlobalScope.launch {
                     val returnType = showTimePickerDialogMin().toDouble()
@@ -294,9 +295,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //TIMERS
-//region
-//============================================================================
-//start the timer
+    //region
+    //============================================================================
+    //start the timer
     private fun startTimer() {
         Log.d("timer", "started1")
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
@@ -306,14 +307,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-//stop the timer
+    //stop the timer
     private fun stopTimer() {
         stopService(serviceIntent)
         timerStarted = false
     }
 
     //============================================================================
-//get the data form the service and update textview
+    //get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             Log.d("timer", "updating")
@@ -324,38 +325,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-//reset the timer
+    //reset the timer
     private fun resetTimer() {
         stopTimer()
         time = 0.0
         TimerOutput = getTimeStringFromDouble(time)
     }
-//endregion
+    //endregion
 
     //============================================================================
-    private fun getTimeStringFromDouble(time: Double): String {
-        val resultInt = time.roundToInt()
-        val hours = resultInt % 86400 / 3600
-        val minutes = resultInt % 86400 % 3600 / 60
-        val seconds = resultInt % 86400 % 3600 % 60
-
-        return makeTimeString(hours, minutes, seconds)
-    }
-
-    //============================================================================
-    override fun onFragmentRequested(fragment: Fragment) {
-        // Replace the current fragment on the dashboard with the requested fragment
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
-    }
-
-    //============================================================================
-    private fun showPopup() {
-        val fragment = QuickActionPopup()
-        fragment.show(supportFragmentManager, "QuickActionPopup")
-    }
-
-    //============================================================================
-//catagory picker
+    //catagory picker
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
         val catagoryNames = mutableListOf<String>()
@@ -387,12 +366,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-//time picker
-    private suspend fun showTimePickerDialogMin(): String {
-        //creates a puase to prevent the other popup from executing until this one is done
+    //time picker
+    private suspend fun showTimePickerDialogMin(): Double {
         return withContext(Dispatchers.Main) {
-
-            //HOURS
             val hours = arrayOf(
                 "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
             )
@@ -404,9 +380,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 wrapSelectorWheel = true
             }
 
-            //MINUTES
-            val minutes =
-                arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
+            val minutes = arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
             val minutePicker = NumberPicker(this@Dashboard)
             minutePicker.apply {
                 minValue = 0
@@ -420,23 +394,26 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             layout.addView(hourPicker)
             layout.addView(minutePicker)
 
-            val selectedTimeDeferred = CompletableDeferred<String>()
+            val selectedTimeDeferred = CompletableDeferred<Double>()
 
-            val alertDialog =
-                android.app.AlertDialog.Builder(this@Dashboard, R.style.CenteredDialog)
-                    .setTitle("Select Time").setView(layout).setPositiveButton("OK") { _, _ ->
-                        val selectedHour = hours[hourPicker.value]
-                        val selectedMinute = minutes[minutePicker.value]
-                        val selectedTime = "$selectedHour:$selectedMinute"
-                        selectedTimeDeferred.complete(selectedTime)
-                    }.setNegativeButton("Cancel") { _, _ ->
-                        selectedTimeDeferred.complete("")
-                    }.create()
+            val alertDialog = android.app.AlertDialog.Builder(this@Dashboard, R.style.CenteredDialog)
+                .setTitle("Select Time")
+                .setView(layout)
+                .setPositiveButton("OK") { _, _ ->
+                    val selectedHour = hours[hourPicker.value].toDouble()
+                    val selectedMinute = minutes[minutePicker.value].toDouble()
+                    val selectedTime = selectedHour / 60.0 + selectedMinute
+                    selectedTimeDeferred.complete(selectedTime)
+                }
+                .setNegativeButton("Cancel") { _, _ ->
+                    selectedTimeDeferred.complete(Double.NaN)
+                }
+                .create()
 
             alertDialog.setOnDismissListener {
                 if (alertDialog.isShowing) {
                     alertDialog.dismiss()
-                    selectedTimeDeferred.complete("")
+                    selectedTimeDeferred.complete(Double.NaN)
                 }
             }
 
@@ -444,6 +421,29 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             selectedTimeDeferred.await()
         }
     }
+
+    //============================================================================
+    private fun getTimeStringFromDouble(time: Double): String {
+        val resultInt = time.roundToInt()
+        val hours = resultInt % 86400 / 3600
+        val minutes = resultInt % 86400 % 3600 / 60
+        val seconds = resultInt % 86400 % 3600 % 60
+
+        return makeTimeString(hours, minutes, seconds)
+    }
+
+    //============================================================================
+    override fun onFragmentRequested(fragment: Fragment) {
+        // Replace the current fragment on the dashboard with the requested fragment
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+    }
+
+    //============================================================================
+    private fun showPopup() {
+        val fragment = QuickActionPopup()
+        fragment.show(supportFragmentManager, "QuickActionPopup")
+    }
+
 }
 
 

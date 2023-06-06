@@ -53,8 +53,7 @@ class complete_activity : BottomSheetDialogFragment() {
 
     //============================================================================
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_complete_activity, container, false)
 
@@ -74,8 +73,7 @@ class complete_activity : BottomSheetDialogFragment() {
             btnAddImage.setOnClickListener {
                 //see if app has permission to use camera
                 if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.CAMERA
+                        requireContext(), Manifest.permission.CAMERA
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     startCamera()
@@ -86,22 +84,23 @@ class complete_activity : BottomSheetDialogFragment() {
                         complete_activity.CAMERA_PERMISSION_CODE
                     )
                 }
-
-                btnOne = view.findViewById(R.id.btnOne)
-                btnOne.setOnClickListener(){rating = 1}
-
-                btnTwo = view.findViewById(R.id.btnTwo)
-                btnTwo.setOnClickListener(){rating = 2}
-
-                btnThree = view.findViewById(R.id.btnThree)
-                btnThree.setOnClickListener(){rating = 3}
-
-                btnFour = view.findViewById(R.id.btnFour)
-                btnFour.setOnClickListener(){rating = 4}
-
-                btnFive = view.findViewById(R.id.btnFive)
-                btnFive.setOnClickListener(){rating = 5}
             }
+
+            btnOne = view.findViewById(R.id.btnOne)
+            btnOne.setOnClickListener() { rating = 1 }
+
+            btnTwo = view.findViewById(R.id.btnTwo)
+            btnTwo.setOnClickListener() { rating = 2 }
+
+            btnThree = view.findViewById(R.id.btnThree)
+            btnThree.setOnClickListener() { rating = 3 }
+
+            btnFour = view.findViewById(R.id.btnFour)
+            btnFour.setOnClickListener() { rating = 4 }
+
+            btnFive = view.findViewById(R.id.btnFive)
+            btnFive.setOnClickListener() { rating = 5 }
+
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
@@ -160,17 +159,16 @@ class complete_activity : BottomSheetDialogFragment() {
             // Creating correct date format
             val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
 
-            val newWorkEntriesObject =
-                WorkEntriesObject(
-                    paraActivityID!!,
-                    paraName!!,
-                    paraCatagory!!,
-                    ToolBox.ActiveUserID,
-                    rating,
-                    time,
-                    paraDuration!!,
-                    paraColor!!
-                )
+            val newWorkEntriesObject = WorkEntriesObject(
+                paraActivityID!!,
+                paraName!!,
+                paraCatagory!!,
+                ToolBox.ActiveUserID,
+                rating,
+                time,
+                paraDuration!!,
+                paraColor!!
+            )
 
             Log.w("log", "image start")
             image?.let { bitmap ->
