@@ -79,20 +79,6 @@ class Logs : Fragment(R.layout.fragment_logs) {
         return view
     }
 
-    private fun populate() {
-        // ----------------- Creating a new card with custom attributes ----------------- //
-        for (card in ToolBox.WorkEntriesList) {
-
-            val customCard = custom_logs_cards(requireContext())
-            customCard.setActivityName(card.WEActivityName)
-            customCard.setCardColor(card.WEColor)
-            customCard.setActivityDuaration(card.WEDuration)
-            customCard.setActivityEndDate(card.WEDateEnded)
-
-            linView.addView(customCard)
-        }
-    }
-
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
         val catagoryNames = mutableListOf<String>()
