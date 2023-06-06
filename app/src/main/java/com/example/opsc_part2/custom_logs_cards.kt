@@ -74,7 +74,7 @@ class custom_logs_cards @JvmOverloads constructor(
             else -> R.color.Blue // Replace with your default color resource ID
         }
         val colorToSet = ContextCompat.getColorStateList(context, colorResource)
-        tvRating.backgroundTintList = colorToSet
+        tvRating.setTextColor(colorToSet)
     }
 
     //============================================================================
