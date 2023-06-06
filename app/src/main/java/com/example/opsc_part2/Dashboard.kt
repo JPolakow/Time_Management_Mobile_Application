@@ -26,6 +26,8 @@ import kotlin.math.roundToInt
 
 class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
 
+    private lateinit var binding: ActivityDashboardBinding
+
     //ui vars
     private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
@@ -33,17 +35,15 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var linView: LinearLayout
     private lateinit var tvActNameTime: TextView
 
-    private var TimerOutput: String = "00:00:00"
-    private var TimerName: String = ""
-
     //timer vars
     private fun makeTimeString(hour: Int, min: Int, sec: Int): String =
         String.format("%02d:%02d:%02d", hour, min, sec)
 
-    private lateinit var binding: ActivityDashboardBinding
+    private var time = 0.0
     private var timerStarted = false
     private lateinit var serviceIntent: Intent
-    private var time = 0.0
+    private var TimerOutput: String = "00:00:00"
+    private var TimerName: String = ""
 
     //============================================================================
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -139,9 +139,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
                     var toast = Toast.makeText(
-                        this,
-                        "Stats feature not available in prototype",
-                        Toast.LENGTH_SHORT
+                        this, "Stats feature not available in prototype", Toast.LENGTH_SHORT
                     )
                     toast.show()
                     true
@@ -193,8 +191,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityName(card.ActivityName)
                 customCard.setActivityStartDate(card.DateCreated)
                 customCard.setCardColor(card.ActivityColor) // not dynamically added
-                customCard.setActivityMinGoal("Min Goal: " + String.format("%.1f", card.ActivityMinGoal/60) + "hrs")
-                customCard.setActivityMaxGoal("Max Goal: " + String.format("%.1f", card.ActivityMaxGoal/60) + "hrs")
+                customCard.setActivityMinGoal(
+                    "Min Goal: " + String.format(
+                        "%.1f", card.ActivityMinGoal / 60
+                    ) + "hrs"
+                )
+                customCard.setActivityMaxGoal(
+                    "Max Goal: " + String.format(
+                        "%.1f", card.ActivityMaxGoal / 60
+                    ) + "hrs"
+                )
 
                 val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
                 //complete the activity
@@ -224,50 +230,31 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 addNewEntry.setOnClickListener {
                     val fragment = complete_activity()
 
-                    // Creating a new Dialog
-                    val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
-                        when (which) {
-                            // When User selects "Yes"
-                            DialogInterface.BUTTON_POSITIVE -> {
-                                GlobalScope.launch {
-                                    val returnType = showTimePickerDialogMin()
 
-                                    withContext(Dispatchers.Main) {
-                                        // Put data into fragment
-                                        val args = Bundle()
-                                        args.putString("color", card.ActivityColor)
-                                        args.putString("duration", returnType)
-                                        args.putInt("id", card.ActivityID)
-                                        args.putString("name", card.ActivityName)
-                                        args.putString("category", card.ActivityCategory)
+                    GlobalScope.launch {
+                        val returnType = showTimePickerDialogMin()
 
-                                        fragment.arguments = args
-                                        fragment.show(supportFragmentManager, "completeActivity")
-                                    }
-                                }
-                            }
-                            // When User selects "No"
-                            DialogInterface.BUTTON_NEGATIVE -> {
-                                // Handle the negative case if needed
-                            }
+                        withContext(Dispatchers.Main) {
+                            // Put data into fragment
+                            val args = Bundle()
+                            args.putString("color", card.ActivityColor)
+                            args.putString("duration", returnType)
+                            args.putInt("id", card.ActivityID)
+                            args.putString("name", card.ActivityName)
+                            args.putString("category", card.ActivityCategory)
+
+                            fragment.arguments = args
+                            fragment.show(supportFragmentManager, "completeActivity")
                         }
                     }
 
-                    // Building a new alert
-                    val builder = android.app.AlertDialog.Builder(this)
-                    // Setting alert message
-                    builder.setMessage("Are you sure you want to add an activity?")
-                        // Setting text for positive button
-                        .setPositiveButton("Yes", dialogClickListener)
-                        // Setting text for negative button
-                        .setNegativeButton("No", dialogClickListener)
-                        // Showing dialog
-                        .show()
+
                 }
+
 
                 val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
 
-                ibPause.setOnClickListener {
+                ibPause.setOnClickListener() {
                     stopTimer()
                     Log.d("timer", "started")
 
@@ -275,8 +262,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 //timer
                 val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
-                ibPausePlay.setOnClickListener()
-                {
+                ibPausePlay.setOnClickListener() {
                     TimerName = card.ActivityName
                     startTimer()
                 }
@@ -285,9 +271,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 linView.addView(customCard)
             }
         }
-        // ----------------- END OF CUSTOM CARDS -------------------
     }
 
+    //TIMERS
+    //region
     //============================================================================
     //start the timer
     private fun startTimer() {
@@ -323,6 +310,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         time = 0.0
         TimerOutput = getTimeStringFromDouble(time)
     }
+    //endregion
 
     //============================================================================
     private fun getTimeStringFromDouble(time: Double): String {
@@ -337,9 +325,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //============================================================================
     override fun onFragmentRequested(fragment: Fragment) {
         // Replace the current fragment on the dashboard with the requested fragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
     }
 
     //============================================================================
@@ -379,13 +365,15 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
+    //time picker
     private suspend fun showTimePickerDialogMin(): String {
+        //creates a puase to prevent the other popup from executing until this one is done
         return withContext(Dispatchers.Main) {
-            val hours =
-                arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-            val minutes =
-                arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
 
+            //HOURS
+            val hours = arrayOf(
+                "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
+            )
             val hourPicker = NumberPicker(this@Dashboard)
             hourPicker.apply {
                 minValue = 0
@@ -394,6 +382,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 wrapSelectorWheel = true
             }
 
+            //MINUTES
+            val minutes =
+                arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
             val minutePicker = NumberPicker(this@Dashboard)
             minutePicker.apply {
                 minValue = 0
@@ -409,19 +400,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
             val selectedTimeDeferred = CompletableDeferred<String>()
 
-            val alertDialog = android.app.AlertDialog.Builder(this@Dashboard)
-                .setTitle("Select Time")
-                .setView(layout)
-                .setPositiveButton("OK") { _, _ ->
-                    val selectedHour = hours[hourPicker.value]
-                    val selectedMinute = minutes[minutePicker.value]
-                    val selectedTime = "$selectedHour:$selectedMinute"
-                    selectedTimeDeferred.complete(selectedTime)
-                }
-                .setNegativeButton("Cancel") { _, _ ->
-                    selectedTimeDeferred.complete("")
-                }
-                .create()
+            val alertDialog =
+                android.app.AlertDialog.Builder(this@Dashboard, R.style.CenteredDialog)
+                    .setTitle("Select Time").setView(layout).setPositiveButton("OK") { _, _ ->
+                        val selectedHour = hours[hourPicker.value]
+                        val selectedMinute = minutes[minutePicker.value]
+                        val selectedTime = "$selectedHour:$selectedMinute"
+                        selectedTimeDeferred.complete(selectedTime)
+                    }.setNegativeButton("Cancel") { _, _ ->
+                        selectedTimeDeferred.complete("")
+                    }.create()
 
             alertDialog.setOnDismissListener {
                 if (alertDialog.isShowing) {

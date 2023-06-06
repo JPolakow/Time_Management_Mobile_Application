@@ -22,4 +22,10 @@
         <item name="android:background">@color/fragment_background</item>
     </style>
 
+    <style name="CenteredDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@color/fragment_background</item>
+    </style>
+
 </resources>

@@ -244,6 +244,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         fragment.show(childFragmentManager, "QuickActionPopup")
     }
 
+    //============================================================================
+    //when the set goal is completed it will return values
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
         minTime = minGoal
         maxTime = maxGoal

@@ -41,6 +41,7 @@ class complete_activity : BottomSheetDialogFragment() {
     private lateinit var btnSave: Button
     private var image: Bitmap? = null
 
+    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

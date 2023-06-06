@@ -28,7 +28,7 @@ class UserSignUp : AppCompatActivity() {
     private lateinit var tvSignInClick: TextView
     private lateinit var btnSignUp: Button
 
-
+    //============================================================================
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_sign_up)

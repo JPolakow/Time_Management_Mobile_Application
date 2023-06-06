@@ -86,9 +86,13 @@ class Settings : AppCompatActivity() {
     }
 }
 
+//============================================================================
+//============================================================================
+
 class CustomTabSelectedListener(private val tabLayout: TabLayout) : TabLayout.OnTabSelectedListener {
     private val animationDuration = 300L // Animation duration in milliseconds
 
+    //============================================================================
     override fun onTabSelected(tab: TabLayout.Tab) {
         val selectedColor = ContextCompat.getColor(tabLayout.context, R.color.black)
         val textView =
@@ -111,6 +115,7 @@ class CustomTabSelectedListener(private val tabLayout: TabLayout) : TabLayout.On
     }
 
 
+    //============================================================================
     override fun onTabUnselected(tab: TabLayout.Tab) {
         val defaultColor = ContextCompat.getColor(tabLayout.context, R.color.black)
         val textView = tab.customView?.findViewById<TextView>(R.id.tabLayout) // Replace R.id.tab_title with the ID of your tab title TextView
@@ -131,6 +136,7 @@ class CustomTabSelectedListener(private val tabLayout: TabLayout) : TabLayout.On
         }
     }
 
+    //============================================================================
     override fun onTabReselected(tab: TabLayout.Tab) {
         val viewPager = tabLayout.rootView.findViewById<ViewPager>(R.id.viewPager)
         viewPager?.setCurrentItem(tab.position, true)

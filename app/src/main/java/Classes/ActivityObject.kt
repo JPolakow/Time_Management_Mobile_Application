@@ -10,8 +10,6 @@ class ActivityObject(
     val DateCreated: String,
     val ActivityMinGoal: Double,
     val ActivityMaxGoal: Double,
-    //val ActivityIcon: String
     val ActivityColor: String,
-    var timer: Timer? = null,
     ) {
 }

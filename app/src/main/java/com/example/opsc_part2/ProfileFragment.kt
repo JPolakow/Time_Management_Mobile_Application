@@ -29,11 +29,13 @@ class ProfileFragment : Fragment() {
 
     private lateinit var imageView: ImageView
 
+    //============================================================================
     companion object {
         internal const val CAMERA_PERMISSION_CODE = 100
         internal const val CAMERA_REQUEST_CODE = 200
     }
 
+    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -100,7 +102,7 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-
+    //============================================================================
     // Suppose to be a method to animate the logout click in profile
     private fun animateButtonClick(imageButton: ImageButton) {
         val colorMatrix = ColorMatrix().apply {

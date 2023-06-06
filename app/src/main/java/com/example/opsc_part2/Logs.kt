@@ -28,6 +28,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     private lateinit var btnFilter: Button
     private var SelectedCatagory = String()
 
+    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -82,6 +83,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
         return view
     }
 
+    //============================================================================
     private fun filterDatesAndCategory(
         workEntries: List<WorkEntriesObject>,
         startDate: String,
@@ -103,6 +105,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
         return filteredList
     }
 
+    //============================================================================
     private fun filterDates(
         workEntries: List<WorkEntriesObject>, startDate: String, endDate: String
     ): List<WorkEntriesObject> {
@@ -121,6 +124,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
         return filteredList
     }
 
+    //============================================================================
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
 
         val categoryNames = mutableListOf<String>()
@@ -148,17 +152,14 @@ class Logs : Fragment(R.layout.fragment_logs) {
         dialog.show()
     }
 
+    //============================================================================
+
     private fun LoadFilters() {
         linView.removeAllViews()
         var dateFilerBool = false
 
         if (etEndDatePick.text.isNotEmpty() && etStartDatePick.text.isNotEmpty()) {
             dateFilerBool = true
-
-            Log.w(
-                "aa",
-                "AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
-            )
         }
         val filtered: List<WorkEntriesObject>
 

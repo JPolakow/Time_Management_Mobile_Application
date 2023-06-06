@@ -51,17 +51,12 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
             }
         }
 
-
         min.setOnClickListener {
-
             showTimePickerDialogMin();
-
         }
 
         max.setOnClickListener {
-
             showTimePickerDialogMax();
-
         }
         return binding.root
     }

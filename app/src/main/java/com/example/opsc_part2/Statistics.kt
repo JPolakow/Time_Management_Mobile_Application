@@ -8,10 +8,12 @@ import android.view.ViewGroup
 
 class Statistics : Fragment(R.layout.fragment_statistics) {
 
+    //============================================================================
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    //============================================================================
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -19,6 +21,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         return inflater?.inflate(R.layout.fragment_statistics, container, false)
     }
 
+    //============================================================================
     companion object {
         fun newInstance(): Statistics {
             return Statistics()
