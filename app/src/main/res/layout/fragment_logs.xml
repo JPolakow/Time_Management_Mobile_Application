@@ -65,8 +65,8 @@
         android:hint="Click to select Start Date"
         android:textSize="16sp"
         android:layout_height="48dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         />
 
     <EditText
@@ -75,8 +75,8 @@
         android:hint="Click to select End Date"
         android:textSize="16sp"
         android:layout_height="48dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         />
 
     </LinearLayout>

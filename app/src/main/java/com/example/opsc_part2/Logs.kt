@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.opsc_part2.databinding.FragmentLogsBinding
 import android.app.DatePickerDialog
 import android.widget.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.log
 
@@ -41,7 +42,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
         btnSelectCategory = view.findViewById(R.id.btnSelectCategory)
         btnSelectCategory.setOnClickListener() {
-            showCategoryPickerDialog { selectedCategory ->
+            showCategoryPickerDialog(0) { selectedCategory ->
                 val showCategoryText = "Category: $selectedCategory"
                 btnSelectCategory.text = showCategoryText
             }
@@ -63,7 +64,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
         }
 
         etEndDatePick = view.findViewById(R.id.etEndDate)
-        etStartDatePick.setOnClickListener {
+        etEndDatePick.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
@@ -82,23 +83,66 @@ class Logs : Fragment(R.layout.fragment_logs) {
         return view
     }
 
-    private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
-        val catagoryNames = mutableListOf<String>()
+    private fun filterDatesAndCategory(
+        workEntries: List<WorkEntriesObject>,
+        startDate: String,
+        endDate: String,
+        selectedCategory: String
+    ): List<WorkEntriesObject> {
 
-        catagoryNames.add("None")
+        val filteredList = mutableListOf<WorkEntriesObject>()
+        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val startDateTime = dateFormatter.parse(startDate)
+        val endDateTime = dateFormatter.parse(endDate)
+
+        for (entry in workEntries) {
+            val entryDate = dateFormatter.parse(entry.WEDateEnded)
+            if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory) {
+                filteredList.add(entry)
+            }
+        }
+        return filteredList
+    }
+
+    private fun filterDates(
+        workEntries: List<WorkEntriesObject>,
+        startDate: String,
+        endDate: String
+    ): List<WorkEntriesObject> {
+
+        val filteredList = mutableListOf<WorkEntriesObject>()
+        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val startDateTime = dateFormatter.parse(startDate)
+        val endDateTime = dateFormatter.parse(endDate)
+
+
+        for (entry in workEntries) {
+            val entryDate = dateFormatter.parse(entry.WEDateEnded)
+            if (entryDate in startDateTime..endDateTime) {
+                filteredList.add(entry)
+            }
+        }
+        return filteredList
+    }
+
+    private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
+
+        val categoryNames = mutableListOf<String>()
+
+        categoryNames.add("None")
 
         for (item in ToolBox.CategoryList) {
             val secondIndexEntry = item.CategoryName
-            catagoryNames.add(secondIndexEntry)
+            categoryNames.add(secondIndexEntry)
         }
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Pick a catagory")
-            .setItems(catagoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
+            .setSingleChoiceItems(categoryNames.toTypedArray(), defaultIndex) { dialog: DialogInterface, which: Int ->
                 val selectedCatagory = which
 
-                SelectedCatagory = catagoryNames[selectedCatagory]
+                SelectedCatagory = categoryNames[selectedCatagory]
                 callback(SelectedCatagory)
 
                 dialog.dismiss()
@@ -112,8 +156,9 @@ class Logs : Fragment(R.layout.fragment_logs) {
         linView.removeAllViews()
         var dateFilerBool = false
 
-        if (etEndDatePick.text.length > 0 && etStartDatePick.text.length > 0) {
+        if (etEndDatePick.text.isNotEmpty() && etStartDatePick.text.isNotEmpty()) {
             dateFilerBool = true
+
             Log.w(
                 "aa",
                 "AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
@@ -122,24 +167,34 @@ class Logs : Fragment(R.layout.fragment_logs) {
         val filtered: List<WorkEntriesObject>
 
         if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool) {
-            //catagory and date
-            filtered = filterWorkEntries(ToolBox.WorkEntriesList, SelectedCatagory, null)
+            //category and date
+            filtered =filterDatesAndCategory(ToolBox.WorkEntriesList, etStartDatePick.text.toString(), etEndDatePick.text.toString(), SelectedCatagory)
             populate(filtered)
             return
         } else if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool == false) {
-            //only catagory
+            //only category
             filtered = filterWorkEntries(ToolBox.WorkEntriesList, SelectedCatagory, null)
             populate(filtered)
             return
-        } else if (SelectedCatagory.isEmpty() && SelectedCatagory.equals("None") && dateFilerBool) {
-            //only timer
-            filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
+        } else if (SelectedCatagory == "None" && dateFilerBool) {
+            //only Dates
+            filtered = filterDates(ToolBox.WorkEntriesList, etStartDatePick.text.toString(), etEndDatePick.text.toString())
             populate(filtered)
             return
-        } else {
+        } /*else if (SelectedCatagory.isNotEmpty() && SelectedCatagory != "None" && dateFilerBool) {
+            filtered =
+          *//*  populate(filtered)
+            Log.w(
+                "aa",
+                "IT WORKERINO'ED"
+            )*//*
+        }*/
+
+        else {
             //no filter
             filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
             populate(filtered)
+
             return
         }
 
@@ -156,7 +211,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 selectedCategory == null || entry.WEActivityCategory == selectedCategory
             Log.w("Log", "2")
             // Check if the selected time is null or matches the entry's time
-            val timeFilter = selectedTime == null || entry.WEDateEnded == selectedTime
+            val timeFilter = selectedTime == null || entry.WEDateEnded.toString() == selectedTime
             Log.w("Log", "3")
             // Return true only if both filters pass
             categoryFilter && timeFilter
@@ -175,7 +230,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
             customCard.setActivityName(card.WEActivityName)
             customCard.setCardColor(card.WEColor)
             customCard.setActivityDuaration(card.WEDuration)
-            customCard.setActivityEndDate(card.WEDateEnded)
+            customCard.setActivityEndDate(card.WEDateEnded.toString())
 
             Log.w("Log", "6")
             if (card.getSavedImage() != null) {
