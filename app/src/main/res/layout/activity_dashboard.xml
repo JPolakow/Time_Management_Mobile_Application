@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/inter_regular"
             android:text="@string/dashboardHeading"
             android:textColor="@color/black"
             android:textSize="40sp" />

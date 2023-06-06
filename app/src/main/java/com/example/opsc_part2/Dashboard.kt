@@ -7,13 +7,17 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
@@ -205,6 +209,21 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     "%.1f", card.ActivityMaxGoal / 60
                 ) + "hrs"
             )
+
+            val cardTile = customCard.findViewById<CardView>(R.id.cardView)
+
+            val popupView = LayoutInflater.from(applicationContext).inflate(R.layout.popup_description, null)
+            val tvDescription = popupView.findViewById<TextView>(R.id.tvDescription)
+            val descriptionToDisplay = "Description: ${card.ActivityDescription}"
+            tvDescription.text = descriptionToDisplay
+            val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            popupWindow.isFocusable = true
+            popupWindow.setBackgroundDrawable(ColorDrawable(Color.WHITE)) // Set a custom background color or drawable
+
+
+            cardTile.setOnClickListener{
+                popupWindow.showAsDropDown(customCard)
+            }
 
             val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
             //complete the activity
