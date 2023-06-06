@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,13 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
 
+        try {
+
+        }catch (ex: Exception)
+        {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
         nameInput = view.findViewById(R.id.etName)
         goalInput = view.findViewById<EditText>(R.id.etGoal)
         colorInput = view.findViewById<EditText>(R.id.etColor)
@@ -101,6 +109,13 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //============================================================================
     //ensure user has Inputed valid data
     private fun validateForm(): Boolean {
+        try {
+
+        }catch (ex: Exception)
+        {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
         var valid = true
         val name: String = nameInput.getText().toString().trim()
         val catagory: String = categoryInput.getText().toString().trim()
@@ -132,9 +147,15 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addActivityToList() {
+        try {
 
+        }catch (ex: Exception)
+        {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
         // Creating correct date format
-        val time = SimpleDateFormat("dd/MM/yyy", Locale.getDefault()).format(Date())
+        val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         //get external data
         val currentUser = ToolBox.ActiveUserID
         val activityID = (ToolBox.ActivitiesList.count() + 1)
@@ -161,52 +182,60 @@ class AddActivity : Fragment(R.layout.fragment_add_activity) {
     //============================================================================
     //color picker
     private fun showColorPickerDialog() {
+        try {
+            var displaySelected = "";
 
-        var displaySelected = "";
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Pick a color")
+                .setItems(colorNames) { dialog: DialogInterface, which: Int ->
 
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pick a color")
-            .setItems(colorNames) { dialog: DialogInterface, which: Int ->
+                    SelectedColor = colorNames[which]
+                    displaySelected += SelectedColor
+                    colorInput.setText(displaySelected)
 
-                SelectedColor = colorNames[which]
-                displaySelected += SelectedColor
-                colorInput.setText(displaySelected)
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
 
-                dialog.dismiss()
-            }
-            .setCancelable(false)
-
-        val dialog = builder.create()
-        dialog.show()
+            val dialog = builder.create()
+            dialog.show()
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
     }
 
     //============================================================================
     //catagory picker
     private fun showCategoryPickerDialog() {
+        try {
+            val categoryNames = mutableListOf<String>()
 
-        val categoryNames = mutableListOf<String>()
-
-        for (item in ToolBox.CategoryList) {
-            val secondIndexEntry = item.CategoryName
-            categoryNames.add(secondIndexEntry)
-        }
-
-        var displaySelected = "";
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pick a catagory")
-            .setItems(categoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
-
-                SelectedCatagory = categoryNames[which]
-                displaySelected += SelectedCatagory
-                categoryInput.setText(displaySelected)
-
-                dialog.dismiss()
+            for (item in ToolBox.CategoryList) {
+                val secondIndexEntry = item.CategoryName
+                categoryNames.add(secondIndexEntry)
             }
-            .setCancelable(false)
 
-        val dialog = builder.create()
-        dialog.show()
+            var displaySelected = "";
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Pick a catagory")
+                .setItems(categoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
+
+                    SelectedCatagory = categoryNames[which]
+                    displaySelected += SelectedCatagory
+                    categoryInput.setText(displaySelected)
+
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+
+            val dialog = builder.create()
+            dialog.show()
+        } catch (ex: Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
     }
 
     //============================================================================

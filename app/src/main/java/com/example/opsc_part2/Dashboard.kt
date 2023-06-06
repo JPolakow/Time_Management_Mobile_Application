@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.example.opsc_part2.databinding.ActivityDashboardBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.*
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -194,11 +195,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityMinGoal("Min Goal: " + card.ActivityMinGoal)
                 customCard.setActivityMaxGoal("Max Goal: " + card.ActivityMaxGoal)
 
-                val completeActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
-
-
+                val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
                 //complete the activity
-                completeActivity.setOnClickListener {
+                stopActivity.setOnClickListener {
 
                     stopTimer()
                     resetTimer() // Check this
@@ -220,10 +219,54 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     fragment.show(supportFragmentManager, "completeActivity")
                 }
 
+                val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
+                addNewEntry.setOnClickListener {
+                    val fragment = complete_activity()
+
+                    // Creating a new Dialog
+                    val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+                        when (which) {
+                            // When User selects "Yes"
+                            DialogInterface.BUTTON_POSITIVE -> {
+                                GlobalScope.launch {
+                                    val returnType = showTimePickerDialogMin()
+
+                                    withContext(Dispatchers.Main) {
+                                        // Put data into fragment
+                                        val args = Bundle()
+                                        args.putString("color", card.ActivityColor)
+                                        args.putString("duration", returnType)
+                                        args.putInt("id", card.ActivityID)
+                                        args.putString("name", card.ActivityName)
+                                        args.putString("category", card.ActivityCategory)
+
+                                        fragment.arguments = args
+                                        fragment.show(supportFragmentManager, "completeActivity")
+                                    }
+                                }
+                            }
+                            // When User selects "No"
+                            DialogInterface.BUTTON_NEGATIVE -> {
+                                // Handle the negative case if needed
+                            }
+                        }
+                    }
+
+                    // Building a new alert
+                    val builder = android.app.AlertDialog.Builder(this)
+                    // Setting alert message
+                    builder.setMessage("Are you sure you want to add an activity?")
+                        // Setting text for positive button
+                        .setPositiveButton("Yes", dialogClickListener)
+                        // Setting text for negative button
+                        .setNegativeButton("No", dialogClickListener)
+                        // Showing dialog
+                        .show()
+                }
 
                 val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
 
-                ibPause.setOnClickListener{
+                ibPause.setOnClickListener {
                     stopTimer()
                     Log.d("timer", "started")
 
@@ -333,4 +376,62 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         val dialog = builder.create()
         dialog.show()
     }
+
+    //============================================================================
+    private suspend fun showTimePickerDialogMin(): String {
+        return withContext(Dispatchers.Main) {
+            val hours =
+                arrayOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+            val minutes =
+                arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
+
+            val hourPicker = NumberPicker(this@Dashboard)
+            hourPicker.apply {
+                minValue = 0
+                maxValue = hours.size - 1
+                displayedValues = hours
+                wrapSelectorWheel = true
+            }
+
+            val minutePicker = NumberPicker(this@Dashboard)
+            minutePicker.apply {
+                minValue = 0
+                maxValue = minutes.size - 1
+                displayedValues = minutes
+                wrapSelectorWheel = true
+            }
+
+            val layout = LinearLayout(this@Dashboard)
+            layout.orientation = LinearLayout.HORIZONTAL
+            layout.addView(hourPicker)
+            layout.addView(minutePicker)
+
+            val selectedTimeDeferred = CompletableDeferred<String>()
+
+            val alertDialog = android.app.AlertDialog.Builder(this@Dashboard)
+                .setTitle("Select Time")
+                .setView(layout)
+                .setPositiveButton("OK") { _, _ ->
+                    val selectedHour = hours[hourPicker.value]
+                    val selectedMinute = minutes[minutePicker.value]
+                    val selectedTime = "$selectedHour:$selectedMinute"
+                    selectedTimeDeferred.complete(selectedTime)
+                }
+                .setNegativeButton("Cancel") { _, _ ->
+                    selectedTimeDeferred.complete("")
+                }
+                .create()
+
+            alertDialog.setOnDismissListener {
+                if (alertDialog.isShowing) {
+                    alertDialog.dismiss()
+                    selectedTimeDeferred.complete("")
+                }
+            }
+
+            alertDialog.show()
+            selectedTimeDeferred.await()
+        }
+    }
+
 }

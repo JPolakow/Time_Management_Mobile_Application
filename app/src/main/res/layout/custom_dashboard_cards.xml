@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <!-- CardView as the main container -->
     <androidx.cardview.widget.CardView
@@ -36,17 +36,16 @@
                 android:textSize="18sp" />
 
 
-
             <TextView
                 android:id="@+id/tvActivityName"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tvDateCreated"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/opensans_bold"
-                android:layout_below="@id/tvDateCreated"
-                android:textAllCaps="true"
                 android:text="@string/activityName"
+                android:textAllCaps="true"
                 android:textColor="#FF000000"
                 android:textSize="18sp" />
 
@@ -54,26 +53,28 @@
                 android:id="@+id/linearIcons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_centerVertical="true">
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/ibPausePlay"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:contentDescription="@string/contentDesPausePlay"
-                android:src="@drawable/play_circle_48px" />
+                <ImageButton
+                    android:id="@+id/ibPausePlay"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@null"
+                    android:contentDescription="@string/contentDesPausePlay"
+                    android:src="@drawable/play_circle_48px" />
 
                 <ImageButton
                     android:id="@+id/ibPause"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:layout_marginHorizontal="1dp"
                     android:background="@null"
                     android:contentDescription="@string/contentDesPausePlay"
                     android:src="@drawable/pause_circle_48px" />
@@ -82,14 +83,13 @@
                     android:id="@+id/ibStop"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginEnd="70dp"
+                    android:layout_marginHorizontal="10dp"
                     android:background="@null"
                     android:contentDescription="@string/contentDesPausePlay"
                     android:src="@drawable/stop_circle_48px" />
 
-
-
             </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tvMinGoal"
@@ -98,9 +98,9 @@
                 android:layout_below="@id/tvActivityName"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
-                android:textSize="18sp"
                 android:text="@string/minGoal"
-                android:textColor="#90000000" />
+                android:textColor="#90000000"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvMaxGoal"
@@ -108,9 +108,19 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvMinGoal"
                 android:layout_marginStart="12dp"
-                android:textSize="18sp"
                 android:text="@string/maxGoal"
-                android:textColor="#90000000" />
+                android:textColor="#90000000"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/AddNewEntry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearIcons"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/tvMaxGoal"
+                android:text="Add New Entry" />
 
         </RelativeLayout>
 

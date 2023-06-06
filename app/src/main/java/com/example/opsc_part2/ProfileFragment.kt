@@ -49,7 +49,6 @@ class ProfileFragment : Fragment() {
 
             // Creating a new Dialog
             val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
-
                 when (which) {
                     // When User selects "Yes"
                     DialogInterface.BUTTON_POSITIVE -> {
