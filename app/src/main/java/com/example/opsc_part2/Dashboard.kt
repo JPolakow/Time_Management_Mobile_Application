@@ -218,8 +218,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                     fragment.arguments = args
                     fragment.show(supportFragmentManager, "completeActivity")
-
-
                 }
 
 
