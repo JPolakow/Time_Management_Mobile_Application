@@ -29,24 +29,26 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     //============================================================================
     private fun populate() {
         // ----------------- Creating a new card with custom attributes ----------------- //
-//        for (card in ToolBox.CategoryList) {
-//            val customCard = custom_stats_cards(requireContext())
-//            customCard.setCatagoryName(card.CategoryName)
-//
-//            val frequencies = ToolBox.ActivitiesList.count{it.ActivityCategory == card.CategoryName}
-//            customCard.setCatagoryAmount(frequencies.toString())
-//
-//            val totalDuration = ToolBox.WorkEntriesList
-//                .filter { it.WEActivityCategory == card.CategoryName }
-//                .groupBy { it.WEActivityCategory }
-//                .mapValues { (_, entries) -> entries.sumBy { it.WEDuration } }
-//
-//            val total = totalDuration[card.CategoryName]
-//            if (total != null) {
-//                customCard.setCatagoryDuration(total.toString())
-//            }
-//
-//            linView.addView(customCard)
-//        }
+        for (card in ToolBox.CategoryList) {
+            val customCard = custom_stats_cards(requireContext())
+            customCard.setCatagoryName("Name: ${card.CategoryName}")
+
+            //get the count of all workentries with the catagory name
+            val frequencies = ToolBox.WorkEntriesList.count{it.WEActivityCategory == card.CategoryName}
+            customCard.setCatagoryAmount("Work entries: $frequencies")
+
+            //get the toal duration of all work entries with the catagory name
+            val totalDuration = ToolBox.WorkEntriesList
+                .filter { it.WEActivityCategory == card.CategoryName }
+                .groupBy { it.WEActivityCategory }
+                .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+
+            val total = totalDuration[card.CategoryName]
+            if (total != null) {
+                customCard.setCatagoryDuration("Total duration: $total")
+            }
+
+            linView.addView(customCard)
+        }
     }
 }

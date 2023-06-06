@@ -139,10 +139,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Menu_Stats -> {
-                    var toast = Toast.makeText(
-                        this, "Stats feature not available in prototype", Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    val fragmentManager = supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.add(R.id.container, Statistics())
+                    transaction.commit()
                     true
                 }
                 R.id.Menu_Dashboard -> {
