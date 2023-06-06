@@ -85,6 +85,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
         val displayCategoryText = "Category: ${ToolBox.SelectedCategory}"
         tvCategory.text = displayCategoryText
+
         tvCategory.setOnClickListener {
             showCategoryPickerDialog { selectedCategory ->
                 val showCategoryText = "Category: $selectedCategory"
