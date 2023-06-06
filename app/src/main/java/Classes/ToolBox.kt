@@ -11,7 +11,7 @@ class ToolBox {
         //used to store selected category
         var SelectedCategory: String = "None"
 
-        //object arrays
+        //Array of Objects
         val WorkEntriesList = mutableListOf<WorkEntriesObject>(
             WorkEntriesObject(1, "Name1", "College", 1, 5, "06-06-2023", "04:00", "Red"),
             WorkEntriesObject(1, "Name2", "College", 1, 5, "07-06-2023", "09:10", "Red"),
