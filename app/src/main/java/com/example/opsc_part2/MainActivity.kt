@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,10 +38,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         signUpClick.setOnClickListener {
-            val fragmentManager = supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.add(R.id.relContainer, SignUp())
-            transaction.commit()
+            val intent = Intent(this, UserSignUp::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
+            ActivityCompat.startActivity(this, intent, options.toBundle())
         }
     }
 
