@@ -7,16 +7,6 @@
     android:background="@color/fragment_background"
     tools:context=".Logs">
 
-
-    <ImageButton
-        android:id="@+id/ibFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/contentDesFilter"
-        android:layout_marginTop="16dp"
-        android:background="@null"
-        android:src="@drawable/filter_48px"/>
-
     <TextView
         android:id="@+id/tvLogsHeading"
         android:layout_width="match_parent"
@@ -25,45 +15,33 @@
         android:gravity="center"
         android:layout_marginTop="16dp"
         android:textColor="@color/black"
-        android:fontFamily="@font/opensans_bold"
-        android:textSize="30sp"
-        />
+        android:fontFamily="@font/inter_regular"
+        android:textSize="34sp"/>
 
-    <Button
-        android:id="@+id/btnSelectCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Select Category"
-        android:layout_below="@id/tvLogsHeading"
-        />
-
-    <Button
-        android:id="@+id/btnFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="15dp"
-        android:text="Filter"
-        android:layout_toEndOf="@id/btnSelectCategory"
-        android:layout_below="@+id/tvLogsHeading"
-        >
-
-    </Button>
+    <View style="@style/Divider"
+        android:id="@+id/lineLogs"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvLogsHeading"/>
 
     <LinearLayout
         android:id="@+id/linearDatePickers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSelectCategory"
+        android:layout_below="@+id/tvLogsHeading"
         android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:weightSum="2"
         android:layout_centerVertical="true">
 
     <EditText
         android:id="@+id/etStartDate"
-        android:layout_width="200dp"
-        android:hint="Click to select Start Date"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:hint="Select Start Date"
         android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
         android:layout_height="48dp"
         android:clickable="false"
         android:focusable="false"
@@ -71,15 +49,71 @@
 
     <EditText
         android:id="@+id/etEndDate"
-        android:layout_width="200dp"
-        android:hint="Click to select End Date"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:hint="Select End Date"
+        android:gravity="center"
         android:textSize="16sp"
         android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:clickable="false"
         android:focusable="false"
         />
 
     </LinearLayout>
+
+    <View style="@style/Divider"
+        android:id="@+id/line"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/linearButtonLayout"/>
+
+    <LinearLayout
+        android:id="@+id/linearButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearDatePickers"
+        >
+
+    <Button
+        android:id="@+id/btnSelectCategory"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Category" />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Filter">
+
+    </Button>
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Clear"/>
+
+    </LinearLayout>
+
+
+
+
 
     <!--Activity scroll view-->
     <ScrollView
@@ -87,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/linearDatePickers"
+        android:layout_below="@+id/line"
         android:contentDescription="@string/dashscrollview"
         android:paddingBottom="58dp">
 

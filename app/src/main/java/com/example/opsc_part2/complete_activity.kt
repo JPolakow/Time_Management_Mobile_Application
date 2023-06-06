@@ -32,7 +32,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     private var paraActivityID: Int? = null
-    private var paraDuration: String? = null
+    private var paraDuration: Double? = null
     private var paraColor: String? = null
     private var paraName: String? = null
     private var paraCatagory: String? = null
@@ -50,7 +50,7 @@ class complete_activity : BottomSheetDialogFragment() {
 
         try {
             paraColor = arguments?.getString("color")
-            paraDuration = arguments?.getString("duration")
+            paraDuration = arguments?.getDouble("duration")
             paraActivityID = arguments?.getInt("id")
             paraName = arguments?.getString("name")
             paraCatagory = arguments?.getString("category")

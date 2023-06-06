@@ -41,9 +41,9 @@ class custom_logs_cards @JvmOverloads constructor(
 
     //============================================================================
     // Used to set duration
-    fun setActivityDuaration(Duration: String) {
+    fun setActivityDuaration(Duration: Double) {
         val txtDuration = findViewById<TextView>(R.id.txtDuration)
-        txtDuration.text = Duration;
+        txtDuration.text = Duration.toString();
     }
 
     //============================================================================
