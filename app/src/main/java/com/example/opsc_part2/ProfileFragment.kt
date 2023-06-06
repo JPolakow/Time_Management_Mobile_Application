@@ -101,6 +101,8 @@ class ProfileFragment : Fragment() {
         return view
     }
 
+
+    // Suppose to be a method to animate the logout click in profile
     private fun animateButtonClick(imageButton: ImageButton) {
         val colorMatrix = ColorMatrix().apply {
             setSaturation(0f) // Set saturation to 0 to convert to grayscale

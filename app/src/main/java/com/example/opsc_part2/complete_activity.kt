@@ -111,17 +111,19 @@ class complete_activity : BottomSheetDialogFragment() {
 
     //============================================================================
     // add data to object array
+    // IDK if i broke shit here
     private fun AddEntry() {
         try {
             val newWorkEntriesObject =
                 WorkEntriesObject(
                     paraActivityID!!,
                     paraName!!,
-                    ToolBox.ActiveUserID,
+                    ToolBox.ActiveUserID.toString(),
                     3,
-                    "time",
+                    4,
                     paraDuration!!,
-                    paraColor!!
+                    paraColor!!,
+                    "Blue"
                 )
 
             Log.w("log", "image start")

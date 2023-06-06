@@ -29,13 +29,65 @@
         android:textSize="30sp"
         />
 
+    <Button
+        android:id="@+id/btnSelectCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Select Category"
+        android:layout_below="@id/tvLogsHeading"
+        />
+
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="15dp"
+        android:text="Filter"
+        android:layout_toEndOf="@id/btnSelectCategory"
+        android:layout_below="@+id/tvLogsHeading"
+        >
+
+    </Button>
+
+    <LinearLayout
+        android:id="@+id/linearDatePickers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSelectCategory"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true">
+
+    <EditText
+        android:id="@+id/etStartDate"
+        android:layout_width="200dp"
+        android:hint="Click to select Start Date"
+        android:textSize="16sp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+    <EditText
+        android:id="@+id/etEndDate"
+        android:layout_width="200dp"
+        android:hint="Click to select End Date"
+        android:textSize="16sp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+    </LinearLayout>
+
     <!--Activity scroll view-->
     <ScrollView
         android:id="@+id/svCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/tvLogsHeading"
+        android:layout_below="@+id/linearDatePickers"
         android:contentDescription="@string/dashscrollview"
         android:paddingBottom="58dp">
 
