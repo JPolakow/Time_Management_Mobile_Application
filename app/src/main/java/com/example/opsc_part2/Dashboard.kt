@@ -64,6 +64,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         tvCategory = findViewById(R.id.tvCategory)
         linView = findViewById(R.id.linearProjectCards)
         tvActNameTime = findViewById(R.id.tvDisplayTime)
+        tvDisplayActivityName = findViewById(R.id.tvActivityNameTimer)
 
         // Obtain a reference to the ImageView
         val imgProfileImg = findViewById<ImageView>(R.id.imgProfileImg)
@@ -209,7 +210,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                     stopTimer()
                     resetTimer() // Check this
-                    TimerName = card.ActivityName
+
                     //startTimer()
 
                     val fragment = complete_activity()
@@ -252,7 +253,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 }
 
-
                 val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
 
                 ibPause.setOnClickListener() {
@@ -264,8 +264,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 //timer
                 val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
                 ibPausePlay.setOnClickListener() {
-                    TimerName = card.ActivityName
+                    tvDisplayActivityName.text = card.ActivityName
                     startTimer()
+
                 }
 
                 //add to the page
