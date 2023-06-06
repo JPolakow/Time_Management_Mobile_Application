@@ -33,6 +33,7 @@ class complete_activity : BottomSheetDialogFragment() {
     private var paraDuration: String? = null
     private var paraColor: String? = null
     private var paraName: String? = null
+    private var paraCatagory: String? = null
 
     private lateinit var btnAddImage: Button
     private lateinit var btnSave: Button
@@ -48,6 +49,7 @@ class complete_activity : BottomSheetDialogFragment() {
         paraDuration = arguments?.getString("duration")
         paraActivityID = arguments?.getInt("id")
         paraName = arguments?.getString("name")
+        paraCatagory = arguments?.getString("category")
 
         btnSave = view.findViewById<Button>(R.id.btnSave)
         btnSave.setOnClickListener {
@@ -117,6 +119,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 WorkEntriesObject(
                     paraActivityID!!,
                     paraName!!,
+                    "",
                     ToolBox.ActiveUserID,
                     3,
                     "time",

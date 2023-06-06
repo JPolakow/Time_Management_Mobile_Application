@@ -210,6 +210,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     args.putString("duration", "2")
                     args.putInt("id", card.ActivityID)
                     args.putString("name", card.ActivityName)
+                    args.putString("category", card.ActivityCategory)
 
                     fragment.arguments = args
                     fragment.show(supportFragmentManager, "completeActivity")

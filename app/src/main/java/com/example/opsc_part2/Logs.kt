@@ -78,8 +78,6 @@ class Logs : Fragment(R.layout.fragment_logs) {
         // ----------------- Creating a new card with custom attributes ----------------- //
         for (card in ToolBox.WorkEntriesList) {
 
-            Log.w("log", "adding card")
-
             val customCard = custom_logs_cards(requireContext())
             customCard.setActivityName(card.WEActivityName)
             customCard.setCardColor(card.WEColor)
@@ -88,9 +86,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
             if (card.getSavedImage() != null)
             {
-                Log.w("log", "there be an image")
                 customCard.SetImage(card.getSavedImage()!!)
-                Log.w("log", "added image")
             }
 
             var imgActivity = customCard.findViewById<ImageView>(R.id.imgActivity)
@@ -99,13 +95,17 @@ class Logs : Fragment(R.layout.fragment_logs) {
             }
 
             linView.addView(customCard)
-            Log.w("log", "card added ")
         }
     }
 
     //============================================================================
     //maximise and minimise the image on click
     private fun enlargeImage(imageView: ImageView) {
+        if (imageView.drawable == null) {
+            // No image present, do nothing
+            return
+        }
+
         val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setContentView(R.layout.enlarged_image)
 
@@ -119,7 +119,4 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
         dialog.show()
     }
-
-
-
 }

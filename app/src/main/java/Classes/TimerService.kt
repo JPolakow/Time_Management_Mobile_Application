@@ -14,11 +14,8 @@ class TimerService : Service()
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int
     {
-        Log.d("timer", "entered1")
         val time = intent.getDoubleExtra(TIME_EXTRA, 0.0)
-        Log.d("timer", "entered2")
         timer.scheduleAtFixedRate(TimeTask(time), 0, 1000)
-        Log.d("timer", "entered3")
         return START_NOT_STICKY
     }
 
@@ -32,12 +29,10 @@ class TimerService : Service()
     {
         override fun run()
         {
-            Log.d("timer", "task1")
             val intent = Intent(TIMER_UPDATED)
             time++
             intent.putExtra(TIME_EXTRA, time)
             sendBroadcast(intent)
-            Log.d("timer", "task2")
         }
     }
 
