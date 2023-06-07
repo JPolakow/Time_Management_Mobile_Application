@@ -15,22 +15,23 @@ class ToolBox {
 
         //Array of Objects
         val WorkEntriesList = mutableListOf<WorkEntriesObject>(
-            WorkEntriesObject(1, "Name1", "College", 0, 5, "06-06-2023", 4.0, "Red"),
-            WorkEntriesObject(1, "Name2", "College", 0, 5, "07-06-2023", 9.1, "Red"),
-            WorkEntriesObject(1, "Name3", "College", 0, 5, "08-06-2023", 11.8, "Red"),
-            WorkEntriesObject(1, "Name4", "Test", 0, 5, "09-06-2023", 1.1, "Red"),
-            WorkEntriesObject(1, "Name5", "Test", 0, 5, "10-06-2023", 0.1, "Red")
+            WorkEntriesObject(1, "Name 1", "College", 0, 5, "06-06-2023", 4.0, "Red"),
+            WorkEntriesObject(1, "Name 2", "College", 0, 3, "07-06-2023", 9.1, "Red"),
+            WorkEntriesObject(1, "Name 3", "College", 0, 4, "08-06-2023", 11.8, "Red"),
+            WorkEntriesObject(1, "Name 4", "Hobby", 0, 4, "09-06-2023", 1.1, "Red"),
+            WorkEntriesObject(1, "Name 5", "Hobby", 0, 5, "10-06-2023", 0.1, "Red")
         )
 
         val CategoryList = mutableListOf<CategoryObject>(
-            CategoryObject("College", 0)
+            CategoryObject("College", 0),
+            CategoryObject("Hobby", 0)
         )
 
         // Passwords are hashed and stored safely
         val UsersList = mutableListOf<ActiveUserClass>(
             ActiveUserClass(
-                "Name",
-                "Surname",
+                "John",
+                "Doe",
                 "user",
                 "D74FF0EE8DA3B9806B18C877DBF29BBDE50B5BD8E4DAD7A3A725000FEB82E8F1"
             )
