@@ -31,8 +31,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     //============================================================================
     private fun populate() {
         try {
-            val filteredCategories = ToolBox.CategoryList.filter { activity ->
-                activity.CategoryUserID == ToolBox.ActiveUserID
+            val filteredCategories = ToolBox.CategoryList.filter { catagory ->
+                catagory.CategoryUserID == ToolBox.ActiveUserID
             }
 
             for (card in filteredCategories) {
@@ -41,12 +41,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
                 //get the count of all workEntries with the category name
                 val frequencies =
-                    ToolBox.WorkEntriesList.count { it.WEActivityCategory == card.CategoryName }
+                    ToolBox.WorkEntriesList.count { it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID }
                 customCard.setCategoryAmount("Work entries: $frequencies")
 
                 // Get the total duration of all work entries with the category name
                 val totalDuration =
-                    ToolBox.WorkEntriesList.filter { it.WEActivityCategory == card.CategoryName }
+                    ToolBox.WorkEntriesList.filter { it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID}
                         .groupBy { it.WEActivityCategory }
                         .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
 
