@@ -47,7 +47,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/textDuration"
                 android:textColor="#FF000000"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvMyRating"
@@ -73,7 +73,7 @@
                 android:textAllCaps="true"
                 android:text="@string/activityName"
                 android:textColor="#FF000000"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvNoImage"
