@@ -17,7 +17,7 @@ import androidx.core.app.ActivityOptionsCompat
 
 class MainActivity : AppCompatActivity() {
 
-    //ui vars
+    //UI vars
     private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var btnSignIn: Button
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             passwordInput = findViewById(R.id.etPassword)
 
             btnSignIn.setOnClickListener {
-                UserLogin()
+                userLogin()
             }
 
             signUpClick.setOnClickListener {
@@ -51,9 +51,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    fun UserLogin() {
+    private fun userLogin() {
         try {
-            //if username does not exist
+            //If username does not exist
             val user =
                 ToolBox.UsersList.find { it.UserUsername == usernameInput.text.toString().trim() }
             if (user == null) {

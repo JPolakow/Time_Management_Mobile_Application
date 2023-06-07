@@ -15,7 +15,7 @@ import com.example.opsc_part2.databinding.FragmentSetGoalBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
-    //bind the front end, making it accessible
+    //Bind the views, making it accessible
     private var _binding: FragmentSetGoalBinding? = null
     private val binding get() = _binding!!
 
@@ -63,12 +63,14 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     }
 
     //============================================================================
+    // Creating an interface listener for popup
     interface GoalPopupListener {
         fun onGoalSubmitted(minGoal: Int, maxGoal: Int)
     }
 
 
     //============================================================================
+    // Validation method for set goal
     private fun validate(): Boolean {
         try {
             var valid = true
@@ -184,7 +186,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
                 wrapSelectorWheel = true
             }
 
-            //MINUTES
+            // Minutes
             val minutes =
                 arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
             val minutePicker = NumberPicker(requireContext())
@@ -208,7 +210,6 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
                     val selectedMinute = minutes[minutePicker.value]
                     val selectedTime = "$selectedHour:$selectedMinute"
                     max.setText(selectedTime)
-                    // Use the selectedTime as needed
                 }
                 .setNegativeButton("Cancel", null)
                 .create()

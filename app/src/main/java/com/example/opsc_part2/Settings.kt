@@ -68,7 +68,7 @@ class Settings : AppCompatActivity() {
             return 3
         }
 
-        //populate the tabs
+        // Populate the tabs
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> GeneralFragment()
@@ -78,7 +78,7 @@ class Settings : AppCompatActivity() {
             }
         }
 
-        //populate the tab headings
+        // Populate the tab headings
         override fun getPageTitle(position: Int): CharSequence? {
             return when (position) {
                 0 -> "General"
@@ -91,18 +91,18 @@ class Settings : AppCompatActivity() {
 }
 
 //============================================================================
-//============================================================================
 
 class CustomTabSelectedListener(private val tabLayout: TabLayout) :
     TabLayout.OnTabSelectedListener {
-    private val animationDuration = 300L // Animation duration in milliseconds
+    // Animation duration in milliseconds
+    private val animationDuration = 300L
 
     //============================================================================
     override fun onTabSelected(tab: TabLayout.Tab) {
         try {
             val selectedColor = ContextCompat.getColor(tabLayout.context, R.color.black)
             val textView =
-                tab.customView?.findViewById<TextView>(R.id.tabLayout) // Replace R.id.tab_title with the ID of your tab title TextView
+                tab.customView?.findViewById<TextView>(R.id.tabLayout)
 
             textView?.setTextColor(selectedColor)
 
@@ -126,11 +126,12 @@ class CustomTabSelectedListener(private val tabLayout: TabLayout) :
 
 
     //============================================================================
+    // WHen tab is unselected
     override fun onTabUnselected(tab: TabLayout.Tab) {
         try {
             val defaultColor = ContextCompat.getColor(tabLayout.context, R.color.black)
             val textView =
-                tab.customView?.findViewById<TextView>(R.id.tabLayout) // Replace R.id.tab_title with the ID of your tab title TextView
+                tab.customView?.findViewById<TextView>(R.id.tabLayout)
 
             textView?.setTextColor(defaultColor)
 
@@ -153,6 +154,7 @@ class CustomTabSelectedListener(private val tabLayout: TabLayout) :
     }
 
     //============================================================================
+    // When a tab is reselected
     override fun onTabReselected(tab: TabLayout.Tab) {
         try {
             val viewPager = tabLayout.rootView.findViewById<ViewPager>(R.id.viewPager)

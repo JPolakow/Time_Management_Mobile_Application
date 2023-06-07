@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class Add_Catagory : BottomSheetDialogFragment() {
 
-    //ui vars
+    //UI Lateinit Vars
     private lateinit var btnAddCategory: Button
     private lateinit var etCategoryInput: EditText
 

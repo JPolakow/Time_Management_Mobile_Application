@@ -24,8 +24,8 @@ class ToolBox {
             CategoryObject("College", 0)
         )
 
+        // Passwords are hashed and stored safely
         val UsersList = mutableListOf<ActiveUserClass>(
-            //default user, password = pass
             ActiveUserClass(
                 "Name",
                 "Surname",

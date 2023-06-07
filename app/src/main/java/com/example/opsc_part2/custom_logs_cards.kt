@@ -14,9 +14,6 @@ class custom_logs_cards @JvmOverloads constructor(
 ) : LinearLayout(context, attrs) {
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_logs_cards, this, true)
-
-        // Perform any initialization or customization here
-        // You can access and modify the views within the custom component layout
     }
 
     //============================================================================

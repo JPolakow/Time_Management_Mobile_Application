@@ -83,7 +83,7 @@ class ProfileFragment : Fragment() {
             imageView = view.findViewById(R.id.imageView)
             val captureButton: ImageButton = view.findViewById(R.id.captureButton)
             captureButton.setOnClickListener {
-                //see if app has permission to use camera
+                //See if app has permission to use camera
                 if (ContextCompat.checkSelfPermission(
                         requireContext(), Manifest.permission.CAMERA
                     ) == PackageManager.PERMISSION_GRANTED
@@ -171,7 +171,7 @@ class ProfileFragment : Fragment() {
                 imageView.setImageBitmap(imageBitmap)
 
                 imageBitmap?.let {
-                    //saveImageLocally(it)
+                    //Save Image Locally(it)
                     ProfileImageManager.saveImage(it)
                 }
             }

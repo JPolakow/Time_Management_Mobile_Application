@@ -22,10 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-private const val paraActivityIDIn = -1
-private const val paraDurationIn = ""
-private const val paraColorIn = ""
-
 class complete_activity : BottomSheetDialogFragment() {
     companion object {
         internal const val CAMERA_PERMISSION_CODE = 100
@@ -49,7 +45,7 @@ class complete_activity : BottomSheetDialogFragment() {
     private lateinit var btnFour: Button
     private lateinit var btnFive: Button
 
-    //regular
+    //Regular
     private var rating: Int = 1
 
     interface CompleteActivityCallback {
@@ -90,7 +86,7 @@ class complete_activity : BottomSheetDialogFragment() {
 
             btnAddImage = view.findViewById<Button>(R.id.btnAddImage)
             btnAddImage.setOnClickListener {
-                //see if app has permission to use camera
+                //Ensure app has permission to use camera
                 if (ContextCompat.checkSelfPermission(
                         requireContext(), Manifest.permission.CAMERA
                     ) == PackageManager.PERMISSION_GRANTED
@@ -128,7 +124,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    // call the camera
+    // Call the camera
     private fun startCamera() {
         try {
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -145,7 +141,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    // when the camera is done get the image
+    // When the camera is done get the image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
             super.onActivityResult(requestCode, resultCode, data)
@@ -172,7 +168,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    // add data to object array
+    // Add data to object array
     private fun AddEntry() {
         try {
             // Creating correct date format

@@ -56,7 +56,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                        etStartDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
+                        val textToSet = "$dayOfMonth-${monthOfYear + 1}-$year"
+                        etStartDatePick.setText(textToSet)
                     }, year, month, day
                 )
                 datePickerDialog.show()
@@ -71,7 +72,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                        etEndDatePick.setText("$dayOfMonth-${monthOfYear + 1}-$year")
+                        val textToSet = "$dayOfMonth-${monthOfYear + 1}-$year"
+                        etEndDatePick.setText(textToSet)
                     }, year, month, day
                 )
                 datePickerDialog.show()
@@ -108,8 +110,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
             }
             val filtered: List<WorkEntriesObject>
 
-            if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool) {
-                //category and date
+            if (!SelectedCatagory.isEmpty() && SelectedCatagory != "None" && dateFilerBool) {
+                //Category and date
                 filtered = filterDatesAndCategory(
                     ToolBox.WorkEntriesList,
                     etStartDatePick.text.toString(),
@@ -118,13 +120,13 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 )
                 populate(filtered)
                 return
-            } else if (!SelectedCatagory.isEmpty() && !SelectedCatagory.equals("None") && dateFilerBool == false) {
-                //only category
+            } else if (!SelectedCatagory.isEmpty() && SelectedCatagory != "None" && dateFilerBool == false) {
+                //Only category
                 filtered = filterWorkEntries(ToolBox.WorkEntriesList, SelectedCatagory, null)
                 populate(filtered)
                 return
             } else if (SelectedCatagory == "None" && dateFilerBool) {
-                //only Dates
+                //Only Dates
                 filtered = filterDates(
                     ToolBox.WorkEntriesList,
                     etStartDatePick.text.toString(),
@@ -133,7 +135,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 populate(filtered)
                 return
             } else {
-                //no filter
+                //No filter
                 filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
                 populate(filtered)
 
@@ -166,7 +168,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
-    //load custom cards
+    //Load custom cards
     private fun populate(filtered: List<WorkEntriesObject>) {
         try {
             // ----------------- Creating a new card with custom attributes ----------------- //
@@ -199,20 +201,19 @@ class Logs : Fragment(R.layout.fragment_logs) {
     //============================================================================
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
         try {
-            var uniqueCatagoriesIN = ToolBox.CategoryList
+            var uniqueCategoriesIN = ToolBox.CategoryList
                 .filter { it.CategoryUserID == ToolBox.ActiveUserID }
                 .map { it.CategoryName }
                 .distinct()
 
-            val uniqueCatagories = listOf<String>("None", *uniqueCatagoriesIN.toTypedArray())
+            val uniqueCategories = listOf<String>("None", *uniqueCategoriesIN.toTypedArray())
 
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Pick a catagory").setSingleChoiceItems(
-                uniqueCatagories.toTypedArray(), defaultIndex
+            builder.setTitle("Pick a category").setSingleChoiceItems(
+                uniqueCategories.toTypedArray(), defaultIndex
             ) { dialog: DialogInterface, which: Int ->
-                val selectedCatagory = which
 
-                SelectedCatagory = uniqueCatagories[selectedCatagory]
+                SelectedCatagory = uniqueCategories[which]
                 callback(SelectedCatagory)
 
                 dialog.dismiss()
@@ -227,11 +228,11 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
-    //maximise and minimise the image on click
+    //Maximise and minimise the image on click
     private fun enlargeImage(imageView: ImageView) {
         try {
             if (imageView.drawable == null) {
-                // No image present, do nothing
+                // No image present, don;t do nothing
                 return
             }
 
@@ -247,6 +248,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
             }
 
             dialog.show()
+
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
@@ -254,6 +256,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
+    // Method to filter by date range and category
     private fun filterDatesAndCategory(
         workEntries: List<WorkEntriesObject>,
         startDate: String,
@@ -280,6 +283,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
+    // Method to filter by dates
     private fun filterDates(
         workEntries: List<WorkEntriesObject>, startDate: String, endDate: String
     ): List<WorkEntriesObject> {

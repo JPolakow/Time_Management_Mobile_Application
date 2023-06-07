@@ -14,9 +14,6 @@ class custom_dashboard_cards @JvmOverloads constructor(
 ) : LinearLayout(context, attrs) {
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_dashboard_cards, this, true)
-
-        // Perform any initialization or customization here
-        // You can access and modify the views within the custom component layout
     }
 
     // These methods are called within the dashboard activity
@@ -39,7 +36,7 @@ class custom_dashboard_cards @JvmOverloads constructor(
         actStartDate.text = startDate;
     }
     //============================================================================
-
+    // Used to set the activity min goal value
     fun setActivityMinGoal(minGoal: String)
     {
 
@@ -49,6 +46,7 @@ class custom_dashboard_cards @JvmOverloads constructor(
 
     }
     //============================================================================
+    // Used to set the activity max goal value
     fun setActivityMaxGoal(maxGoal: String)
     {
 
