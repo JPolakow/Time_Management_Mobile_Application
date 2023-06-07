@@ -1,19 +1,17 @@
 package Classes
 
-import com.example.opsc_part2.R
-import java.time.LocalDate
 import java.util.*
 
+// Object for Users' activities
 class ActivityObject(
     val ActivityID: Int,
     val ActivityUserID: Int,
     val ActivityName: String,
-    val ActivityCatagory: String,
+    val ActivityCategory: String,
     val DateCreated: String,
-    val ActivityMinGoal: Int,
-    val ActivityMaxGoal: Int,
-    //val ActivityIcon: String
+    val ActivityMinGoal: Double,
+    val ActivityMaxGoal: Double,
     val ActivityColor: String,
-    var timer: Timer? = null,
+    val ActivityDescription: String,
     ) {
 }

@@ -27,7 +27,7 @@
         android:gravity="start"
         android:paddingBottom="10dp"
         android:text="@string/settingsHeading"
-        android:fontFamily="@font/opensans_regular"
+        android:fontFamily="@font/inter_regular"
         android:textColor="@color/black"
         android:textSize="40sp" />
     <!--End of heading-->

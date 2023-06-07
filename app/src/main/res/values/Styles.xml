@@ -22,4 +22,23 @@
         <item name="android:background">@color/fragment_background</item>
     </style>
 
+    <style name="CenteredDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:buttonBarButtonStyle">@style/DialogButtonStyle</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/fragment_background</item>
+    </style>
+
+    <style name="DialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
 </resources>

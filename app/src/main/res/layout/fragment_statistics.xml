@@ -6,33 +6,40 @@
     android:background="@color/fragment_background"
     tools:context=".Statistics">
 
-    <RelativeLayout
-        android:id="@+id/relPieChart"
+    <TextView
+        android:id="@+id/tvSettingsHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:paddingBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Statistics"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/black"
+        android:textSize="40sp" />
+
+    <!--Activity scroll view-->
+    <ScrollView
+        android:id="@+id/svCards"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:background="@color/teal_200"
-        >
-        <TextView
-            android:id="@+id/tvTempPieChart"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/tvSettingsHeading"
+        android:contentDescription="@string/dashscrollview"
+        android:paddingBottom="58dp">
+
+        <LinearLayout
+            android:id="@+id/linearProjectCards"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="PIE CHART HERE"
-            android:gravity="center"
-            android:textSize="34sp"
-            />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
-    </RelativeLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearProgress"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        >
-
-
-
-    </LinearLayout>
+    </ScrollView>
+    <!--end of scroll view-->
 
 </RelativeLayout>

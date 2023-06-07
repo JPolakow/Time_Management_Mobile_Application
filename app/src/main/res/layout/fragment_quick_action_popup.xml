@@ -6,34 +6,36 @@
     tools:context=".QuickActionPopup">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
         android:id="@+id/linearParent"
-        android:gravity="top"
-        android:background="@color/fragmentActivity">
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/cardview_dark_background"
+        android:gravity="top">
 
         <Button
             android:id="@+id/btnCreateActivity"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="40dp"
-            android:textSize="20sp"
+            android:layout_marginBottom="6dp"
             android:background="@android:color/transparent"
-            android:layout_marginBottom="16dp"
-            android:text="Create Activity" />
+            android:text="Create Activity"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnCreateCategory"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_below="@id/btnCreateActivity"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:textSize="20sp"
-            android:layout_below="@id/btnCreateActivity"
             android:background="@android:color/transparent"
-            android:text="Create Category" />
+            android:text="Create Category"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

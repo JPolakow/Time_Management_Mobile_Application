@@ -1,10 +1,9 @@
 package com.example.opsc_part2
 
-import Classes.CatagoryObject
+import Classes.CategoryObject
 import Classes.ToolBox
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class Add_Catagory : BottomSheetDialogFragment() {
 
-    //ui vars
-    private lateinit var btnAddCatagory: Button
-    private lateinit var etCatagoryInput: EditText
+    //UI Lateinit Vars
+    private lateinit var btnAddCategory: Button
+    private lateinit var etCategoryInput: EditText
 
     //============================================================================
     override fun onCreateView(
@@ -25,18 +24,23 @@ class Add_Catagory : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add__catagory, container, false)
+        try {
+            // Find buttons in the inflated view
+            btnAddCategory = view.findViewById(R.id.btnAddCatagory)
+            etCategoryInput = view.findViewById(R.id.etCatagoryInput)
 
-        // Find the buttons in the inflated view
-        btnAddCatagory = view.findViewById(R.id.btnAddCatagory)
-        etCatagoryInput = view.findViewById(R.id.etCatagoryInput)
-
-        // Set click listeners for the buttons
-        btnAddCatagory.setOnClickListener {
-            if (!etCatagoryInput.text.toString().trim().equals("")) {
-                var catagory = CatagoryObject(etCatagoryInput.text.toString().trim(), ToolBox.ActiveUserID)
-                ToolBox.CatagoryList.add(catagory)
-                dismiss()
+            // Set click listeners for the buttons
+            btnAddCategory.setOnClickListener {
+                if (etCategoryInput.text.toString().trim() != "") {
+                    var catagory =
+                        CategoryObject(etCategoryInput.text.toString().trim(), ToolBox.ActiveUserID)
+                    ToolBox.CategoryList.add(catagory)
+                    dismiss()
+                }
             }
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
         return view
     }

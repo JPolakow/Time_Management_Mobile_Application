@@ -24,22 +24,26 @@ class QuickActionPopup : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_quick_action_popup, container, false)
+        try {
+            // Find the buttons in the inflated view
+            btnCreateActivity = view.findViewById(R.id.btnCreateActivity)
+            btnCreateGroup = view.findViewById(R.id.btnCreateCategory)
 
-        // Find the buttons in the inflated view
-        btnCreateActivity = view.findViewById(R.id.btnCreateActivity)
-        btnCreateGroup = view.findViewById(R.id.btnCreateCategory)
+            // Set click listeners for the buttons
+            btnCreateActivity.setOnClickListener {
+                val fragment = AddActivity() // Replace with the desired fragment
+                listener.onFragmentRequested(fragment)
+                dismiss()
+            }
 
-        // Set click listeners for the buttons
-        btnCreateActivity.setOnClickListener {
-            val fragment = AddActivity() // Replace with the desired fragment
-            listener.onFragmentRequested(fragment)
-            dismiss()
-        }
-
-        btnCreateGroup.setOnClickListener {
-            val fragment = Add_Catagory()
-            fragment.show(parentFragmentManager, "QuickActionPopup")
-            dismiss()
+            btnCreateGroup.setOnClickListener {
+                val fragment = Add_Catagory()
+                fragment.show(parentFragmentManager, "QuickActionPopup")
+                dismiss()
+            }
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
         return view
     }
@@ -51,11 +55,16 @@ class QuickActionPopup : BottomSheetDialogFragment() {
 
     //============================================================================
     override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is DashboardFragmentListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement DashboardFragmentListener")
+        try {
+            super.onAttach(context)
+            if (context is DashboardFragmentListener) {
+                listener = context
+            } else {
+                throw RuntimeException("$context must implement DashboardFragmentListener")
+            }
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
         }
     }
 }

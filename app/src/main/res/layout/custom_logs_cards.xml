@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:text="12 April 2023"
+                android:text="@string/textDate"
                 android:textColor="#80000000"
                 android:textSize="18sp" />
 
@@ -44,10 +44,23 @@
                 android:layout_marginTop="8dp"
                 android:layout_below="@+id/tvActivityName"
                 android:gravity="end"
-                android:text="00:20:02"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/textDuration"
                 android:textColor="#FF000000"
-                android:textSize="22sp"
-                app:drawableLeftCompat="@drawable/timer_48px" />
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvMyRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/txtDuration"
+                android:gravity="end"
+                android:text="My Rating: 1"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:fontFamily="@font/inter_regular" />
 
             <TextView
                 android:id="@+id/tvActivityName"
@@ -58,9 +71,21 @@
                 android:fontFamily="@font/opensans_bold"
                 android:layout_below="@id/tvDateEnded"
                 android:textAllCaps="true"
-                android:text="Programming"
+                android:text="@string/activityName"
                 android:textColor="#FF000000"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvNoImage"
+                android:layout_width="150dp"
+                android:paddingTop="16dp"
+                android:text="No Image"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                tools:srcCompat="@tools:sample/avatars"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/tvActivityName"/>
 
             <ImageView
                 android:id="@+id/imgActivity"
@@ -68,7 +93,11 @@
                 android:paddingTop="5dp"
                 android:layout_height="150dp"
                 tools:srcCompat="@tools:sample/avatars"
-                android:layout_toRightOf="@+id/tvActivityName"/>
+                android:layout_toEndOf="@+id/tvActivityName"/>
+
+
+
+
 
 
         </RelativeLayout>

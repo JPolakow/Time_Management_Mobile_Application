@@ -12,7 +12,7 @@
         android:id="@+id/pandaImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="310dp"
+        android:layout_marginStart="310dp"
         android:adjustViewBounds="true"
         android:src="@drawable/cornerpanda" />
 
@@ -30,7 +30,8 @@
             android:layout_alignParentTop="true"
             android:clickable="true"
             android:contentDescription="@string/dashimageprofile"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/tvDisplayName"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/inter_regular"
             android:text="@string/dashboardHeading"
             android:textColor="@color/black"
             android:textSize="40sp" />
@@ -46,26 +47,46 @@
         <!--End of title-->
 
         <!--Headings-->
-        <TextView
-            android:id="@+id/tvRecentTasks"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearTimerStuff"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvDisplayName"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="34dp"
-            android:text="@string/recentTasksHeading"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="48dp"
+            android:layout_below="@+id/tvDisplayName"
+            >
+            <TextView
+                android:id="@+id/tvActivityNameTimer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/activityName"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                />
+
+            <TextView
+                android:id="@+id/tvDisplayTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/timerDefault"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvRecentTasks"
+            android:layout_below="@+id/linearTimerStuff"
             android:layout_marginStart="16dp"
             android:alpha="0.7"
             android:textColor="@color/black"
             android:textSize="22sp" />
+
 
         <!--End of headings-->
 
