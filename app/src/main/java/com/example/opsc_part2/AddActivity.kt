@@ -23,11 +23,7 @@ import java.util.*
 class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
     private val colorNames = arrayOf(
-        "Red",
-        "Blue",
-        "Purple",
-        "Pink",
-        "Light-Blue"
+        "Red", "Blue", "Purple", "Pink", "Light-Blue"
     )
 
     //inputs
@@ -48,8 +44,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
@@ -66,9 +61,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         ivSubmit = view.findViewById<ImageButton>(R.id.ivSubmit)
         tvClose = view.findViewById<ImageButton>(R.id.ibClose)
         categoryInput = view.findViewById(R.id.etCategory)
-
-
-
         descriptionInput = view.findViewById(R.id.etName)
 
         //add goal
@@ -118,10 +110,14 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         var valid = true
         val name: String = nameInput.getText().toString().trim()
         val catagory: String = categoryInput.getText().toString().trim()
-
+        val desc: String = descriptionInput.getText().toString().trim()
 
         if (TextUtils.isEmpty(name)) {
             nameInput.setError("Name is required")
+            valid = false
+        }
+        if (TextUtils.isEmpty(desc)) {
+            descriptionInput.setError("Description is required")
             valid = false
         }
         if (TextUtils.isEmpty(catagory)) {
@@ -159,18 +155,17 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val name = nameInput.text.toString().trim()
         val desc = descriptionInput.text.toString().trim()
 
-        val newActitivy =
-            ActivityObject(
-                activityID,
-                currentUser,
-                name,
-                SelectedCatagory,
-                time,
-                minTime.toDouble(),
-                maxTime.toDouble(),
-                SelectedColor,
-                desc,
-            )
+        val newActitivy = ActivityObject(
+            activityID,
+            currentUser,
+            name,
+            SelectedCatagory,
+            time,
+            minTime.toDouble(),
+            maxTime.toDouble(),
+            SelectedColor,
+            desc,
+        )
         ToolBox.ActivitiesList.add(newActitivy)
     }
 
@@ -189,8 +184,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     colorInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }
-                .setCancelable(false)
+                }.setCancelable(false)
 
             val dialog = builder.create()
             dialog.show()
@@ -204,12 +198,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //catagory picker
     private fun showCategoryPickerDialog() {
         try {
-           // val categoryNames = mutableListOf<String>()
+            // val categoryNames = mutableListOf<String>()
 
-            val uniqueCatagories = ToolBox.CategoryList
-                .filter { it.CategoryUserID == ToolBox.ActiveUserID }
-                .map { it.CategoryName }
-                .distinct()
+            val uniqueCatagories =
+                ToolBox.CategoryList.filter { it.CategoryUserID == ToolBox.ActiveUserID }
+                    .map { it.CategoryName }.distinct()
 
             var displaySelected = "";
 
@@ -222,8 +215,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     categoryInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }
-                .setCancelable(false)
+                }.setCancelable(false)
 
             val dialog = builder.create()
             dialog.show()
@@ -245,5 +237,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
         minTime = minGoal
         maxTime = maxGoal
+        goalInput.setText("Min time: " + minGoal.toDouble() / 60 + " Max time: " + maxTime.toDouble() / 60)
     }
 }

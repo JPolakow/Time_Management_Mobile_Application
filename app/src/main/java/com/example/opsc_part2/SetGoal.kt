@@ -3,6 +3,7 @@ package com.example.opsc_part2
 import Classes.ToolBox
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,18 +70,24 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
     //============================================================================
     private fun validate(): Boolean {
-        var valid = true
+        try {
+            var valid = true
 
-        if (min.text.toString().trim() == "") {
-            min.error = "Surname is required"
-            valid = false
-        }
-        if (max.text.toString().trim() == "") {
-            max.error = "Surname is required"
-            valid = false
-        }
+            if (min.text.toString().trim() == "") {
+                min.error = "Time is required"
+                valid = false
+            }
 
-        return valid
+            if (max.text.toString().trim() == "") {
+                max.error = "Time is required"
+                valid = false
+            }
+            return valid
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+            return false
+        }
     }
 
     //============================================================================
@@ -107,100 +114,109 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
 
         // returning total minutes
         return totalMinutes
-
     }
 
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMin() {
-        //HOURS
-        val hours = arrayOf(
-            "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
-        )
-        val hourPicker = NumberPicker(requireContext())
-        hourPicker.apply {
-            minValue = 0
-            maxValue = hours.size - 1
-            displayedValues = hours
-            wrapSelectorWheel = true
-        }
-
-        //MINUTES
-        val minutes =
-            arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
-        val minutePicker = NumberPicker(requireContext())
-        minutePicker.apply {
-            minValue = 0
-            maxValue = minutes.size - 1
-            displayedValues = minutes
-            wrapSelectorWheel = true
-        }
-
-        val layout = LinearLayout(requireContext())
-        layout.orientation = LinearLayout.HORIZONTAL
-        layout.addView(hourPicker)
-        layout.addView(minutePicker)
-
-        val alertDialog = AlertDialog.Builder(requireContext(), R.style.CenteredDialog)
-            .setTitle("Select Time")
-            .setView(layout)
-            .setPositiveButton("OK") { _, _ ->
-                val selectedHour = hours[hourPicker.value]
-                val selectedMinute = minutes[minutePicker.value]
-                val selectedTime = "$selectedHour:$selectedMinute"
-                min.setText(selectedTime)
-                // Use the selectedTime as needed
+        try {
+            //HOURS
+            val hours = arrayOf(
+                "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
+            )
+            val hourPicker = NumberPicker(requireContext())
+            hourPicker.apply {
+                minValue = 0
+                maxValue = hours.size - 1
+                displayedValues = hours
+                wrapSelectorWheel = true
             }
-            .setNegativeButton("Cancel", null)
-            .create()
 
-        alertDialog.show()
+            //MINUTES
+            val minutes =
+                arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
+            val minutePicker = NumberPicker(requireContext())
+            minutePicker.apply {
+                minValue = 0
+                maxValue = minutes.size - 1
+                displayedValues = minutes
+                wrapSelectorWheel = true
+            }
+
+            val layout = LinearLayout(requireContext())
+            layout.orientation = LinearLayout.HORIZONTAL
+            layout.addView(hourPicker)
+            layout.addView(minutePicker)
+
+            val alertDialog = AlertDialog.Builder(requireContext(), R.style.CenteredDialog)
+                .setTitle("Select Time")
+                .setView(layout)
+                .setPositiveButton("OK") { _, _ ->
+                    val selectedHour = hours[hourPicker.value]
+                    val selectedMinute = minutes[minutePicker.value]
+                    val selectedTime = "$selectedHour:$selectedMinute"
+                    min.setText(selectedTime)
+                    // Use the selectedTime as needed
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+
+            alertDialog.show()
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
     }
 
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMax() {
-        //HOURS
-        val hours = arrayOf(
-            "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
-        )
-        val hourPicker = NumberPicker(requireContext())
-        hourPicker.apply {
-            minValue = 0
-            maxValue = hours.size - 1
-            displayedValues = hours
-            wrapSelectorWheel = true
-        }
-
-        //MINUTES
-        val minutes =
-            arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
-        val minutePicker = NumberPicker(requireContext())
-        minutePicker.apply {
-            minValue = 0
-            maxValue = minutes.size - 1
-            displayedValues = minutes
-            wrapSelectorWheel = true
-        }
-
-        val layout = LinearLayout(requireContext())
-        layout.orientation = LinearLayout.HORIZONTAL
-        layout.addView(hourPicker)
-        layout.addView(minutePicker)
-
-        val alertDialog = AlertDialog.Builder(requireContext(), R.style.CenteredDialog)
-            .setTitle("Select Time")
-            .setView(layout)
-            .setPositiveButton("OK") { _, _ ->
-                val selectedHour = hours[hourPicker.value]
-                val selectedMinute = minutes[minutePicker.value]
-                val selectedTime = "$selectedHour:$selectedMinute"
-                max.setText(selectedTime)
-                // Use the selectedTime as needed
+        try {
+            //HOURS
+            val hours = arrayOf(
+                "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
+            )
+            val hourPicker = NumberPicker(requireContext())
+            hourPicker.apply {
+                minValue = 0
+                maxValue = hours.size - 1
+                displayedValues = hours
+                wrapSelectorWheel = true
             }
-            .setNegativeButton("Cancel", null)
-            .create()
 
-        alertDialog.show()
+            //MINUTES
+            val minutes =
+                arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
+            val minutePicker = NumberPicker(requireContext())
+            minutePicker.apply {
+                minValue = 0
+                maxValue = minutes.size - 1
+                displayedValues = minutes
+                wrapSelectorWheel = true
+            }
+
+            val layout = LinearLayout(requireContext())
+            layout.orientation = LinearLayout.HORIZONTAL
+            layout.addView(hourPicker)
+            layout.addView(minutePicker)
+
+            val alertDialog = AlertDialog.Builder(requireContext(), R.style.CenteredDialog)
+                .setTitle("Select Time")
+                .setView(layout)
+                .setPositiveButton("OK") { _, _ ->
+                    val selectedHour = hours[hourPicker.value]
+                    val selectedMinute = minutes[minutePicker.value]
+                    val selectedTime = "$selectedHour:$selectedMinute"
+                    max.setText(selectedTime)
+                    // Use the selectedTime as needed
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+
+            alertDialog.show()
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
     }
 }
