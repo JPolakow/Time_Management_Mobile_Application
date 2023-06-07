@@ -37,7 +37,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
             for (card in filteredCategories) {
                 val customCard = custom_stats_cards(requireContext())
-                customCard.setCategoryName("Name: ${card.CategoryName}")
+                customCard.setCategoryName("Catagory: ${card.CategoryName}")
 
                 //get the count of all workEntries with the category name
                 val frequencies =
