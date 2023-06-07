@@ -62,7 +62,7 @@
     <string name="LogsHeading">Logs</string>
     <string name="contentDesFilter">Filter Logs</string>
     <string name="textDate">12 April 2023</string>
-    <string name="textDuration">00:20:02</string>
+    <string name="textDuration">Duration: </string>
 
     <!--Custom Dashboard-->
     <string name="DateCreatedText">12 April 2023</string>
