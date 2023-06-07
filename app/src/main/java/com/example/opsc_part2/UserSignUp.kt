@@ -98,7 +98,7 @@ class UserSignUp : AppCompatActivity() {
             valid = false
         }
         if (TextUtils.isEmpty(username)) {
-            usernameInput.error = ("Password is required")
+            usernameInput.error = ("Username is required")
             valid = false
         }
         if (doesUsernameExist((username))) {
