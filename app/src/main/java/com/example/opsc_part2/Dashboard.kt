@@ -90,7 +90,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 startActivity(intent)
             }
 
-
             val displayCategoryText = "Category: ${ToolBox.SelectedCategory}"
             tvCategory.text = displayCategoryText
 
@@ -183,6 +182,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             actionButt.setOnClickListener {
                 showPopup()
             }
+
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
@@ -201,9 +201,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
             }
 
-            // ----------------- Creating a new card with custom attributes ----------------- //
+            //===== CREATE NEW CARDS FOR EACH ACTIVITY =====
             for (card in filteredCategories) {
                 val customCard = custom_dashboard_cards(this)
+                //===== LOAD DATA INTO THE UIs =====
                 customCard.setActivityName(card.ActivityName)
                 customCard.setActivityStartDate(card.DateCreated)
                 customCard.setCardColor(card.ActivityColor) // not dynamically added
@@ -220,6 +221,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                 val cardTile = customCard.findViewById<CardView>(R.id.cardView)
 
+                //===== DESCRIPTION =====
                 val popupView = LayoutInflater.from(applicationContext)
                     .inflate(R.layout.popup_description, null)
                 val tvDescription = popupView.findViewById<TextView>(R.id.tvDescription)
@@ -233,11 +235,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 popupWindow.isFocusable = true
                 popupWindow.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
-
                 cardTile.setOnClickListener {
                     popupWindow.showAsDropDown(customCard)
                 }
 
+                //===== STOP TIMER BUTTON =====
                 val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
                 //Complete the activity
                 stopActivity.setOnClickListener {
@@ -261,6 +263,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     }
                 }
 
+                //===== ADD NEW TIMER BUTTON =====
                 val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
                 //Add new entry
                 addNewEntry.setOnClickListener {
@@ -283,20 +286,21 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     }
                 }
 
+                //===== PAUSE BUTTON =====
                 val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
-
                 ibPause.setOnClickListener() {
                     stopTimer()
                     Log.d("timer", "started")
                 }
 
-                //Timer
+                //===== TIMER =====
                 val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
                 ibPausePlay.setOnClickListener() {
                     tvDisplayActivityName.text = card.ActivityName
                     startTimer()
                 }
-                //Add to the page
+
+                //===== ADD CARD TO PAGE =====
                 linView.addView(customCard)
             }
         } catch (ex: java.lang.Exception) {

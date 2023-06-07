@@ -54,30 +54,6 @@
         android:textColor="@color/black"
         android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/tvEmailHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvUsernameHeading"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/profileEmailHeading"
-        android:textSize="22sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/inter_regular" />
-
-    <TextView
-        android:id="@+id/tvPasswordHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvEmailHeading"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/profilePasswordHeading"
-        android:textSize="22sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/inter_regular"/>
-
 
     <TextView
         android:id="@+id/tvDisplayName"
@@ -115,73 +91,21 @@
         android:text="@string/profileDisplayUsername"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tvDisplayEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvDisplayUsername"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="14dp"
-        android:layout_toEndOf="@id/tvEmailHeading"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/profileDisplayEmail"
-        android:textSize="20sp" />
-
-
-    <TextView
-        android:id="@+id/tvDisplayPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvDisplayEmail"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/tvPasswordHeading"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/profileDisplayPassword"
-        android:textSize="20sp" />
-
-
 
     <ImageButton
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvDisplayPassword"
-        android:layout_marginStart="200dp"
+        android:layout_below="@id/tvDisplayUsername"
+        android:layout_marginStart="30dp"
         android:layout_marginEnd="0dp"
         android:layout_marginTop="30sp"
         android:contentDescription="@string/contentDesPausePlay"
         android:height="50dp"
-
         android:width="170dp"
-        android:layout_toEndOf="@+id/captureButton"
         android:src="@drawable/logout_48px"
         android:background="@null"
         android:text="@string/profileLogout"
         android:textColor="@color/black" />
-
-    <ImageButton
-        android:id="@+id/captureButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvDisplayPassword"
-        android:contentDescription="@string/contentDesPausePlay"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginTop="30sp"
-        android:height="50dp"
-        android:width="170dp"
-        android:textSize="20sp"
-        android:src="@drawable/add_a_photo_48px"
-        android:background="@null"
-        android:textColor="@color/black" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        tools:srcCompat="@drawable/temp_profilepicture"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/btnLogout"/>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.opsc_part2
 
 import Classes.ProfileImageManager
+import Classes.ToolBox
 import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -19,8 +20,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -28,13 +31,9 @@ import androidx.fragment.app.Fragment
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var imageView: ImageView
-
-    //============================================================================
-    companion object {
-        internal const val CAMERA_PERMISSION_CODE = 100
-        internal const val CAMERA_REQUEST_CODE = 200
-    }
+    private lateinit var name: TextView
+    private lateinit var surname: TextView
+    private lateinit var username: TextView
 
     //============================================================================
     override fun onCreateView(
@@ -42,6 +41,14 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_settings, container, false)
         try {
+            name = view.findViewById(R.id.tvDisplayName)
+            surname = view.findViewById(R.id.tvDisplaySurname)
+            username = view.findViewById(R.id.tvDisplayUsername)
+
+            name.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserName)
+            surname.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserSurname)
+            username.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserUsername)
+
             // ------------ SIGN OUT CLICK ------------ //
             // Add functionality for clearing user data
             val signOutClick = view.findViewById<ImageButton>(R.id.btnLogout)
@@ -49,7 +56,7 @@ class ProfileFragment : Fragment() {
 
                 animateButtonClick(signOutClick)
 
-
+                //Sign out
                 // Creating a new Dialog
                 val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
                     when (which) {
@@ -69,7 +76,7 @@ class ProfileFragment : Fragment() {
                 // Building a new alert
                 val builder = AlertDialog.Builder(context)
                 // Setting alert message
-                builder.setMessage("Are you sure you want to logout?\nYou will lose all progress!")
+                builder.setMessage("Are you sure you want to logout?")
                     // Setting text for positive button
                     .setPositiveButton("Yes", dialogClickListener)
                     // Setting text for negative button
@@ -79,25 +86,6 @@ class ProfileFragment : Fragment() {
             }
             // ------------ END SIGN OUT CLICK ------------ //
 
-            // ------------ CAMERA ------------ //
-            imageView = view.findViewById(R.id.imageView)
-            val captureButton: ImageButton = view.findViewById(R.id.captureButton)
-            captureButton.setOnClickListener {
-                //See if app has permission to use camera
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(), Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    startCamera()
-                } else {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.CAMERA),
-                        CAMERA_PERMISSION_CODE
-                    )
-                }
-            }
-            // ------------ END OF CAMERA ------------ //
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
@@ -128,53 +116,6 @@ class ProfileFragment : Fragment() {
             })
 
             animator.start()
-        } catch (ex: java.lang.Exception) {
-            Log.w("log", ex.toString())
-            ex.printStackTrace()
-        }
-    }
-
-    //============================================================================
-    // Load the image if it exists in the ImageManager
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        ProfileImageManager.loadImage()?.let { image ->
-            imageView.setImageBitmap(image)
-        }
-    }
-
-    //============================================================================
-    //call the camera
-    private fun startCamera() {
-        try {
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
-            } else {
-                Toast.makeText(requireContext(), "Camera is not available", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        } catch (ex: java.lang.Exception) {
-            Log.w("log", ex.toString())
-            ex.printStackTrace()
-        }
-    }
-
-    //============================================================================
-    //when camera is done get the image
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        try {
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                val imageBitmap = data?.extras?.get("data") as Bitmap?
-                imageView.setImageBitmap(imageBitmap)
-
-                imageBitmap?.let {
-                    //Save Image Locally(it)
-                    ProfileImageManager.saveImage(it)
-                }
-            }
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
