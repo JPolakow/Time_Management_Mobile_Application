@@ -4,6 +4,7 @@ import Classes.ToolBox
 import Classes.WorkEntriesObject
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -50,6 +51,24 @@ class complete_activity : BottomSheetDialogFragment() {
 
     //regular
     private var rating: Int = 1
+
+    interface CompleteActivityCallback {
+        fun onActivityComplete()
+    }
+    private var callback: CompleteActivityCallback? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is CompleteActivityCallback) {
+            callback = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
 
     //============================================================================
     override fun onCreateView(
@@ -170,13 +189,13 @@ class complete_activity : BottomSheetDialogFragment() {
                 paraColor!!
             )
 
-            Log.w("log", "image start")
             image?.let { bitmap ->
                 newWorkEntriesObject.saveImage(bitmap)
-                Log.w("log", "IMAGED SAVED")
             }
 
             ToolBox.WorkEntriesList.add(newWorkEntriesObject)
+
+            callback?.onActivityComplete()
             dismiss()
         } catch (ex: Exception) {
             Log.w("log", ex.toString())

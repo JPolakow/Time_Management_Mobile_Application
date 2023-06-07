@@ -28,7 +28,8 @@ import kotlinx.coroutines.*
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener {
+class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListener,
+    complete_activity.CompleteActivityCallback {
 
     private lateinit var binding: ActivityDashboardBinding
 
@@ -242,17 +243,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 stopActivity.setOnClickListener {
 
                     stopTimer()
-                    resetTimer() // Check this
                     val fragment = complete_activity()
 
                     GlobalScope.launch {
-                        val returnType = showTimePickerDialogMin()
-
                         withContext(Dispatchers.Main) {
                             // Put data into fragment
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
-                            args.putDouble("duration", returnType)
+                            args.putDouble("duration", time)
                             args.putInt("id", card.ActivityID)
                             args.putString("name", card.ActivityName)
                             args.putString("category", card.ActivityCategory)
@@ -260,10 +258,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             fragment.arguments = args
                             fragment.show(supportFragmentManager, "completeActivity")
                         }
+
                     }
+
+
                 }
 
                 val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
+                //add new entry
                 addNewEntry.setOnClickListener {
                     val fragment = complete_activity()
 
@@ -309,6 +311,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
     }
 
+    override fun onActivityComplete() {
+        stopTimer()
+        resetTimer()
+    }
+
     //TIMERS
     //region
     //============================================================================
@@ -332,10 +339,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            Log.d("timer", "updating")
             time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
             tvActNameTime.text = getTimeStringFromDouble(time)
-            Log.d("timer", "updating2")
         }
     }
 

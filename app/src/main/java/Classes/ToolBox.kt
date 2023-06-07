@@ -45,7 +45,7 @@ class ToolBox {
                 60.0,
                 180.0,
                 "Light-Blue",
-                "A whole lot of nonsense"
+                "Android and Github fun"
             ),
             ActivityObject(
                 1,
@@ -56,7 +56,7 @@ class ToolBox {
                 40.0,
                 120.0,
                 "Red",
-                "Best subject ever!"
+                "Life advice and C#"
             ),
             ActivityObject(
                 2,
@@ -67,7 +67,7 @@ class ToolBox {
                 120.0,
                 240.0,
                 "Pink",
-                "Worst Subject Ever!"
+                "pain"
             ),
             ActivityObject(
                 3,
@@ -78,7 +78,7 @@ class ToolBox {
                 30.0,
                 60.0,
                 "Blue",
-                "A waste of Time!"
+                "Team building and future knowledge"
             )
         )
     }
