@@ -77,7 +77,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         // This is where you change size of image
         val maxImageSize = 140
 
-        //timer decs
+        //timer decks
         serviceIntent = Intent(this, TimerService::class.java)
         registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
 
@@ -187,14 +187,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun loadCustomUI() {
         linView.removeAllViews()
 
-        val filteredCatagories = ToolBox.ActivitiesList.filter { activity ->
+        val filteredCategories = ToolBox.ActivitiesList.filter { activity ->
             activity.ActivityUserID == ToolBox.ActiveUserID
         }.filter { activity ->
             ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
         }
 
         // ----------------- Creating a new card with custom attributes ----------------- //
-        for (card in filteredCatagories) {
+        for (card in filteredCategories) {
             val customCard = custom_dashboard_cards(this)
             customCard.setActivityName(card.ActivityName)
             customCard.setActivityStartDate(card.DateCreated)

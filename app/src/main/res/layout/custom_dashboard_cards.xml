@@ -117,13 +117,13 @@
                 android:id="@+id/AddNewEntry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearIcons"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
+                android:textColor="@color/black"
+                android:layout_marginRight="16dp"
                 android:text="Add New Entry"
                 android:textSize="11sp"
-                app:icon="@drawable/add_48px" />
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent" />
 
         </RelativeLayout>
 

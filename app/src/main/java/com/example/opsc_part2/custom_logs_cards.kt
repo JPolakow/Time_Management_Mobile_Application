@@ -56,7 +56,8 @@ class custom_logs_cards @JvmOverloads constructor(
     // Used to set the rating user has selected
     fun setRating(ratingInt: Int) {
         val tvRating = findViewById<TextView>(R.id.tvMyRating)
-        tvRating.text = "My rating: "+ ratingInt.toString()
+        val ratingDisplay = "My rating: ${ratingInt.toString()}"
+        tvRating.text = ratingDisplay
     }
 
     //============================================================================

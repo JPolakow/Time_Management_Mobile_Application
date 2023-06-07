@@ -41,14 +41,15 @@ class UserSignUp : AppCompatActivity() {
 
         btnSignUp = findViewById(R.id.btnSignUp)
         btnSignUp.setOnClickListener() {
-            if (validateForm()) RegisterUser()
+            if (validateForm()){
+                RegisterUser()
+                intentToSignIn()
+            }
         }
 
         tvSignInClick = findViewById(R.id.tvSignIn)
         tvSignInClick.setOnClickListener() {
-            val intent = Intent(this, MainActivity::class.java)
-            val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
-            ActivityCompat.startActivity(this, intent, options.toBundle())
+            intentToSignIn()
         }
     }
 
@@ -66,6 +67,16 @@ class UserSignUp : AppCompatActivity() {
 
         val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
         toast.show()
+    }
+
+    //============================================================================
+    private fun intentToSignIn()
+    {
+
+        val intent = Intent(this, MainActivity::class.java)
+        val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
+        ActivityCompat.startActivity(this, intent, options.toBundle())
+
     }
 
     //============================================================================

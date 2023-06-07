@@ -36,7 +36,7 @@ class complete_activity : BottomSheetDialogFragment() {
     private var paraDuration: Double? = null
     private var paraColor: String? = null
     private var paraName: String? = null
-    private var paraCatagory: String? = null
+    private var paraCategory: String? = null
 
     //UI
     private lateinit var btnAddImage: Button
@@ -62,7 +62,7 @@ class complete_activity : BottomSheetDialogFragment() {
             paraDuration = arguments?.getDouble("duration")
             paraActivityID = arguments?.getInt("id")
             paraName = arguments?.getString("name")
-            paraCatagory = arguments?.getString("category")
+            paraCategory = arguments?.getString("category")
 
             btnSave = view.findViewById<Button>(R.id.btnSave)
             btnSave.setOnClickListener {
@@ -162,7 +162,7 @@ class complete_activity : BottomSheetDialogFragment() {
             val newWorkEntriesObject = WorkEntriesObject(
                 paraActivityID!!,
                 paraName!!,
-                paraCatagory!!,
+                paraCategory!!,
                 ToolBox.ActiveUserID,
                 rating,
                 time,
