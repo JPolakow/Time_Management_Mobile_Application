@@ -16,10 +16,13 @@ class WorkEntriesObject(
 
     private var savedImage: Bitmap? = null
 
+    // Function to save image
     fun saveImage(image: Bitmap) {
         savedImage = image
     }
 
+
+    // Function to get the saved image
     fun getSavedImage(): Bitmap? {
         return savedImage
     }

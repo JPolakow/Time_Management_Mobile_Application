@@ -14,23 +14,23 @@ context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     }
 
     //============================================================================
-    // Used to set catagory Name
-    fun setCatagoryName(name: String) {
-        val catagoryName = findViewById<TextView>(R.id.txtName)
-        catagoryName.text = name;
+    // Used to set category Name
+    fun setCategoryName(name: String) {
+        val categoryName = findViewById<TextView>(R.id.txtName)
+        categoryName.text = name;
     }
 
     //============================================================================
     // Used to set amount
-    fun setCatagoryAmount(amount: String) {
-        val catagoryAmount = findViewById<TextView>(R.id.txtAmount)
-        catagoryAmount.text = amount;
+    fun setCategoryAmount(amount: String) {
+        val categoryAmount = findViewById<TextView>(R.id.txtAmount)
+        categoryAmount.text = amount;
     }
 
     //============================================================================
-    // Used to set catagory Name
-    fun setCatagoryDuration(name: String) {
-        val catagoryDuration = findViewById<TextView>(R.id.txtDuration)
-        catagoryDuration.text = name;
+    // Used to set category Name
+    fun setCategoryDuration(name: String) {
+        val categoryDuration = findViewById<TextView>(R.id.txtDuration)
+        categoryDuration.text = name;
     }
 }

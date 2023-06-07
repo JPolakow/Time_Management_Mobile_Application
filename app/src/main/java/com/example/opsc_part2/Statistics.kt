@@ -1,15 +1,12 @@
 package com.example.opsc_part2
 
-import Classes.CategoryObject
 import Classes.ToolBox
-import Classes.WorkEntriesObject
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 
 class Statistics : Fragment(R.layout.fragment_statistics) {
@@ -34,20 +31,20 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     //============================================================================
     private fun populate() {
         try {
-            val filteredCatagories = ToolBox.CategoryList.filter { activity ->
+            val filteredCategories = ToolBox.CategoryList.filter { activity ->
                 activity.CategoryUserID == ToolBox.ActiveUserID
             }
 
-            for (card in filteredCatagories) {
+            for (card in filteredCategories) {
                 val customCard = custom_stats_cards(requireContext())
-                customCard.setCatagoryName("Name: ${card.CategoryName}")
+                customCard.setCategoryName("Name: ${card.CategoryName}")
 
-                //get the count of all workentries with the catagory name
+                //get the count of all workEntries with the category name
                 val frequencies =
                     ToolBox.WorkEntriesList.count { it.WEActivityCategory == card.CategoryName }
-                customCard.setCatagoryAmount("Work entries: $frequencies")
+                customCard.setCategoryAmount("Work entries: $frequencies")
 
-                //get the toal duration of all work entries with the catagory name
+                // Get the total duration of all work entries with the category name
                 val totalDuration =
                     ToolBox.WorkEntriesList.filter { it.WEActivityCategory == card.CategoryName }
                         .groupBy { it.WEActivityCategory }
@@ -55,7 +52,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
                 val total = totalDuration[card.CategoryName]
                 if (total != null) {
-                    customCard.setCatagoryDuration("Total duration: $total")
+                    customCard.setCategoryDuration("Total duration: $total")
                 }
 
                 linView.addView(customCard)

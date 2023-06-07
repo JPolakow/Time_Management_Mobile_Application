@@ -56,29 +56,29 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             ex.printStackTrace()
         }
         nameInput = view.findViewById(R.id.etName)
-        goalInput = view.findViewById<EditText>(R.id.etGoal)
-        colorInput = view.findViewById<EditText>(R.id.etColor)
-        ivSubmit = view.findViewById<ImageButton>(R.id.ivSubmit)
-        tvClose = view.findViewById<ImageButton>(R.id.ibClose)
+        goalInput = view.findViewById(R.id.etGoal)
+        colorInput = view.findViewById(R.id.etColor)
+        ivSubmit = view.findViewById(R.id.ivSubmit)
+        tvClose = view.findViewById(R.id.ibClose)
         categoryInput = view.findViewById(R.id.etCategory)
         descriptionInput = view.findViewById(R.id.etName)
 
-        //add goal
+        //Add goal
         goalInput.setOnClickListener {
             showPopupFragment()
         }
 
-        //pick color
+        //Pick a color
         colorInput.setOnClickListener {
             showColorPickerDialog()
         }
 
-        //pick category
+        //Pick Category
         categoryInput.setOnClickListener {
             showCategoryPickerDialog()
         }
 
-        //submit button
+        //Submit Button
         ivSubmit.setOnClickListener() {
             if (validateForm()) {
                 addActivityToList()
@@ -88,7 +88,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             }
         }
 
-        //close button
+        //Close Button
         tvClose.setOnClickListener() {
             val intent = Intent(requireActivity(), Dashboard::class.java)
             val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
@@ -99,7 +99,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //ensure user has Inputed valid data
+    //ensure user has Inputted valid data
     private fun validateForm(): Boolean {
         try {
 
@@ -113,23 +113,23 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val desc: String = descriptionInput.getText().toString().trim()
 
         if (TextUtils.isEmpty(name)) {
-            nameInput.setError("Name is required")
+            nameInput.error = "Name is required"
             valid = false
         }
         if (TextUtils.isEmpty(desc)) {
-            descriptionInput.setError("Description is required")
+            descriptionInput.error = "Description is required"
             valid = false
         }
         if (TextUtils.isEmpty(catagory)) {
-            categoryInput.setError("Catagory is required")
+            categoryInput.error = "Category is required"
             valid = false
         }
-        if (SelectedColor.equals("")) {
-            colorInput.setError("Color is required")
+        if (SelectedColor == "") {
+            colorInput.error = "Color is required"
             valid = false
         }
         if (minTime == -1 || maxTime == -1) {
-            goalInput.setError("Goal is required")
+            goalInput.error = "Goal is required"
             valid = false
         }
 
@@ -137,7 +137,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //add the new entry to the list
+    //Add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addActivityToList() {
         try {
@@ -155,7 +155,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val name = nameInput.text.toString().trim()
         val desc = descriptionInput.text.toString().trim()
 
-        val newActitivy = ActivityObject(
+        val newActivity = ActivityObject(
             activityID,
             currentUser,
             name,
@@ -166,11 +166,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             SelectedColor,
             desc,
         )
-        ToolBox.ActivitiesList.add(newActitivy)
+        ToolBox.ActivitiesList.add(newActivity)
     }
 
     //============================================================================
-    //color picker
+    //Method to show color picker dialog
     private fun showColorPickerDialog() {
         try {
             var displaySelected = "";
@@ -195,22 +195,21 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //catagory picker
+    //Category picker
     private fun showCategoryPickerDialog() {
         try {
-            // val categoryNames = mutableListOf<String>()
 
-            val uniqueCatagories =
+            val uniqueCategories =
                 ToolBox.CategoryList.filter { it.CategoryUserID == ToolBox.ActiveUserID }
                     .map { it.CategoryName }.distinct()
 
             var displaySelected = "";
 
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Pick a catagory")
-                .setItems(uniqueCatagories.toTypedArray()) { dialog: DialogInterface, which: Int ->
+            builder.setTitle("Pick a category")
+                .setItems(uniqueCategories.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
-                    SelectedCatagory = uniqueCatagories[which]
+                    SelectedCatagory = uniqueCategories[which]
                     displaySelected += SelectedCatagory
                     categoryInput.setText(displaySelected)
 
@@ -237,6 +236,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
         minTime = minGoal
         maxTime = maxGoal
-        goalInput.setText("Min time: " + minGoal.toDouble() / 60 + " Max time: " + maxTime.toDouble() / 60)
+        val textToSet = "Min time: ${minGoal.toDouble() / 60} Max time: ${maxTime.toDouble() / 60}"
+        goalInput.setText(textToSet)
     }
 }

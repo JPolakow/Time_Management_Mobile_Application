@@ -2,6 +2,7 @@ package Classes
 
 import java.util.*
 
+// Object for Users' activities
 class ActivityObject(
     val ActivityID: Int,
     val ActivityUserID: Int,

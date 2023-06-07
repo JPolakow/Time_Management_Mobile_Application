@@ -33,7 +33,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
     private lateinit var binding: ActivityDashboardBinding
 
-    //ui vars
+    //UI vars
     private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var tvCategory: TextView
@@ -41,7 +41,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var tvActNameTime: TextView
     private lateinit var tvDisplayActivityName: TextView
 
-    //timer vars
+    //Timer vars
     private fun makeTimeString(hour: Int, min: Int, sec: Int): String =
         String.format("%02d:%02d:%02d", hour, min, sec)
 
@@ -60,7 +60,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         try {
 
             // ======================= Declarations ======================= //
-            //binding
+            //Binding
             binding = ActivityDashboardBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
@@ -231,7 +231,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 popupWindow.isFocusable = true
-                popupWindow.setBackgroundDrawable(ColorDrawable(Color.WHITE)) // Set a custom background color or drawable
+                popupWindow.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
 
                 cardTile.setOnClickListener {
@@ -239,7 +239,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 }
 
                 val stopActivity = customCard.findViewById<ImageButton>(R.id.ibStop)
-                //complete the activity
+                //Complete the activity
                 stopActivity.setOnClickListener {
 
                     stopTimer()
@@ -258,19 +258,16 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             fragment.arguments = args
                             fragment.show(supportFragmentManager, "completeActivity")
                         }
-
                     }
-
-
                 }
 
                 val addNewEntry = customCard.findViewById<Button>(R.id.AddNewEntry)
-                //add new entry
+                //Add new entry
                 addNewEntry.setOnClickListener {
                     val fragment = complete_activity()
 
                     GlobalScope.launch {
-                        val returnType = showTimePickerDialogMin().toDouble()
+                        val returnType = showTimePickerDialogMin()
 
                         withContext(Dispatchers.Main) {
                             // Put data into fragment
@@ -285,8 +282,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             fragment.show(supportFragmentManager, "completeActivity")
                         }
                     }
-
-
                 }
 
                 val ibPause = customCard.findViewById<ImageButton>(R.id.ibPause)
@@ -296,13 +291,13 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     Log.d("timer", "started")
                 }
 
-                //timer
+                //Timer
                 val ibPausePlay = customCard.findViewById<ImageButton>(R.id.ibPausePlay)
                 ibPausePlay.setOnClickListener() {
                     tvDisplayActivityName.text = card.ActivityName
                     startTimer()
                 }
-                //add to the page
+                //Add to the page
                 linView.addView(customCard)
             }
         } catch (ex: java.lang.Exception) {
@@ -329,14 +324,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //stop the timer
+    //Stop the timer
     private fun stopTimer() {
         stopService(serviceIntent)
         timerStarted = false
     }
 
     //============================================================================
-    //get the data form the service and update textview
+    //Get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
@@ -354,15 +349,15 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     //endregion
 
     //============================================================================
-    //catagory picker
+    //Category picker
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
-        val catagoryNames = mutableListOf<String>()
-        catagoryNames.add("None")
+        val categoryNames = mutableListOf<String>()
+        categoryNames.add("None")
 
-        ToolBox.CategoryList.forEach { catagory ->
-            if (catagory.CategoryUserID.equals(ToolBox.ActiveUserID)) {
-                catagoryNames.add(catagory.CategoryName)
+        ToolBox.CategoryList.forEach { category ->
+            if (category.CategoryUserID == ToolBox.ActiveUserID) {
+                categoryNames.add(category.CategoryName)
             }
         }
 
@@ -370,12 +365,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Pick a catagory")
-            .setItems(catagoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
-                val selectedCatagory = which
+            .setItems(categoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
-                ToolBox.SelectedCategory = catagoryNames[selectedCatagory]
+                ToolBox.SelectedCategory = categoryNames[which]
                 displaySelected += ToolBox.SelectedCategory
-                tvCategory.setText(displaySelected)
+                tvCategory.text = displaySelected
                 callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
@@ -386,7 +380,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //time picker
+    //Time picker
     private suspend fun showTimePickerDialogMin(): Double {
         return withContext(Dispatchers.Main) {
             val hours = arrayOf(

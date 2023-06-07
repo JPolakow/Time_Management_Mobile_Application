@@ -18,14 +18,14 @@ import androidx.core.app.ActivityOptionsCompat
 
 class UserSignUp : AppCompatActivity() {
 
-    //inputs
+    //Inputs
     private lateinit var nameInput: EditText
     private lateinit var surnameInput: EditText
     private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var confirmPasswordInput: EditText
 
-    //press ables
+    //Press ables
     private lateinit var tvSignInClick: TextView
     private lateinit var btnSignUp: Button
 
@@ -94,7 +94,7 @@ class UserSignUp : AppCompatActivity() {
     }
 
     //============================================================================
-    //ensure user has inputted valid data
+    // Ensure user has inputted valid data
     private fun validateForm(): Boolean {
         var valid = true
         try {
@@ -142,7 +142,7 @@ class UserSignUp : AppCompatActivity() {
     }
 
     //============================================================================
-    //try find if the existing username exists
+    // Try find if the existing username exists
     private fun doesUsernameExist(NameToFind: String): Boolean {
         try {
             val person = ToolBox.UsersList.find { it.UserUsername == NameToFind }
