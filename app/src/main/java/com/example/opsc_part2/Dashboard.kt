@@ -105,7 +105,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             //---------------------------SET UP BOTTOM UI-------------------------
             //region
             // Create a Bitmap from the image drawable
-            val drawable = resources.getDrawable(R.drawable.temp_profilepicture) as BitmapDrawable
+            val drawable = resources.getDrawable(R.drawable.profile_image_placeholder2) as BitmapDrawable
             val bitmap = drawable.bitmap
 
             // Calculate the desired size for the circular ImageView, considering the maximum size
