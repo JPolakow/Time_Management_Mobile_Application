@@ -177,6 +177,7 @@ class complete_activity : BottomSheetDialogFragment() {
         try {
             // Creating correct date format
             val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
+            val duration = String.format( "%.2f",  paraDuration!! / 60).toDouble()
 
             val newWorkEntriesObject = WorkEntriesObject(
                 paraActivityID!!,
@@ -185,7 +186,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 ToolBox.ActiveUserID,
                 rating,
                 time,
-                paraDuration!!,
+                duration,
                 paraColor!!
             )
 

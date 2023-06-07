@@ -258,7 +258,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             fragment.arguments = args
                             fragment.show(supportFragmentManager, "completeActivity")
                         }
-
                     }
 
 
@@ -270,9 +269,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     val fragment = complete_activity()
 
                     GlobalScope.launch {
-                        val returnType = showTimePickerDialogMin().toDouble()
-
                         withContext(Dispatchers.Main) {
+                            val returnType = showTimePickerDialogMin().toDouble()
                             // Put data into fragment
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
@@ -424,7 +422,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     .setPositiveButton("OK") { _, _ ->
                         val selectedHour = hours[hourPicker.value].toDouble()
                         val selectedMinute = minutes[minutePicker.value].toDouble()
-                        val selectedTime = selectedHour / 60.0 + selectedMinute
+                        val selectedTime = selectedHour * 60 * 60 + selectedMinute * 60
                         selectedTimeDeferred.complete(selectedTime)
                     }
                     .setNegativeButton("Cancel") { _, _ ->
