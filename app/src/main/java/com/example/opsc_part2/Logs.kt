@@ -271,7 +271,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
             for (entry in workEntries) {
                 val entryDate = dateFormatter.parse(entry.WEDateEnded)
-                if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory) {
+                if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory && entry.WEUserID == ToolBox.ActiveUserID) {
                     filteredList.add(entry)
                 }
             }
@@ -295,7 +295,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
             for (entry in workEntries) {
                 val entryDate = dateFormatter.parse(entry.WEDateEnded)
-                if (entryDate in startDateTime..endDateTime) {
+                if (entryDate in startDateTime..endDateTime && entry.WEUserID == ToolBox.ActiveUserID) {
                     filteredList.add(entry)
                 }
             }
