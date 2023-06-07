@@ -61,7 +61,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         ivSubmit = view.findViewById(R.id.ivSubmit)
         tvClose = view.findViewById(R.id.ibClose)
         categoryInput = view.findViewById(R.id.etCategory)
-        descriptionInput = view.findViewById(R.id.etName)
+        descriptionInput = view.findViewById(R.id.etDescription)
 
         //Add goal
         goalInput.setOnClickListener {
@@ -214,7 +214,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     categoryInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }.setCancelable(false)
+                }
 
             val dialog = builder.create()
             dialog.show()
