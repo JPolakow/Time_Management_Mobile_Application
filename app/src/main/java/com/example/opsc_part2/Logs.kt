@@ -5,20 +5,16 @@ import Classes.WorkEntriesObject
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Im
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.appcompat.app.AlertDialog
-import com.example.opsc_part2.databinding.FragmentLogsBinding
 import android.app.DatePickerDialog
 import android.widget.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 class Logs : Fragment(R.layout.fragment_logs) {
     private lateinit var linView: LinearLayout
@@ -178,7 +174,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 val customCard = custom_logs_cards(requireContext())
                 customCard.setActivityName(card.WEActivityName)
                 customCard.setCardColor(card.WEColor)
-                customCard.setActivityDuaration(card.WEDuration)
+                customCard.setActivityDuration(card.WEDuration)
                 customCard.setActivityEndDate(card.WEDateEnded.toString())
                 customCard.setRating(card.WERating)
                 customCard.setRatingColor(card.WERating)

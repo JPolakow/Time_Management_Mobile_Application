@@ -70,6 +70,7 @@ class UserSignUp : AppCompatActivity() {
     }
 
     //============================================================================
+    // Method to start intent activity to sign in
     private fun intentToSignIn()
     {
 
@@ -80,14 +81,14 @@ class UserSignUp : AppCompatActivity() {
     }
 
     //============================================================================
-    //ensure user has inouted valid data
+    //ensure user has inputted valid data
     private fun validateForm(): Boolean {
         var valid = true
-        val name: String = nameInput.getText().toString().trim()
-        val surname: String = surnameInput.getText().toString().trim()
-        val username: String = usernameInput.getText().toString().trim()
-        val password: String = passwordInput.getText().toString().trim()
-        val confirmPassword: String = confirmPasswordInput.getText().toString().trim()
+        val name: String = nameInput.text.toString().trim()
+        val surname: String = surnameInput.text.toString().trim()
+        val username: String = usernameInput.text.toString().trim()
+        val password: String = passwordInput.text.toString().trim()
+        val confirmPassword: String = confirmPasswordInput.text.toString().trim()
 
         if (TextUtils.isEmpty(name)) {
             nameInput.error = "Name is required"
