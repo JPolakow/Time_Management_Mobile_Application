@@ -1,8 +1,10 @@
 package Classes
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class ToolBox {
     companion object {
