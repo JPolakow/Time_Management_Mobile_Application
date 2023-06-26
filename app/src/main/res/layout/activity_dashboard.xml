@@ -68,13 +68,13 @@
 
             <TextView
                 android:id="@+id/tvDisplayTime"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
+                android:layout_marginRight="20dp"
                 android:text="@string/timerDefault"
                 android:textColor="@color/black"
-                android:textSize="30sp"
-                />
+                android:textSize="30sp" />
         </LinearLayout>
 
         <TextView
@@ -84,8 +84,12 @@
             android:layout_below="@+id/linearTimerStuff"
             android:layout_marginStart="16dp"
             android:alpha="0.7"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:textSize="20sp"
+            android:paddingVertical="3dp"
+            android:paddingHorizontal="7dp"
+            android:background="@drawable/button_background" />
 
 
         <!--End of headings-->
