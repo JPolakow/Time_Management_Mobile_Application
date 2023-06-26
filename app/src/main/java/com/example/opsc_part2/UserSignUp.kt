@@ -16,7 +16,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 
-class UserSignUp : AppCompatActivity() {
+class   UserSignUp : AppCompatActivity() {
 
     //Inputs
     private lateinit var nameInput: EditText
@@ -104,6 +104,13 @@ class UserSignUp : AppCompatActivity() {
             val password: String = passwordInput.text.toString().trim()
             val confirmPassword: String = confirmPasswordInput.text.toString().trim()
 
+            val minLength = 8
+            val maxLength = 50
+            val hasUpperCase = "[A-Z]".toRegex().containsMatchIn(password)
+            val hasLowerCase = "[a-z]".toRegex().containsMatchIn(password)
+            val hasDigit = "\\d".toRegex().containsMatchIn(password)
+            val hasSpecialChar = "[^A-Za-z0-9]".toRegex().containsMatchIn(password)
+
             if (TextUtils.isEmpty(name)) {
                 nameInput.error = "Name is required"
                 valid = false
@@ -133,6 +140,18 @@ class UserSignUp : AppCompatActivity() {
                 confirmPasswordInput.error = ("Passwords must match")
                 valid = false
             }
+            if (!(password.length in minLength..maxLength &&
+                hasUpperCase &&
+                hasLowerCase &&
+                hasDigit &&
+                hasSpecialChar)
+            )
+            {
+                passwordInput.error = ("Password is not strong enough.")
+                valid = false
+            }
+
+
             return valid
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
