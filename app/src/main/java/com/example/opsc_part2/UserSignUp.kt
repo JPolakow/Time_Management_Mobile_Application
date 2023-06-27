@@ -3,6 +3,7 @@ package com.example.opsc_part2
 import Classes.ActiveUserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,8 +16,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-class   UserSignUp : AppCompatActivity() {
+class UserSignUp : AppCompatActivity() {
 
     //Inputs
     private lateinit var nameInput: EditText
@@ -33,6 +36,7 @@ class   UserSignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_sign_up)
+
 
         try {
             nameInput = findViewById(R.id.etName)
@@ -61,14 +65,33 @@ class   UserSignUp : AppCompatActivity() {
 
     //============================================================================
     //take user inputs and create new user instance
+    // atraverso2001 Password1!
     private fun RegisterUser() {
+        val db = Firebase.firestore
         try {
             val activeUserClass = ActiveUserClass(
                 nameInput.text.toString().trim(),
                 surnameInput.text.toString().trim(),
                 usernameInput.text.toString().trim(),
                 PasswordHandler.hashPassword(passwordInput.text.toString().trim())
+
+
             )
+
+            val user = hashMapOf(
+                "name" to nameInput.text.toString().trim(),
+                "surname" to surnameInput.text.toString().trim(),
+                "username" to usernameInput.text.toString().trim(),
+                "password" to PasswordHandler.hashPassword(passwordInput.text.toString().trim())
+            )
+            db.collection("users")
+                .add(user)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
 
             ToolBox.UsersList.add(activeUserClass)
 
@@ -141,12 +164,11 @@ class   UserSignUp : AppCompatActivity() {
                 valid = false
             }
             if (!(password.length in minLength..maxLength &&
-                hasUpperCase &&
-                hasLowerCase &&
-                hasDigit &&
-                hasSpecialChar)
-            )
-            {
+                        hasUpperCase &&
+                        hasLowerCase &&
+                        hasDigit &&
+                        hasSpecialChar)
+            ) {
                 passwordInput.error = ("Password is not strong enough.")
                 valid = false
             }

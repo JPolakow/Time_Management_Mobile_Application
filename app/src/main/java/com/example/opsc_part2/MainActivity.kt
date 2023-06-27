@@ -15,6 +15,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -53,6 +56,38 @@ class MainActivity : AppCompatActivity() {
             ex.printStackTrace()
         }
     }
+
+    companion object {
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    }
+
+    /*fun verifyUserCredentials(email: String, password: String) {
+        auth.signInWith(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // User credentials are correct
+                    println("User credentials are correct.")
+                    val user = auth.currentUser
+                    println("Logged in user: ${user?.email}")
+                } else {
+                    // An error occurred or credentials are incorrect
+                    when (task.exception) {
+                        is FirebaseAuthInvalidUserException -> {
+                            // User does not exist
+                            println("User does not exist.")
+                        }
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            // Invalid password
+                            println("Invalid password.")
+                        }
+                        else -> {
+                            // Other error occurred
+                            println("Error: ${task.exception?.message}")
+                        }
+                    }
+                }
+            }
+    }*/
     //============================================================================
     private fun writeToDB()
     {
