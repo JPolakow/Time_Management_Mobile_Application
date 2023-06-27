@@ -57,7 +57,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.holeRadius = 0f
         pieChart.setHoleColor(android.R.color.transparent)
         // setting drag friction for dragging pie chart
-        pieChart.dragDecelerationFrictionCoef = 0.95f
+        pieChart.dragDecelerationFrictionCoef = 0.99f
     }
 
     //============================================================================
@@ -76,19 +76,20 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
         val data = PieData(dataSet)
         pieChart.data = data
+        // refresh chart
         pieChart.invalidate()
     }
 
     //============================================================================
     private fun populate() {
         try {
-            val filteredCategories = ToolBox.CategoryList.filter { catagory ->
-                catagory.CategoryUserID == ToolBox.ActiveUserID
+            val filteredCategories = ToolBox.CategoryList.filter { category ->
+                category.CategoryUserID == ToolBox.ActiveUserID
             }
 
             for (card in filteredCategories) {
                 val customCard = custom_stats_cards(requireContext())
-                customCard.setCategoryName("Catagory: ${card.CategoryName}")
+                customCard.setCategoryName("Category: ${card.CategoryName}")
 
                 //get the count of all workEntries with the category name
                 val frequencies =
