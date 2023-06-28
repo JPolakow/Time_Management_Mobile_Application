@@ -43,11 +43,14 @@ class MainActivity : AppCompatActivity() {
             passwordInput = findViewById(R.id.etPassword)
 
             btnSignIn.setOnClickListener {
-                userLogin()
+                // Calling method to authenticate user credentials with firebase - returning user document ID
+                authenticateUserWithFirebase(usernameInput.text.toString().trim(), passwordInput.text.toString().trim())
+            //userLogin()
+
             }
 
             signUpClick.setOnClickListener {
-                             val intent = Intent(this, UserSignUp::class.java)
+                val intent = Intent(this, UserSignUp::class.java)
                 val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
                 ActivityCompat.startActivity(this, intent, options.toBundle())
             }
@@ -60,37 +63,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val auth: FirebaseAuth = FirebaseAuth.getInstance()
     }
-
-    /*fun verifyUserCredentials(email: String, password: String) {
-        auth.signInWith(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // User credentials are correct
-                    println("User credentials are correct.")
-                    val user = auth.currentUser
-                    println("Logged in user: ${user?.email}")
-                } else {
-                    // An error occurred or credentials are incorrect
-                    when (task.exception) {
-                        is FirebaseAuthInvalidUserException -> {
-                            // User does not exist
-                            println("User does not exist.")
-                        }
-                        is FirebaseAuthInvalidCredentialsException -> {
-                            // Invalid password
-                            println("Invalid password.")
-                        }
-                        else -> {
-                            // Other error occurred
-                            println("Error: ${task.exception?.message}")
-                        }
-                    }
-                }
-            }
-    }*/
     //============================================================================
-    private fun writeToDB()
-    {
+    private fun writeToDB() {
         val db = Firebase.firestore
         // Create a new user with a first and last name
         val user = hashMapOf(
@@ -112,8 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    private fun readFromDB()
-    {
+    private fun readFromDB() {
         val db = Firebase.firestore
         db.collection("users")
             .get()
@@ -128,10 +101,15 @@ class MainActivity : AppCompatActivity() {
     }
     //============================================================================
     private fun userLogin() {
+
+
         try {
             //If username does not exist
             val user =
                 ToolBox.UsersList.find { it.UserUsername == usernameInput.text.toString().trim() }
+
+
+
             if (user == null) {
                 val errToast = Toast.makeText(
                     applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
@@ -164,5 +142,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // function to authenticate user with firebase
+    private fun authenticateUserWithFirebase(username: String, password: String) {
+        val db = Firebase.firestore
 
+        // Query the users collection for the provided username
+        db.collection("users")
+            .whereEqualTo("username", username)
+            .get()
+            .addOnSuccessListener { result ->
+                if (!result.isEmpty) {
+                    val userDocument = result.documents[0]
+                    val storedPassword = userDocument.getString("password")
+
+                    // Compare the stored hashed password with the provided password
+                    if (storedPassword != null && verifyPassword(password, storedPassword)) {
+                        // Authentication successful
+                        val userId = userDocument.id
+                        // Perform any necessary actions for a successful login
+                        Log.d(TAG, "Authentication successful. User ID: $userId")
+                    } else {
+                        // Authentication failed
+                        Log.d(TAG, "Authentication failed. Invalid username or password.")
+                    }
+                } else {
+                    // Authentication failed
+                    Log.d(TAG, "Authentication failed. Invalid username or password.")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
+    }
+
+
+    // function to verify a users' password using their stored hash password
+    private fun verifyPassword(password: String, storedPassword: String): Boolean {
+        return PasswordHandler.hashPassword(password.toString().trim()) == storedPassword
+    }
 }

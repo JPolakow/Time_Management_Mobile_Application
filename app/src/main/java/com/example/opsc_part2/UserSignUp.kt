@@ -67,7 +67,7 @@ class UserSignUp : AppCompatActivity() {
     //take user inputs and create new user instance
     // atraverso2001 Password1!
     private fun RegisterUser() {
-       // val db = Firebase.firestore
+        val db = Firebase.firestore
         try {
             val activeUserClass = ActiveUserClass(
                 nameInput.text.toString().trim(),
@@ -76,9 +76,8 @@ class UserSignUp : AppCompatActivity() {
                 PasswordHandler.hashPassword(passwordInput.text.toString().trim())
             )
 
-//            createAccount()
 
-            /*val user = hashMapOf(
+            val user = hashMapOf(
                 "name" to nameInput.text.toString().trim(),
                 "surname" to surnameInput.text.toString().trim(),
                 "username" to usernameInput.text.toString().trim(),
@@ -92,7 +91,6 @@ class UserSignUp : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
-*/
             ToolBox.UsersList.add(activeUserClass)
 
             val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
