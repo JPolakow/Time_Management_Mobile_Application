@@ -36,6 +36,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
             initPieChart()
             loadPieChartData()
 
+            // Listener for double tap on the pie chart
             val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
                 override fun onDoubleTap(event: MotionEvent): Boolean {
                     initGameWheel()
@@ -99,18 +100,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     }
 
-   /* // Function to call game wheel when clicked
-    private fun onChartDoubleTapped(me: MotionEvent?)
-    {
-        initGameWheel()
-        loadWheelGameData()
-    }
-*/
-
-
     // Function to load data to game wheel
     private fun loadWheelGameData() {
-        pieChart.spin(3000, 0f, 360f, Easing.EaseInOutQuad) // Spin the wheel over 3 seconds
+        pieChart.spin(3000, 0f, 360f, Easing.EaseInOutQuad) // Spin the wheel for 3 seconds
         val colorMap = generateRandomColorMap() // Generate the HashMap of random colors
 
         val entries = mutableListOf<PieEntry>()
