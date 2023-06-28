@@ -110,9 +110,9 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             ex.printStackTrace()
         }
         var valid = true
-        val name: String = nameInput.getText().toString().trim()
-        val catagory: String = categoryInput.getText().toString().trim()
-        val desc: String = descriptionInput.getText().toString().trim()
+        val name: String = nameInput.text.toString().trim()
+        val catagory: String = categoryInput.text.toString().trim()
+        val desc: String = descriptionInput.text.toString().trim()
 
         if (TextUtils.isEmpty(name)) {
             nameInput.error = "Name is required"
@@ -229,14 +229,14 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //calls the set goal popup
+    //Calls the set goal popup
     private fun showPopupFragment() {
         val fragment = SetGoal()
         fragment.show(childFragmentManager, "QuickActionPopup")
     }
 
     //============================================================================
-    //when the set goal is completed it will return values
+    //When the set goal is completed it will return values
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
         maxTime = maxGoal
         minTime = minGoal
@@ -249,7 +249,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val maxOutput = String.format("%02d:%02d", maxHours, maxMinutes)
         val minOutput = String.format("%02d:%02d", minHours, minMinutes)
 
-        val textToSet = "Min time: ${minOutput}\t Max time: ${maxOutput}"
+        val textToSet = "Min time: ${minOutput}\t Max time: $maxOutput"
         goalInput.setText(textToSet)
     }
 }
