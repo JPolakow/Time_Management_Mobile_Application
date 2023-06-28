@@ -376,9 +376,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
-            }.setCancelable(false)
+            }.setCancelable(true)
 
         val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
 

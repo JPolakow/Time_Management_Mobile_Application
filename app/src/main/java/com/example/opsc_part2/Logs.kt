@@ -220,9 +220,10 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 selectedCategory = uniqueCategories[which]
                 callback(selectedCategory!!)
                 dialog.dismiss()
-            }.setCancelable(false)
+            }.setCancelable(true)
 
             val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(true)
             dialog.show()
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
