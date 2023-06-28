@@ -102,8 +102,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     // Function to load data to game wheel
     private fun loadWheelGameData() {
-        pieChart.spin(3000, 0f, 360f, Easing.EaseInOutQuad) // Spin the wheel for 3 seconds
-        val colorMap = generateRandomColorMap() // Generate the HashMap of random colors
+
+        // Spin the wheel for 3 seconds
+        pieChart.spin(3000, 0f, 360f, Easing.EaseInOutQuad)
+
+        // Generate the HashMap of random colors
+        val colorMap = generateRandomColorMap()
 
         val entries = mutableListOf<PieEntry>()
 
@@ -159,22 +163,22 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 //        // refresh chart
 //        pieChart.invalidate()
 
-        //get all user specific catagory names
+        //get all user specific category names
         val filteredCategories = ToolBox.CategoryList.filter { category ->
             category.CategoryUserID == ToolBox.ActiveUserID
         }
 
         val entries = mutableListOf<PieEntry>()
 
-        for (catagory in filteredCategories)
+        for (category in filteredCategories)
         {
             // Get the total duration of all work entries with the category name
             val totalDuration =
-                ToolBox.WorkEntriesList.filter { it.WEActivityCategory == catagory.CategoryName && it.WEUserID == ToolBox.ActiveUserID}
+                ToolBox.WorkEntriesList.filter { it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID}
                     .groupBy { it.WEActivityCategory }
                     .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
 
-            entries.add(PieEntry(totalDuration[catagory.CategoryName]!!.toFloat(), catagory.CategoryName))
+            entries.add(PieEntry(totalDuration[category.CategoryName]!!.toFloat(), category.CategoryName))
         }
 
         val dataSet = PieDataSet(entries, "")

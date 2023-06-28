@@ -67,18 +67,18 @@ class UserSignUp : AppCompatActivity() {
     //take user inputs and create new user instance
     // atraverso2001 Password1!
     private fun RegisterUser() {
-        val db = Firebase.firestore
+       // val db = Firebase.firestore
         try {
             val activeUserClass = ActiveUserClass(
                 nameInput.text.toString().trim(),
                 surnameInput.text.toString().trim(),
                 usernameInput.text.toString().trim(),
                 PasswordHandler.hashPassword(passwordInput.text.toString().trim())
-
-
             )
 
-            val user = hashMapOf(
+//            createAccount()
+
+            /*val user = hashMapOf(
                 "name" to nameInput.text.toString().trim(),
                 "surname" to surnameInput.text.toString().trim(),
                 "username" to usernameInput.text.toString().trim(),
@@ -92,7 +92,7 @@ class UserSignUp : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
-
+*/
             ToolBox.UsersList.add(activeUserClass)
 
             val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
@@ -193,5 +193,29 @@ class UserSignUp : AppCompatActivity() {
             ex.printStackTrace()
             return true
         }
+    }
+
+    private fun createAccount(email: String, password:String)
+    {
+        MainActivity.auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                    val user = MainActivity.auth.currentUser
+                    //updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    //updateUI(null)
+                }
+            }
+
+
     }
 }
