@@ -1,10 +1,8 @@
 package Classes
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
 class ToolBox {
     companion object {
@@ -28,11 +26,12 @@ class ToolBox {
         )
 
         // Passwords are hashed and stored safely
-        val UsersList = mutableListOf<ActiveUserClass>(
-            ActiveUserClass(
+        val UsersList = mutableListOf<UserClass>(
+            UserClass(
+                "user",
+                "John@example.com",
                 "John",
                 "Doe",
-                "user",
                 "D74FF0EE8DA3B9806B18C877DBF29BBDE50B5BD8E4DAD7A3A725000FEB82E8F1"
             )
         )

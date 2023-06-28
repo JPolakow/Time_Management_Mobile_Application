@@ -1,9 +1,10 @@
 package Classes
 
-class ActiveUserClass(
+class UserClass(
+    val UserUsername: String,
+    val UserEmail: String,
     val UserName: String,
     val UserSurname: String,
-    val UserUsername: String,
     val UserPasswordHash: String
 ) {
 }
