@@ -208,16 +208,12 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityName(card.ActivityName)
                 customCard.setActivityStartDate(card.DateCreated)
                 customCard.setCardColor(card.ActivityColor) // not dynamically added
-                customCard.setActivityMinGoal(
-                    "Min Goal: " + String.format(
-                        "%.1f", card.ActivityMinGoal / 60
-                    ) + "hrs"
-                )
-                customCard.setActivityMaxGoal(
-                    "Max Goal: " + String.format(
-                        "%.1f", card.ActivityMaxGoal / 60
-                    ) + "hrs"
-                )
+
+                val minFormatted = String.format("%02d:%02d", (card.ActivityMinGoal / 60).toInt(), (card.ActivityMinGoal % 60).toInt())
+                customCard.setActivityMinGoal("Min Goal: $minFormatted hrs")
+
+                val maxFormatted = String.format("%02d:%02d", (card.ActivityMaxGoal / 60).toInt(), (card.ActivityMaxGoal % 60).toInt())
+                customCard.setActivityMaxGoal("Max Goal: $maxFormatted hrs")
 
                 val cardTile = customCard.findViewById<CardView>(R.id.cardView)
 
@@ -376,10 +372,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
-            }.setCancelable(true)
+            }.setCancelable(false)
 
         val dialog = builder.create()
-        dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
 
