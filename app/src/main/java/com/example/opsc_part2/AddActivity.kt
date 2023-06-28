@@ -19,6 +19,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
@@ -184,9 +186,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     colorInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }.setCancelable(false)
+                }.setCancelable(true)
 
             val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(true)
             dialog.show()
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
@@ -214,9 +217,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     categoryInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }
+                }.setCancelable(true)
 
             val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(true)
             dialog.show()
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
@@ -234,9 +238,18 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //============================================================================
     //when the set goal is completed it will return values
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
-        minTime = minGoal
         maxTime = maxGoal
-        val textToSet = "Min time: ${minGoal.toDouble() / 60} Max time: ${maxTime.toDouble() / 60}"
+        minTime = minGoal
+
+        val maxHours = maxGoal / 60
+        val maxMinutes = maxGoal % 60
+        val minHours = minGoal / 60
+        val minMinutes = minGoal % 60
+
+        val maxOutput = String.format("%02d:%02d", maxHours, maxMinutes)
+        val minOutput = String.format("%02d:%02d", minHours, minMinutes)
+
+        val textToSet = "Min time: ${minOutput}\t Max time: ${maxOutput}"
         goalInput.setText(textToSet)
     }
 }

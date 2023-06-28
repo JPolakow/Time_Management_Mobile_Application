@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             signUpClick.setOnClickListener {
-                val intent = Intent(this, UserSignUp::class.java)
+                             val intent = Intent(this, UserSignUp::class.java)
                 val options = ActivityOptionsCompat.makeCustomAnimation(this, 0, 0)
                 ActivityCompat.startActivity(this, intent, options.toBundle())
             }
