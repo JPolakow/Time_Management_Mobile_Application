@@ -73,6 +73,7 @@
 
     <!-- profile settings-->
     <string name="profileInformation">Information</string>
+    <string name="email">EMAIL</string>
 
 
 </resources>

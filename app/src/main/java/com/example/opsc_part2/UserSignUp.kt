@@ -3,13 +3,13 @@ package com.example.opsc_part2
 import Classes.UserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
-import Classes.UserClass
 import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -69,9 +69,8 @@ class UserSignUp : AppCompatActivity() {
     private fun RegisterUser() {
        // val db = Firebase.firestore
         try {
-            val userClass = UserClass(
+            val activeUserClass = UserClass(
                 nameInput.text.toString().trim(),
-                "email",
                 surnameInput.text.toString().trim(),
                 usernameInput.text.toString().trim(),
                 PasswordHandler.hashPassword(passwordInput.text.toString().trim())
@@ -80,9 +79,6 @@ class UserSignUp : AppCompatActivity() {
 //            createAccount()
 
             /*val user = hashMapOf(
-            )
-
-            val user = hashMapOf(
                 "name" to nameInput.text.toString().trim(),
                 "surname" to surnameInput.text.toString().trim(),
                 "username" to usernameInput.text.toString().trim(),
@@ -97,8 +93,7 @@ class UserSignUp : AppCompatActivity() {
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
 */
-
-            ToolBox.UsersList.add(userClass)
+            ToolBox.UsersList.add(activeUserClass)
 
             val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
             toast.show()

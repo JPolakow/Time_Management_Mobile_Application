@@ -17,22 +17,21 @@
             android:layout_height="wrap_content">
 
             <!--Heading-->
-            <!--            <ImageView-->
-            <!--                android:id="@+id/imgPanda"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="200dp"-->
-            <!--                android:layout_centerHorizontal="true"-->
-            <!--                android:contentDescription="@string/PandaLogo"-->
-            <!--                android:src="@drawable/panda" />&lt;!&ndash;End of heading&ndash;&gt;-->
+            <ImageView
+                android:id="@+id/imgPanda"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/PandaLogo"
+                android:src="@drawable/panda" /><!--End of heading-->
 
             <!--Main content-->
             <LinearLayout
                 android:id="@+id/linearInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="30dp">
-                <!--android:layout_below="@+id/imgPanda"-->
+                android:layout_below="@+id/imgPanda"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvTimePanda"
@@ -40,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/adamina"
                     android:gravity="center"
-                    android:text="@string/signUp"
+                    android:text="@string/app_name"
                     android:textColor="@color/black"
                     android:textSize="40sp" />
 
