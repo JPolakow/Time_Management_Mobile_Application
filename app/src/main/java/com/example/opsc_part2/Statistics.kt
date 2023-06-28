@@ -143,12 +143,41 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     //============================================================================
     // This is where we will load our own data
     private fun loadPieChartData() {
-        val entries = mutableListOf<PieEntry>()
-        entries.add(PieEntry(30f, "John"))
-        entries.add(PieEntry(40f, "Jake"))
-        entries.add(PieEntry(50f, "Peter"))
+//        val entries = mutableListOf<PieEntry>()
+//        entries.add(PieEntry(30f, "John"))
+//        entries.add(PieEntry(40f, "Jake"))
+//        entries.add(PieEntry(50f, "Peter"))
+//
+//        val dataSet = PieDataSet(entries, "Sample Pie Chart")
+//        dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
+//        dataSet.valueTextColor = Color.BLACK
+//        dataSet.valueTextColor = Color.BLACK
+//        dataSet.valueTextSize = 12f
+//
+//        val data = PieData(dataSet)
+//        pieChart.data = data
+//        // refresh chart
+//        pieChart.invalidate()
 
-        val dataSet = PieDataSet(entries, "Sample Pie Chart")
+        //get all user specific catagory names
+        val filteredCategories = ToolBox.CategoryList.filter { category ->
+            category.CategoryUserID == ToolBox.ActiveUserID
+        }
+
+        val entries = mutableListOf<PieEntry>()
+
+        for (catagory in filteredCategories)
+        {
+            // Get the total duration of all work entries with the category name
+            val totalDuration =
+                ToolBox.WorkEntriesList.filter { it.WEActivityCategory == catagory.CategoryName && it.WEUserID == ToolBox.ActiveUserID}
+                    .groupBy { it.WEActivityCategory }
+                    .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+
+            entries.add(PieEntry(totalDuration[catagory.CategoryName]!!.toFloat(), catagory.CategoryName))
+        }
+
+        val dataSet = PieDataSet(entries, "")
         dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
         dataSet.valueTextColor = Color.BLACK
         dataSet.valueTextColor = Color.BLACK
