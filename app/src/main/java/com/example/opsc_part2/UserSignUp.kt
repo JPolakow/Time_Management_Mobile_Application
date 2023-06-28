@@ -1,6 +1,6 @@
 package com.example.opsc_part2
 
-import Classes.ActiveUserClass
+import Classes.UserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
 import android.content.ContentValues
@@ -69,7 +69,7 @@ class UserSignUp : AppCompatActivity() {
     private fun RegisterUser() {
         val db = Firebase.firestore
         try {
-            val activeUserClass = ActiveUserClass(
+            val activeUserClass = UserClass(
                 nameInput.text.toString().trim(),
                 surnameInput.text.toString().trim(),
                 usernameInput.text.toString().trim(),

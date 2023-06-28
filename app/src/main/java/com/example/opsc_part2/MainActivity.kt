@@ -1,6 +1,5 @@
 package com.example.opsc_part2
 
-import Classes.ActiveUserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
 import android.content.ContentValues.TAG
@@ -16,8 +15,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
