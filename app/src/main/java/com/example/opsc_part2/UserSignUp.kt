@@ -69,29 +69,32 @@ class UserSignUp : AppCompatActivity() {
     private fun RegisterUser() {
         val db = Firebase.firestore
         try {
-            val activeUserClass = UserClass(
-                nameInput.text.toString().trim(),
-                surnameInput.text.toString().trim(),
-                usernameInput.text.toString().trim(),
-                PasswordHandler.hashPassword(passwordInput.text.toString().trim())
-            )
+//            val activeUserClass = UserClass(
+//                nameInput.text.toString().trim(),
+//                surnameInput.text.toString().trim(),
+//                usernameInput.text.toString().trim(),
+//                PasswordHandler.hashPassword(passwordInput.text.toString().trim())
+//            )
 
-
+            //hash map to sotre user data
             val user = hashMapOf(
                 "name" to nameInput.text.toString().trim(),
                 "surname" to surnameInput.text.toString().trim(),
                 "username" to usernameInput.text.toString().trim(),
                 "password" to PasswordHandler.hashPassword(passwordInput.text.toString().trim())
             )
+
+            //add user to database
             db.collection("users")
                 .add(user)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    Log.d(ContentValues.TAG, "Entry added with ID: ${documentReference.id}")
                 }
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
-            ToolBox.UsersList.add(activeUserClass)
+
+            //ToolBox.UsersList.add(activeUserClass)
 
             val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
             toast.show()

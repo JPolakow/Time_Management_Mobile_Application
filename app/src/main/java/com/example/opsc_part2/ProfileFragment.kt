@@ -34,9 +34,11 @@ class ProfileFragment : Fragment() {
             surname = view.findViewById(R.id.tvDisplaySurname)
             username = view.findViewById(R.id.tvDisplayUsername)
 
-            name.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserName)
-            surname.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserSurname)
-            username.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserUsername)
+            val userIndex = ToolBox.UsersList.indexOfFirst { user -> user.UserKey == ToolBox.ActiveUserID }
+
+            name.setText(ToolBox.UsersList[userIndex].UserName)
+            surname.setText(ToolBox.UsersList[userIndex].UserSurname)
+            username.setText(ToolBox.UsersList[userIndex].UserUsername)
 
             // ------------ SIGN OUT CLICK ------------ //
             // Add functionality for clearing user data

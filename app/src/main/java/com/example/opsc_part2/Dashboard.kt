@@ -1,5 +1,6 @@
 package com.example.opsc_part2
 
+import Classes.RetreiveData
 import Classes.ToolBox
 import android.annotation.SuppressLint
 import android.content.*
@@ -195,8 +196,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         try {
             linView.removeAllViews()
 
-            val filteredCategories = ToolBox.ActivitiesList.filter { activity ->
-                activity.ActivityUserID == ToolBox.ActiveUserID
+            val a = ToolBox.ActiveUserID
+            val b = ToolBox.ActivitiesList
+
+            val filteredCategories = ToolBox.ActivitiesList.filter { activity -> activity.ActivityUserID.equals(ToolBox.ActiveUserID)
             }.filter { activity ->
                 ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
             }
@@ -249,7 +252,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
                             args.putDouble("duration", time)
-                            args.putInt("id", card.ActivityID)
+                            args.putString("id", card.ActivityID)
                             args.putString("name", card.ActivityName)
                             args.putString("category", card.ActivityCategory)
 
@@ -272,7 +275,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
                             args.putDouble("duration", returnType)
-                            args.putInt("id", card.ActivityID)
+                            args.putString("id", card.ActivityID)
                             args.putString("name", card.ActivityName)
                             args.putString("category", card.ActivityCategory)
 
@@ -355,9 +358,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         categoryNames.add("None")
 
         ToolBox.CategoryList.forEach { category ->
-            if (category.CategoryUserID == ToolBox.ActiveUserID) {
+            //if (category.CategoryUserID == ToolBox.ActiveUserID) {
                 categoryNames.add(category.CategoryName)
-            }
+            //}
         }
 
         var displaySelected = "Catagory: ";
@@ -372,9 +375,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
-            }.setCancelable(false)
+            }.setCancelable(true)
 
         val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
 

@@ -1,10 +1,10 @@
 package com.example.opsc_part2
 
 import Classes.PasswordHandler
+import Classes.RetreiveData
 import Classes.ToolBox
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -41,8 +42,11 @@ class MainActivity : AppCompatActivity() {
 
             btnSignIn.setOnClickListener {
                 // Calling method to authenticate user credentials with firebase - returning user document ID
-                authenticateUserWithFirebase(usernameInput.text.toString().trim(), passwordInput.text.toString().trim())
-            //userLogin()
+                authenticateUserWithFirebase(
+                    usernameInput.text.toString().trim(),
+                    passwordInput.text.toString().trim()
+                )
+
 
             }
 
@@ -60,86 +64,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val auth: FirebaseAuth = FirebaseAuth.getInstance()
     }
-    //============================================================================
-    private fun writeToDB() {
-        val db = Firebase.firestore
-        // Create a new user with a first and last name
-        val user = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
-
-        // Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
-
-    }
 
     //============================================================================
-    private fun readFromDB() {
-        val db = Firebase.firestore
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
-    }
-    //============================================================================
-    private fun userLogin() {
-
-
-        try {
-            //If username does not exist
-            val user =
-                ToolBox.UsersList.find { it.UserUsername == usernameInput.text.toString().trim() }
-
-
-
-            if (user == null) {
-                val errToast = Toast.makeText(
-                    applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
-                )
-                errToast.setGravity(Gravity.BOTTOM, 0, 25)
-                errToast.show()
-                return
-            }
-
-            //check password
-            if (user.UserPasswordHash == PasswordHandler.hashPassword(
-                    passwordInput.text.toString().trim()
-                )
-            ) {
-                ToolBox.ActiveUserID =
-                    ToolBox.UsersList.indexOfFirst { it.UserUsername == user.UserUsername }
-
-                intent = Intent(this, Dashboard::class.java)
-                startActivity(intent)
-            } else {
-                val errToast = Toast.makeText(
-                    applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
-                )
-                errToast.setGravity(Gravity.BOTTOM, 0, 25)
-                errToast.show()
-            }
-        } catch (ex: java.lang.Exception) {
-            Log.w("log", ex.toString())
-            ex.printStackTrace()
-        }
-    }
-
-    // function to authenticate user with firebase
     private fun authenticateUserWithFirebase(username: String, password: String) {
         val db = Firebase.firestore
 
@@ -156,11 +82,30 @@ class MainActivity : AppCompatActivity() {
                     if (storedPassword != null && verifyPassword(password, storedPassword)) {
                         // Authentication successful
                         val userId = userDocument.id
-                        // Perform any necessary actions for a successful login
-                        Log.d(TAG, "Authentication successful. User ID: $userId")
+
+                        RetreiveData.LoadUserCategories(userId) { categoryCallback ->
+                            RetreiveData.LoadActivities(userId) { activityCallback ->
+                                RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
+                                    if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success") {
+                                        ToolBox.ActiveUserID = userId
+
+                                        // Perform any necessary actions for a successful login
+                                        Log.d(TAG, "Authentication successful. User ID: $userId")
+
+                                        intent = Intent(this, Dashboard::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+                            }
+                        }
                     } else {
                         // Authentication failed
                         Log.d(TAG, "Authentication failed. Invalid username or password.")
+                        val errToast = Toast.makeText(
+                            applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
+                        )
+                        errToast.setGravity(Gravity.BOTTOM, 0, 25)
+                        errToast.show()
                     }
                 } else {
                     // Authentication failed
@@ -171,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "Error getting documents.", exception)
             }
     }
-
 
     // function to verify a users' password using their stored hash password
     private fun verifyPassword(password: String, storedPassword: String): Boolean {

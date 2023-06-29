@@ -160,10 +160,10 @@ class Logs : Fragment(R.layout.fragment_logs) {
             // Check if the selected time is null or matches the entry's time
             val timeFilter = selectedTime == null || entry.WEDateEnded.toString() == selectedTime
 
-            val userFilter = entry.WEUserID == ToolBox.ActiveUserID
+            //val userFilter = entry.WEUserID == ToolBox.ActiveUserID
 
             // Return true only if both filters pass
-            categoryFilter && timeFilter && userFilter
+            categoryFilter && timeFilter //&& userFilter
         }
     }
 
@@ -278,7 +278,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
             for (entry in workEntries) {
                 val entryDate = dateFormatter.parse(entry.WEDateEnded)
-                if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory && entry.WEUserID == ToolBox.ActiveUserID) {
+                if (entryDate in startDateTime..endDateTime && entry.WEActivityCategory == selectedCategory //&& entry.WEUserID == ToolBox.ActiveUserID
+                ) {
                     filteredList.add(entry)
                 }
             }
@@ -302,7 +303,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
             for (entry in workEntries) {
                 val entryDate = dateFormatter.parse(entry.WEDateEnded)
-                if (entryDate in startDateTime..endDateTime && entry.WEUserID == ToolBox.ActiveUserID) {
+                if (entryDate in startDateTime..endDateTime //&& entry.WEUserID == ToolBox.ActiveUserID
+                ) {
                     filteredList.add(entry)
                 }
             }

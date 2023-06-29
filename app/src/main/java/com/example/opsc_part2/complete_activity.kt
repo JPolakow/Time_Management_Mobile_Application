@@ -29,7 +29,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //arguments inputs
-    private var paraActivityID: Int? = null
+    private var paraActivityID: String? = null
     private var paraDuration: Double? = null
     private var paraColor: String? = null
     private var paraName: String? = null
@@ -75,7 +75,7 @@ class complete_activity : BottomSheetDialogFragment() {
         try {
             paraColor = arguments?.getString("color")
             paraDuration = arguments?.getDouble("duration")
-            paraActivityID = arguments?.getInt("id")
+            paraActivityID = arguments?.getString("id")
             paraName = arguments?.getString("name")
             paraCategory = arguments?.getString("category")
 
@@ -176,6 +176,7 @@ class complete_activity : BottomSheetDialogFragment() {
             val duration = String.format( "%.2f",  paraDuration!! / 60).toDouble()
 
             val newWorkEntriesObject = WorkEntriesObject(
+                "",
                 paraActivityID!!,
                 paraName!!,
                 paraCategory!!,

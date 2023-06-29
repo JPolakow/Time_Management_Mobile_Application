@@ -1,7 +1,9 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
+import Classes.CategoryObject
 import Classes.ToolBox
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -152,7 +156,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         //get external data
         val currentUser = ToolBox.ActiveUserID
-        val activityID = (ToolBox.ActivitiesList.count() + 1)
+        val activityID = (ToolBox.ActivitiesList.count() + 1).toString()
         //get user inputs
         val name = nameInput.text.toString().trim()
         val desc = descriptionInput.text.toString().trim()
@@ -168,7 +172,42 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             SelectedColor,
             desc,
         )
-        ToolBox.ActivitiesList.add(newActivity)
+
+        //writeToDB callback
+        writeToDB(newActivity) { outcome ->
+            if (outcome) {
+                ToolBox.ActivitiesList.add(newActivity)
+            } else {
+                // Failure
+            }
+        }
+    }
+
+    //save new catagory in db
+    private fun writeToDB(newActivityInput: ActivityObject, callback: (Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        val newActivity = hashMapOf(
+            "ActivityCategory" to newActivityInput.ActivityCategory,
+            "ActivityColor" to newActivityInput.ActivityColor,
+            "ActivityDescription" to newActivityInput.ActivityDescription,
+            "ActivityMaxGoal" to newActivityInput.ActivityMaxGoal,
+            "ActivityMinGoal" to newActivityInput.ActivityMinGoal,
+            "ActivityName" to newActivityInput.ActivityName,
+            "ActivityUserID" to newActivityInput.ActivityUserID,
+            "DateCreated" to newActivityInput.DateCreated
+        )
+
+        db.collection("activities")
+            .add(newActivity)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                callback(true)
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+                callback(false)
+            }
     }
 
     //============================================================================
@@ -203,7 +242,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         try {
 
             val uniqueCategories =
-                ToolBox.CategoryList.filter { it.CategoryUserID == ToolBox.ActiveUserID }
+                ToolBox.CategoryList.filter { true }//{ it.CategoryUserID == ToolBox.ActiveUserID }
                     .map { it.CategoryName }.distinct()
 
             var displaySelected = "";
