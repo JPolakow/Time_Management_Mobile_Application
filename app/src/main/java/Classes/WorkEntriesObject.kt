@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import java.util.*
 
 class WorkEntriesObject(
-    val WEID: String,
+    var WEID: String,
     val WEActivityID: String,
     val WEActivityName: String,
     val WEActivityCategory: String,

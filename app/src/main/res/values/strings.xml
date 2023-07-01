@@ -74,6 +74,7 @@
     <!-- profile settings-->
     <string name="profileInformation">Information</string>
     <string name="email">EMAIL</string>
+    <string name="no_image">No Image</string>
 
 
 </resources>

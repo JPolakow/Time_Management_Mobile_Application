@@ -106,7 +106,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             //---------------------------SET UP BOTTOM UI-------------------------
             //region
             // Create a Bitmap from the image drawable
-            val drawable = resources.getDrawable(R.drawable.profile_image_placeholder2) as BitmapDrawable
+            val drawable =
+                resources.getDrawable(R.drawable.profile_image_placeholder2) as BitmapDrawable
             val bitmap = drawable.bitmap
 
             // Calculate the desired size for the circular ImageView, considering the maximum size
@@ -199,7 +200,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             val a = ToolBox.ActiveUserID
             val b = ToolBox.ActivitiesList
 
-            val filteredCategories = ToolBox.ActivitiesList.filter { activity -> activity.ActivityUserID.equals(ToolBox.ActiveUserID)
+            val filteredCategories = ToolBox.ActivitiesList.filter { activity ->
+                activity.ActivityUserID.equals(ToolBox.ActiveUserID)
             }.filter { activity ->
                 ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
             }
@@ -212,10 +214,18 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityStartDate(card.DateCreated)
                 customCard.setCardColor(card.ActivityColor) // not dynamically added
 
-                val minFormatted = String.format("%02d:%02d", (card.ActivityMinGoal / 60).toInt(), (card.ActivityMinGoal % 60).toInt())
+                val minFormatted = String.format(
+                    "%02d:%02d",
+                    (card.ActivityMinGoal / 60).toInt(),
+                    (card.ActivityMinGoal % 60).toInt()
+                )
                 customCard.setActivityMinGoal("Min Goal: $minFormatted hrs")
 
-                val maxFormatted = String.format("%02d:%02d", (card.ActivityMaxGoal / 60).toInt(), (card.ActivityMaxGoal % 60).toInt())
+                val maxFormatted = String.format(
+                    "%02d:%02d",
+                    (card.ActivityMaxGoal / 60).toInt(),
+                    (card.ActivityMaxGoal % 60).toInt()
+                )
                 customCard.setActivityMaxGoal("Max Goal: $maxFormatted hrs")
 
                 val cardTile = customCard.findViewById<CardView>(R.id.cardView)
@@ -248,7 +258,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                     GlobalScope.launch {
                         withContext(Dispatchers.Main) {
-                            // Put data into fragment
+                            // Put data into arguments to send to the complete_activity fragment
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
                             args.putDouble("duration", time)
@@ -359,7 +369,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
         ToolBox.CategoryList.forEach { category ->
             //if (category.CategoryUserID == ToolBox.ActiveUserID) {
-                categoryNames.add(category.CategoryName)
+            categoryNames.add(category.CategoryName)
             //}
         }
 

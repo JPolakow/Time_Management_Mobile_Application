@@ -47,6 +47,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     private lateinit var ivSubmit: ImageButton
     private lateinit var tvClose: ImageButton
 
+    private var Key: String = ""
+
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -122,6 +124,13 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             nameInput.error = "Name is required"
             valid = false
         }
+
+        val actIndex = ToolBox.ActivitiesList.indexOfFirst { act -> act.ActivityName == name }
+        if (actIndex != -1) {
+            nameInput.error = "Name must be unique"
+            valid = false
+        }
+
         if (TextUtils.isEmpty(desc)) {
             descriptionInput.error = "Description is required"
             valid = false
@@ -156,13 +165,12 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         //get external data
         val currentUser = ToolBox.ActiveUserID
-        val activityID = (ToolBox.ActivitiesList.count() + 1).toString()
         //get user inputs
         val name = nameInput.text.toString().trim()
         val desc = descriptionInput.text.toString().trim()
 
         val newActivity = ActivityObject(
-            activityID,
+            "",
             currentUser,
             name,
             SelectedCatagory,
@@ -176,6 +184,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         //writeToDB callback
         writeToDB(newActivity) { outcome ->
             if (outcome) {
+                newActivity.ActivityID = Key
                 ToolBox.ActivitiesList.add(newActivity)
             } else {
                 // Failure
@@ -183,7 +192,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         }
     }
 
-    //save new catagory in db
+    //============================================================================
+    //save new activity to db
     private fun writeToDB(newActivityInput: ActivityObject, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
@@ -202,6 +212,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             .add(newActivity)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                Key = documentReference.id
                 callback(true)
             }
             .addOnFailureListener { e ->
