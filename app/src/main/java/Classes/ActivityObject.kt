@@ -4,8 +4,8 @@ import java.util.*
 
 // Object for Users' activities
 class ActivityObject(
-    val ActivityID: Int,
-    val ActivityUserID: Int,
+    var ActivityID: String,
+    val ActivityUserID: String,
     val ActivityName: String,
     val ActivityCategory: String,
     val DateCreated: String,

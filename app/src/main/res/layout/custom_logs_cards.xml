@@ -10,7 +10,10 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -22,7 +25,7 @@
             android:id="@+id/relCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="0dp"
             android:backgroundTint="#E1F0F4"
             android:elevation="12dp">
 
@@ -33,72 +36,79 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/textDate"
-                android:textColor="#80000000"
+                android:textColor="#AB000000"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvActivityName"
+                android:layout_width="245dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDateEnded"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="@string/activityName"
+                android:textAllCaps="true"
+                android:textColor="#FF000000"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvActivityName"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@+id/tvActivityName"
-                android:gravity="end"
                 android:fontFamily="@font/inter_regular"
+                android:gravity="end"
                 android:text="@string/textDuration"
-                android:textColor="#FF000000"
-                android:textSize="20sp" />
+                android:textColor="#AB000000"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvMyRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDuration"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@+id/txtDuration"
+                android:fontFamily="@font/inter_regular"
                 android:gravity="end"
                 android:text="My Rating: 1"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:fontFamily="@font/inter_regular" />
-
-            <TextView
-                android:id="@+id/tvActivityName"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/opensans_bold"
-                android:layout_below="@id/tvDateEnded"
-                android:textAllCaps="true"
-                android:text="@string/activityName"
-                android:textColor="#FF000000"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvNoImage"
-                android:layout_width="150dp"
-                android:paddingTop="16dp"
-                android:text="No Image"
+                android:layout_width="130dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_centerVertical="true"
-                tools:srcCompat="@tools:sample/avatars"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/tvActivityName"/>
+                android:layout_marginStart="0dp"
+                android:layout_toEndOf="@+id/tvActivityName"
+                android:gravity="center"
+                android:paddingTop="16dp"
+                android:text="@string/no_image"
+                tools:srcCompat="@tools:sample/avatars" />
 
-            <ImageView
-                android:id="@+id/imgActivity"
-                android:layout_width="150dp"
-                android:paddingTop="5dp"
+            <FrameLayout
+                android:layout_width="130dp"
                 android:layout_height="150dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:layout_toEndOf="@+id/tvActivityName"/>
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="0dp"
+                android:layout_toEndOf="@+id/tvActivityName">
 
+                <ImageView
+                    android:id="@+id/imgActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="0dp"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-
-
-
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/border" />
+            </FrameLayout>
 
         </RelativeLayout>
 

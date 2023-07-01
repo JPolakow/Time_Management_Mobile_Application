@@ -1,5 +1,6 @@
 package com.example.opsc_part2
 
+import Classes.RetreiveData
 import Classes.ToolBox
 import android.annotation.SuppressLint
 import android.content.*
@@ -105,7 +106,8 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             //---------------------------SET UP BOTTOM UI-------------------------
             //region
             // Create a Bitmap from the image drawable
-            val drawable = resources.getDrawable(R.drawable.profile_image_placeholder2) as BitmapDrawable
+            val drawable =
+                resources.getDrawable(R.drawable.profile_image_placeholder2) as BitmapDrawable
             val bitmap = drawable.bitmap
 
             // Calculate the desired size for the circular ImageView, considering the maximum size
@@ -195,8 +197,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         try {
             linView.removeAllViews()
 
+            val a = ToolBox.ActiveUserID
+            val b = ToolBox.ActivitiesList
+
             val filteredCategories = ToolBox.ActivitiesList.filter { activity ->
-                activity.ActivityUserID == ToolBox.ActiveUserID
+                activity.ActivityUserID.equals(ToolBox.ActiveUserID)
             }.filter { activity ->
                 ToolBox.SelectedCategory.equals("None") || activity.ActivityCategory == ToolBox.SelectedCategory
             }
@@ -208,16 +213,20 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 customCard.setActivityName(card.ActivityName)
                 customCard.setActivityStartDate(card.DateCreated)
                 customCard.setCardColor(card.ActivityColor) // not dynamically added
-                customCard.setActivityMinGoal(
-                    "Min Goal: " + String.format(
-                        "%.1f", card.ActivityMinGoal / 60
-                    ) + "hrs"
+
+                val minFormatted = String.format(
+                    "%02d:%02d",
+                    (card.ActivityMinGoal / 60).toInt(),
+                    (card.ActivityMinGoal % 60).toInt()
                 )
-                customCard.setActivityMaxGoal(
-                    "Max Goal: " + String.format(
-                        "%.1f", card.ActivityMaxGoal / 60
-                    ) + "hrs"
+                customCard.setActivityMinGoal("Min Goal: $minFormatted hrs")
+
+                val maxFormatted = String.format(
+                    "%02d:%02d",
+                    (card.ActivityMaxGoal / 60).toInt(),
+                    (card.ActivityMaxGoal % 60).toInt()
                 )
+                customCard.setActivityMaxGoal("Max Goal: $maxFormatted hrs")
 
                 val cardTile = customCard.findViewById<CardView>(R.id.cardView)
 
@@ -249,11 +258,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
                     GlobalScope.launch {
                         withContext(Dispatchers.Main) {
-                            // Put data into fragment
+                            // Put data into arguments to send to the complete_activity fragment
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
                             args.putDouble("duration", time)
-                            args.putInt("id", card.ActivityID)
+                            args.putString("id", card.ActivityID)
                             args.putString("name", card.ActivityName)
                             args.putString("category", card.ActivityCategory)
 
@@ -276,7 +285,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                             val args = Bundle()
                             args.putString("color", card.ActivityColor)
                             args.putDouble("duration", returnType)
-                            args.putInt("id", card.ActivityID)
+                            args.putString("id", card.ActivityID)
                             args.putString("name", card.ActivityName)
                             args.putString("category", card.ActivityCategory)
 
@@ -359,9 +368,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         categoryNames.add("None")
 
         ToolBox.CategoryList.forEach { category ->
-            if (category.CategoryUserID == ToolBox.ActiveUserID) {
-                categoryNames.add(category.CategoryName)
-            }
+            //if (category.CategoryUserID == ToolBox.ActiveUserID) {
+            categoryNames.add(category.CategoryName)
+            //}
         }
 
         var displaySelected = "Catagory: ";
@@ -376,9 +385,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                 callback(ToolBox.SelectedCategory)
 
                 dialog.dismiss()
-            }.setCancelable(false)
+            }.setCancelable(true)
 
         val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
 

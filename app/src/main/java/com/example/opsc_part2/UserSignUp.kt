@@ -1,8 +1,9 @@
 package com.example.opsc_part2
 
-import Classes.ActiveUserClass
+import Classes.UserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class UserSignUp : AppCompatActivity() {
 
@@ -33,6 +36,7 @@ class UserSignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_sign_up)
+
 
         try {
             nameInput = findViewById(R.id.etName)
@@ -61,16 +65,36 @@ class UserSignUp : AppCompatActivity() {
 
     //============================================================================
     //take user inputs and create new user instance
+    // atraverso2001 Password1!
     private fun RegisterUser() {
+        val db = Firebase.firestore
         try {
-            val activeUserClass = ActiveUserClass(
-                nameInput.text.toString().trim(),
-                surnameInput.text.toString().trim(),
-                usernameInput.text.toString().trim(),
-                PasswordHandler.hashPassword(passwordInput.text.toString().trim())
+//            val activeUserClass = UserClass(
+//                nameInput.text.toString().trim(),
+//                surnameInput.text.toString().trim(),
+//                usernameInput.text.toString().trim(),
+//                PasswordHandler.hashPassword(passwordInput.text.toString().trim())
+//            )
+
+            //hash map to sotre user data
+            val user = hashMapOf(
+                "name" to nameInput.text.toString().trim(),
+                "surname" to surnameInput.text.toString().trim(),
+                "username" to usernameInput.text.toString().trim(),
+                "password" to PasswordHandler.hashPassword(passwordInput.text.toString().trim())
             )
 
-            ToolBox.UsersList.add(activeUserClass)
+            //add user to database
+            db.collection("users")
+                .add(user)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(ContentValues.TAG, "Entry added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
+
+            //ToolBox.UsersList.add(activeUserClass)
 
             val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
             toast.show()
@@ -104,6 +128,13 @@ class UserSignUp : AppCompatActivity() {
             val password: String = passwordInput.text.toString().trim()
             val confirmPassword: String = confirmPasswordInput.text.toString().trim()
 
+            val minLength = 8
+            val maxLength = 50
+            val hasUpperCase = "[A-Z]".toRegex().containsMatchIn(password)
+            val hasLowerCase = "[a-z]".toRegex().containsMatchIn(password)
+            val hasDigit = "\\d".toRegex().containsMatchIn(password)
+            val hasSpecialChar = "[^A-Za-z0-9]".toRegex().containsMatchIn(password)
+
             if (TextUtils.isEmpty(name)) {
                 nameInput.error = "Name is required"
                 valid = false
@@ -133,6 +164,17 @@ class UserSignUp : AppCompatActivity() {
                 confirmPasswordInput.error = ("Passwords must match")
                 valid = false
             }
+            if (!(password.length in minLength..maxLength &&
+                        hasUpperCase &&
+                        hasLowerCase &&
+                        hasDigit &&
+                        hasSpecialChar)
+            ) {
+                passwordInput.error = ("Password is not strong enough.")
+                valid = false
+            }
+
+
             return valid
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
@@ -152,5 +194,29 @@ class UserSignUp : AppCompatActivity() {
             ex.printStackTrace()
             return true
         }
+    }
+
+    private fun createAccount(email: String, password:String)
+    {
+        MainActivity.auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                    val user = MainActivity.auth.currentUser
+                    //updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    //updateUI(null)
+                }
+            }
+
+
     }
 }

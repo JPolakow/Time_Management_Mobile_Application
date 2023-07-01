@@ -1,9 +1,12 @@
 package com.example.opsc_part2
 
+import Classes.ActivityObject
 import Classes.ToolBox
+import androidx.lifecycle.viewModelScope
 import Classes.WorkEntriesObject
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -19,6 +22,10 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,7 +36,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //arguments inputs
-    private var paraActivityID: Int? = null
+    private var paraActivityID: String? = null
     private var paraDuration: Double? = null
     private var paraColor: String? = null
     private var paraName: String? = null
@@ -47,12 +54,16 @@ class complete_activity : BottomSheetDialogFragment() {
 
     //Regular
     private var rating: Int = 1
+    private var Key: String = ""
 
+    private var callback: CompleteActivityCallback? = null
+
+    //============================================================================
     interface CompleteActivityCallback {
         fun onActivityComplete()
     }
-    private var callback: CompleteActivityCallback? = null
 
+    //============================================================================
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CompleteActivityCallback) {
@@ -60,11 +71,11 @@ class complete_activity : BottomSheetDialogFragment() {
         }
     }
 
+    //============================================================================
     override fun onDetach() {
         super.onDetach()
         callback = null
     }
-
 
     //============================================================================
     override fun onCreateView(
@@ -73,17 +84,20 @@ class complete_activity : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_complete_activity, container, false)
 
         try {
+            //retreive data send from the dashboard, loadCustomUI method
             paraColor = arguments?.getString("color")
             paraDuration = arguments?.getDouble("duration")
-            paraActivityID = arguments?.getInt("id")
+            paraActivityID = arguments?.getString("id")
             paraName = arguments?.getString("name")
             paraCategory = arguments?.getString("category")
 
+            //save
             btnSave = view.findViewById<Button>(R.id.btnSave)
             btnSave.setOnClickListener {
                 AddEntry()
             }
 
+            //add image
             btnAddImage = view.findViewById<Button>(R.id.btnAddImage)
             btnAddImage.setOnClickListener {
                 //Ensure app has permission to use camera
@@ -101,6 +115,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 }
             }
 
+            //ratings
             btnOne = view.findViewById(R.id.btnOne)
             btnOne.setOnClickListener() { rating = 1 }
 
@@ -173,9 +188,10 @@ class complete_activity : BottomSheetDialogFragment() {
         try {
             // Creating correct date format
             val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
-            val duration = String.format( "%.2f",  paraDuration!! / 60).toDouble()
+            val duration = String.format("%.2f", paraDuration!! / 60).toDouble()
 
-            val newWorkEntriesObject = WorkEntriesObject(
+            var newWorkEntriesObject = WorkEntriesObject(
+                "",
                 paraActivityID!!,
                 paraName!!,
                 paraCategory!!,
@@ -190,7 +206,15 @@ class complete_activity : BottomSheetDialogFragment() {
                 newWorkEntriesObject.saveImage(bitmap)
             }
 
-            ToolBox.WorkEntriesList.add(newWorkEntriesObject)
+            //writeToDB callback
+            writeToDB(newWorkEntriesObject) { outcome ->
+                if (outcome) {
+                    newWorkEntriesObject.WEID = Key
+                    ToolBox.WorkEntriesList.add(newWorkEntriesObject)
+                } else {
+                    // Failure
+                }
+            }
 
             callback?.onActivityComplete()
             dismiss()
@@ -198,5 +222,35 @@ class complete_activity : BottomSheetDialogFragment() {
             Log.w("log", ex.toString())
             ex.printStackTrace()
         }
+    }
+
+    //============================================================================
+    //save new work entry to db
+    private fun writeToDB(newWorkEntry: WorkEntriesObject, callback: (Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        val newActivity = hashMapOf(
+            "WEID" to newWorkEntry.WEID,
+            "WEActivityID" to newWorkEntry.WEActivityID,
+            "WEActivityName" to newWorkEntry.WEActivityName,
+            "WEActivityCategory" to newWorkEntry.WEActivityCategory,
+            "WEUserID" to newWorkEntry.WEUserID,
+            "WERating" to newWorkEntry.WERating,
+            "WEDateEnded" to newWorkEntry.WEDateEnded,
+            "WEDuration" to newWorkEntry.WEDuration,
+            "WEColor" to newWorkEntry.WEColor
+        )
+
+        db.collection("workEntries")
+            .add(newActivity)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                Key = documentReference.id
+                callback(true)
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+                callback(false)
+            }
     }
 }

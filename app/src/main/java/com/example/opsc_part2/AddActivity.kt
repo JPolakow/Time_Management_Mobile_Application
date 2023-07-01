@@ -1,7 +1,9 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
+import Classes.CategoryObject
 import Classes.ToolBox
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -17,8 +19,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
@@ -40,6 +46,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //Press-ables
     private lateinit var ivSubmit: ImageButton
     private lateinit var tvClose: ImageButton
+
+    private var Key: String = ""
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -108,14 +116,21 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             ex.printStackTrace()
         }
         var valid = true
-        val name: String = nameInput.getText().toString().trim()
-        val catagory: String = categoryInput.getText().toString().trim()
-        val desc: String = descriptionInput.getText().toString().trim()
+        val name: String = nameInput.text.toString().trim()
+        val catagory: String = categoryInput.text.toString().trim()
+        val desc: String = descriptionInput.text.toString().trim()
 
         if (TextUtils.isEmpty(name)) {
             nameInput.error = "Name is required"
             valid = false
         }
+
+        val actIndex = ToolBox.ActivitiesList.indexOfFirst { act -> act.ActivityName == name }
+        if (actIndex != -1) {
+            nameInput.error = "Name must be unique"
+            valid = false
+        }
+
         if (TextUtils.isEmpty(desc)) {
             descriptionInput.error = "Description is required"
             valid = false
@@ -150,13 +165,12 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
         //get external data
         val currentUser = ToolBox.ActiveUserID
-        val activityID = (ToolBox.ActivitiesList.count() + 1)
         //get user inputs
         val name = nameInput.text.toString().trim()
         val desc = descriptionInput.text.toString().trim()
 
         val newActivity = ActivityObject(
-            activityID,
+            "",
             currentUser,
             name,
             SelectedCatagory,
@@ -166,7 +180,45 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             SelectedColor,
             desc,
         )
-        ToolBox.ActivitiesList.add(newActivity)
+
+        //writeToDB callback
+        writeToDB(newActivity) { outcome ->
+            if (outcome) {
+                newActivity.ActivityID = Key
+                ToolBox.ActivitiesList.add(newActivity)
+            } else {
+                // Failure
+            }
+        }
+    }
+
+    //============================================================================
+    //save new activity to db
+    private fun writeToDB(newActivityInput: ActivityObject, callback: (Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        val newActivity = hashMapOf(
+            "ActivityCategory" to newActivityInput.ActivityCategory,
+            "ActivityColor" to newActivityInput.ActivityColor,
+            "ActivityDescription" to newActivityInput.ActivityDescription,
+            "ActivityMaxGoal" to newActivityInput.ActivityMaxGoal,
+            "ActivityMinGoal" to newActivityInput.ActivityMinGoal,
+            "ActivityName" to newActivityInput.ActivityName,
+            "ActivityUserID" to newActivityInput.ActivityUserID,
+            "DateCreated" to newActivityInput.DateCreated
+        )
+
+        db.collection("activities")
+            .add(newActivity)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                Key = documentReference.id
+                callback(true)
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+                callback(false)
+            }
     }
 
     //============================================================================
@@ -184,9 +236,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     colorInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }.setCancelable(false)
+                }.setCancelable(true)
 
             val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(true)
             dialog.show()
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
@@ -200,7 +253,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         try {
 
             val uniqueCategories =
-                ToolBox.CategoryList.filter { it.CategoryUserID == ToolBox.ActiveUserID }
+                ToolBox.CategoryList.filter { true }//{ it.CategoryUserID == ToolBox.ActiveUserID }
                     .map { it.CategoryName }.distinct()
 
             var displaySelected = "";
@@ -214,9 +267,10 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                     categoryInput.setText(displaySelected)
 
                     dialog.dismiss()
-                }
+                }.setCancelable(true)
 
             val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(true)
             dialog.show()
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
@@ -225,18 +279,27 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //calls the set goal popup
+    //Calls the set goal popup
     private fun showPopupFragment() {
         val fragment = SetGoal()
         fragment.show(childFragmentManager, "QuickActionPopup")
     }
 
     //============================================================================
-    //when the set goal is completed it will return values
+    //When the set goal is completed it will return values
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
-        minTime = minGoal
         maxTime = maxGoal
-        val textToSet = "Min time: ${minGoal.toDouble() / 60} Max time: ${maxTime.toDouble() / 60}"
+        minTime = minGoal
+
+        val maxHours = maxGoal / 60
+        val maxMinutes = maxGoal % 60
+        val minHours = minGoal / 60
+        val minMinutes = minGoal % 60
+
+        val maxOutput = String.format("%02d:%02d", maxHours, maxMinutes)
+        val minOutput = String.format("%02d:%02d", minHours, minMinutes)
+
+        val textToSet = "Min time: ${minOutput}\t Max time: $maxOutput"
         goalInput.setText(textToSet)
     }
 }

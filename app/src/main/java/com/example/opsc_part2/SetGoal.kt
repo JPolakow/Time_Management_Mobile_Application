@@ -93,14 +93,6 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     }
 
     //============================================================================
-    // Function to add values to edit text - forgot the edit text isnt on this fragment
-    private fun addTimeToEditText(min: Int, max: Int, goalText: EditText) {
-        val textToSet = "Min: $min | Max: $max";
-        goalText.setText(textToSet)
-
-    }
-
-    //============================================================================
     private fun formatGoalInput(inputValue: String): Int {
         // Val to store value to split at
         val valToSplit = inputValue.split(":")

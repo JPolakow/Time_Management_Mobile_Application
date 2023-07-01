@@ -1,32 +1,21 @@
 package com.example.opsc_part2
 
-import Classes.ProfileImageManager
 import Classes.ToolBox
-import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.*
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 class ProfileFragment : Fragment() {
@@ -45,9 +34,11 @@ class ProfileFragment : Fragment() {
             surname = view.findViewById(R.id.tvDisplaySurname)
             username = view.findViewById(R.id.tvDisplayUsername)
 
-            name.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserName)
-            surname.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserSurname)
-            username.setText(ToolBox.UsersList[ToolBox.ActiveUserID].UserUsername)
+            val userIndex = ToolBox.UsersList.indexOfFirst { user -> user.UserKey == ToolBox.ActiveUserID }
+
+            name.setText(ToolBox.UsersList[userIndex].UserName)
+            surname.setText(ToolBox.UsersList[userIndex].UserSurname)
+            username.setText(ToolBox.UsersList[userIndex].UserUsername)
 
             // ------------ SIGN OUT CLICK ------------ //
             // Add functionality for clearing user data

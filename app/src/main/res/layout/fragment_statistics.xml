@@ -20,13 +20,20 @@
         android:textColor="@color/black"
         android:textSize="40sp" />
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tvSettingsHeading"
+        android:layout_height="300dp"/>
+
+
     <!--Activity scroll view-->
     <ScrollView
         android:id="@+id/svCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/tvSettingsHeading"
+        android:layout_below="@+id/chart"
         android:contentDescription="@string/dashscrollview"
         android:paddingBottom="58dp">
 

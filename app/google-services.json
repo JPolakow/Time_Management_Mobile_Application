@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "769942603524",
+    "project_id": "opsc7311-storage",
+    "storage_bucket": "opsc7311-storage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769942603524:android:dc57dc774894cce518f251",
+        "android_client_info": {
+          "package_name": "com.example.opsc_part2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769942603524-8hv9cfvbmobb65ctjut8069pg3gq7uca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU0eTMVJE0_8-8Xqwt4vfJ_VZfdyR2huc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769942603524-8hv9cfvbmobb65ctjut8069pg3gq7uca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

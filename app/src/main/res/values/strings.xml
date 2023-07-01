@@ -10,8 +10,8 @@
     <string name="hintUsername"> USERNAME</string>
     <string name="hintPassword"> PASSWORD</string>
     <string name="hintConfirmPass"> CONFIRM PASSWORD</string>
-    <string name="SignIn">Sign in</string>
-    <string name="signUp">Sign up</string>
+    <string name="SignIn">Sign In</string>
+    <string name="signUp">Sign Up</string>
     <!--Sign in-->
     <string name="signInForgotPassword">Forgot Password?</string>
     <string name="SignInDontHaveAccount">Dont have an account?</string>
@@ -73,6 +73,8 @@
 
     <!-- profile settings-->
     <string name="profileInformation">Information</string>
+    <string name="email">EMAIL</string>
+    <string name="no_image">No Image</string>
 
 
 </resources>
