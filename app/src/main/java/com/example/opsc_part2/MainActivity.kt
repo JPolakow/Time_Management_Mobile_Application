@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnSignIn: Button
     private lateinit var signUpClick: TextView
 
+    private var userId: String = ""
+
     //============================================================================
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,23 +86,10 @@ class MainActivity : AppCompatActivity() {
                     // Compare the stored hashed password with the provided password
                     if (storedPassword != null && verifyPassword(password, storedPassword)) {
                         // Authentication successful
-                        val userId = userDocument.id
+                        userId = userDocument.id
 
-                        RetreiveData.LoadUserCategories(userId) { categoryCallback ->
-                            RetreiveData.LoadActivities(userId) { activityCallback ->
-                                RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
-                                    if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success") {
-                                        ToolBox.ActiveUserID = userId
+                        LoadDataSignIN()
 
-                                        // Perform any necessary actions for a successful login
-                                        Log.d(TAG, "Authentication successful. User ID: $userId")
-
-                                        intent = Intent(this, Dashboard::class.java)
-                                        startActivity(intent)
-                                    }
-                                }
-                            }
-                        }
                     } else {
                         // Authentication failed
                         Log.d(TAG, "Authentication failed. Invalid username or password.")
@@ -120,6 +109,41 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    //============================================================================
+    //load exisitn data into lists, then sign user in
+    private fun LoadDataSignIN()
+    {
+        try {
+            RetreiveData.LoadUserCategories(userId) { categoryCallback ->
+                RetreiveData.LoadActivities(userId) { activityCallback ->
+                    RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
+                        RetreiveData.loadImages(userId) { imagesCallBack ->
+                            if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success" && imagesCallBack == "success") {
+                                ToolBox.ActiveUserID = userId
+
+                                var a = ToolBox.WorkEntriesList
+
+
+                                // Perform any necessary actions for a successful login
+                                Log.d(
+                                    TAG,
+                                    "Authentication successful. User ID: $userId"
+                                )
+
+                                intent = Intent(this, Dashboard::class.java)
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                }
+            }
+        }catch (ex: java.lang.Exception)
+        {
+
+        }
+    }
+
+    //============================================================================
     // function to verify a users' password using their stored hash password
     private fun verifyPassword(password: String, storedPassword: String): Boolean {
         return PasswordHandler.hashPassword(password.toString().trim()) == storedPassword

@@ -17,25 +17,12 @@ class WorkEntriesObject(
 
     private var savedImage: Bitmap? = null
 
-    private var imageUrl: String? = null
-
-    fun setImageUrl(url: String) {
-        imageUrl = url
-    }
-
-    fun getImageUrl(): String {
-        return imageUrl!!
-    }
-
     // Function to save image
     fun saveImage(image: Bitmap) {
         savedImage = image
     }
-
-
     // Function to get the saved image
     fun getSavedImage(): Bitmap? {
         return savedImage
     }
-
 }
