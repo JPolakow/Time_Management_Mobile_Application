@@ -17,7 +17,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.*
 import kotlin.math.roundToInt
 
-
 class Statistics : Fragment(R.layout.fragment_statistics) {
 
     private lateinit var linView: LinearLayout
@@ -30,25 +29,30 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_statistics, container, false)
         try {
-           linView = view.findViewById(R.id.linearProjectCards)
+            linView = view.findViewById(R.id.linearProjectCards)
 
+            //start of chart
+            //region
             pieChart = view.findViewById(R.id.chart)
             initPieChart()
             loadPieChartData()
-
-            // Listener for double tap on the pie chart
-            val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-                override fun onDoubleTap(event: MotionEvent): Boolean {
-                    initGameWheel()
-                    loadWheelGameData()
-                    return true
-                }
-            })
-
-            pieChart.setOnTouchListener { _, event ->
-                gestureDetector.onTouchEvent(event)
-                true
-            }
+////
+//            // Listener for double tap on the pie chart
+//            val gestureDetector =
+//                GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+//                    override fun onDoubleTap(event: MotionEvent): Boolean {
+//                        initGameWheel()
+//                        loadWheelGameData()
+//                        return true
+//                    }
+//                })
+//
+//            pieChart.setOnTouchListener { _, event ->
+//                gestureDetector.onTouchEvent(event)
+//                true
+//            }
+            //endregion
+            //end of chart
 
             populate()
         } catch (ex: java.lang.Exception) {
@@ -58,7 +62,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         return view
     }
 
-
+    //pie starts start
+    //region
     //============================================================================
     // Method to initialise pie chart
     // All pie chart properties will go here
@@ -80,8 +85,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.dragDecelerationFrictionCoef = 0.99f
     }
 
-    fun initGameWheel ()
-    {
+    //============================================================================
+    fun initGameWheel() {
         pieChart.setUsePercentValues(true)
         // setting pie chart description visibility
         pieChart.description.isEnabled = false
@@ -100,6 +105,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     }
 
+    //============================================================================
     // Function to load data to game wheel
     private fun loadWheelGameData() {
 
@@ -136,6 +142,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.invalidate()
     }
 
+    //============================================================================
     // Method to round sizes of pie chart pies to whole numbers
     class RoundedValueFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
@@ -143,25 +150,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
     }
 
-
     //============================================================================
     // This is where we will load our own data
     private fun loadPieChartData() {
-//        val entries = mutableListOf<PieEntry>()
-//        entries.add(PieEntry(30f, "John"))
-//        entries.add(PieEntry(40f, "Jake"))
-//        entries.add(PieEntry(50f, "Peter"))
-//
-//        val dataSet = PieDataSet(entries, "Sample Pie Chart")
-//        dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
-//        dataSet.valueTextColor = Color.BLACK
-//        dataSet.valueTextColor = Color.BLACK
-//        dataSet.valueTextSize = 12f
-//
-//        val data = PieData(dataSet)
-//        pieChart.data = data
-//        // refresh chart
-//        pieChart.invalidate()
 
         //get all user specific category names
         val filteredCategories = ToolBox.CategoryList.filter { category ->
@@ -170,16 +161,26 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
         val entries = mutableListOf<PieEntry>()
 
-        for (category in filteredCategories)
-        {
+        for (category in filteredCategories) {
             // Get the total duration of all work entries with the category name
+
             val totalDuration =
-                ToolBox.WorkEntriesList.filter { it.WEActivityCategory == category.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                     }
+                ToolBox.WorkEntriesList.filter {
+                    it.WEActivityCategory == category.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                }
                     .groupBy { it.WEActivityCategory }
                     .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
 
-            entries.add(PieEntry(totalDuration[category.CategoryName]!!.toFloat(), category.CategoryName))
+            val total = totalDuration[category.CategoryName]
+            if (total != null) {
+                entries.add(
+                    PieEntry(
+                        total!!.toFloat(),
+                        category.CategoryName
+                    )
+                )
+            }
+
         }
 
         val dataSet = PieDataSet(entries, "")
@@ -195,43 +196,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     }
 
     //============================================================================
-    private fun populate() {
-        try {
-            val filteredCategories = ToolBox.CategoryList.filter { category ->
-                category.CategoryUserID == ToolBox.ActiveUserID
-            }
-
-            for (card in filteredCategories) {
-                val customCard = custom_stats_cards(requireContext())
-                customCard.setCategoryName("Category: ${card.CategoryName}")
-
-                //get the count of all workEntries with the category name
-                val frequencies =
-                    ToolBox.WorkEntriesList.count { it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                    }
-                customCard.setCategoryAmount("Work entries: $frequencies")
-
-                // Get the total duration of all work entries with the category name
-                val totalDuration =
-                    ToolBox.WorkEntriesList.filter { it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                         }
-                        .groupBy { it.WEActivityCategory }
-                        .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
-
-                val total = totalDuration[card.CategoryName]
-                if (total != null) {
-                    customCard.setCategoryDuration("Total duration: $total")
-                }
-
-                linView.addView(customCard)
-            }
-        } catch (ex: java.lang.Exception) {
-            Log.w("log", ex.toString())
-            ex.printStackTrace()
-        }
-    }
-
-
     // Method to generate a random color for the wheel
     private fun generateRandomColor(): Int {
         val random = Random()
@@ -242,6 +206,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         return Color.argb(alpha, red, green, blue)
     }
 
+    //============================================================================
     // Method to generate a hashmap of random colors
     private fun generateRandomColorMap(): HashMap<Int, Int> {
         val colorMap = HashMap<Int, Int>()
@@ -254,5 +219,49 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
         return colorMap
     }
+//endregion
+    //pie charts end
 
+    //============================================================================
+    private fun populate() {
+        try {
+            val filteredCategories = ToolBox.CategoryList.filter { category ->
+                category.CategoryUserID == ToolBox.ActiveUserID
+            }
+
+            for (card in filteredCategories) {
+                val customCard = custom_stats_cards(requireContext())
+                customCard.setCategoryName("Category: ${card.CategoryName}")
+
+                //get the count of all workEntries with the category name
+                val frequencies =
+                    ToolBox.WorkEntriesList.count {
+                        it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                    }
+                customCard.setCategoryAmount("Work entries: $frequencies")
+
+                // Get the total duration of all work entries with the category name
+                val totalDuration =
+                    ToolBox.WorkEntriesList.filter {
+                        it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                    }
+                        .groupBy { it.WEActivityCategory }
+                        .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+
+                val total = totalDuration[card.CategoryName]
+                if (total != null) {
+                    customCard.setCategoryDuration("Total duration: $total")
+                }
+                else
+                {
+                    customCard.setCategoryDuration("Total duration: 0")
+                }
+
+                linView.addView(customCard)
+            }
+        } catch (ex: java.lang.Exception) {
+            Log.w("log", ex.toString())
+            ex.printStackTrace()
+        }
+    }
 }
