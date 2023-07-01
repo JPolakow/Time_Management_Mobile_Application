@@ -40,14 +40,17 @@ class MainActivity : AppCompatActivity() {
             usernameInput = findViewById(R.id.etUsername)
             passwordInput = findViewById(R.id.etPassword)
 
+            var name = usernameInput.text.toString().trim()
+            var pword = passwordInput.text.toString().trim()
+            name = "user"
+            pword = "pass"
+
             btnSignIn.setOnClickListener {
                 // Calling method to authenticate user credentials with firebase - returning user document ID
                 authenticateUserWithFirebase(
-                    usernameInput.text.toString().trim(),
-                    passwordInput.text.toString().trim()
+                    name,
+                    pword
                 )
-
-
             }
 
             signUpClick.setOnClickListener {
