@@ -13,9 +13,19 @@ class WorkEntriesObject(
     val WEDateEnded: String,
     val WEDuration: Double,
     val WEColor: String,
-    ) {
+) {
 
     private var savedImage: Bitmap? = null
+
+    private var imageUrl: String? = null
+
+    fun setImageUrl(url: String) {
+        imageUrl = url
+    }
+
+    fun getImageUrl(): String {
+        return imageUrl!!
+    }
 
     // Function to save image
     fun saveImage(image: Bitmap) {

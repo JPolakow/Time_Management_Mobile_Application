@@ -18,14 +18,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -115,6 +120,16 @@ class complete_activity : BottomSheetDialogFragment() {
                 }
             }
 
+            // Call the method to fetch work entries from Firestore
+            GlobalScope.launch {
+                try {
+                    fetchWorkEntriesFromFirestore()
+                    // Handle the retrieved work entries and their associated images
+                } catch (exception: Exception) {
+                    // Handle the failure
+                }
+            }
+
             //ratings
             btnOne = view.findViewById(R.id.btnOne)
             btnOne.setOnClickListener() { rating = 1 }
@@ -166,7 +181,7 @@ class complete_activity : BottomSheetDialogFragment() {
                     if (imageBitmap != null) {
                         Log.d("log", "Image captured successfully")
                         image = imageBitmap
-                        // Now you can call the saveImage() method if necessary
+
                     } else {
                         Log.e("log", "Failed to retrieve the image bitmap from the camera")
                     }
@@ -185,6 +200,11 @@ class complete_activity : BottomSheetDialogFragment() {
     //============================================================================
     // Add data to object array
     private fun AddEntry() {
+        // Creating an instance of firebase storage
+        val storage = Firebase.storage
+        // Create a storage reference
+        var storageRef = Firebase.storage.reference
+
         try {
             // Creating correct date format
             val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
@@ -211,6 +231,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 if (outcome) {
                     newWorkEntriesObject.WEID = Key
                     ToolBox.WorkEntriesList.add(newWorkEntriesObject)
+                    uploadImageToFirebaseStorage(image!!)
                 } else {
                     // Failure
                 }
@@ -253,4 +274,100 @@ class complete_activity : BottomSheetDialogFragment() {
                 callback(false)
             }
     }
+    private fun uploadImageToFirebaseStorage(imageBitmap: Bitmap) {
+        // Get a reference to the Firebase Storage root
+        val storageRef = Firebase.storage.reference
+
+        // Path where image is being stored
+        val userId = ToolBox.ActiveUserID
+
+        val imagePath = "images/$userId/$Key.jpg"
+
+        // Create a reference to the image file in Firebase Storage
+        val imageRef = storageRef.child(imagePath)
+
+        // Convert the Bitmap to a byte array
+        val baos = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val imageData = baos.toByteArray()
+
+        // Upload the image data to Firebase Storage
+        val uploadTask = imageRef.putBytes(imageData)
+
+        // Add a listener to track the upload progress or handle success/failure
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            // Image upload successful
+            // You can retrieve the image URL using taskSnapshot.metadata?.reference?.downloadUrl
+            val imageUrl = taskSnapshot.metadata?.reference?.downloadUrl
+
+            // Save the image URL and other details in Firestore
+            saveImageDetailsToFirestore(imageUrl.toString(), userId, Key)
+        }.addOnFailureListener { exception ->
+            // Image upload failed
+            // Handle the failure and show an error message to the user
+        }
+    }
+    private fun saveImageDetailsToFirestore(imageUrl: String, userId: String, WorkEntryID: String) {
+        val db = Firebase.firestore
+        val imageDetails = hashMapOf(
+            "imageUrl" to imageUrl,
+            "userId" to userId,
+            "WorkEntryID" to WorkEntryID
+            // Add any other relevant details
+        )
+
+        db.collection("images").add(imageDetails)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Image Success","Uploaded Image Successfully")
+                // You can access the document ID using documentReference.id if needed
+            }
+            .addOnFailureListener { exception ->
+                // Image details save failed
+                // Handle the failure and show an error message to the user
+            }
+    }
+
+
+    private suspend fun getImageUrlForWorkEntry(workEntryID: String): String? {
+        val db = Firebase.firestore
+        val querySnapshot = db.collection("images")
+            .whereEqualTo("WorkEntryID", workEntryID)
+            .get()
+            .await() // Use 'await()' to suspend the coroutine and wait for the result
+
+        return if (!querySnapshot.isEmpty) {
+            val documentSnapshot = querySnapshot.documents[0]
+            val imageUrl = documentSnapshot.getString("imageUrl")
+            imageUrl
+        } else {
+            null
+        }
+    }
+
+    private suspend fun fetchWorkEntriesFromFirestore() {
+        val db = Firebase.firestore
+        val workEntriesCollection = db.collection("workEntries")
+
+        try {
+            val querySnapshot = workEntriesCollection.get().await()
+            val workEntriesList = mutableListOf<WorkEntriesObject>()
+
+            for (document in querySnapshot) {
+                val workEntry = document.toObject(WorkEntriesObject::class.java)
+                workEntry.setImageUrl(getImageUrlForWorkEntry(Key)!!)
+                workEntriesList.add(workEntry)
+            }
+
+            // Handle the retrieved work entries list
+            // Display the work entries and their associated images
+        } catch (exception: Exception) {
+            // Handle the failure
+        }
+    }
+
+
+
+
+
+
 }
