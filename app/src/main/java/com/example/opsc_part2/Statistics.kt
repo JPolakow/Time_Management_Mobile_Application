@@ -8,6 +8,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -28,6 +30,8 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -39,7 +43,11 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     private lateinit var etStartDatePick: EditText
     private lateinit var btnClear: Button
 
+//    private val startDate: Date? = null
+//    private val startDate: Date? = null
+
     //============================================================================
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -86,15 +94,18 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
             btnClear = view.findViewById(R.id.btnClear)
             btnClear.setOnClickListener {
-                /*linView.removeAllViews()*/
                 //Possibly revert back to original
                 etEndDatePick.text.clear()
                 etStartDatePick.text.clear()
+                loadPieChartData()
+                populate()
             }
 
             // Create a TextWatcher
             val textWatcher = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence?, start: Int, count: Int, after: Int
+                ) {
                     // This method is called before the text is changed
                     // We don't need to do anything here
                 }
@@ -112,18 +123,16 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     val endDate = etEndDatePick.text.toString().trim()
 
                     if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
-                        // Both EditText fields are filled, so we call loadFilters()
-                        loadPieChartData(startDate.toDate(), endDate.toDate())
+                        // Both EditText fields are filled
+                        loadPieChartData()
+                        populate()
                     }
                 }
             }
 
-// Add the TextWatcher to both EditText fields
+            // Add the TextWatcher to both EditText fields
             etStartDatePick.addTextChangedListener(textWatcher)
             etEndDatePick.addTextChangedListener(textWatcher)
-
-
-
 
             pieChart = view.findViewById(R.id.chart)
             initPieChart()
@@ -137,8 +146,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         return view
     }
 
-    //pie starts start
-    //region
     //============================================================================
     // Method to initialise pie chart
     // All pie chart properties will go here
@@ -161,16 +168,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     }
 
     //============================================================================
-    // Method to round sizes of pie chart pies to whole numbers
-    class RoundedValueFormatter : ValueFormatter() {
-        override fun getFormattedValue(value: Float): String {
-            return value.roundToInt().toString()
-        }
-    }
-
-    //============================================================================
     // This is where we will load our own data
-    private fun loadPieChartData(startDate: Date? = null, endDate: Date? = null) {
+    private fun loadPieChartData() {
         // Get all user-specific category names
         val filteredCategories = ToolBox.CategoryList.filter { category ->
             category.CategoryUserID == ToolBox.ActiveUserID
@@ -180,12 +179,22 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
         for (category in filteredCategories) {
             // Get the total duration of work entries with the category name within the specified date range
-            // This is suppose to be doing the filtering based on user selected date period
-            val totalDuration = ToolBox.WorkEntriesList.filter {
-                it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID &&
-                        (startDate == null || it.WEDateEnded.toDate()!! >= startDate) &&
-                        (endDate == null || it.WEDateEnded.toDate()!! <= endDate)
+            var totalDuration = ToolBox.WorkEntriesList.filter {
+                it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID
             }.sumBy { it.WEDuration.toInt() }
+
+            if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
+                //get all dates in the same format
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val startDate = dateFormat.parse(etStartDatePick.text.toString())
+                val endDate = dateFormat.parse(etEndDatePick.text.toString())
+
+                totalDuration = ToolBox.WorkEntriesList.filter {
+                    it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID && dateFormat.parse(
+                        it.WEDateEnded
+                    ) in startDate..endDate
+                }.sumBy { it.WEDuration.toInt() }
+            }
 
             if (totalDuration > 0) {
                 entries.add(PieEntry(totalDuration.toFloat(), category.CategoryName))
@@ -203,63 +212,20 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.invalidate()
     }
 
-    //============================================================================
-    // Method to generate a random color for the wheel
-    private fun generateRandomColor(): Int {
-        val random = Random()
-        val alpha = 255 // You can adjust the alpha value as per your preference
-        val red = random.nextInt(256)
-        val green = random.nextInt(256)
-        val blue = random.nextInt(256)
-        return Color.argb(alpha, red, green, blue)
-    }
 
     //============================================================================
-    // Method to generate a hashmap of random colors
-    private fun generateRandomColorMap(): HashMap<Int, Int> {
-        val colorMap = HashMap<Int, Int>()
-        val numberOfColors = 7 // Adjust the number of colors as per your requirement
-
-        for (i in 0 until numberOfColors) {
-            val color = generateRandomColor()
-            colorMap[i] = color
-        }
-
-        return colorMap
-    }
-
-
-    // Method to load filters based on condition - is called onCreate in listeners
-    private fun loadFilters()
-    {
-        val startDate = etStartDatePick.text.toString().toDate()
-        val endDate = etEndDatePick.text.toString().toDate()
-
-        if (startDate != null && endDate != null) {
-            // Filter based on start and end dates
-            loadPieChartData(startDate, endDate)
-        }
-
-    }
-
-    // Function to convert string to a Date
-    private fun String.toDate(): Date? {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return try {
-            format.parse(this)
-        } catch (e: ParseException) {
-            null
-        }
-    }
-
-    //============================================================================
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     private fun populate() {
         try {
-            val filteredCategories = ToolBox.CategoryList.filter { category ->
+
+            linView.removeAllViews()
+
+            var filteredCategories = ToolBox.CategoryList.filter { category ->
                 category.CategoryUserID == ToolBox.ActiveUserID
             }
 
+            //catagory headings, main cards
             for (card in filteredCategories) {
 
                 val customCard = custom_stats_cards(requireContext())
@@ -269,8 +235,22 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 var expanded = false
 
                 // Get the work entries for the current category
-                val workEntriesForCategory = ToolBox.WorkEntriesList.filter {
+                var workEntriesForCategory = ToolBox.WorkEntriesList.filter {
                     it.WEActivityCategory == card.CategoryName
+                }
+
+                if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
+                    //get all dates in the same format
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                    val startDate = dateFormat.parse(etStartDatePick.text.toString())
+                    val endDate = dateFormat.parse(etEndDatePick.text.toString())
+
+                    //get all work entried for the category with the same userid and within the date range
+                    workEntriesForCategory = ToolBox.WorkEntriesList.filter { we ->
+                        we.WEUserID == ToolBox.ActiveUserID && we.WEActivityCategory == card.CategoryName && dateFormat.parse(
+                            we.WEDateEnded
+                        ) in startDate..endDate
+                    }
                 }
 
                 val linCard = customCard.findViewById<LinearLayout>(R.id.relCard)
@@ -279,7 +259,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 val distinctActivityNames =
                     workEntriesForCategory.map { it.WEActivityName }.distinct()
 
-                // Add TextViews for each work entry
+                // sub views
                 for (workEntry in distinctActivityNames) {
                     // Dynamically creating a TextView based on number of work entries
 
@@ -433,16 +413,40 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 }
 
                 //get the count of all workEntries with the category name
-                val frequencies = ToolBox.WorkEntriesList.count {
-                    it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                var frequencies = ToolBox.WorkEntriesList.count {
+                    it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID
                 }
-                customCard.setCategoryAmount("Work entries: $frequencies")
 
                 // Get the total duration of all work entries with the category name
-                val totalDuration = ToolBox.WorkEntriesList.filter {
-                    it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                var totalDuration = ToolBox.WorkEntriesList.filter {
+                    it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID
                 }.groupBy { it.WEActivityCategory }
                     .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+
+                //do the above with date filter is the user has the filter enabled
+                if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
+                    //get all dates in the same format
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                    val startDate = dateFormat.parse(etStartDatePick.text.toString())
+                    val endDate = dateFormat.parse(etEndDatePick.text.toString())
+
+                    //get the count of all workEntries with the category name
+                    frequencies = ToolBox.WorkEntriesList.count {
+                        it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID && dateFormat.parse(
+                            it.WEDateEnded
+                        ) in startDate..endDate
+                    }
+
+                    // Get the total duration of all work entries with the category name
+                    totalDuration = ToolBox.WorkEntriesList.filter {
+                        it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID && dateFormat.parse(
+                            it.WEDateEnded
+                        ) in startDate..endDate
+                    }.groupBy { it.WEActivityCategory }
+                        .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+                }
+
+                customCard.setCategoryAmount("Work entries: $frequencies")
 
                 val total = totalDuration[card.CategoryName]
                 if (total != null) {
@@ -459,39 +463,34 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
     }
 
+    //============================================================================
+    // Function to convert string to a Date
+    private fun String.toDate(): Date? {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return try {
+            format.parse(this)
+        } catch (e: ParseException) {
+            null
+        }
+    }
 
+    //============================================================================
     private fun getActivityObjectByName(activityName: String): ActivityObject? {
         return ToolBox.ActivitiesList.find { it.ActivityName == activityName }
     }
 
-    private fun validateUserDurationLeft(max: Double, totalDuration: Double): String {
-        var durationLeft = 0.0
-        val displayText: String
-
-        if (max - totalDuration > 0) {
-            durationLeft = max - totalDuration
-            displayText = "Your not done yet, just $durationLeft minutes left!"
-
-        } else {
-            displayText = "Wow, your done!"
-        }
-
-        return displayText
-    }
-
+    //============================================================================
     // Function to calculate user study minutes remaining
     private fun calculateDurationLeft(max: Double, totalDuration: Double): Double =
         max - totalDuration
 
+    //============================================================================
     // Function to return whether or not the user has completed their minimum goal
     private fun isDurationGreaterThanMin(Min: Double, totalDuration: Double): Boolean =
         totalDuration >= Min
 
+    //============================================================================
     // Function to return whether or not the user has completed their maximum goal
     private fun isDurationGreaterThanMax(Max: Double, totalDuration: Double): Boolean =
         totalDuration >= Max
 }
-
-// ----------------------- TO DO ----------------------- //
-// Individual duration for Work Entry Activity's
-// Min + Max goal for activity
