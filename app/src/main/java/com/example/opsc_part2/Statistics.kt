@@ -406,6 +406,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
             ex.printStackTrace()
         }
     }
+
+}
     private fun getActivityObjectByName(activityName: String): ActivityObject? {
         return ToolBox.ActivitiesList.find { it.ActivityName == activityName }
     }
@@ -437,4 +439,3 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 // ----------------------- TO DO ----------------------- //
 // Individual duration for Work Entry Activity's
 // Min + Max goal for activity
-

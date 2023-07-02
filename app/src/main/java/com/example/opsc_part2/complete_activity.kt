@@ -18,16 +18,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import android.util.Base64
 
 class complete_activity : BottomSheetDialogFragment() {
     companion object {
@@ -166,7 +172,7 @@ class complete_activity : BottomSheetDialogFragment() {
                     if (imageBitmap != null) {
                         Log.d("log", "Image captured successfully")
                         image = imageBitmap
-                        // Now you can call the saveImage() method if necessary
+
                     } else {
                         Log.e("log", "Failed to retrieve the image bitmap from the camera")
                     }
@@ -185,6 +191,11 @@ class complete_activity : BottomSheetDialogFragment() {
     //============================================================================
     // Add data to object array
     private fun AddEntry() {
+        // Creating an instance of firebase storage
+        val storage = Firebase.storage
+        // Create a storage reference
+        var storageRef = Firebase.storage.reference
+
         try {
             // Creating correct date format
             val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
@@ -202,14 +213,17 @@ class complete_activity : BottomSheetDialogFragment() {
                 paraColor!!
             )
 
-            image?.let { bitmap ->
-                newWorkEntriesObject.saveImage(bitmap)
-            }
 
             //writeToDB callback
             writeToDB(newWorkEntriesObject) { outcome ->
                 if (outcome) {
                     newWorkEntriesObject.WEID = Key
+
+                    if (image != null) {
+                        saveImageToDB(image!!, Key)
+                        newWorkEntriesObject.saveImage(image!!)
+                    }
+
                     ToolBox.WorkEntriesList.add(newWorkEntriesObject)
                 } else {
                     // Failure
@@ -251,6 +265,33 @@ class complete_activity : BottomSheetDialogFragment() {
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
                 callback(false)
+            }
+    }
+
+    //============================================================================
+    //save new image to db
+    private fun saveImageToDB(image: Bitmap, WEID: String) {
+        val db = Firebase.firestore
+
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val byteArray = baos.toByteArray()
+        val convertedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
+
+        val newActivity = hashMapOf(
+            "WorkEntryID" to WEID,
+            "imageUrl" to convertedImage,
+            "userId" to ToolBox.ActiveUserID
+        )
+
+        db.collection("images")
+            .add(newActivity)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                Key = documentReference.id
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
             }
     }
 }

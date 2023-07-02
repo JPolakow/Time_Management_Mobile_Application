@@ -13,7 +13,7 @@ class WorkEntriesObject(
     val WEDateEnded: String,
     val WEDuration: Double,
     val WEColor: String,
-    ) {
+) {
 
     private var savedImage: Bitmap? = null
 
@@ -21,11 +21,8 @@ class WorkEntriesObject(
     fun saveImage(image: Bitmap) {
         savedImage = image
     }
-
-
     // Function to get the saved image
     fun getSavedImage(): Bitmap? {
         return savedImage
     }
-
 }

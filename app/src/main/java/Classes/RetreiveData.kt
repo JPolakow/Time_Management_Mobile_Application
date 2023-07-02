@@ -1,9 +1,16 @@
 package Classes
 
 import android.content.ContentValues
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
 class RetreiveData {
 
@@ -61,7 +68,10 @@ class RetreiveData {
                     callback("success")
                 }
                 .addOnFailureListener { exception ->
-                    Log.w(ContentValues.TAG, "Error getting documents.", exception)
+                    Log.d(
+                        ContentValues.TAG,
+                        exception.toString()
+                    )
                     callback("failure")
                 }
         }
@@ -93,45 +103,60 @@ class RetreiveData {
                     callback("success")
                 }
                 .addOnFailureListener { exception ->
-                    Log.w(ContentValues.TAG, "Error getting documents.", exception)
+                    Log.d(
+                        ContentValues.TAG,
+                        exception.toString()
+                    )
                     callback("failure")
                 }
         }
-    }
 
-    private fun writeToDB() {
-        val db = Firebase.firestore
+        fun loadImages(userID: String, callback: (String) -> Unit) {
+            val db = Firebase.firestore
 
-        val user = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
+            db.collection("images")
+                .whereEqualTo("userId", userID)
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
 
-        // Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-            }
-    }
+                        val workEntryID = document.getString("WorkEntryID") ?: continue
+                        val index = ToolBox.WorkEntriesList.indexOfFirst { we ->
+                            we.WEID == workEntryID
+                        }
 
-    //============================================================================
-    private fun readFromDB() {
-        val db = Firebase.firestore
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                        if (index != -1) {
+
+                            // Assuming you have retrieved the base64Image string from Firestore
+                            val base64Image = document.getString("imageUrl")
+
+                            // Decode the base64-encoded string back into a byte array
+                            val imageBytes = Base64.decode(base64Image, Base64.DEFAULT)
+
+                            // Convert the byte array to a Bitmap object
+                            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+                            ToolBox.WorkEntriesList[index].saveImage(bitmap)
+
+var a = 0
+                        }
+                    }
+                    callback("success")
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents.", exception)
-            }
-    }
+                .addOnFailureListener { exception ->
+                    Log.e(ContentValues.TAG, "Failure occurred", exception)
+                    callback("failure")
+                    // You can throw the exception here if needed
+                }
+        }
 
+
+        fun getImageFromFirebaseStorage(
+            path: String,
+            onSuccess: (Bitmap) -> Unit,
+            onFailure: (Exception) -> Unit
+        ) {
+
+        }
+    }
 }

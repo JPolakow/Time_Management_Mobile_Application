@@ -13,7 +13,16 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.widget.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,6 +72,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 datePickerDialog.show()
             }
 
+
             etEndDatePick = view.findViewById(R.id.etEndDate)
             etEndDatePick.setOnClickListener {
                 val c = Calendar.getInstance()
@@ -80,8 +90,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
             }
 
             btnClear = view.findViewById(R.id.btnClear)
-            btnClear.setOnClickListener()
-            {
+            btnClear.setOnClickListener() {
                 linView.removeAllViews()
                 LoadFilters()
                 selectedCategory = String()
@@ -199,16 +208,16 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
+    //filter by catagory popup
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
         try {
             if (selectedCategory == null) {
                 selectedCategory = "None"
             }
 
-            val uniqueCategoriesIN = ToolBox.CategoryList
-                .filter { it.CategoryUserID == ToolBox.ActiveUserID }
-                .map { it.CategoryName }
-                .distinct()
+            val uniqueCategoriesIN =
+                ToolBox.CategoryList.filter { it.CategoryUserID == ToolBox.ActiveUserID }
+                    .map { it.CategoryName }.distinct()
 
             val uniqueCategories = listOf<String>("None", *uniqueCategoriesIN.toTypedArray())
 
@@ -230,9 +239,6 @@ class Logs : Fragment(R.layout.fragment_logs) {
             ex.printStackTrace()
         }
     }
-
-
-
 
     //============================================================================
     //Maximise and minimise the image on click
