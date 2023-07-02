@@ -43,13 +43,14 @@ class MainActivity : AppCompatActivity() {
             usernameInput = findViewById(R.id.etUsername)
             passwordInput = findViewById(R.id.etPassword)
 
-            var name = usernameInput.text.toString().trim()
-            var pword = passwordInput.text.toString().trim()
-
-            name = "user"
-            pword = "pass"
-
             btnSignIn.setOnClickListener {
+
+                var name = usernameInput.text.toString().trim()
+                var pword = passwordInput.text.toString().trim()
+
+                //debugging login override for ease of use
+//            name = "user"
+//            pword = "pass"
 
                 // Setting progress bar to visible when user attempts to sign in
                 pbWaitToSignIn.visibility = View.VISIBLE
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
                     } else {
                         // Authentication failed
-                        Log.d(TAG, "Authentication failed. Invalid username or password.")
+                        Log.d(TAG, "Authentication failed. Invalid password.")
                         val errToast = Toast.makeText(
                             applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
                         )
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     // Authentication failed
-                    Log.d(TAG, "Authentication failed. Invalid username or password.")
+                    Log.d(TAG, "Authentication failed. Username not found.")
                 }
             }
             .addOnFailureListener { exception ->
@@ -116,8 +117,7 @@ class MainActivity : AppCompatActivity() {
 
     //============================================================================
     //Load existing data into lists, then sign user in
-    private fun loadDataSignIN()
-    {
+    private fun loadDataSignIN() {
         try {
             //add one more of these lines for the user callback, don't forget to add one more }
             RetreiveData.LoadUserCategories(userId) { categoryCallback ->
@@ -147,8 +147,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }catch (_: java.lang.Exception)
-        {
+        } catch (_: java.lang.Exception) {
 
         }
     }
