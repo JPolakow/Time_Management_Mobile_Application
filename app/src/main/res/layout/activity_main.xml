@@ -112,11 +112,19 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/pbWaitToSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearInput"
+        android:visibility="gone"
+        />
+
     <LinearLayout
         android:id="@+id/linearBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearInput"
+        android:layout_below="@id/pbWaitToSignIn"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
         android:gravity="center|bottom"
