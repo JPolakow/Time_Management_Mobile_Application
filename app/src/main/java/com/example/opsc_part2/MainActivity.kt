@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordInput: EditText
     private lateinit var btnSignIn: Button
     private lateinit var signUpClick: TextView
+    private lateinit var pbWaitToSignIn: ProgressBar
 
     private var userId: String = ""
 
@@ -32,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         try {
             setContentView(R.layout.activity_main)
+
+            pbWaitToSignIn = findViewById(R.id.pbWaitToSignIn)
 
             btnSignIn = findViewById(R.id.btnSignIn)
             signUpClick = findViewById(R.id.tvSignUp)
@@ -45,6 +49,10 @@ class MainActivity : AppCompatActivity() {
             pword = "pass"
 
             btnSignIn.setOnClickListener {
+
+                // Setting progress bar to visible when user attempts to sign in
+                pbWaitToSignIn.visibility = View.VISIBLE
+
                 // Calling method to authenticate user credentials with firebase - returning user document ID
                 authenticateUserWithFirebase(
                     name,
@@ -126,6 +134,8 @@ class MainActivity : AppCompatActivity() {
                                     TAG,
                                     "Authentication successful. User ID: $userId"
                                 )
+                                // Hide the progress bar when successfully authenticated
+                                pbWaitToSignIn.visibility = View.GONE
 
                                 intent = Intent(this, Dashboard::class.java)
                                 startActivity(intent)
