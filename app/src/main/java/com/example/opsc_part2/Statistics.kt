@@ -255,7 +255,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 val linCard = customCard.findViewById<LinearLayout>(R.id.relCard)
 
                 // Retrieving distinct activity names from
-                val distinctActivityNames = workEntriesForCategory.map { it.WEActivityName }.distinct()
+                val distinctActivityNames =
+                    workEntriesForCategory.map { it.WEActivityName }.distinct()
 
 
                 // Add TextViews for each work entry
@@ -267,7 +268,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     entryTextView.textSize = 20F
                     // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
                     entryTextView.text = workEntry
-                    entryTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    entryTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
 
 
                     // Get the corresponding ActivityObject for the activity name
@@ -290,8 +296,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     minGoalTextView.text = "Min Goal: ${activityObject?.ActivityMinGoal.toString()}"
 
 
-
-
                     // Calculate the total duration for activities with the same name
                     val totalDuration = workEntriesForCategory
                         .filter { it.WEActivityName == workEntry }
@@ -304,7 +308,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
                     val maxGoal = activityObject?.ActivityMaxGoal
                     // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    durationTextView.text = "Duration Left: ${calculateDurationLeft(maxGoal!!, totalDuration.toDouble())}"
+                    durationTextView.text = "Duration Left: ${
+                        calculateDurationLeft(
+                            maxGoal!!,
+                            totalDuration.toDouble()
+                        )
+                    }"
 
 
                     val minGoalReached = TextView(requireContext())
@@ -313,7 +322,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     minGoalReached.textSize = 16F
 
                     // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    minGoalReached.text = "Min Goal Reached: ${isDurationGreaterThanMin(activityObject?.ActivityMinGoal!!, totalDuration.toDouble())}"
+                    minGoalReached.text = "Min Goal Reached: ${
+                        isDurationGreaterThanMin(
+                            activityObject?.ActivityMinGoal!!,
+                            totalDuration.toDouble()
+                        )
+                    }"
 
                     val maxGoalReached = TextView(requireContext())
                     maxGoalReached.visibility = View.GONE
@@ -321,7 +335,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     maxGoalReached.textSize = 16F
 
                     // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    maxGoalReached.text = "Max Goal Reached: ${isDurationGreaterThanMax(activityObject?.ActivityMaxGoal!!, totalDuration.toDouble())}"
+                    maxGoalReached.text = "Max Goal Reached: ${
+                        isDurationGreaterThanMax(
+                            activityObject?.ActivityMaxGoal!!,
+                            totalDuration.toDouble()
+                        )
+                    }"
 
                     // Set the layout parameters for the TextView
                     val entryParams = LinearLayout.LayoutParams(
@@ -333,12 +352,14 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    entryParamsActivityName.marginStart = resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                    entryParamsActivityName.marginStart =
+                        resources.getDimensionPixelSize(R.dimen.entry_start_margin)
                     entryParamsActivityName.weight = 70F
                     entryTextView.layoutParams = entryParamsActivityName
 
                     // Adjust the start margin as needed
-                    entryParams.marginStart = resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                    entryParams.marginStart =
+                        resources.getDimensionPixelSize(R.dimen.entry_start_margin)
                     durationTextView.layoutParams = entryParams
                     maxGoalTextView.layoutParams = entryParams
                     minGoalTextView.layoutParams = entryParams
@@ -371,8 +392,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     }
                 }
 
-               /* val activityObject = getActivityObjectByCategory(card.CategoryName)
-                updateTextViews(linCard, activityObject.toString())*/
+                /* val activityObject = getActivityObjectByCategory(card.CategoryName)
+                 updateTextViews(linCard, activityObject.toString())*/
 
 
                 //get the count of all workEntries with the category name
@@ -393,9 +414,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 val total = totalDuration[card.CategoryName]
                 if (total != null) {
                     customCard.setCategoryDuration("Total duration: $total")
-                }
-                else
-                {
+                } else {
                     customCard.setCategoryDuration("Total duration: 0")
                 }
 
@@ -407,21 +426,20 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
     }
 
-}
+
     private fun getActivityObjectByName(activityName: String): ActivityObject? {
         return ToolBox.ActivitiesList.find { it.ActivityName == activityName }
     }
 
-    private fun validateUserDurationLeft(max: Double, totalDuration: Double): String{
+    private fun validateUserDurationLeft(max: Double, totalDuration: Double): String {
         var durationLeft = 0.0
-        val displayText : String
+        val displayText: String
 
-        if (max - totalDuration > 0)
-        {
+        if (max - totalDuration > 0) {
             durationLeft = max - totalDuration
             displayText = "Your not done yet, just $durationLeft minutes left!"
 
-        }else{
+        } else {
             displayText = "Wow, your done!"
         }
 
@@ -429,13 +447,18 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     }
 
     // Function to calculate user study minutes remaining
-    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double = max - totalDuration
+    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double =
+        max - totalDuration
 
     // Function to return whether or not the user has completed their minimum goal
-    private fun isDurationGreaterThanMin(Min: Double, totalDuration: Double): Boolean = totalDuration >= Min
+    private fun isDurationGreaterThanMin(Min: Double, totalDuration: Double): Boolean =
+        totalDuration >= Min
+
     // Function to return whether or not the user has completed their maximum goal
-    private fun isDurationGreaterThanMax(Max: Double, totalDuration: Double): Boolean = totalDuration >= Max
+    private fun isDurationGreaterThanMax(Max: Double, totalDuration: Double): Boolean =
+        totalDuration >= Max
 }
+
 // ----------------------- TO DO ----------------------- //
 // Individual duration for Work Entry Activity's
 // Min + Max goal for activity
