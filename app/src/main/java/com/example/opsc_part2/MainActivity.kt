@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordInput: EditText
     private lateinit var btnSignIn: Button
     private lateinit var signUpClick: TextView
+    private lateinit var pbWaitToSignIn: ProgressBar
 
     private var userId: String = ""
 
@@ -33,18 +35,26 @@ class MainActivity : AppCompatActivity() {
         try {
             setContentView(R.layout.activity_main)
 
+            pbWaitToSignIn = findViewById(R.id.pbWaitToSignIn)
+
             btnSignIn = findViewById(R.id.btnSignIn)
             signUpClick = findViewById(R.id.tvSignUp)
 
             usernameInput = findViewById(R.id.etUsername)
             passwordInput = findViewById(R.id.etPassword)
 
-            var name = usernameInput.text.toString().trim()
-            var pword = passwordInput.text.toString().trim()
-            name = "user"
-            pword = "pass"
-
             btnSignIn.setOnClickListener {
+
+                var name = usernameInput.text.toString().trim()
+                var pword = passwordInput.text.toString().trim()
+
+                //debugging login override for ease of use
+//            name = "user"
+//            pword = "pass"
+
+                // Setting progress bar to visible when user attempts to sign in
+                pbWaitToSignIn.visibility = View.VISIBLE
+
                 // Calling method to authenticate user credentials with firebase - returning user document ID
                 authenticateUserWithFirebase(
                     name,
@@ -70,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     //============================================================================
     private fun authenticateUserWithFirebase(username: String, password: String) {
         val db = Firebase.firestore
-
         // Query the users collection for the provided username
         db.collection("users")
             .whereEqualTo("username", username)
@@ -85,20 +94,30 @@ class MainActivity : AppCompatActivity() {
                         // Authentication successful
                         userId = userDocument.id
 
-                        LoadDataSignIN()
+                        loadDataSignIN()
 
                     } else {
                         // Authentication failed
-                        Log.d(TAG, "Authentication failed. Invalid username or password.")
+                        Log.d(TAG, "Authentication failed. Invalid password.")
+                        pbWaitToSignIn.visibility = View.GONE
+
                         val errToast = Toast.makeText(
                             applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
+
                         )
                         errToast.setGravity(Gravity.BOTTOM, 0, 25)
                         errToast.show()
                     }
                 } else {
                     // Authentication failed
-                    Log.d(TAG, "Authentication failed. Invalid username or password.")
+                    Log.d(TAG, "Authentication failed. Username not found.")
+                    val notFoundToast = Toast.makeText(
+                        applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
+
+                    )
+                    notFoundToast.setGravity(Gravity.BOTTOM, 0, 25)
+                    notFoundToast.show()
+                    pbWaitToSignIn.visibility = View.GONE
                 }
             }
             .addOnFailureListener { exception ->
@@ -107,35 +126,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    //Load exisitn data into lists, then sign user in
-    private fun LoadDataSignIN()
-    {
+    //Load existing data into lists, then sign user in
+    private fun loadDataSignIN() {
         try {
+            //add one more of these lines for the user callback, don't forget to add one more }
             RetreiveData.LoadUserCategories(userId) { categoryCallback ->
                 RetreiveData.LoadActivities(userId) { activityCallback ->
-                    RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
-                        RetreiveData.loadImages(userId) { imagesCallBack ->
-                            if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success" && imagesCallBack == "success") {
-                                ToolBox.ActiveUserID = userId
+                    RetreiveData.LoadUserProfile(userId) { userCallback ->
+                        RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
+                            RetreiveData.loadImages(userId) { imagesCallBack ->
+                                if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success" && imagesCallBack == "success" && userCallback == "success") {
+                                    ToolBox.ActiveUserID = userId
 
-                                var a = ToolBox.WorkEntriesList
+                                    var a = ToolBox.WorkEntriesList
 
 
-                                // Perform any necessary actions for a successful login
-                                Log.d(
-                                    TAG,
-                                    "Authentication successful. User ID: $userId"
-                                )
+                                    // Perform any necessary actions for a successful login
+                                    Log.d(
+                                        TAG,
+                                        "Authentication successful. User ID: $userId"
+                                    )
+                                    // Hiding the progress bar when successfully authenticated
+                                    pbWaitToSignIn.visibility = View.GONE
 
-                                intent = Intent(this, Dashboard::class.java)
-                                startActivity(intent)
+                                    intent = Intent(this, Dashboard::class.java)
+                                    startActivity(intent)
+                                }
                             }
                         }
                     }
                 }
             }
-        }catch (ex: java.lang.Exception)
-        {
+        } catch (_: java.lang.Exception) {
 
         }
     }

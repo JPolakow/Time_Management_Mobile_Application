@@ -90,21 +90,22 @@ class complete_activity : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_complete_activity, container, false)
 
         try {
-            //retreive data send from the dashboard, loadCustomUI method
+            // Retrieve data send from the dashboard, loadCustomUI method
             paraColor = arguments?.getString("color")
             paraDuration = arguments?.getDouble("duration")
             paraActivityID = arguments?.getString("id")
             paraName = arguments?.getString("name")
             paraCategory = arguments?.getString("category")
 
-            //save
-            btnSave = view.findViewById<Button>(R.id.btnSave)
+            // Save
+            btnSave = view.findViewById(R.id.btnSave)
             btnSave.setOnClickListener {
+                // Calling add entry to save user entry
                 AddEntry()
             }
 
-            //add image
-            btnAddImage = view.findViewById<Button>(R.id.btnAddImage)
+            // Add image
+            btnAddImage = view.findViewById(R.id.btnAddImage)
             btnAddImage.setOnClickListener {
                 //Ensure app has permission to use camera
                 if (ContextCompat.checkSelfPermission(

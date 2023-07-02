@@ -17,25 +17,23 @@ import com.google.firebase.ktx.Firebase
 
 class Add_Catagory : BottomSheetDialogFragment() {
 
-    //UI Lateinit Vars
+    // UI Late init Vars
     private lateinit var btnAddCategory: Button
     private lateinit var etCategoryInput: EditText
 
     //============================================================================
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add__catagory, container, false)
         try {
             // Find buttons in the inflated view
-            btnAddCategory = view.findViewById(R.id.btnAddCatagory)
-            etCategoryInput = view.findViewById(R.id.etCatagoryInput)
+            btnAddCategory = view.findViewById(R.id.btnAddCategory)
+            etCategoryInput = view.findViewById(R.id.etCategoryInput)
 
             // Set click listeners for the buttons
             btnAddCategory.setOnClickListener {
-                valadateInput()
+                validateInput()
             }
 
         } catch (ex: java.lang.Exception) {
@@ -46,8 +44,8 @@ class Add_Catagory : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //valaidate user inputs
-    private fun valadateInput() {
+    // Validate user inputs
+    private fun validateInput() {
         var valid = true
 
         val name = etCategoryInput.text.toString().trim()
@@ -64,22 +62,21 @@ class Add_Catagory : BottomSheetDialogFragment() {
             valid = false
         }
 
-        if (valid)
-        {
-            AddNewCatagory()
+        if (valid) {
+            addNewCategory()
         }
     }
 
     //============================================================================
-    //add the new catagory to the local list and the db
-    private fun AddNewCatagory() {
-        var newCatagory =
+    // Add the new category to the local list and the db
+    private fun addNewCategory() {
+        val newCategory =
             CategoryObject(etCategoryInput.text.toString().trim(), ToolBox.ActiveUserID)
 
-        //writeToDB callback
-        writeToDB(newCatagory) { outcome ->
+        // WriteToDB callback
+        writeToDB(newCategory) { outcome ->
             if (outcome) {
-                ToolBox.CategoryList.add(newCatagory)
+                ToolBox.CategoryList.add(newCategory)
             } else {
                 // Failure
             }
@@ -89,24 +86,21 @@ class Add_Catagory : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //save new catagory in db
-    private fun writeToDB(newCatagoryInput: CategoryObject, callback: (Boolean) -> Unit) {
+    // Save new category in db
+    private fun writeToDB(newCategoryInput: CategoryObject, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
-        val newCatagory = hashMapOf(
-            "CategoryName" to newCatagoryInput.CategoryName,
-            "CategoryUserID" to newCatagoryInput.CategoryUserID
+        val newCategory = hashMapOf(
+            "CategoryName" to newCategoryInput.CategoryName,
+            "CategoryUserID" to newCategoryInput.CategoryUserID
         )
 
-        db.collection("categories")
-            .add(newCatagory)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                callback(true)
-            }
-            .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-                callback(false)
-            }
+        db.collection("categories").add(newCategory).addOnSuccessListener { documentReference ->
+            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            callback(true)
+        }.addOnFailureListener { e ->
+            Log.w(ContentValues.TAG, "Error adding document", e)
+            callback(false)
+        }
     }
 }

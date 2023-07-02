@@ -60,12 +60,10 @@
         android:focusable="false"
         />
 
+
+
     </LinearLayout>
 
-    <View style="@style/Divider"
-        android:id="@+id/line"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/linearButtonLayout"/>
 
     <LinearLayout
         android:id="@+id/linearButtonLayout"
@@ -108,6 +106,22 @@
             android:text="Clear"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCategorySelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearButtonLayout"
+        android:gravity="center"
+        android:text="College"
+        android:textSize="20sp"
+
+        />
+
+    <View style="@style/Divider"
+        android:id="@+id/line"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvCategorySelected"/>
 
     <!--Activity scroll view-->
     <ScrollView

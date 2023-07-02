@@ -1,7 +1,6 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
-import Classes.CategoryObject
 import Classes.ToolBox
 import android.content.ContentValues
 import android.content.DialogInterface
@@ -23,8 +22,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
@@ -32,22 +29,22 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         "Red", "Blue", "Purple", "Pink", "Light-Blue"
     )
 
-    //inputs
+    // Inputs
     private lateinit var nameInput: EditText
     private lateinit var categoryInput: EditText
     private lateinit var colorInput: EditText
     private lateinit var goalInput: EditText
     private lateinit var descriptionInput: EditText
-    private var SelectedColor: String = ""
-    private var SelectedCatagory: String = ""
+    private var selectedColor: String = ""
+    private var selectedCategory: String = ""
     private var minTime = -1
     private var maxTime = -1
 
-    //Press-ables
+    // Press-ables
     private lateinit var ivSubmit: ImageButton
     private lateinit var tvClose: ImageButton
 
-    private var Key: String = ""
+    private var key: String = ""
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -57,12 +54,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
 
-        try {
-
-        } catch (ex: Exception) {
-            Log.w("log", ex.toString())
-            ex.printStackTrace()
-        }
         nameInput = view.findViewById(R.id.etName)
         goalInput = view.findViewById(R.id.etGoal)
         colorInput = view.findViewById(R.id.etColor)
@@ -89,10 +80,18 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         //Submit Button
         ivSubmit.setOnClickListener() {
             if (validateForm()) {
-                addActivityToList()
-                val intent = Intent(requireActivity(), Dashboard::class.java)
-                val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
-                ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
+                addActivityToList() { outcome ->
+                    if (outcome) {
+                        val intent = Intent(requireActivity(), Dashboard::class.java)
+                        // Putting Extra for success message for newly added activity
+                        intent.putExtra("successMessage","Successfully Added Activity!")
+                        val options =
+                            ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
+                        ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
+                    } else {
+
+                    }
+                }
             }
         }
 
@@ -117,7 +116,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         }
         var valid = true
         val name: String = nameInput.text.toString().trim()
-        val catagory: String = categoryInput.text.toString().trim()
+        val category: String = categoryInput.text.toString().trim()
         val desc: String = descriptionInput.text.toString().trim()
 
         if (TextUtils.isEmpty(name)) {
@@ -135,11 +134,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             descriptionInput.error = "Description is required"
             valid = false
         }
-        if (TextUtils.isEmpty(catagory)) {
+        if (TextUtils.isEmpty(category)) {
             categoryInput.error = "Category is required"
             valid = false
         }
-        if (SelectedColor == "") {
+        if (selectedColor == "") {
             colorInput.error = "Color is required"
             valid = false
         }
@@ -154,41 +153,41 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //============================================================================
     //Add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun addActivityToList() {
+    private fun addActivityToList(callback: (Boolean) -> Unit) {
         try {
+            // Creating correct date format
+            val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
+            //get external data
+            val currentUser = ToolBox.ActiveUserID
+            //get user inputs
+            val name = nameInput.text.toString().trim()
+            val desc = descriptionInput.text.toString().trim()
 
+            val newActivity = ActivityObject(
+                "",
+                currentUser,
+                name,
+                selectedCategory,
+                time,
+                minTime.toDouble(),
+                maxTime.toDouble(),
+                selectedColor,
+                desc,
+            )
+
+            //writeToDB callback
+            writeToDB(newActivity) { outcome ->
+                if (outcome) {
+                    newActivity.ActivityID = key
+                    ToolBox.ActivitiesList.add(newActivity)
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
-        }
-        // Creating correct date format
-        val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
-        //get external data
-        val currentUser = ToolBox.ActiveUserID
-        //get user inputs
-        val name = nameInput.text.toString().trim()
-        val desc = descriptionInput.text.toString().trim()
-
-        val newActivity = ActivityObject(
-            "",
-            currentUser,
-            name,
-            SelectedCatagory,
-            time,
-            minTime.toDouble(),
-            maxTime.toDouble(),
-            SelectedColor,
-            desc,
-        )
-
-        //writeToDB callback
-        writeToDB(newActivity) { outcome ->
-            if (outcome) {
-                newActivity.ActivityID = Key
-                ToolBox.ActivitiesList.add(newActivity)
-            } else {
-                // Failure
-            }
         }
     }
 
@@ -212,7 +211,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             .add(newActivity)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                Key = documentReference.id
+                key = documentReference.id
                 callback(true)
             }
             .addOnFailureListener { e ->
@@ -231,8 +230,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             builder.setTitle("Pick a color")
                 .setItems(colorNames) { dialog: DialogInterface, which: Int ->
 
-                    SelectedColor = colorNames[which]
-                    displaySelected += SelectedColor
+                    selectedColor = colorNames[which]
+                    displaySelected += selectedColor
                     colorInput.setText(displaySelected)
 
                     dialog.dismiss()
@@ -262,8 +261,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             builder.setTitle("Pick a category")
                 .setItems(uniqueCategories.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
-                    SelectedCatagory = uniqueCategories[which]
-                    displaySelected += SelectedCatagory
+                    selectedCategory = uniqueCategories[which]
+                    displaySelected += selectedCategory
                     categoryInput.setText(displaySelected)
 
                     dialog.dismiss()

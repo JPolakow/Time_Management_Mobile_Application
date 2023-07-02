@@ -2,27 +2,17 @@ package com.example.opsc_part2
 
 import Classes.ToolBox
 import Classes.WorkEntriesObject
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import android.app.DatePickerDialog
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.widget.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +24,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     private lateinit var btnFilter: Button
     private var selectedCategory = String()
     private lateinit var btnClear: Button
+    private lateinit var tvCategorySelected: TextView
 
     //============================================================================
     override fun onCreateView(
@@ -43,6 +34,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
         try {
             linView = view.findViewById(R.id.linearProjectCards)
+
+            tvCategorySelected = view.findViewById(R.id.tvCategorySelected)
 
             btnFilter = view.findViewById(R.id.btnFilter)
             btnFilter.setOnClickListener() {
@@ -119,7 +112,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
             }
             val filtered: List<WorkEntriesObject>
 
-            if (!selectedCategory.isEmpty() && selectedCategory != "None" && dateFilerBool) {
+            if (selectedCategory.isNotEmpty() && selectedCategory != "None" && dateFilerBool) {
                 //Category and date
                 filtered = filterDatesAndCategory(
                     ToolBox.WorkEntriesList,
@@ -129,7 +122,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 )
                 populate(filtered)
                 return
-            } else if (!selectedCategory.isEmpty() && selectedCategory != "None" && dateFilerBool == false) {
+            } else if (selectedCategory.isNotEmpty() && selectedCategory != "None" && !dateFilerBool) {
                 //Only category
                 filtered = filterWorkEntries(ToolBox.WorkEntriesList, selectedCategory, null)
                 populate(filtered)
@@ -180,6 +173,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     //Load custom cards
     private fun populate(filtered: List<WorkEntriesObject>) {
         try {
+
             // ----------------- Creating a new card with custom attributes ----------------- //
             for (card in filtered) {
                 val customCard = custom_logs_cards(requireContext())
@@ -191,7 +185,12 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 customCard.setRatingColor(card.WERating)
 
                 if (card.getSavedImage() != null) {
-                    customCard.SetImage(card.getSavedImage()!!)
+                    val imgActivity = customCard.findViewById<ImageView>(R.id.imgActivity)
+                    imgActivity.scaleType = ImageView.ScaleType.CENTER_CROP
+                    imgActivity.setImageBitmap(card.getSavedImage())
+                    imgActivity.setOnClickListener {
+                        enlargeImage(imgActivity)
+                    }
                 }
 
                 var imgActivity = customCard.findViewById<ImageView>(R.id.imgActivity)
@@ -208,7 +207,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
-    //filter by catagory popup
+    //filter by category popup
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
         try {
             if (selectedCategory == null) {
@@ -227,6 +226,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 uniqueCategories.toTypedArray(), selectedIndex
             ) { dialog: DialogInterface, which: Int ->
                 selectedCategory = uniqueCategories[which]
+                tvCategorySelected.text = selectedCategory
+                tvCategorySelected.text = selectedCategory
                 callback(selectedCategory!!)
                 dialog.dismiss()
             }.setCancelable(true)

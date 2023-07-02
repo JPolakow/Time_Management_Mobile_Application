@@ -19,11 +19,59 @@
         android:fontFamily="@font/inter_regular"
         android:textColor="@color/black"
         android:textSize="40sp" />
+    <LinearLayout
+        android:id="@+id/linearDatePickers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSettingsHeading"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:weightSum="2"
+        android:layout_centerVertical="true">
+
+        <EditText
+            android:id="@+id/etStartDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="Select Start Date"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_height="48dp"
+            android:clickable="false"
+            android:focusable="false"
+            />
+
+        <EditText
+            android:id="@+id/etEndDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="Select End Date"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:clickable="false"
+            android:focusable="false"
+            />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:text="X"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            />
+
+    </LinearLayout>
+
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_below="@+id/tvSettingsHeading"
+        android:layout_below="@+id/linearDatePickers"
         android:layout_height="250dp"/>
 
 

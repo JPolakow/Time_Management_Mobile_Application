@@ -6,19 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.viewpager.widget.ViewPager
-import com.example.opsc_part2.AchievementsFragment
-import com.example.opsc_part2.GeneralFragment
-import com.example.opsc_part2.ProfileFragment
 import com.google.android.material.tabs.TabLayout
 
 class Settings : AppCompatActivity() {
@@ -65,15 +60,16 @@ class Settings : AppCompatActivity() {
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getCount(): Int {
-            return 3
+            //return 3
+            return 2
         }
 
         // Populate the tabs
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> GeneralFragment()
-                1 -> ProfileFragment()
-                2 -> AchievementsFragment()
+                //0 -> GeneralFragment()
+                0 -> ProfileFragment()
+                1 -> AchievementsFragment()
                 else -> throw IllegalArgumentException("Invalid position: $position")
             }
         }
@@ -81,9 +77,9 @@ class Settings : AppCompatActivity() {
         // Populate the tab headings
         override fun getPageTitle(position: Int): CharSequence? {
             return when (position) {
-                0 -> "General"
-                1 -> "Profile"
-                2 -> "Achievements"
+                //0 -> "General"
+                0 -> "Profile"
+                1 -> "Achievements"
                 else -> null
             }
         }

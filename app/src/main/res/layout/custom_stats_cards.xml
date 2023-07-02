@@ -23,27 +23,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:orientation="vertical"
             android:backgroundTint="#E1F0F4"
-            android:elevation="12dp">
+            android:elevation="12dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="end"
                 android:text="Category: "
                 android:textColor="#FF000000"
-                android:textSize="24sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/txtDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
                 android:gravity="end"
                 android:text="Total Duration: "
                 android:textColor="#FF000000"
@@ -53,29 +53,13 @@
                 android:id="@+id/txtAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="end"
                 android:text="Amount: "
                 android:textColor="#FF000000"
                 android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/txtPlaceHolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="end"
-                android:textSize="24sp"
-                android:textColor="#FF000000"
-                android:text="My Progress"
-                android:visibility="gone"/>
-
-
-
 
         </LinearLayout>
 

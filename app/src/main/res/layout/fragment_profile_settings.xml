@@ -64,7 +64,7 @@
         android:layout_below="@+id/tvSubHeading"
         android:layout_toEndOf="@+id/tvNameHeading"
         android:fontFamily="@font/inter_regular"
-        android:text="@string/profileDisplayName"
+        android:text=""
         android:textSize="20sp" />
 
     <TextView
@@ -75,7 +75,7 @@
         android:layout_marginStart="43dp"
         android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/tvSurnameHeading"
-        android:text="@string/profileDisplaySurname"
+        android:text=""
         android:textSize="20sp"
         android:fontFamily="@font/inter_regular" />
 
@@ -88,7 +88,7 @@
         android:layout_marginTop="23dp"
         android:layout_toEndOf="@+id/tvUsernameHeading"
         android:fontFamily="@font/inter_regular"
-        android:text="@string/profileDisplayUsername"
+        android:text=""
         android:textSize="20sp" />
 
 

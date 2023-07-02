@@ -13,7 +13,7 @@
         android:gravity="top">
 
         <TextView
-            android:id="@+id/tvCatagoryHeading"
+            android:id="@+id/tvCategoryHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -23,22 +23,22 @@
             android:layout_marginVertical="20dp"
             android:gravity="center"
             android:background="@android:color/transparent"
-            android:text="Catagory"
+            android:text="Category"
             android:textColor="@color/white"
             android:textSize="30dp" />
 
         <EditText
-            android:id="@+id/etCatagoryInput"
+            android:id="@+id/etCategoryInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCatagoryHeading"
+            android:layout_below="@+id/tvCategoryHeading"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="80dp"
             android:textColor="@color/white"
             android:layout_marginEnd="80dp"
             android:autofillHints=""
             android:background="@android:color/transparent"
-            android:hint="Tap to set the catagory"
+            android:hint="Tap to set the category"
             android:inputType="text"
             android:gravity="center"
             android:textColorHint="@color/input_grey"
@@ -47,10 +47,10 @@
             tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:id="@+id/btnAddCatagory"
+            android:id="@+id/btnAddCategory"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@id/etCatagoryInput"
+            android:layout_below="@id/etCategoryInput"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"

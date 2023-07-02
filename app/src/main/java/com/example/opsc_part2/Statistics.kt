@@ -1,19 +1,26 @@
 package com.example.opsc_part2
 
-//
-
 import Classes.ActivityObject
 import Classes.ToolBox
+import Classes.WorkEntriesObject
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -21,17 +28,26 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.api.Distribution.BucketOptions.Linear
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.math.max
 import kotlin.math.roundToInt
 
 class Statistics : Fragment(R.layout.fragment_statistics) {
 
     private lateinit var linView: LinearLayout
     private lateinit var pieChart: PieChart
+    private lateinit var etEndDatePick: EditText
+    private lateinit var etStartDatePick: EditText
+    private lateinit var btnClear: Button
+
+//    private val startDate: Date? = null
+//    private val startDate: Date? = null
 
     //============================================================================
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,30 +56,89 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         try {
             linView = view.findViewById(R.id.linearProjectCards)
 
-            //start of chart
-            //region
+            // Date Picker Input Fields
+            etEndDatePick = view.findViewById(R.id.etEndDate)
+            etStartDatePick = view.findViewById(R.id.etStartDate)
+
+            // End Date - Date Picker Dialog
+            etEndDatePick.setOnClickListener {
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                        val textToSet = "$dayOfMonth-${monthOfYear + 1}-$year"
+                        etEndDatePick.setText(textToSet)
+                    }, year, month, day
+                )
+                datePickerDialog.show()
+            }
+
+            // End Date - Date Picker Dialog
+            etStartDatePick.setOnClickListener {
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                        val textToSet = "$dayOfMonth-${monthOfYear + 1}-$year"
+                        etStartDatePick.setText(textToSet)
+                    }, year, month, day
+                )
+                datePickerDialog.show()
+            }
+
+            btnClear = view.findViewById(R.id.btnClear)
+            btnClear.setOnClickListener {
+                //Possibly revert back to original
+                etEndDatePick.text.clear()
+                etStartDatePick.text.clear()
+                loadPieChartData()
+                populate()
+            }
+
+            // Create a TextWatcher
+            val textWatcher = object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?, start: Int, count: Int, after: Int
+                ) {
+                    // This method is called before the text is changed
+                    // We don't need to do anything here
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    // This method is called when the text is changing
+                    // We don't need to do anything here
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    // This method is called after the text has changed
+                    // We will check if both EditText fields are filled and call loadFilters() if true
+
+                    val startDate = etStartDatePick.text.toString().trim()
+                    val endDate = etEndDatePick.text.toString().trim()
+
+                    if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+                        // Both EditText fields are filled
+                        loadPieChartData()
+                        populate()
+                    }
+                }
+            }
+
+            // Add the TextWatcher to both EditText fields
+            etStartDatePick.addTextChangedListener(textWatcher)
+            etEndDatePick.addTextChangedListener(textWatcher)
+
             pieChart = view.findViewById(R.id.chart)
             initPieChart()
             loadPieChartData()
-////
-//            // Listener for double tap on the pie chart
-//            val gestureDetector =
-//                GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-//                    override fun onDoubleTap(event: MotionEvent): Boolean {
-//                        initGameWheel()
-//                        loadWheelGameData()
-//                        return true
-//                    }
-//                })
-//
-//            pieChart.setOnTouchListener { _, event ->
-//                gestureDetector.onTouchEvent(event)
-//                true
-//            }
-            //endregion
-            //end of chart
-
             populate()
+
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
@@ -71,8 +146,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         return view
     }
 
-    //pie starts start
-    //region
     //============================================================================
     // Method to initialise pie chart
     // All pie chart properties will go here
@@ -91,79 +164,13 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.holeRadius = 0f
         pieChart.setHoleColor(android.R.color.transparent)
         // setting drag friction for dragging pie chart
-        pieChart.dragDecelerationFrictionCoef = 0.99f
-    }
-
-    //============================================================================
-    fun initGameWheel() {
-        pieChart.setUsePercentValues(true)
-        // setting pie chart description visibility
-        pieChart.description.isEnabled = false
-        // setting legend visibility
-        pieChart.legend.isEnabled = false
-        pieChart.setDrawEntryLabels(false)
-        // setting rotation of pie chart = true
-        pieChart.isRotationEnabled = true
-        // Enabling pie chart hole
-        pieChart.isDrawHoleEnabled = true
-        // Setting hole size of pie chart
-        pieChart.holeRadius = 0f
-        pieChart.setHoleColor(android.R.color.transparent)
-        // setting drag friction for dragging pie chart
-        pieChart.dragDecelerationFrictionCoef = 0.99f
-
-    }
-
-    //============================================================================
-    // Function to load data to game wheel
-    private fun loadWheelGameData() {
-
-        // Spin the wheel for 3 seconds
-        pieChart.spin(3000, 0f, 360f, Easing.EaseInOutQuad)
-
-        // Generate the HashMap of random colors
-        val colorMap = generateRandomColorMap()
-
-        val entries = mutableListOf<PieEntry>()
-
-        // Generate 7 PieEntries with random values
-        for (i in 1..7) {
-            val value = (1..100).random().toFloat()
-            entries.add(PieEntry(value, "Entry $i"))
-        }
-
-        val dataSet = PieDataSet(entries, "Game Wheel")
-
-        // Set the colors for each entry in the dataset using the color map
-        val colors = mutableListOf<Int>()
-        for (i in entries.indices) {
-            val color = colorMap[i % colorMap.size] ?: Color.BLACK
-            colors.add(color)
-        }
-        dataSet.colors = colors
-
-        dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextSize = 12f
-
-        val data = PieData(dataSet)
-        data.setValueFormatter(RoundedValueFormatter()) // Apply custom value formatter
-        pieChart.data = data
-        pieChart.invalidate()
-    }
-
-    //============================================================================
-    // Method to round sizes of pie chart pies to whole numbers
-    class RoundedValueFormatter : ValueFormatter() {
-        override fun getFormattedValue(value: Float): String {
-            return value.roundToInt().toString()
-        }
+        pieChart.dragDecelerationFrictionCoef = 0.50f
     }
 
     //============================================================================
     // This is where we will load our own data
     private fun loadPieChartData() {
-
-        //get all user specific category names
+        // Get all user-specific category names
         val filteredCategories = ToolBox.CategoryList.filter { category ->
             category.CategoryUserID == ToolBox.ActiveUserID
         }
@@ -171,199 +178,233 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         val entries = mutableListOf<PieEntry>()
 
         for (category in filteredCategories) {
-            // Get the total duration of all work entries with the category name
+            // Get the total duration of work entries with the category name within the specified date range
+            var totalDuration = ToolBox.WorkEntriesList.filter {
+                it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID
+            }.sumBy { it.WEDuration.toInt() }
 
-            val totalDuration =
-                ToolBox.WorkEntriesList.filter {
-                    it.WEActivityCategory == category.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                }
-                    .groupBy { it.WEActivityCategory }
-                    .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+            if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
+                //get all dates in the same format
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val startDate = dateFormat.parse(etStartDatePick.text.toString())
+                val endDate = dateFormat.parse(etEndDatePick.text.toString())
 
-            val total = totalDuration[category.CategoryName]
-            if (total != null) {
-                entries.add(
-                    PieEntry(
-                        total!!.toFloat(),
-                        category.CategoryName
-                    )
-                )
+                totalDuration = ToolBox.WorkEntriesList.filter {
+                    it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID && dateFormat.parse(
+                        it.WEDateEnded
+                    ) in startDate..endDate
+                }.sumBy { it.WEDuration.toInt() }
             }
 
+            if (totalDuration > 0) {
+                entries.add(PieEntry(totalDuration.toFloat(), category.CategoryName))
+            }
         }
 
         val dataSet = PieDataSet(entries, "")
         dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
         dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextColor = Color.BLACK
         dataSet.valueTextSize = 12f
 
         val data = PieData(dataSet)
         pieChart.data = data
-        // refresh chart
+        // Refresh chart
         pieChart.invalidate()
     }
 
-    //============================================================================
-    // Method to generate a random color for the wheel
-    private fun generateRandomColor(): Int {
-        val random = Random()
-        val alpha = 255 // You can adjust the alpha value as per your preference
-        val red = random.nextInt(256)
-        val green = random.nextInt(256)
-        val blue = random.nextInt(256)
-        return Color.argb(alpha, red, green, blue)
-    }
 
     //============================================================================
-    // Method to generate a hashmap of random colors
-    private fun generateRandomColorMap(): HashMap<Int, Int> {
-        val colorMap = HashMap<Int, Int>()
-        val numberOfColors = 7 // Adjust the number of colors as per your requirement
-
-        for (i in 0 until numberOfColors) {
-            val color = generateRandomColor()
-            colorMap[i] = color
-        }
-
-        return colorMap
-    }
-//endregion
-    //pie charts end
-
-    //============================================================================
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetTextI18n")
     private fun populate() {
         try {
 
+            linView.removeAllViews()
 
-            val filteredCategories = ToolBox.CategoryList.filter { category ->
+            var filteredCategories = ToolBox.CategoryList.filter { category ->
                 category.CategoryUserID == ToolBox.ActiveUserID
             }
 
+            //catagory headings, main cards
             for (card in filteredCategories) {
+
                 val customCard = custom_stats_cards(requireContext())
                 customCard.setCategoryName("Category: ${card.CategoryName}")
 
                 val cardDisplay = customCard.findViewById<CardView>(R.id.cardView)
-                val amountDisplay = customCard.findViewById<TextView>(R.id.txtPlaceHolder)
+                var expanded = false
 
                 // Get the work entries for the current category
-                val workEntriesForCategory = ToolBox.WorkEntriesList.filter {
+                var workEntriesForCategory = ToolBox.WorkEntriesList.filter {
                     it.WEActivityCategory == card.CategoryName
+                }
+
+                if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
+                    //get all dates in the same format
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                    val startDate = dateFormat.parse(etStartDatePick.text.toString())
+                    val endDate = dateFormat.parse(etEndDatePick.text.toString())
+
+                    //get all work entried for the category with the same userid and within the date range
+                    workEntriesForCategory = ToolBox.WorkEntriesList.filter { we ->
+                        we.WEUserID == ToolBox.ActiveUserID && we.WEActivityCategory == card.CategoryName && dateFormat.parse(
+                            we.WEDateEnded
+                        ) in startDate..endDate
+                    }
                 }
 
                 val linCard = customCard.findViewById<LinearLayout>(R.id.relCard)
 
                 // Retrieving distinct activity names from
-                val distinctActivityNames = workEntriesForCategory.map { it.WEActivityName }.distinct()
+                val distinctActivityNames =
+                    workEntriesForCategory.map { it.WEActivityName }.distinct()
 
-
-                // Add TextViews for each work entry
+                // sub views
                 for (workEntry in distinctActivityNames) {
                     // Dynamically creating a TextView based on number of work entries
-                    val entryTextView = TextView(requireContext())
-                    entryTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    entryTextView.textSize = 20F
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    entryTextView.text = workEntry
-                    entryTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
+                    // Calculate the total duration for activities with the same name
+                    val totalDuration =
+                        workEntriesForCategory.filter { it.WEActivityName == workEntry }
+                            .sumBy { it.WEDuration.toInt() }
+
+                    //ACTIVITY NAME
+                    val entryTextView = TextView(requireContext())
+
+                    entryTextView.text = workEntry
 
                     // Get the corresponding ActivityObject for the activity name
                     val activityObject = getActivityObjectByName(workEntry)
 
-                    val maxGoalTextView = TextView(requireContext())
-                    maxGoalTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    maxGoalTextView.textSize = 20F
-
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    maxGoalTextView.text = "Max Goal: ${activityObject?.ActivityMaxGoal.toString()}"
-
-                    val minGoalTextView = TextView(requireContext())
-                    minGoalTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    minGoalTextView.textSize = 20F
-
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    minGoalTextView.text = "Min Goal: ${activityObject?.ActivityMinGoal.toString()}"
-
-
-
-
-                    // Calculate the total duration for activities with the same name
-                    val totalDuration = workEntriesForCategory
-                        .filter { it.WEActivityName == workEntry }
-                        .sumBy { it.WEDuration.toInt() }
-
+                    //-----DURATION LEFT
                     val durationTextView = TextView(requireContext())
-                    durationTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    durationTextView.textSize = 20F
 
                     val maxGoal = activityObject?.ActivityMaxGoal
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    durationTextView.text = "Duration Left: ${calculateDurationLeft(maxGoal!!, totalDuration.toDouble())}"
 
+                    //Calculate then display duration left
+                    durationTextView.text = "Duration Left: ${
+                        calculateDurationLeft(
+                            maxGoal!!, totalDuration.toDouble()
+                        )
+                    }"
 
-                    val minGoalReached = TextView(requireContext())
-                    minGoalReached.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    minGoalReached.textSize = 16F
+                    //-----DURATION WORKED
+                    val workedTextView = TextView(requireContext())
+                    workedTextView.text = "Duration Worked: ${totalDuration.toDouble()}"
 
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    minGoalReached.text = "Min Goal Reached: ${isDurationGreaterThanMin(activityObject?.ActivityMinGoal!!, totalDuration.toDouble())}"
+                    //-----MAX GOAL
+                    val maxGoalTextView = TextView(requireContext())
+                    var maxGoalString = ""
 
-                    val maxGoalReached = TextView(requireContext())
-                    maxGoalReached.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    maxGoalReached.textSize = 16F
+                    val overUnderMax = isDurationGreaterThanMax(
+                        activityObject.ActivityMaxGoal, totalDuration.toDouble()
+                    )
 
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    maxGoalReached.text = "Max Goal Reached: ${isDurationGreaterThanMax(activityObject?.ActivityMaxGoal!!, totalDuration.toDouble())}"
+                    if (overUnderMax) maxGoalString =
+                        "Max goal (${activityObject?.ActivityMaxGoal.toString()}) achieved"
+                    else maxGoalString =
+                        "Max goal (${activityObject?.ActivityMaxGoal.toString()}) not achieved"
 
-                    // Set the layout parameters for the TextView
+                    maxGoalTextView.text = maxGoalString
+
+                    //-----MIN GOAL
+                    val minGoalTextView = TextView(requireContext())
+                    var minGoalString = ""
+
+                    var overUnderMin = isDurationGreaterThanMin(
+                        activityObject?.ActivityMinGoal!!, totalDuration.toDouble()
+                    )
+
+                    if (overUnderMin) minGoalString =
+                        "Min goal (${activityObject?.ActivityMinGoal.toString()}) achieved"
+                    else minGoalString =
+                        "Min goal (${activityObject?.ActivityMinGoal.toString()}) not achieved"
+
+                    minGoalTextView.text = minGoalString
+
+                    //-----GENERAL
                     val entryParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    // Set the layout parameters for the TextView
+                    entryParams.marginStart =
+                        resources.getDimensionPixelSize(R.dimen.entry_start_margin) + 15
+
                     val entryParamsActivityName = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    entryParamsActivityName.marginStart = resources.getDimensionPixelSize(R.dimen.entry_start_margin)
-                    entryParamsActivityName.weight = 70F
-                    entryTextView.layoutParams = entryParamsActivityName
+                    entryParamsActivityName.marginStart =
+                        resources.getDimensionPixelSize(R.dimen.entry_start_margin)
 
-                    // Adjust the start margin as needed
-                    entryParams.marginStart = resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                    entryTextView.layoutParams = entryParamsActivityName
                     durationTextView.layoutParams = entryParams
+                    workedTextView.layoutParams = entryParams
                     maxGoalTextView.layoutParams = entryParams
                     minGoalTextView.layoutParams = entryParams
-                    minGoalReached.layoutParams = entryParams
-                    maxGoalReached.layoutParams = entryParams
+
+                    entryTextView.textSize = 20F
+                    entryTextView.setTypeface(null, Typeface.BOLD)
+                    maxGoalTextView.textSize = 15F
+                    minGoalTextView.textSize = 15F
+                    durationTextView.textSize = 18F
+                    workedTextView.textSize = 18F
+
+                    entryTextView.paintFlags = entryTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+                    entryTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    maxGoalTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    minGoalTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    durationTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    workedTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+
+                    entryTextView.visibility = View.GONE
+                    minGoalTextView.visibility = View.GONE
+                    maxGoalTextView.visibility = View.GONE
+                    durationTextView.visibility = View.GONE
+                    workedTextView.visibility = View.GONE
 
                     // Add the TextView to the LinearLayout inside the custom card view
                     linCard.addView(entryTextView)
+                    linCard.addView(workedTextView)
                     linCard.addView(durationTextView)
                     linCard.addView(minGoalTextView)
-                    linCard.addView(minGoalReached)
                     linCard.addView(maxGoalTextView)
-                    linCard.addView(maxGoalReached)
                 }
+
 
                 // OnClick for each card to expand
                 cardDisplay.setOnClickListener {
-                    if (amountDisplay.visibility == View.GONE) {
-                        amountDisplay.visibility = View.VISIBLE
+                    //hidden
+                    if (!expanded) {
+                        expanded = true
                         for (i in 0 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
                             child.visibility = View.VISIBLE // Show the entryTextView
                         }
                     } else {
-                        amountDisplay.visibility = View.GONE
+                        //shown
+                        expanded = false
                         for (i in 3 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
                             child.visibility = View.GONE // Hide the entryTextView
@@ -371,31 +412,46 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     }
                 }
 
-               /* val activityObject = getActivityObjectByCategory(card.CategoryName)
-                updateTextViews(linCard, activityObject.toString())*/
-
-
                 //get the count of all workEntries with the category name
-                val frequencies =
-                    ToolBox.WorkEntriesList.count {
-                        it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                    }
-                customCard.setCategoryAmount("Work entries: $frequencies")
+                var frequencies = ToolBox.WorkEntriesList.count {
+                    it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID
+                }
 
                 // Get the total duration of all work entries with the category name
-                val totalDuration =
-                    ToolBox.WorkEntriesList.filter {
-                        it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                var totalDuration = ToolBox.WorkEntriesList.filter {
+                    it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID
+                }.groupBy { it.WEActivityCategory }
+                    .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+
+                //do the above with date filter is the user has the filter enabled
+                if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
+                    //get all dates in the same format
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                    val startDate = dateFormat.parse(etStartDatePick.text.toString())
+                    val endDate = dateFormat.parse(etEndDatePick.text.toString())
+
+                    //get the count of all workEntries with the category name
+                    frequencies = ToolBox.WorkEntriesList.count {
+                        it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID && dateFormat.parse(
+                            it.WEDateEnded
+                        ) in startDate..endDate
                     }
-                        .groupBy { it.WEActivityCategory }
+
+                    // Get the total duration of all work entries with the category name
+                    totalDuration = ToolBox.WorkEntriesList.filter {
+                        it.WEActivityCategory == card.CategoryName && it.WEUserID == ToolBox.ActiveUserID && dateFormat.parse(
+                            it.WEDateEnded
+                        ) in startDate..endDate
+                    }.groupBy { it.WEActivityCategory }
                         .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+                }
+
+                customCard.setCategoryAmount("Work entries: $frequencies")
 
                 val total = totalDuration[card.CategoryName]
                 if (total != null) {
                     customCard.setCategoryDuration("Total duration: $total")
-                }
-                else
-                {
+                } else {
                     customCard.setCategoryDuration("Total duration: 0")
                 }
 
@@ -407,35 +463,34 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
     }
 
-}
+    //============================================================================
+    // Function to convert string to a Date
+    private fun String.toDate(): Date? {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return try {
+            format.parse(this)
+        } catch (e: ParseException) {
+            null
+        }
+    }
+
+    //============================================================================
     private fun getActivityObjectByName(activityName: String): ActivityObject? {
         return ToolBox.ActivitiesList.find { it.ActivityName == activityName }
     }
 
-    private fun validateUserDurationLeft(max: Double, totalDuration: Double): String{
-        var durationLeft = 0.0
-        val displayText : String
-
-        if (max - totalDuration > 0)
-        {
-            durationLeft = max - totalDuration
-            displayText = "Your not done yet, just $durationLeft minutes left!"
-
-        }else{
-            displayText = "Wow, your done!"
-        }
-
-        return displayText
-    }
-
+    //============================================================================
     // Function to calculate user study minutes remaining
-    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double = max - totalDuration
+    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double =
+        max - totalDuration
 
+    //============================================================================
     // Function to return whether or not the user has completed their minimum goal
-    private fun isDurationGreaterThanMin(Min: Double, totalDuration: Double): Boolean = totalDuration >= Min
+    private fun isDurationGreaterThanMin(Min: Double, totalDuration: Double): Boolean =
+        totalDuration >= Min
+
+    //============================================================================
     // Function to return whether or not the user has completed their maximum goal
-    private fun isDurationGreaterThanMax(Max: Double, totalDuration: Double): Boolean = totalDuration >= Max
+    private fun isDurationGreaterThanMax(Max: Double, totalDuration: Double): Boolean =
+        totalDuration >= Max
 }
-// ----------------------- TO DO ----------------------- //
-// Individual duration for Work Entry Activity's
-// Min + Max goal for activity
