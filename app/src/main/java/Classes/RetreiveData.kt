@@ -37,6 +37,32 @@ class RetreiveData {
                 }
         }
 
+        fun LoadUserProfile(userID: String, callback: (String) -> Unit) {
+            val userList = mutableListOf<UserClass>()
+            val db = Firebase.firestore
+
+            db.collection("users").document(userID).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val user = UserClass(
+                            document.id,
+                            document.getString("username").toString(),
+                            document.getString("name").toString(),
+                            document.getString("surname").toString()
+                        )
+                        userList.add(user)
+                        ToolBox.UsersList = userList
+                        callback("success")
+                    } else {
+                        callback("failure")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(ContentValues.TAG, exception.toString())
+                    callback("failure")
+                }
+        }
+
 
         fun LoadActivities(userID: String, callback: (String) -> Unit) {
             val listIn = mutableListOf<ActivityObject>()
@@ -99,37 +125,6 @@ class RetreiveData {
                     callback("failure")
                 }
         }
-
-//        fun LoadWorkEntries(userID: String, callback: (String) -> Unit) {
-//            val listIn = mutableListOf<WorkEntriesObject>()
-//            val db = Firebase.firestore
-//
-//            db.collection("workEntries").whereEqualTo("WEUserID", userID).get()
-//                .addOnSuccessListener { result ->
-//                    for (document in result) {
-//                        listIn.add(
-//                            WorkEntriesObject(
-//                                document.id,
-//                                document.getString("WEActivityID").toString(),
-//                                document.getString("WEActivityName").toString(),
-//                                document.getString("WEActivityCategory").toString(),
-//                                document.getString("WEUserID").toString(),
-//                                document.getDouble("WERating")!!.toInt(),
-//                                document.getString("WEDateEnded").toString(),
-//                                document.getDouble("WEDuration")!!,
-//                                document.getString("WEColor").toString()
-//                            )
-//                        )
-//                    }
-//                    ToolBox.WorkEntriesList = listIn
-//                    callback("success")
-//                }.addOnFailureListener { exception ->
-//                    Log.d(
-//                        ContentValues.TAG, exception.toString()
-//                    )
-//                    callback("failure")
-//                }
-//        }
 
         fun loadImages(userID: String, callback: (String) -> Unit) {
             val db = Firebase.firestore

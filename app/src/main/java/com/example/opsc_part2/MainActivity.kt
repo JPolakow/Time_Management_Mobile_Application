@@ -120,27 +120,29 @@ class MainActivity : AppCompatActivity() {
     private fun loadDataSignIN()
     {
         try {
-            //add one more of these lines for the user callback, dont forget to add one more }
+            //add one more of these lines for the user callback, don't forget to add one more }
             RetreiveData.LoadUserCategories(userId) { categoryCallback ->
                 RetreiveData.LoadActivities(userId) { activityCallback ->
-                    RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
-                        RetreiveData.loadImages(userId) { imagesCallBack ->
-                            if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success" && imagesCallBack == "success") {
-                                ToolBox.ActiveUserID = userId
+                    RetreiveData.LoadUserProfile(userId) { userCallback ->
+                        RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->
+                            RetreiveData.loadImages(userId) { imagesCallBack ->
+                                if (categoryCallback == "success" && activityCallback == "success" && workEntriesCallBack == "success" && imagesCallBack == "success" && userCallback == "success") {
+                                    ToolBox.ActiveUserID = userId
 
-                                var a = ToolBox.WorkEntriesList
+                                    var a = ToolBox.WorkEntriesList
 
 
-                                // Perform any necessary actions for a successful login
-                                Log.d(
-                                    TAG,
-                                    "Authentication successful. User ID: $userId"
-                                )
-                                // Hiding the progress bar when successfully authenticated
-                                pbWaitToSignIn.visibility = View.GONE
+                                    // Perform any necessary actions for a successful login
+                                    Log.d(
+                                        TAG,
+                                        "Authentication successful. User ID: $userId"
+                                    )
+                                    // Hiding the progress bar when successfully authenticated
+                                    pbWaitToSignIn.visibility = View.GONE
 
-                                intent = Intent(this, Dashboard::class.java)
-                                startActivity(intent)
+                                    intent = Intent(this, Dashboard::class.java)
+                                    startActivity(intent)
+                                }
                             }
                         }
                     }

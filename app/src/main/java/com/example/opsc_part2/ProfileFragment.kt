@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
     private lateinit var name: TextView
     private lateinit var surname: TextView
     private lateinit var username: TextView
-    private lateinit var signout: ImageButton
+    private lateinit var signOut: ImageButton
 
     //============================================================================
     override fun onCreateView(
@@ -39,18 +39,18 @@ class ProfileFragment : Fragment() {
                 ToolBox.UsersList.indexOfFirst { user -> user.UserKey == ToolBox.ActiveUserID }
 
             if (userIndex != -1) {
-                name.setText(ToolBox.UsersList[userIndex].UserName)
-                surname.setText(ToolBox.UsersList[userIndex].UserSurname)
-                username.setText(ToolBox.UsersList[userIndex].UserUsername)
+                name.text = ToolBox.UsersList[userIndex].UserName
+                surname.text = ToolBox.UsersList[userIndex].UserSurname
+                username.text = ToolBox.UsersList[userIndex].UserUsername
             }
 
             // ------------ SIGN OUT CLICK ------------ //
             // Add functionality for clearing user data
-            signout = view.findViewById(R.id.btnLogout)
-            signout.setOnClickListener {
+            signOut = view.findViewById(R.id.btnLogout)
+            signOut.setOnClickListener {
 
                 var a = 0
-                animateButtonClick(signout)
+                animateButtonClick(signOut)
 
                 // Sign out
                 //       Creating a new Dialog
