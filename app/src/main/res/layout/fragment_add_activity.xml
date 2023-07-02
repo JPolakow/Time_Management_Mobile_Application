@@ -205,7 +205,6 @@
                 android:id="@+id/imgPandaAddActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="230dp"
-                android:layout_below="@+id/etDescription"
                 android:layout_marginTop="4dp"
                 android:contentDescription="@string/PandaLogo"
                 android:rotation="90"

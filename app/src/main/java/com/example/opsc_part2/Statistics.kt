@@ -1,7 +1,5 @@
 package com.example.opsc_part2
 
-//
-
 import Classes.ActivityObject
 import Classes.ToolBox
 import android.annotation.SuppressLint
@@ -15,7 +13,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -23,9 +20,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.api.Distribution.BucketOptions.Linear
 import java.util.*
-import kotlin.math.max
 import kotlin.math.roundToInt
 
 class Statistics : Fragment(R.layout.fragment_statistics) {
@@ -47,7 +42,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
             pieChart = view.findViewById(R.id.chart)
             initPieChart()
             loadPieChartData()
-////
+//
 //            // Listener for double tap on the pie chart
 //            val gestureDetector =
 //                GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
@@ -93,7 +88,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.holeRadius = 0f
         pieChart.setHoleColor(android.R.color.transparent)
         // setting drag friction for dragging pie chart
-        pieChart.dragDecelerationFrictionCoef = 0.99f
+        pieChart.dragDecelerationFrictionCoef = 0.50f
     }
 
     //============================================================================
@@ -113,7 +108,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.setHoleColor(android.R.color.transparent)
         // setting drag friction for dragging pie chart
         pieChart.dragDecelerationFrictionCoef = 0.99f
-
     }
 
     //============================================================================
@@ -184,7 +178,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
             if (total != null) {
                 entries.add(
                     PieEntry(
-                        total!!.toFloat(), category.CategoryName
+                        total.toFloat(), category.CategoryName
                     )
                 )
             }
@@ -279,7 +273,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
                     val maxGoal = activityObject?.ActivityMaxGoal
 
-                    //calcualte then display duration left
+                    //Calculate then display duration left
                     durationTextView.text = "Duration Left: ${
                         calculateDurationLeft(
                             maxGoal!!, totalDuration.toDouble()
@@ -294,8 +288,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     val maxGoalTextView = TextView(requireContext())
                     var maxGoalString = ""
 
-                    var overUnderMax = isDurationGreaterThanMax(
-                        activityObject?.ActivityMaxGoal!!, totalDuration.toDouble()
+                    val overUnderMax = isDurationGreaterThanMax(
+                        activityObject.ActivityMaxGoal, totalDuration.toDouble()
                     )
 
                     if (overUnderMax) maxGoalString =
@@ -394,7 +388,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 // OnClick for each card to expand
                 cardDisplay.setOnClickListener {
                     //hidden
-                    if (expanded == false) {
+                    if (!expanded) {
                         expanded = true
                         for (i in 0 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
