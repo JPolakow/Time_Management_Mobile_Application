@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.animation.Easing
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.api.Distribution.BucketOptions.Linear
 import java.util.*
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 class Statistics : Fragment(R.layout.fragment_statistics) {
@@ -243,7 +245,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 customCard.setCategoryName("Category: ${card.CategoryName}")
 
                 val cardDisplay = customCard.findViewById<CardView>(R.id.cardView)
-                val amountDisplay = customCard.findViewById<TextView>(R.id.txtAmount)
+                val amountDisplay = customCard.findViewById<TextView>(R.id.txtPlaceHolder)
 
                 // Get the work entries for the current category
                 val workEntriesForCategory = ToolBox.WorkEntriesList.filter {
@@ -265,6 +267,30 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     entryTextView.textSize = 20F
                     // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
                     entryTextView.text = workEntry
+                    entryTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+
+                    // Get the corresponding ActivityObject for the activity name
+                    val activityObject = getActivityObjectByName(workEntry)
+
+                    val maxGoalTextView = TextView(requireContext())
+                    maxGoalTextView.visibility = View.GONE
+                    // Setting the text size for TextViews
+                    maxGoalTextView.textSize = 20F
+
+                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
+                    maxGoalTextView.text = "Max Goal: ${activityObject?.ActivityMaxGoal.toString()}"
+
+                    val minGoalTextView = TextView(requireContext())
+                    minGoalTextView.visibility = View.GONE
+                    // Setting the text size for TextViews
+                    minGoalTextView.textSize = 20F
+
+                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
+                    minGoalTextView.text = "Min Goal: ${activityObject?.ActivityMinGoal.toString()}"
+
+
+
 
                     // Calculate the total duration for activities with the same name
                     val totalDuration = workEntriesForCategory
@@ -275,22 +301,57 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     durationTextView.visibility = View.GONE
                     // Setting the text size for TextViews
                     durationTextView.textSize = 20F
+
+                    val maxGoal = activityObject?.ActivityMaxGoal
                     // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    durationTextView.text = totalDuration.toString()
+                    durationTextView.text = "Duration Left: ${calculateDurationLeft(maxGoal!!, totalDuration.toDouble())}"
+
+
+                    val minGoalReached = TextView(requireContext())
+                    minGoalReached.visibility = View.GONE
+                    // Setting the text size for TextViews
+                    minGoalReached.textSize = 16F
+
+                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
+                    minGoalReached.text = "Min Goal Reached: ${isDurationGreaterThanMin(activityObject?.ActivityMinGoal!!, totalDuration.toDouble())}"
+
+                    val maxGoalReached = TextView(requireContext())
+                    maxGoalReached.visibility = View.GONE
+                    // Setting the text size for TextViews
+                    maxGoalReached.textSize = 16F
+
+                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
+                    maxGoalReached.text = "Max Goal Reached: ${isDurationGreaterThanMax(activityObject?.ActivityMaxGoal!!, totalDuration.toDouble())}"
 
                     // Set the layout parameters for the TextView
                     val entryParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
+                    // Set the layout parameters for the TextView
+                    val entryParamsActivityName = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    entryParamsActivityName.marginStart = resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                    entryParamsActivityName.weight = 70F
+                    entryTextView.layoutParams = entryParamsActivityName
 
                     // Adjust the start margin as needed
                     entryParams.marginStart = resources.getDimensionPixelSize(R.dimen.entry_start_margin)
-                    entryTextView.layoutParams = entryParams
+                    durationTextView.layoutParams = entryParams
+                    maxGoalTextView.layoutParams = entryParams
+                    minGoalTextView.layoutParams = entryParams
+                    minGoalReached.layoutParams = entryParams
+                    maxGoalReached.layoutParams = entryParams
 
                     // Add the TextView to the LinearLayout inside the custom card view
                     linCard.addView(entryTextView)
                     linCard.addView(durationTextView)
+                    linCard.addView(minGoalTextView)
+                    linCard.addView(minGoalReached)
+                    linCard.addView(maxGoalTextView)
+                    linCard.addView(maxGoalReached)
                 }
 
                 // OnClick for each card to expand
@@ -345,6 +406,33 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
             ex.printStackTrace()
         }
     }
+    private fun getActivityObjectByName(activityName: String): ActivityObject? {
+        return ToolBox.ActivitiesList.find { it.ActivityName == activityName }
+    }
+
+    private fun validateUserDurationLeft(max: Double, totalDuration: Double): String{
+        var durationLeft = 0.0
+        val displayText : String
+
+        if (max - totalDuration > 0)
+        {
+            durationLeft = max - totalDuration
+            displayText = "Your not done yet, just $durationLeft minutes left!"
+
+        }else{
+            displayText = "Wow, your done!"
+        }
+
+        return displayText
+    }
+
+    // Function to calculate user study minutes remaining
+    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double = max - totalDuration
+
+    // Function to return whether or not the user has completed their minimum goal
+    private fun isDurationGreaterThanMin(Min: Double, totalDuration: Double): Boolean = totalDuration >= Min
+    // Function to return whether or not the user has completed their maximum goal
+    private fun isDurationGreaterThanMax(Max: Double, totalDuration: Double): Boolean = totalDuration >= Max
 }
 // ----------------------- TO DO ----------------------- //
 // Individual duration for Work Entry Activity's

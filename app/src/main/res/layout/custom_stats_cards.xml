@@ -36,7 +36,7 @@
                 android:gravity="end"
                 android:text="Category: "
                 android:textColor="#FF000000"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtDuration"
@@ -59,7 +59,19 @@
                 android:gravity="end"
                 android:text="Amount: "
                 android:textColor="#FF000000"
-                android:textSize="20sp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtPlaceHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="end"
+                android:textSize="24sp"
+                android:textColor="#FF000000"
+                android:text="My Progress"
                 android:visibility="gone"/>
 
 
