@@ -54,12 +54,6 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
 
-        try {
-
-        } catch (ex: Exception) {
-            Log.w("log", ex.toString())
-            ex.printStackTrace()
-        }
         nameInput = view.findViewById(R.id.etName)
         goalInput = view.findViewById(R.id.etGoal)
         colorInput = view.findViewById(R.id.etColor)
@@ -86,10 +80,18 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         //Submit Button
         ivSubmit.setOnClickListener() {
             if (validateForm()) {
-                addActivityToList()
-                val intent = Intent(requireActivity(), Dashboard::class.java)
-                val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
-                ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
+
+
+                addActivityToList() { outcome ->
+                    if (outcome) {
+                        val intent = Intent(requireActivity(), Dashboard::class.java)
+                        val options =
+                            ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
+                        ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
+                    } else {
+
+                    }
+                }
             }
         }
 
@@ -151,41 +153,41 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     //============================================================================
     //Add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun addActivityToList() {
+    private fun addActivityToList(callback: (Boolean) -> Unit) {
         try {
+            // Creating correct date format
+            val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
+            //get external data
+            val currentUser = ToolBox.ActiveUserID
+            //get user inputs
+            val name = nameInput.text.toString().trim()
+            val desc = descriptionInput.text.toString().trim()
 
+            val newActivity = ActivityObject(
+                "",
+                currentUser,
+                name,
+                SelectedCatagory,
+                time,
+                minTime.toDouble(),
+                maxTime.toDouble(),
+                SelectedColor,
+                desc,
+            )
+
+            //writeToDB callback
+            writeToDB(newActivity) { outcome ->
+                if (outcome) {
+                    newActivity.ActivityID = Key
+                    ToolBox.ActivitiesList.add(newActivity)
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
         } catch (ex: Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
-        }
-        // Creating correct date format
-        val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
-        //get external data
-        val currentUser = ToolBox.ActiveUserID
-        //get user inputs
-        val name = nameInput.text.toString().trim()
-        val desc = descriptionInput.text.toString().trim()
-
-        val newActivity = ActivityObject(
-            "",
-            currentUser,
-            name,
-            SelectedCatagory,
-            time,
-            minTime.toDouble(),
-            maxTime.toDouble(),
-            SelectedColor,
-            desc,
-        )
-
-        //writeToDB callback
-        writeToDB(newActivity) { outcome ->
-            if (outcome) {
-                newActivity.ActivityID = Key
-                ToolBox.ActivitiesList.add(newActivity)
-            } else {
-                // Failure
-            }
         }
     }
 
