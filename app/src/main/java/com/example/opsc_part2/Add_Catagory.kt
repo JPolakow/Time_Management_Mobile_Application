@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 
 class Add_Catagory : BottomSheetDialogFragment() {
 
-    //UI Lateinit Vars
+    //UI Late init Vars
     private lateinit var btnAddCategory: Button
     private lateinit var etCategoryInput: EditText
 
@@ -35,7 +35,7 @@ class Add_Catagory : BottomSheetDialogFragment() {
 
             // Set click listeners for the buttons
             btnAddCategory.setOnClickListener {
-                valadateInput()
+                validateInput()
             }
 
         } catch (ex: java.lang.Exception) {
@@ -46,8 +46,8 @@ class Add_Catagory : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //valaidate user inputs
-    private fun valadateInput() {
+    // Validate user inputs
+    private fun validateInput() {
         var valid = true
 
         val name = etCategoryInput.text.toString().trim()
@@ -66,20 +66,20 @@ class Add_Catagory : BottomSheetDialogFragment() {
 
         if (valid)
         {
-            AddNewCatagory()
+            addNewCategory()
         }
     }
 
     //============================================================================
-    //add the new catagory to the local list and the db
-    private fun AddNewCatagory() {
-        var newCatagory =
+    //add the new category to the local list and the db
+    private fun addNewCategory() {
+        val newCategory =
             CategoryObject(etCategoryInput.text.toString().trim(), ToolBox.ActiveUserID)
 
         //writeToDB callback
-        writeToDB(newCatagory) { outcome ->
+        writeToDB(newCategory) { outcome ->
             if (outcome) {
-                ToolBox.CategoryList.add(newCatagory)
+                ToolBox.CategoryList.add(newCategory)
             } else {
                 // Failure
             }
@@ -89,17 +89,17 @@ class Add_Catagory : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //save new catagory in db
-    private fun writeToDB(newCatagoryInput: CategoryObject, callback: (Boolean) -> Unit) {
+    //save new category in db
+    private fun writeToDB(newCategoryInput: CategoryObject, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
-        val newCatagory = hashMapOf(
-            "CategoryName" to newCatagoryInput.CategoryName,
-            "CategoryUserID" to newCatagoryInput.CategoryUserID
+        val newCategory = hashMapOf(
+            "CategoryName" to newCategoryInput.CategoryName,
+            "CategoryUserID" to newCategoryInput.CategoryUserID
         )
 
         db.collection("categories")
-            .add(newCatagory)
+            .add(newCategory)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                 callback(true)

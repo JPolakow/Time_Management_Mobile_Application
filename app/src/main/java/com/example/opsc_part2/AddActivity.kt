@@ -35,8 +35,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     private lateinit var colorInput: EditText
     private lateinit var goalInput: EditText
     private lateinit var descriptionInput: EditText
-    private var SelectedColor: String = ""
-    private var SelectedCatagory: String = ""
+    private var selectedColor: String = ""
+    private var selectedCategory: String = ""
     private var minTime = -1
     private var maxTime = -1
 
@@ -44,7 +44,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     private lateinit var ivSubmit: ImageButton
     private lateinit var tvClose: ImageButton
 
-    private var Key: String = ""
+    private var key: String = ""
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -138,7 +138,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             categoryInput.error = "Category is required"
             valid = false
         }
-        if (SelectedColor == "") {
+        if (selectedColor == "") {
             colorInput.error = "Color is required"
             valid = false
         }
@@ -172,18 +172,18 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             "",
             currentUser,
             name,
-            SelectedCatagory,
+            selectedCategory,
             time,
             minTime.toDouble(),
             maxTime.toDouble(),
-            SelectedColor,
+            selectedColor,
             desc,
         )
 
         //writeToDB callback
         writeToDB(newActivity) { outcome ->
             if (outcome) {
-                newActivity.ActivityID = Key
+                newActivity.ActivityID = key
                 ToolBox.ActivitiesList.add(newActivity)
             } else {
                 // Failure
@@ -211,7 +211,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             .add(newActivity)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                Key = documentReference.id
+                key = documentReference.id
                 callback(true)
             }
             .addOnFailureListener { e ->
@@ -230,8 +230,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             builder.setTitle("Pick a color")
                 .setItems(colorNames) { dialog: DialogInterface, which: Int ->
 
-                    SelectedColor = colorNames[which]
-                    displaySelected += SelectedColor
+                    selectedColor = colorNames[which]
+                    displaySelected += selectedColor
                     colorInput.setText(displaySelected)
 
                     dialog.dismiss()
@@ -261,8 +261,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             builder.setTitle("Pick a category")
                 .setItems(uniqueCategories.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
-                    SelectedCatagory = uniqueCategories[which]
-                    displaySelected += SelectedCatagory
+                    selectedCategory = uniqueCategories[which]
+                    displaySelected += selectedCategory
                     categoryInput.setText(displaySelected)
 
                     dialog.dismiss()
