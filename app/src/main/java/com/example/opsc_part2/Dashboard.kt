@@ -60,6 +60,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         setContentView(R.layout.activity_dashboard)
         try {
 
+            val successMessage = intent.getStringExtra("successMessage")
+
+            // Ensuring extra is not empty, then displaying success message for adding activity
+            if(successMessage != null)
+            {
+                Toast.makeText(this, successMessage, Toast.LENGTH_LONG).show()
+
+            }
             // ======================= Declarations ======================= //
             //Binding
             binding = ActivityDashboardBinding.inflate(layoutInflater)

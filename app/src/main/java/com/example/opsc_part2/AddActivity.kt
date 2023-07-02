@@ -88,6 +88,8 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             if (validateForm()) {
                 addActivityToList()
                 val intent = Intent(requireActivity(), Dashboard::class.java)
+                // Putting Extra for success message for newly added activity
+                intent.putExtra("successMessage","Successfully Added Activity!")
                 val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
                 ActivityCompat.startActivity(requireActivity(), intent, options.toBundle())
             }
@@ -114,7 +116,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         }
         var valid = true
         val name: String = nameInput.text.toString().trim()
-        val catagory: String = categoryInput.text.toString().trim()
+        val category: String = categoryInput.text.toString().trim()
         val desc: String = descriptionInput.text.toString().trim()
 
         if (TextUtils.isEmpty(name)) {
@@ -132,7 +134,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             descriptionInput.error = "Description is required"
             valid = false
         }
-        if (TextUtils.isEmpty(catagory)) {
+        if (TextUtils.isEmpty(category)) {
             categoryInput.error = "Category is required"
             valid = false
         }
