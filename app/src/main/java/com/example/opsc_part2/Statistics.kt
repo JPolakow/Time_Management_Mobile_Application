@@ -6,6 +6,8 @@ import Classes.ActivityObject
 import Classes.ToolBox
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -173,19 +175,16 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         for (category in filteredCategories) {
             // Get the total duration of all work entries with the category name
 
-            val totalDuration =
-                ToolBox.WorkEntriesList.filter {
-                    it.WEActivityCategory == category.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                }
-                    .groupBy { it.WEActivityCategory }
-                    .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+            val totalDuration = ToolBox.WorkEntriesList.filter {
+                it.WEActivityCategory == category.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+            }.groupBy { it.WEActivityCategory }
+                .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
 
             val total = totalDuration[category.CategoryName]
             if (total != null) {
                 entries.add(
                     PieEntry(
-                        total!!.toFloat(),
-                        category.CategoryName
+                        total!!.toFloat(), category.CategoryName
                     )
                 )
             }
@@ -235,18 +234,17 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     @SuppressLint("SetTextI18n")
     private fun populate() {
         try {
-
-
             val filteredCategories = ToolBox.CategoryList.filter { category ->
                 category.CategoryUserID == ToolBox.ActiveUserID
             }
 
             for (card in filteredCategories) {
+
                 val customCard = custom_stats_cards(requireContext())
                 customCard.setCategoryName("Category: ${card.CategoryName}")
 
                 val cardDisplay = customCard.findViewById<CardView>(R.id.cardView)
-                val amountDisplay = customCard.findViewById<TextView>(R.id.txtPlaceHolder)
+                var expanded = false
 
                 // Get the work entries for the current category
                 val workEntriesForCategory = ToolBox.WorkEntriesList.filter {
@@ -259,133 +257,152 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 val distinctActivityNames =
                     workEntriesForCategory.map { it.WEActivityName }.distinct()
 
-
                 // Add TextViews for each work entry
                 for (workEntry in distinctActivityNames) {
                     // Dynamically creating a TextView based on number of work entries
-                    val entryTextView = TextView(requireContext())
-                    entryTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    entryTextView.textSize = 20F
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    entryTextView.text = workEntry
-                    entryTextView.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.black
-                        )
-                    )
 
+                    // Calculate the total duration for activities with the same name
+                    val totalDuration =
+                        workEntriesForCategory.filter { it.WEActivityName == workEntry }
+                            .sumBy { it.WEDuration.toInt() }
+
+                    //ACTIVITY NAME
+                    val entryTextView = TextView(requireContext())
+
+                    entryTextView.text = workEntry
 
                     // Get the corresponding ActivityObject for the activity name
                     val activityObject = getActivityObjectByName(workEntry)
 
-                    val maxGoalTextView = TextView(requireContext())
-                    maxGoalTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    maxGoalTextView.textSize = 20F
-
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    maxGoalTextView.text = "Max Goal: ${activityObject?.ActivityMaxGoal.toString()}"
-
-                    val minGoalTextView = TextView(requireContext())
-                    minGoalTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    minGoalTextView.textSize = 20F
-
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    minGoalTextView.text = "Min Goal: ${activityObject?.ActivityMinGoal.toString()}"
-
-
-                    // Calculate the total duration for activities with the same name
-                    val totalDuration = workEntriesForCategory
-                        .filter { it.WEActivityName == workEntry }
-                        .sumBy { it.WEDuration.toInt() }
-
+                    //-----DURATION LEFT
                     val durationTextView = TextView(requireContext())
-                    durationTextView.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    durationTextView.textSize = 20F
 
                     val maxGoal = activityObject?.ActivityMaxGoal
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
+
+                    //calcualte then display duration left
                     durationTextView.text = "Duration Left: ${
                         calculateDurationLeft(
-                            maxGoal!!,
-                            totalDuration.toDouble()
+                            maxGoal!!, totalDuration.toDouble()
                         )
                     }"
 
+                    //-----DURATION WORKED
+                    val workedTextView = TextView(requireContext())
+                    workedTextView.text = "Duration Worked: ${totalDuration.toDouble()}"
 
-                    val minGoalReached = TextView(requireContext())
-                    minGoalReached.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    minGoalReached.textSize = 16F
+                    //-----MAX GOAL
+                    val maxGoalTextView = TextView(requireContext())
+                    var maxGoalString = ""
 
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    minGoalReached.text = "Min Goal Reached: ${
-                        isDurationGreaterThanMin(
-                            activityObject?.ActivityMinGoal!!,
-                            totalDuration.toDouble()
-                        )
-                    }"
+                    var overUnderMax = isDurationGreaterThanMax(
+                        activityObject?.ActivityMaxGoal!!, totalDuration.toDouble()
+                    )
 
-                    val maxGoalReached = TextView(requireContext())
-                    maxGoalReached.visibility = View.GONE
-                    // Setting the text size for TextViews
-                    maxGoalReached.textSize = 16F
+                    if (overUnderMax) maxGoalString =
+                        "Max goal (${activityObject?.ActivityMaxGoal.toString()}) achieved"
+                    else maxGoalString =
+                        "Max goal (${activityObject?.ActivityMaxGoal.toString()}) not achieved"
 
-                    // Setting the dynamically added TextViews' text equal to Work Entry Activity Names
-                    maxGoalReached.text = "Max Goal Reached: ${
-                        isDurationGreaterThanMax(
-                            activityObject?.ActivityMaxGoal!!,
-                            totalDuration.toDouble()
-                        )
-                    }"
+                    maxGoalTextView.text = maxGoalString
 
-                    // Set the layout parameters for the TextView
+                    //-----MIN GOAL
+                    val minGoalTextView = TextView(requireContext())
+                    var minGoalString = ""
+
+                    var overUnderMin = isDurationGreaterThanMin(
+                        activityObject?.ActivityMinGoal!!, totalDuration.toDouble()
+                    )
+
+                    if (overUnderMin) minGoalString =
+                        "Min goal (${activityObject?.ActivityMinGoal.toString()}) achieved"
+                    else minGoalString =
+                        "Min goal (${activityObject?.ActivityMinGoal.toString()}) not achieved"
+
+                    minGoalTextView.text = minGoalString
+
+                    //-----GENERAL
                     val entryParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    // Set the layout parameters for the TextView
+                    entryParams.marginStart =
+                        resources.getDimensionPixelSize(R.dimen.entry_start_margin) + 15
+
                     val entryParamsActivityName = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
                     entryParamsActivityName.marginStart =
                         resources.getDimensionPixelSize(R.dimen.entry_start_margin)
-                    entryParamsActivityName.weight = 70F
-                    entryTextView.layoutParams = entryParamsActivityName
 
-                    // Adjust the start margin as needed
-                    entryParams.marginStart =
-                        resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                    entryTextView.layoutParams = entryParamsActivityName
                     durationTextView.layoutParams = entryParams
+                    workedTextView.layoutParams = entryParams
                     maxGoalTextView.layoutParams = entryParams
                     minGoalTextView.layoutParams = entryParams
-                    minGoalReached.layoutParams = entryParams
-                    maxGoalReached.layoutParams = entryParams
+
+                    entryTextView.textSize = 20F
+                    entryTextView.setTypeface(null, Typeface.BOLD)
+                    maxGoalTextView.textSize = 15F
+                    minGoalTextView.textSize = 15F
+                    durationTextView.textSize = 18F
+                    workedTextView.textSize = 18F
+
+                    entryTextView.paintFlags = entryTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+                    entryTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    maxGoalTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    minGoalTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    durationTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+                    workedTextView.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(), R.color.dark_grey
+                        )
+                    )
+
+                    entryTextView.visibility = View.GONE
+                    minGoalTextView.visibility = View.GONE
+                    maxGoalTextView.visibility = View.GONE
+                    durationTextView.visibility = View.GONE
+                    workedTextView.visibility = View.GONE
 
                     // Add the TextView to the LinearLayout inside the custom card view
                     linCard.addView(entryTextView)
+                    linCard.addView(workedTextView)
                     linCard.addView(durationTextView)
                     linCard.addView(minGoalTextView)
-                    linCard.addView(minGoalReached)
                     linCard.addView(maxGoalTextView)
-                    linCard.addView(maxGoalReached)
                 }
+
 
                 // OnClick for each card to expand
                 cardDisplay.setOnClickListener {
-                    if (amountDisplay.visibility == View.GONE) {
-                        amountDisplay.visibility = View.VISIBLE
+                    //hidden
+                    if (expanded == false) {
+                        expanded = true
                         for (i in 0 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
                             child.visibility = View.VISIBLE // Show the entryTextView
                         }
                     } else {
-                        amountDisplay.visibility = View.GONE
+                        //shown
+                        expanded = false
                         for (i in 3 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
                             child.visibility = View.GONE // Hide the entryTextView
@@ -393,24 +410,17 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     }
                 }
 
-                /* val activityObject = getActivityObjectByCategory(card.CategoryName)
-                 updateTextViews(linCard, activityObject.toString())*/
-
-
                 //get the count of all workEntries with the category name
-                val frequencies =
-                    ToolBox.WorkEntriesList.count {
-                        it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                    }
+                val frequencies = ToolBox.WorkEntriesList.count {
+                    it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                }
                 customCard.setCategoryAmount("Work entries: $frequencies")
 
                 // Get the total duration of all work entries with the category name
-                val totalDuration =
-                    ToolBox.WorkEntriesList.filter {
-                        it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-                    }
-                        .groupBy { it.WEActivityCategory }
-                        .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+                val totalDuration = ToolBox.WorkEntriesList.filter {
+                    it.WEActivityCategory == card.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
+                }.groupBy { it.WEActivityCategory }
+                    .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
 
                 val total = totalDuration[card.CategoryName]
                 if (total != null) {

@@ -35,5 +35,6 @@
     <color name="redPastel">#ffafcc</color>
     <color name="lightBluePastel">#bde0fe</color>
     <color name="bluePastel">#a2d2ff</color>
+    <color name="dark_grey">#6F6F6F</color>
 
 </resources>
