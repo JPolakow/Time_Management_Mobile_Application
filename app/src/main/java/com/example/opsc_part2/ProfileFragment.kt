@@ -23,6 +23,7 @@ class ProfileFragment : Fragment() {
     private lateinit var name: TextView
     private lateinit var surname: TextView
     private lateinit var username: TextView
+    private lateinit var signout: ImageButton
 
     //============================================================================
     override fun onCreateView(
@@ -34,21 +35,25 @@ class ProfileFragment : Fragment() {
             surname = view.findViewById(R.id.tvDisplaySurname)
             username = view.findViewById(R.id.tvDisplayUsername)
 
-            val userIndex = ToolBox.UsersList.indexOfFirst { user -> user.UserKey == ToolBox.ActiveUserID }
+            val userIndex =
+                ToolBox.UsersList.indexOfFirst { user -> user.UserKey == ToolBox.ActiveUserID }
 
-            name.setText(ToolBox.UsersList[userIndex].UserName)
-            surname.setText(ToolBox.UsersList[userIndex].UserSurname)
-            username.setText(ToolBox.UsersList[userIndex].UserUsername)
+            if (userIndex != -1) {
+                name.setText(ToolBox.UsersList[userIndex].UserName)
+                surname.setText(ToolBox.UsersList[userIndex].UserSurname)
+                username.setText(ToolBox.UsersList[userIndex].UserUsername)
+            }
 
             // ------------ SIGN OUT CLICK ------------ //
             // Add functionality for clearing user data
-            val signOutClick = view.findViewById<ImageButton>(R.id.btnLogout)
-            signOutClick.setOnClickListener {
+            signout = view.findViewById(R.id.btnLogout)
+            signout.setOnClickListener {
 
-                animateButtonClick(signOutClick)
+                var a = 0
+                animateButtonClick(signout)
 
-                //Sign out
-                // Creating a new Dialog
+                // Sign out
+                //       Creating a new Dialog
                 val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
                     when (which) {
                         // When User selects "Yes"

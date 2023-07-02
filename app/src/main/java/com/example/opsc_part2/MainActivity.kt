@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
             var name = usernameInput.text.toString().trim()
             var pword = passwordInput.text.toString().trim()
+
             name = "user"
             pword = "pass"
 
@@ -119,6 +120,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadDataSignIN()
     {
         try {
+            //add one more of these lines for the user callback, dont forget to add one more }
             RetreiveData.LoadUserCategories(userId) { categoryCallback ->
                 RetreiveData.LoadActivities(userId) { activityCallback ->
                     RetreiveData.LoadWorkEntries(userId) { workEntriesCallBack ->

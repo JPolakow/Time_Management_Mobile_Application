@@ -65,15 +65,16 @@ class Settings : AppCompatActivity() {
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getCount(): Int {
-            return 3
+            //return 3
+            return 2
         }
 
         // Populate the tabs
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> GeneralFragment()
-                1 -> ProfileFragment()
-                2 -> AchievementsFragment()
+                //0 -> GeneralFragment()
+                0 -> ProfileFragment()
+                1 -> AchievementsFragment()
                 else -> throw IllegalArgumentException("Invalid position: $position")
             }
         }
@@ -81,9 +82,9 @@ class Settings : AppCompatActivity() {
         // Populate the tab headings
         override fun getPageTitle(position: Int): CharSequence? {
             return when (position) {
-                0 -> "General"
-                1 -> "Profile"
-                2 -> "Achievements"
+                //0 -> "General"
+                0 -> "Profile"
+                1 -> "Achievements"
                 else -> null
             }
         }

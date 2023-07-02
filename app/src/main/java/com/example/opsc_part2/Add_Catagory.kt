@@ -23,15 +23,13 @@ class Add_Catagory : BottomSheetDialogFragment() {
 
     //============================================================================
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add__catagory, container, false)
         try {
             // Find buttons in the inflated view
-            btnAddCategory = view.findViewById(R.id.btnAddCatagory)
-            etCategoryInput = view.findViewById(R.id.etCatagoryInput)
+            btnAddCategory = view.findViewById(R.id.btnAddCategory)
+            etCategoryInput = view.findViewById(R.id.etCategoryInput)
 
             // Set click listeners for the buttons
             btnAddCategory.setOnClickListener {
@@ -64,8 +62,7 @@ class Add_Catagory : BottomSheetDialogFragment() {
             valid = false
         }
 
-        if (valid)
-        {
+        if (valid) {
             addNewCategory()
         }
     }
@@ -98,15 +95,12 @@ class Add_Catagory : BottomSheetDialogFragment() {
             "CategoryUserID" to newCategoryInput.CategoryUserID
         )
 
-        db.collection("categories")
-            .add(newCategory)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                callback(true)
-            }
-            .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-                callback(false)
-            }
+        db.collection("categories").add(newCategory).addOnSuccessListener { documentReference ->
+            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            callback(true)
+        }.addOnFailureListener { e ->
+            Log.w(ContentValues.TAG, "Error adding document", e)
+            callback(false)
+        }
     }
 }
