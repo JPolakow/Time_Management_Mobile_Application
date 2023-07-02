@@ -99,8 +99,11 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         // Authentication failed
                         Log.d(TAG, "Authentication failed. Invalid password.")
+                        pbWaitToSignIn.visibility = View.GONE
+
                         val errToast = Toast.makeText(
                             applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
+
                         )
                         errToast.setGravity(Gravity.BOTTOM, 0, 25)
                         errToast.show()
@@ -108,6 +111,13 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     // Authentication failed
                     Log.d(TAG, "Authentication failed. Username not found.")
+                    val notFoundToast = Toast.makeText(
+                        applicationContext, "Incorrect username or password", Toast.LENGTH_LONG
+
+                    )
+                    notFoundToast.setGravity(Gravity.BOTTOM, 0, 25)
+                    notFoundToast.show()
+                    pbWaitToSignIn.visibility = View.GONE
                 }
             }
             .addOnFailureListener { exception ->
