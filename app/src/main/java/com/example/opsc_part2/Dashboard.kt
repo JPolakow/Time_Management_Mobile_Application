@@ -52,6 +52,11 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private var TimerOutput: String = "00:00:00"
     private var TimerName: String = ""
 
+    override fun onResume() {
+        super.onResume()
+        loadCustomUI()
+    }
+
     //============================================================================
     @SuppressLint("UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -204,9 +209,6 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private fun loadCustomUI() {
         try {
             linView.removeAllViews()
-
-            val a = ToolBox.ActiveUserID
-            val b = ToolBox.ActivitiesList
 
             val filteredCategories = ToolBox.ActivitiesList.filter { activity ->
                 activity.ActivityUserID.equals(ToolBox.ActiveUserID)
@@ -381,10 +383,10 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             //}
         }
 
-        var displaySelected = "Catagory: ";
+        var displaySelected = "Category: ";
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Pick a catagory")
+        builder.setTitle("Pick a category")
             .setItems(categoryNames.toTypedArray()) { dialog: DialogInterface, which: Int ->
 
                 ToolBox.SelectedCategory = categoryNames[which]
