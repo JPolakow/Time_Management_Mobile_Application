@@ -8,10 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -110,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    //load exisitn data into lists, then sign user in
+    //Load exisitn data into lists, then sign user in
     private fun LoadDataSignIN()
     {
         try {
@@ -144,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    // function to verify a users' password using their stored hash password
+    // Function to verify a users' password using their stored hash password
     private fun verifyPassword(password: String, storedPassword: String): Boolean {
         return PasswordHandler.hashPassword(password.toString().trim()) == storedPassword
     }

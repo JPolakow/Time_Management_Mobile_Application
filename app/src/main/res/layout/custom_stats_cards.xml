@@ -18,11 +18,12 @@
         android:foreground="?android:attr/selectableItemBackground">
 
         <!-- The main content layout -->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:orientation="vertical"
             android:backgroundTint="#E1F0F4"
             android:elevation="12dp">
 
@@ -35,13 +36,12 @@
                 android:gravity="end"
                 android:text="Category: "
                 android:textColor="#FF000000"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtName"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="8dp"
                 android:gravity="end"
@@ -53,7 +53,6 @@
                 android:id="@+id/txtAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtDuration"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -62,8 +61,23 @@
                 android:textColor="#FF000000"
                 android:textSize="20sp" />
 
+            <TextView
+                android:id="@+id/txtPlaceHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="end"
+                android:textSize="24sp"
+                android:textColor="#FF000000"
+                android:text="My Progress"
+                android:visibility="gone"/>
 
-        </RelativeLayout>
+
+
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -24,7 +24,7 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_below="@+id/tvSettingsHeading"
-        android:layout_height="300dp"/>
+        android:layout_height="250dp"/>
 
 
     <!--Activity scroll view-->
