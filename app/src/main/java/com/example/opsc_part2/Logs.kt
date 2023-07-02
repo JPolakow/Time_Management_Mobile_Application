@@ -173,6 +173,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     //Load custom cards
     private fun populate(filtered: List<WorkEntriesObject>) {
         try {
+
             // ----------------- Creating a new card with custom attributes ----------------- //
             for (card in filtered) {
                 val customCard = custom_logs_cards(requireContext())
@@ -206,7 +207,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
-    //filter by catagory popup
+    //filter by category popup
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
         try {
             if (selectedCategory == null) {
