@@ -232,6 +232,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     //pie charts end
 
     //============================================================================
+    @SuppressLint("SetTextI18n")
     private fun populate() {
         try {
 

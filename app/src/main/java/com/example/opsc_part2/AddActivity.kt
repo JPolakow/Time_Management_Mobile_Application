@@ -1,7 +1,6 @@
 package com.example.opsc_part2
 
 import Classes.ActivityObject
-import Classes.CategoryObject
 import Classes.ToolBox
 import android.content.ContentValues
 import android.content.DialogInterface
@@ -23,8 +22,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
