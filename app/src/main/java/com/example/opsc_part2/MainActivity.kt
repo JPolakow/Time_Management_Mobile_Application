@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    // function to verify a users' password using their stored hash password
+    // Function to verify a users' password using their stored hash password
     private fun verifyPassword(password: String, storedPassword: String): Boolean {
         return PasswordHandler.hashPassword(password.toString().trim()) == storedPassword
     }
