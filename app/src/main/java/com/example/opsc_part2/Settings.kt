@@ -6,19 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.viewpager.widget.ViewPager
-import com.example.opsc_part2.AchievementsFragment
-import com.example.opsc_part2.GeneralFragment
-import com.example.opsc_part2.ProfileFragment
 import com.google.android.material.tabs.TabLayout
 
 class Settings : AppCompatActivity() {

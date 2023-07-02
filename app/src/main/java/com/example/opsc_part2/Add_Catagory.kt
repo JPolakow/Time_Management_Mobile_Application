@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 
 class Add_Catagory : BottomSheetDialogFragment() {
 
-    //UI Late init Vars
+    // UI Late init Vars
     private lateinit var btnAddCategory: Button
     private lateinit var etCategoryInput: EditText
 
@@ -68,12 +68,12 @@ class Add_Catagory : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //add the new category to the local list and the db
+    // Add the new category to the local list and the db
     private fun addNewCategory() {
         val newCategory =
             CategoryObject(etCategoryInput.text.toString().trim(), ToolBox.ActiveUserID)
 
-        //writeToDB callback
+        // WriteToDB callback
         writeToDB(newCategory) { outcome ->
             if (outcome) {
                 ToolBox.CategoryList.add(newCategory)
@@ -86,7 +86,7 @@ class Add_Catagory : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //save new category in db
+    // Save new category in db
     private fun writeToDB(newCategoryInput: CategoryObject, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 

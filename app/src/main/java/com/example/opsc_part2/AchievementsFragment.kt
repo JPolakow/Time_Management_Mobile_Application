@@ -1,6 +1,5 @@
 package com.example.opsc_part2
 
-import Classes.ActivityObject
 import Classes.ToolBox
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -13,10 +12,10 @@ import androidx.fragment.app.Fragment
 
 class AchievementsFragment : Fragment() {
 
-    private lateinit var trophyimg: ImageView
-    private lateinit var trophyname: TextView
-    private lateinit var trophyamount: TextView
-    private var Amount: Int = 0
+    private lateinit var trophyImg: ImageView
+    private lateinit var trophyName: TextView
+    private lateinit var trophyAmount: TextView
+    private var amount: Int = 0
 
     //============================================================================
     @SuppressLint("SetTextI18n")
@@ -26,14 +25,14 @@ class AchievementsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_achievements_settings, container, false)
 
         //Front end vars
-        trophyname = view.findViewById(R.id.tvTrophyName)
-        trophyimg = view.findViewById(R.id.imgTrophy)
-        trophyamount = view.findViewById(R.id.tvTrophyAmount)
+        trophyName = view.findViewById(R.id.tvTrophyName)
+        trophyImg = view.findViewById(R.id.imgTrophy)
+        trophyAmount = view.findViewById(R.id.tvTrophyAmount)
 
         //Default values
-        trophyname.text = "Max goals achieved"
-        trophyimg.setImageResource(R.drawable.trophygrey)
-        trophyamount.text = "Amount: $Amount"
+        trophyName.text = "Max goals achieved"
+        trophyImg.setImageResource(R.drawable.trophygrey)
+        trophyAmount.text = "Amount: $amount"
 
         //Get lists for user
         val filteredActivity = ToolBox.ActivitiesList.filter { activity ->
@@ -50,12 +49,12 @@ class AchievementsFragment : Fragment() {
                     .sumBy { it.WEDuration.toInt() }
 
             if (activity.ActivityMaxGoal <= totalDuration) {
-                Amount++
-                trophyimg.setImageResource(R.drawable.trophyincolor)
+                amount++
+                trophyImg.setImageResource(R.drawable.trophyincolor)
             }
         }
 
-        trophyamount.text = "Amount: $Amount"
+        trophyAmount.text = "Amount: $amount"
 
         return view
     }

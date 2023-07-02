@@ -29,7 +29,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         "Red", "Blue", "Purple", "Pink", "Light-Blue"
     )
 
-    //inputs
+    // Inputs
     private lateinit var nameInput: EditText
     private lateinit var categoryInput: EditText
     private lateinit var colorInput: EditText
@@ -40,7 +40,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     private var minTime = -1
     private var maxTime = -1
 
-    //Press-ables
+    // Press-ables
     private lateinit var ivSubmit: ImageButton
     private lateinit var tvClose: ImageButton
 

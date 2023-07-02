@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity() {
     //============================================================================
     private fun authenticateUserWithFirebase(username: String, password: String) {
         val db = Firebase.firestore
-
         // Query the users collection for the provided username
         db.collection("users")
             .whereEqualTo("username", username)
