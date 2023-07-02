@@ -2,13 +2,19 @@ package com.example.opsc_part2
 
 import Classes.ActivityObject
 import Classes.ToolBox
+import Classes.WorkEntriesObject
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -20,6 +26,8 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -27,6 +35,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     private lateinit var linView: LinearLayout
     private lateinit var pieChart: PieChart
+    private lateinit var etEndDatePick: EditText
+    private lateinit var etStartDatePick: EditText
+    private lateinit var btnClear: Button
 
     //============================================================================
     @SuppressLint("ClickableViewAccessibility")
@@ -37,30 +48,88 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         try {
             linView = view.findViewById(R.id.linearProjectCards)
 
-            //start of chart
-            //region
+            // Date Picker Input Fields
+            etEndDatePick = view.findViewById(R.id.etEndDate)
+            etStartDatePick = view.findViewById(R.id.etStartDate)
+
+            // End Date - Date Picker Dialog
+            etEndDatePick.setOnClickListener {
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                        val textToSet = "$dayOfMonth-${monthOfYear + 1}-$year"
+                        etEndDatePick.setText(textToSet)
+                    }, year, month, day
+                )
+                datePickerDialog.show()
+            }
+
+            // End Date - Date Picker Dialog
+            etStartDatePick.setOnClickListener {
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                        val textToSet = "$dayOfMonth-${monthOfYear + 1}-$year"
+                        etStartDatePick.setText(textToSet)
+                    }, year, month, day
+                )
+                datePickerDialog.show()
+            }
+
+            btnClear = view.findViewById(R.id.btnClear)
+            btnClear.setOnClickListener {
+                /*linView.removeAllViews()*/
+                //Possibly revert back to original
+                etEndDatePick.text.clear()
+                etStartDatePick.text.clear()
+            }
+
+            // Create a TextWatcher
+            val textWatcher = object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    // This method is called before the text is changed
+                    // We don't need to do anything here
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    // This method is called when the text is changing
+                    // We don't need to do anything here
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    // This method is called after the text has changed
+                    // We will check if both EditText fields are filled and call loadFilters() if true
+
+                    val startDate = etStartDatePick.text.toString().trim()
+                    val endDate = etEndDatePick.text.toString().trim()
+
+                    if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+                        // Both EditText fields are filled, so we call loadFilters()
+                        loadPieChartData(startDate.toDate(), endDate.toDate())
+                    }
+                }
+            }
+
+// Add the TextWatcher to both EditText fields
+            etStartDatePick.addTextChangedListener(textWatcher)
+            etEndDatePick.addTextChangedListener(textWatcher)
+
+
+
+
             pieChart = view.findViewById(R.id.chart)
             initPieChart()
             loadPieChartData()
-//
-//            // Listener for double tap on the pie chart
-//            val gestureDetector =
-//                GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-//                    override fun onDoubleTap(event: MotionEvent): Boolean {
-//                        initGameWheel()
-//                        loadWheelGameData()
-//                        return true
-//                    }
-//                })
-//
-//            pieChart.setOnTouchListener { _, event ->
-//                gestureDetector.onTouchEvent(event)
-//                true
-//            }
-            //endregion
-            //end of chart
-
             populate()
+
         } catch (ex: java.lang.Exception) {
             Log.w("log", ex.toString())
             ex.printStackTrace()
@@ -92,62 +161,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     }
 
     //============================================================================
-    fun initGameWheel() {
-        pieChart.setUsePercentValues(true)
-        // setting pie chart description visibility
-        pieChart.description.isEnabled = false
-        // setting legend visibility
-        pieChart.legend.isEnabled = false
-        pieChart.setDrawEntryLabels(false)
-        // setting rotation of pie chart = true
-        pieChart.isRotationEnabled = true
-        // Enabling pie chart hole
-        pieChart.isDrawHoleEnabled = true
-        // Setting hole size of pie chart
-        pieChart.holeRadius = 0f
-        pieChart.setHoleColor(android.R.color.transparent)
-        // setting drag friction for dragging pie chart
-        pieChart.dragDecelerationFrictionCoef = 0.99f
-    }
-
-    //============================================================================
-    // Function to load data to game wheel
-    private fun loadWheelGameData() {
-
-        // Spin the wheel for 3 seconds
-        pieChart.spin(3000, 0f, 360f, Easing.EaseInOutQuad)
-
-        // Generate the HashMap of random colors
-        val colorMap = generateRandomColorMap()
-
-        val entries = mutableListOf<PieEntry>()
-
-        // Generate 7 PieEntries with random values
-        for (i in 1..7) {
-            val value = (1..100).random().toFloat()
-            entries.add(PieEntry(value, "Entry $i"))
-        }
-
-        val dataSet = PieDataSet(entries, "Game Wheel")
-
-        // Set the colors for each entry in the dataset using the color map
-        val colors = mutableListOf<Int>()
-        for (i in entries.indices) {
-            val color = colorMap[i % colorMap.size] ?: Color.BLACK
-            colors.add(color)
-        }
-        dataSet.colors = colors
-
-        dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextSize = 12f
-
-        val data = PieData(dataSet)
-        data.setValueFormatter(RoundedValueFormatter()) // Apply custom value formatter
-        pieChart.data = data
-        pieChart.invalidate()
-    }
-
-    //============================================================================
     // Method to round sizes of pie chart pies to whole numbers
     class RoundedValueFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
@@ -157,9 +170,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     //============================================================================
     // This is where we will load our own data
-    private fun loadPieChartData() {
-
-        //get all user specific category names
+    private fun loadPieChartData(startDate: Date? = null, endDate: Date? = null) {
+        // Get all user-specific category names
         val filteredCategories = ToolBox.CategoryList.filter { category ->
             category.CategoryUserID == ToolBox.ActiveUserID
         }
@@ -167,33 +179,27 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         val entries = mutableListOf<PieEntry>()
 
         for (category in filteredCategories) {
-            // Get the total duration of all work entries with the category name
-
+            // Get the total duration of work entries with the category name within the specified date range
+            // This is suppose to be doing the filtering based on user selected date period
             val totalDuration = ToolBox.WorkEntriesList.filter {
-                it.WEActivityCategory == category.CategoryName //&& it.WEUserID == ToolBox.ActiveUserID
-            }.groupBy { it.WEActivityCategory }
-                .mapValues { (_, entries) -> entries.sumBy { it.WEDuration.toInt() } }
+                it.WEActivityCategory == category.CategoryName && it.WEUserID == ToolBox.ActiveUserID &&
+                        (startDate == null || it.WEDateEnded.toDate()!! >= startDate) &&
+                        (endDate == null || it.WEDateEnded.toDate()!! <= endDate)
+            }.sumBy { it.WEDuration.toInt() }
 
-            val total = totalDuration[category.CategoryName]
-            if (total != null) {
-                entries.add(
-                    PieEntry(
-                        total.toFloat(), category.CategoryName
-                    )
-                )
+            if (totalDuration > 0) {
+                entries.add(PieEntry(totalDuration.toFloat(), category.CategoryName))
             }
-
         }
 
         val dataSet = PieDataSet(entries, "")
         dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
         dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextColor = Color.BLACK
         dataSet.valueTextSize = 12f
 
         val data = PieData(dataSet)
         pieChart.data = data
-        // refresh chart
+        // Refresh chart
         pieChart.invalidate()
     }
 
@@ -221,8 +227,30 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
         return colorMap
     }
-//endregion
-    //pie charts end
+
+
+    // Method to load filters based on condition - is called onCreate in listeners
+    private fun loadFilters()
+    {
+        val startDate = etStartDatePick.text.toString().toDate()
+        val endDate = etEndDatePick.text.toString().toDate()
+
+        if (startDate != null && endDate != null) {
+            // Filter based on start and end dates
+            loadPieChartData(startDate, endDate)
+        }
+
+    }
+
+    // Function to convert string to a Date
+    private fun String.toDate(): Date? {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return try {
+            format.parse(this)
+        } catch (e: ParseException) {
+            null
+        }
+    }
 
     //============================================================================
     @SuppressLint("SetTextI18n")

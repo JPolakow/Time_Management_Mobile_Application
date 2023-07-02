@@ -30,8 +30,8 @@ class Add_Catagory : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_add__catagory, container, false)
         try {
             // Find buttons in the inflated view
-            btnAddCategory = view.findViewById(R.id.btnAddCatagory)
-            etCategoryInput = view.findViewById(R.id.etCatagoryInput)
+            btnAddCategory = view.findViewById(R.id.btnAddCategory)
+            etCategoryInput = view.findViewById(R.id.etCategoryInput)
 
             // Set click listeners for the buttons
             btnAddCategory.setOnClickListener {
