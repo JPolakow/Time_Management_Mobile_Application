@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                         // Authentication successful
                         userId = userDocument.id
 
-                        LoadDataSignIN()
+                        loadDataSignIN()
 
                     } else {
                         // Authentication failed
@@ -115,8 +115,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    //Load exisitn data into lists, then sign user in
-    private fun LoadDataSignIN()
+    //Load existing data into lists, then sign user in
+    private fun loadDataSignIN()
     {
         try {
             RetreiveData.LoadUserCategories(userId) { categoryCallback ->
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                                     TAG,
                                     "Authentication successful. User ID: $userId"
                                 )
-                                // Hide the progress bar when successfully authenticated
+                                // Hiding the progress bar when successfully authenticated
                                 pbWaitToSignIn.visibility = View.GONE
 
                                 intent = Intent(this, Dashboard::class.java)
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }catch (ex: java.lang.Exception)
+        }catch (_: java.lang.Exception)
         {
 
         }
