@@ -1,8 +1,6 @@
 package com.example.opsc_part2
 
-import Classes.ActivityObject
 import Classes.ToolBox
-import androidx.lifecycle.viewModelScope
 import Classes.WorkEntriesObject
 import android.Manifest
 import android.app.Activity
@@ -18,18 +16,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,18 +30,19 @@ import android.util.Base64
 
 class complete_activity : BottomSheetDialogFragment() {
     companion object {
+        // Request codes for user
         internal const val CAMERA_PERMISSION_CODE = 100
         internal const val CAMERA_REQUEST_CODE = 200
     }
 
-    //arguments inputs
+    // Arguments inputs
     private var paraActivityID: String? = null
     private var paraDuration: Double? = null
     private var paraColor: String? = null
     private var paraName: String? = null
     private var paraCategory: String? = null
 
-    //UI
+    // UI initialization
     private lateinit var btnAddImage: Button
     private lateinit var btnSave: Button
     private var image: Bitmap? = null
@@ -58,7 +52,7 @@ class complete_activity : BottomSheetDialogFragment() {
     private lateinit var btnFour: Button
     private lateinit var btnFive: Button
 
-    //Regular
+    // Regular
     private var rating: Int = 1
     private var Key: String = ""
 
@@ -122,7 +116,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 }
             }
 
-            //ratings
+            // Ratings
             btnOne = view.findViewById(R.id.btnOne)
             btnOne.setOnClickListener() { rating = 1 }
 
@@ -192,11 +186,6 @@ class complete_activity : BottomSheetDialogFragment() {
     //============================================================================
     // Add data to object array
     private fun AddEntry() {
-        // Creating an instance of firebase storage
-        val storage = Firebase.storage
-        // Create a storage reference
-        var storageRef = Firebase.storage.reference
-
         try {
             // Creating correct date format
             val time = SimpleDateFormat("dd-MM-yyy", Locale.getDefault()).format(Date())
@@ -214,8 +203,7 @@ class complete_activity : BottomSheetDialogFragment() {
                 paraColor!!
             )
 
-
-            //writeToDB callback
+            // WriteToDB callback
             writeToDB(newWorkEntriesObject) { outcome ->
                 if (outcome) {
                     newWorkEntriesObject.WEID = Key
@@ -240,7 +228,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //save new work entry to db
+    // Save new work entry to db
     private fun writeToDB(newWorkEntry: WorkEntriesObject, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
@@ -270,7 +258,7 @@ class complete_activity : BottomSheetDialogFragment() {
     }
 
     //============================================================================
-    //save new image to db
+    // Save new image to db
     private fun saveImageToDB(image: Bitmap, WEID: String) {
         val db = Firebase.firestore
 

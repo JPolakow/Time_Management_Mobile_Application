@@ -25,11 +25,12 @@ import java.util.*
 
 class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupListener {
 
+    // List to store color names for activity card
     private val colorNames = arrayOf(
         "Red", "Blue", "Purple", "Pink", "Light-Blue"
     )
 
-    // Inputs
+    // Input Bindings
     private lateinit var nameInput: EditText
     private lateinit var categoryInput: EditText
     private lateinit var colorInput: EditText
@@ -54,6 +55,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_activity, container, false)
 
+        // Binding variables to views
         nameInput = view.findViewById(R.id.etName)
         goalInput = view.findViewById(R.id.etGoal)
         colorInput = view.findViewById(R.id.etColor)
@@ -62,22 +64,22 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
         categoryInput = view.findViewById(R.id.etCategory)
         descriptionInput = view.findViewById(R.id.etDescription)
 
-        //Add goal
+        // Add goal
         goalInput.setOnClickListener {
             showPopupFragment()
         }
 
-        //Pick a color
+        // Pick a color
         colorInput.setOnClickListener {
             showColorPickerDialog()
         }
 
-        //Pick Category
+        // Pick Category
         categoryInput.setOnClickListener {
             showCategoryPickerDialog()
         }
 
-        //Submit Button
+        // Submit Button
         ivSubmit.setOnClickListener() {
             if (validateForm()) {
                 addActivityToList() { outcome ->
@@ -95,7 +97,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
             }
         }
 
-        //Close Button
+        // Close Button
         tvClose.setOnClickListener() {
             val intent = Intent(requireActivity(), Dashboard::class.java)
             val options = ActivityOptionsCompat.makeCustomAnimation(requireContext(), 0, 0)
@@ -106,7 +108,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //ensure user has Inputted valid data
+    // Ensure user has Inputted valid data
     private fun validateForm(): Boolean {
         try {
 
@@ -151,7 +153,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //Add the new entry to the list
+    // Add the new entry to the list
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addActivityToList(callback: (Boolean) -> Unit) {
         try {
@@ -175,7 +177,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
                 desc,
             )
 
-            //writeToDB callback
+            // WriteToDB callback
             writeToDB(newActivity) { outcome ->
                 if (outcome) {
                     newActivity.ActivityID = key
@@ -192,10 +194,11 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //save new activity to db
+    // Save new activity to db
     private fun writeToDB(newActivityInput: ActivityObject, callback: (Boolean) -> Unit) {
         val db = Firebase.firestore
 
+        // Creating a hashmap of an activity to store in firebase
         val newActivity = hashMapOf(
             "ActivityCategory" to newActivityInput.ActivityCategory,
             "ActivityColor" to newActivityInput.ActivityColor,
@@ -221,7 +224,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //Method to show color picker dialog
+    // Method to show color picker dialog
     private fun showColorPickerDialog() {
         try {
             var displaySelected = "";
@@ -247,7 +250,7 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //Category picker
+    // Category picker
     private fun showCategoryPickerDialog() {
         try {
 
@@ -278,14 +281,14 @@ class AddActivity : Fragment(R.layout.fragment_add_activity), SetGoal.GoalPopupL
     }
 
     //============================================================================
-    //Calls the set goal popup
+    // Calls the set goal popup
     private fun showPopupFragment() {
         val fragment = SetGoal()
         fragment.show(childFragmentManager, "QuickActionPopup")
     }
 
     //============================================================================
-    //When the set goal is completed it will return values
+    // When the set goal is completed it will return values
     override fun onGoalSubmitted(minGoal: Int, maxGoal: Int) {
         maxTime = maxGoal
         minTime = minGoal

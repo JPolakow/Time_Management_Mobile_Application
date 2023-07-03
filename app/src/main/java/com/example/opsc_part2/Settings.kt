@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout
 
 class Settings : AppCompatActivity() {
 
-    //tabs
+    // Tabs initialization
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
 

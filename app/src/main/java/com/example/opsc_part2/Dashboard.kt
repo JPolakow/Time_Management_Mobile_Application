@@ -1,6 +1,5 @@
 package com.example.opsc_part2
 
-import Classes.RetreiveData
 import Classes.ToolBox
 import android.annotation.SuppressLint
 import android.content.*
@@ -34,7 +33,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
 
     private lateinit var binding: ActivityDashboardBinding
 
-    //UI vars
+    // UI vars
     private lateinit var actionButt: FloatingActionButton
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var tvCategory: TextView
@@ -42,7 +41,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     private lateinit var tvActNameTime: TextView
     private lateinit var tvDisplayActivityName: TextView
 
-    //Timer vars
+    // Timer vars
     private fun makeTimeString(hour: Int, min: Int, sec: Int): String =
         String.format("%02d:%02d:%02d", hour, min, sec)
 
@@ -153,11 +152,9 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
             params.leftMargin = 50
             params.topMargin = 25
             imgProfileImg.layoutParams = params
-            //endregion
             //------------------------------------END OF BOTTOM UI---------------------------------
 
             // ----------------- MENU ----------------------------
-            //region
             bottomNav.setOnItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.Menu_Stats -> {
@@ -189,11 +186,12 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
                     else -> false
                 }
             }
-            //endregion
             // ----------------- END OF MENU -----------------------------------
 
+            // Loading custom UI
             loadCustomUI()
 
+            // Action Button OnClick listener
             actionButt.setOnClickListener {
                 showPopup()
             }
@@ -205,7 +203,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //=========================================================
-    //load custom ui elements
+    // Load custom ui elements with custom card created
     private fun loadCustomUI() {
         try {
             linView.removeAllViews()
@@ -328,15 +326,15 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
         }
     }
 
+    // When activity is completed, stop the timer, and reset it
     override fun onActivityComplete() {
         stopTimer()
         resetTimer()
     }
 
     //TIMERS
-    //region
     //============================================================================
-    //start the timer
+    // Start the timer
     private fun startTimer() {
         Log.d("timer", "started1")
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
@@ -346,14 +344,14 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //Stop the timer
+    // Stop the timer
     private fun stopTimer() {
         stopService(serviceIntent)
         timerStarted = false
     }
 
     //============================================================================
-    //Get the data form the service and update textview
+    // Get the data form the service and update textview
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
@@ -362,25 +360,22 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //reset the timer
+    // Reset the timer
     private fun resetTimer() {
         stopTimer()
         time = 0.0
         TimerOutput = getTimeStringFromDouble(time)
     }
-    //endregion
 
     //============================================================================
-    //Category picker
+    // Category picker
     private fun showCategoryPickerDialog(callback: (String) -> Unit) {
 
         val categoryNames = mutableListOf<String>()
         categoryNames.add("None")
 
         ToolBox.CategoryList.forEach { category ->
-            //if (category.CategoryUserID == ToolBox.ActiveUserID) {
             categoryNames.add(category.CategoryName)
-            //}
         }
 
         var displaySelected = "Category: ";
@@ -403,7 +398,7 @@ class Dashboard : AppCompatActivity(), QuickActionPopup.DashboardFragmentListene
     }
 
     //============================================================================
-    //Time picker
+    // Time picker
     private suspend fun showTimePickerDialogMin(): Double {
         return withContext(Dispatchers.Main) {
             val hours = arrayOf(

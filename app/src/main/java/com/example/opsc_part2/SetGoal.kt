@@ -1,6 +1,5 @@
 package com.example.opsc_part2
 
-import Classes.ToolBox
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
@@ -15,10 +14,9 @@ import com.example.opsc_part2.databinding.FragmentSetGoalBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
-    //Bind the views, making it accessible
+    // Bind the views, making it accessible
     private var _binding: FragmentSetGoalBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var submit: ImageButton
     private lateinit var min: EditText
     private lateinit var max: EditText
@@ -93,6 +91,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
     }
 
     //============================================================================
+    // Method to format the goal input
     private fun formatGoalInput(inputValue: String): Int {
         // Val to store value to split at
         val valToSplit = inputValue.split(":")
@@ -103,18 +102,15 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
         // val to store minutes of string
         val minutes = valToSplit[1].toInt()
 
-        // val to store total minutes
-        val totalMinutes = hours * 60 + minutes
-
         // returning total minutes
-        return totalMinutes
+        return hours * 60 + minutes
     }
 
     //============================================================================
     // Function to show dialog and set text of editText
     private fun showTimePickerDialogMin() {
         try {
-            //HOURS
+            // HOURS
             val hours = arrayOf(
                 "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"
             )
@@ -126,7 +122,7 @@ class SetGoal : BottomSheetDialogFragment(R.layout.fragment_set_goal) {
                 wrapSelectorWheel = true
             }
 
-            //MINUTES
+            // MINUTES
             val minutes =
                 arrayOf("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
             val minutePicker = NumberPicker(requireContext())

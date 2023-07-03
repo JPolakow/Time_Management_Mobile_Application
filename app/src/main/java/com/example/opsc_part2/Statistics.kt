@@ -38,8 +38,6 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     private lateinit var etStartDatePick: EditText
     private lateinit var btnClear: ImageButton
 
-//    private val startDate: Date? = null
-//    private val startDate: Date? = null
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -87,9 +85,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 datePickerDialog.show()
             }
 
+            // Clear Button Clicked
             btnClear = view.findViewById(R.id.btnClear)
             btnClear.setOnClickListener {
-                //Possibly revert back to original
                 etEndDatePick.text.clear()
                 etStartDatePick.text.clear()
                 loadPieChartData()
@@ -111,14 +109,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    // This method is called after the text has changed
-                    // We will check if both EditText fields are filled and call loadFilters() if true
 
                     val startDate = etStartDatePick.text.toString().trim()
                     val endDate = etEndDatePick.text.toString().trim()
 
                     if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
-                        // Both EditText fields are filled
+                        // When both EditText fields are filled
                         loadPieChartData()
                         populate()
                     }
@@ -265,12 +261,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 }
 
                 if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
-                    //get all dates in the same format
+                    // Get all dates in the same format
                     val dateFormat = SimpleDateFormat("dd-MM-yyyy")
                     val startDate = dateFormat.parse(etStartDatePick.text.toString())
                     val endDate = dateFormat.parse(etEndDatePick.text.toString())
 
-                    //get all work entries for the category with the same userid and within the date range
+                    // Get all work entries for the category with the same userid and within the date range
                     workEntriesForCategory = ToolBox.WorkEntriesList.filter { we ->
                         we.WEUserID == ToolBox.ActiveUserID && we.WEActivityCategory == card.CategoryName && dateFormat.parse(
                             we.WEDateEnded
@@ -284,7 +280,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 val distinctActivityNames =
                     workEntriesForCategory.map { it.WEActivityName }.distinct()
 
-                // sub views
+                // Sub views
                 for (workEntry in distinctActivityNames) {
                     // Dynamically creating a TextView based on number of work entries
 
@@ -293,7 +289,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                         workEntriesForCategory.filter { it.WEActivityName == workEntry }
                             .sumBy { it.WEDuration.toInt() }
 
-                    //ACTIVITY NAME
+                    // ACTIVITY NAME
                     val entryTextView = TextView(requireContext())
 
                     entryTextView.text = workEntry
@@ -306,7 +302,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
                     val maxGoal = activityObject?.ActivityMaxGoal
 
-                    //Calculate then display duration left
+                    // Calculate then display duration left
                     durationTextView.text = "Duration Left: ${
                         calculateDurationLeft(
                             maxGoal!!, totalDuration.toDouble()

@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 
 class Add_Catagory : BottomSheetDialogFragment() {
 
-    // UI Late init Vars
+    // UI Late init Variables
     private lateinit var btnAddCategory: Button
     private lateinit var etCategoryInput: EditText
 
@@ -51,11 +51,13 @@ class Add_Catagory : BottomSheetDialogFragment() {
         val name = etCategoryInput.text.toString().trim()
 
 
+        // Ensuring a name is entered
         if (TextUtils.isEmpty(name)) {
             etCategoryInput.error = "Name is required"
             valid = false
         }
 
+        // Ensuring category name is unique
         val catIndex = ToolBox.CategoryList.indexOfFirst { act -> act.CategoryName == name }
         if (catIndex != -1) {
             etCategoryInput.error = "Name must be unique"
@@ -63,6 +65,7 @@ class Add_Catagory : BottomSheetDialogFragment() {
         }
 
         if (valid) {
+            // Add category if the input was all valid
             addNewCategory()
         }
     }
