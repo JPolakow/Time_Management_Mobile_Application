@@ -5,7 +5,8 @@
     <dimen name="tab_indicator_height">4dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="entry_top_margin">8dp</dimen>
-    <dimen name="entry_start_margin">14dp</dimen>
+    <dimen name="entry_start_margin">30dp</dimen>
     <dimen name="entry_end_margin">16dp</dimen>
     <dimen name="entry_bottom_margin">8dp</dimen>
+    <dimen name="entry_start_margin_ActHeading">10dp</dimen>
 </resources>

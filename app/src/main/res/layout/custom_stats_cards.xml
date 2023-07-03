@@ -27,6 +27,12 @@
             android:elevation="12dp"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/linearCardArrow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
@@ -34,9 +40,22 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:gravity="end"
+                android:textStyle="bold"
                 android:text="Category: "
                 android:textColor="#FF000000"
                 android:textSize="25sp" />
+
+                <ImageButton
+                    android:id="@+id/btnCardExpansion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentDesPausePlay"
+                    android:src="@drawable/expand_more_48px"
+                    android:background="@null"
+                    android:layout_alignParentEnd="true"
+                    android:alpha="0.5"
+                    android:text="@string/profileLogout" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtDuration"
