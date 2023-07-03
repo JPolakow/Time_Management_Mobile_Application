@@ -60,8 +60,6 @@
         android:focusable="false"
         />
 
-
-
     </LinearLayout>
 
 
@@ -70,11 +68,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="3"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/linearDatePickers"
-        >
+        android:layout_below="@+id/linearDatePickers">
 
     <Button
         android:id="@+id/btnSelectCategory"
