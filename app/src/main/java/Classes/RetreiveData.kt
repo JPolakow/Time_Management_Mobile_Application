@@ -15,6 +15,9 @@ import java.net.URL
 class RetreiveData {
 
     companion object {
+
+        // =========================================================================================//
+        // Function to load user categories into object list from Firebase
         fun LoadUserCategories(userID: String, callback: (String) -> Unit) {
             val listIn = mutableListOf<CategoryObject>()
             val db = Firebase.firestore
@@ -37,6 +40,8 @@ class RetreiveData {
                 }
         }
 
+        // =========================================================================================//
+        // Function to load user profile details into object list from Firebase
         fun LoadUserProfile(userID: String, callback: (String) -> Unit) {
             val userList = mutableListOf<UserClass>()
             val db = Firebase.firestore
@@ -63,7 +68,8 @@ class RetreiveData {
                 }
         }
 
-
+        // =========================================================================================//
+        // Function to load user Activities into object list from Firebase
         fun LoadActivities(userID: String, callback: (String) -> Unit) {
             val listIn = mutableListOf<ActivityObject>()
             val db = Firebase.firestore
@@ -95,6 +101,8 @@ class RetreiveData {
                 }
         }
 
+        // =========================================================================================//
+        // Function to load user Work Entries details into object list from Firebase
         fun LoadWorkEntries(userID: String, callback: (String) -> Unit) {
             val listIn = mutableListOf<WorkEntriesObject>()
             val db = Firebase.firestore
@@ -126,6 +134,8 @@ class RetreiveData {
                 }
         }
 
+        // =========================================================================================//
+        // Function to load user Images into object list from Firebase
         fun loadImages(userID: String, callback: (String) -> Unit) {
             val db = Firebase.firestore
 
@@ -140,13 +150,12 @@ class RetreiveData {
 
                         if (index != -1) {
 
-                            // Assuming you have retrieved the base64Image string from Firestore
                             val base64Image = document.getString("imageUrl")
 
-                            // Decode the base64-encoded string back into a byte array
+                            // Decoding the base64-encoded string back into a byte array
                             val imageBytes = Base64.decode(base64Image, Base64.DEFAULT)
 
-                            // Convert the byte array to a Bitmap object
+                            // Converting the byte array to a Bitmap object
                             val bitmap =
                                 BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
@@ -157,7 +166,6 @@ class RetreiveData {
                 }.addOnFailureListener { exception ->
                     Log.e(ContentValues.TAG, "Failure occurred", exception)
                     callback("failure")
-                    // You can throw the exception here if needed
                 }
         }
     }

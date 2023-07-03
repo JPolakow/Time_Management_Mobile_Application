@@ -1,7 +1,5 @@
 package Classes
 
-import java.util.*
-
 // Object for Users' activities
 class ActivityObject(
     var ActivityID: String,
