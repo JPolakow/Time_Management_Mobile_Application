@@ -88,10 +88,10 @@ class Logs : Fragment(R.layout.fragment_logs) {
             // Clear Button ClickEvent to clear all relevant views and fields
             btnClear.setOnClickListener() {
                 linView.removeAllViews()
-                LoadFilters()
                 selectedCategory = String()
                 etEndDatePick.text.clear()
                 etStartDatePick.text.clear()
+                LoadFilters()
             }
 
             // Filtering
