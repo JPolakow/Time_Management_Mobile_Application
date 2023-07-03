@@ -6,6 +6,7 @@ import Classes.WorkEntriesObject
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.graphics.Color
+import kotlin.random.Random
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Build
@@ -163,6 +164,10 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.legend.isEnabled = true
         pieChart.setDrawEntryLabels(false)
 
+        val legend = pieChart.legend
+        legend.textSize = 16f
+        legend.formSize = 14f
+
         pieChart.setEntryLabelTextSize(12f)
         // setting rotation of pie chart = true
         pieChart.isRotationEnabled = true
@@ -210,7 +215,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
 
         val dataSet = PieDataSet(entries, "")
-        dataSet.colors = listOf(Color.CYAN, Color.GREEN, Color.MAGENTA)
+        val randomColors = generateRandomBrightColors(entries.size)
+        dataSet.colors = randomColors
+        //dataSet.colors = listOf(Color.CYAN, Color.GREEN, Color.MAGENTA)
         dataSet.valueTextColor = Color.BLACK
         dataSet.valueTextSize = 16f
         dataSet.setDrawValues(true)
@@ -225,6 +232,20 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         pieChart.invalidate()
     }
 
+    private fun generateRandomBrightColors(size: Int): List<Int> {
+        val random = Random.Default
+        val colors = mutableListOf<Int>()
+
+        for (i in 0 until size) {
+            val r = random.nextInt(128, 256)
+            val g = random.nextInt(128, 256)
+            val b = random.nextInt(128, 256)
+            val color = Color.rgb(r, g, b)
+            colors.add(color)
+        }
+
+        return colors
+    }
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
