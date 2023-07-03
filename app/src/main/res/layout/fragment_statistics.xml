@@ -56,11 +56,13 @@
             android:focusable="false"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnClear"
             android:layout_width="50dp"
             android:layout_height="48dp"
             android:text="X"
+            android:background="@null"
+            android:src="@drawable/clear_all_48px"
             android:gravity="center"
             android:layout_marginTop="16dp"
             />

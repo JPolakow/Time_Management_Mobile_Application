@@ -30,6 +30,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.api.Distribution.BucketOptions.Linear
 import java.text.ParseException
@@ -45,7 +46,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     private lateinit var pieChart: PieChart
     private lateinit var etEndDatePick: EditText
     private lateinit var etStartDatePick: EditText
-    private lateinit var btnClear: Button
+    private lateinit var btnClear: ImageButton
 
 //    private val startDate: Date? = null
 //    private val startDate: Date? = null
@@ -154,12 +155,15 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     // Method to initialise pie chart
     // All pie chart properties will go here
     private fun initPieChart() {
+
         pieChart.setUsePercentValues(true)
         // setting pie chart description visibility
         pieChart.description.isEnabled = false
         // setting legend visibility
         pieChart.legend.isEnabled = true
         pieChart.setDrawEntryLabels(false)
+
+        pieChart.setEntryLabelTextSize(12f)
         // setting rotation of pie chart = true
         pieChart.isRotationEnabled = true
         // Enabling pie chart hole
@@ -206,11 +210,16 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
 
         val dataSet = PieDataSet(entries, "")
-        dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
+        dataSet.colors = listOf(Color.CYAN, Color.GREEN, Color.MAGENTA)
         dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextSize = 12f
+        dataSet.valueTextSize = 16f
+        dataSet.setDrawValues(true)
+
+        dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
 
         val data = PieData(dataSet)
+        data.setValueFormatter(PercentFormatter(pieChart))
+
         pieChart.data = data
         // Refresh chart
         pieChart.invalidate()
