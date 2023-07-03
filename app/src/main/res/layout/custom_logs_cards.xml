@@ -37,7 +37,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/textDate"
                 android:textColor="#AB000000"
-                android:textSize="18sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/tvActivityName"
@@ -62,8 +62,8 @@
                 android:fontFamily="@font/inter_regular"
                 android:gravity="end"
                 android:text="@string/textDuration"
-                android:textColor="#AB000000"
-                android:textSize="18sp" />
+                android:textColor="#C1000000"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvMyRating"
@@ -71,12 +71,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDuration"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:fontFamily="@font/inter_regular"
                 android:gravity="end"
                 android:text="My Rating: 1"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/tvNoImage"
@@ -86,7 +86,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_toEndOf="@+id/tvActivityName"
                 android:gravity="center"
-                android:paddingTop="16dp"
+                android:paddingTop="0dp"
                 android:text="@string/no_image"
                 tools:srcCompat="@tools:sample/avatars" />
 
