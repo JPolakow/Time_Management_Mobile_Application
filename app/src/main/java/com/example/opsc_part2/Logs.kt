@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Logs : Fragment(R.layout.fragment_logs) {
+    // Initialization for views
     private lateinit var linView: LinearLayout
     private lateinit var etStartDatePick: EditText
     private lateinit var etEndDatePick: EditText
@@ -33,23 +34,27 @@ class Logs : Fragment(R.layout.fragment_logs) {
         val view = inflater.inflate(R.layout.fragment_logs, container, false)
 
         try {
+            // Binding views to variables
             linView = view.findViewById(R.id.linearProjectCards)
-
             tvCategorySelected = view.findViewById(R.id.tvCategorySelected)
+            btnSelectCategory = view.findViewById(R.id.btnSelectCategory)
+            etStartDatePick = view.findViewById(R.id.etStartDate)
+            etEndDatePick = view.findViewById(R.id.etEndDate)
+            btnClear = view.findViewById(R.id.btnClear)
 
             btnFilter = view.findViewById(R.id.btnFilter)
+
+            // OnClick event for filter button
             btnFilter.setOnClickListener() {
                 LoadFilters()
             }
 
-            btnSelectCategory = view.findViewById(R.id.btnSelectCategory)
             btnSelectCategory.setOnClickListener() {
                 showCategoryPickerDialog(0) { selectedCategory ->
                     val showCategoryText = "Category: $selectedCategory"
                 }
             }
 
-            etStartDatePick = view.findViewById(R.id.etStartDate)
             etStartDatePick.setOnClickListener {
                 val c = Calendar.getInstance()
                 val year = c.get(Calendar.YEAR)
@@ -65,8 +70,6 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 datePickerDialog.show()
             }
 
-
-            etEndDatePick = view.findViewById(R.id.etEndDate)
             etEndDatePick.setOnClickListener {
                 val c = Calendar.getInstance()
                 val year = c.get(Calendar.YEAR)
@@ -82,15 +85,16 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 datePickerDialog.show()
             }
 
-            btnClear = view.findViewById(R.id.btnClear)
+            // Clear Button ClickEvent to clear all relevant views and fields
             btnClear.setOnClickListener() {
                 linView.removeAllViews()
-                LoadFilters()
                 selectedCategory = String()
                 etEndDatePick.text.clear()
                 etStartDatePick.text.clear()
+                LoadFilters()
             }
 
+            // Filtering
             LoadFilters()
 
         } catch (ex: Exception) {
@@ -113,22 +117,23 @@ class Logs : Fragment(R.layout.fragment_logs) {
             val filtered: List<WorkEntriesObject>
 
             if (selectedCategory.isNotEmpty() && selectedCategory != "None" && dateFilerBool) {
-                //Category and date
+                // Category and date
                 filtered = filterDatesAndCategory(
                     ToolBox.WorkEntriesList,
                     etStartDatePick.text.toString(),
                     etEndDatePick.text.toString(),
                     selectedCategory
                 )
+
                 populate(filtered)
                 return
             } else if (selectedCategory.isNotEmpty() && selectedCategory != "None" && !dateFilerBool) {
-                //Only category
+                // Only category
                 filtered = filterWorkEntries(ToolBox.WorkEntriesList, selectedCategory, null)
                 populate(filtered)
                 return
             } else if (selectedCategory == "None" && dateFilerBool) {
-                //Only Dates
+                // Only Dates
                 filtered = filterDates(
                     ToolBox.WorkEntriesList,
                     etStartDatePick.text.toString(),
@@ -137,10 +142,9 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 populate(filtered)
                 return
             } else {
-                //No filter
+                // No filter
                 filtered = filterWorkEntries(ToolBox.WorkEntriesList, null, null)
                 populate(filtered)
-
                 return
             }
         } catch (ex: Exception) {
@@ -162,10 +166,8 @@ class Logs : Fragment(R.layout.fragment_logs) {
             // Check if the selected time is null or matches the entry's time
             val timeFilter = selectedTime == null || entry.WEDateEnded.toString() == selectedTime
 
-            //val userFilter = entry.WEUserID == ToolBox.ActiveUserID
-
             // Return true only if both filters pass
-            categoryFilter && timeFilter //&& userFilter
+            categoryFilter && timeFilter
         }
     }
 
@@ -207,7 +209,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
-    //filter by category popup
+    // Filter by category popup
     private fun showCategoryPickerDialog(defaultIndex: Int = 0, callback: (String) -> Unit) {
         try {
             if (selectedCategory == null) {
@@ -218,7 +220,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
                 ToolBox.CategoryList.filter { it.CategoryUserID == ToolBox.ActiveUserID }
                     .map { it.CategoryName }.distinct()
 
-            val uniqueCategories = listOf<String>("None", *uniqueCategoriesIN.toTypedArray())
+            val uniqueCategories = listOf("None", *uniqueCategoriesIN.toTypedArray())
 
             val selectedIndex = uniqueCategories.indexOf(selectedCategory)
             val builder = AlertDialog.Builder(requireContext())
@@ -242,7 +244,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
     }
 
     //============================================================================
-    //Maximise and minimise the image on click
+    // Maximise and minimise the image on click
     private fun enlargeImage(imageView: ImageView) {
         try {
             if (imageView.drawable == null) {
@@ -310,7 +312,7 @@ class Logs : Fragment(R.layout.fragment_logs) {
 
             for (entry in workEntries) {
                 val entryDate = dateFormatter.parse(entry.WEDateEnded)
-                if (entryDate in startDateTime..endDateTime //&& entry.WEUserID == ToolBox.ActiveUserID
+                if (entryDate in startDateTime..endDateTime
                 ) {
                     filteredList.add(entry)
                 }

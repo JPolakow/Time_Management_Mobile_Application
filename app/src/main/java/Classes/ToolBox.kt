@@ -1,17 +1,13 @@
 package Classes
 
-import android.annotation.SuppressLint
-import java.text.SimpleDateFormat
-import java.util.*
-
 class ToolBox {
     companion object {
         var ActiveUserID: String = ""
 
-        //used to store selected category
+        // Used to store selected category
         var SelectedCategory: String = "None"
 
-        //Array of Objects
+        // Array work entry objects
         var WorkEntriesList = mutableListOf<WorkEntriesObject>(
         )
 
@@ -22,7 +18,7 @@ class ToolBox {
         var UsersList = mutableListOf<UserClass>(
         )
 
-        //@SuppressLint("ConstantLocale")
+        // Activity object list
         var ActivitiesList = mutableListOf<ActivityObject>(
         )
     }

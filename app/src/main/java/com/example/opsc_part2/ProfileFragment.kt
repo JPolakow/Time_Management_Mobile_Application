@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 
 class ProfileFragment : Fragment() {
 
+    // Initializing variables
     private lateinit var name: TextView
     private lateinit var surname: TextView
     private lateinit var username: TextView
@@ -31,9 +32,12 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_settings, container, false)
         try {
+
+            // Binding views
             name = view.findViewById(R.id.tvDisplayName)
             surname = view.findViewById(R.id.tvDisplaySurname)
             username = view.findViewById(R.id.tvDisplayUsername)
+            signOut = view.findViewById(R.id.btnLogout)
 
             val userIndex =
                 ToolBox.UsersList.indexOfFirst { user -> user.UserKey == ToolBox.ActiveUserID }
@@ -45,13 +49,9 @@ class ProfileFragment : Fragment() {
             }
 
             // ------------ SIGN OUT CLICK ------------ //
-            // Add functionality for clearing user data
-            signOut = view.findViewById(R.id.btnLogout)
             signOut.setOnClickListener {
-
                 var a = 0
                 animateButtonClick(signOut)
-
                 // Sign out
                 //       Creating a new Dialog
                 val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
@@ -95,7 +95,8 @@ class ProfileFragment : Fragment() {
     private fun animateButtonClick(imageButton: ImageButton) {
         try {
             val colorMatrix = ColorMatrix().apply {
-                setSaturation(0f) // Set saturation to 0 to convert to grayscale
+                // Set saturation to 0 to convert to grayscale
+                setSaturation(0f)
             }
             val colorFilter = ColorMatrixColorFilter(colorMatrix)
             imageButton.colorFilter = colorFilter

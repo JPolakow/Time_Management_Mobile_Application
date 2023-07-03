@@ -19,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
-    //UI vars
+    // UI vars
     private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var btnSignIn: Button
@@ -35,11 +35,10 @@ class MainActivity : AppCompatActivity() {
         try {
             setContentView(R.layout.activity_main)
 
+            // Binding Views
             pbWaitToSignIn = findViewById(R.id.pbWaitToSignIn)
-
             btnSignIn = findViewById(R.id.btnSignIn)
             signUpClick = findViewById(R.id.tvSignUp)
-
             usernameInput = findViewById(R.id.etUsername)
             passwordInput = findViewById(R.id.etPassword)
 
@@ -47,10 +46,6 @@ class MainActivity : AppCompatActivity() {
 
                 var name = usernameInput.text.toString().trim()
                 var pword = passwordInput.text.toString().trim()
-
-                //debugging login override for ease of use
-//            name = "user"
-//            pword = "pass"
 
                 // Setting progress bar to visible when user attempts to sign in
                 pbWaitToSignIn.visibility = View.VISIBLE
@@ -126,10 +121,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     //============================================================================
-    //Load existing data into lists, then sign user in
+    // Load existing data into lists, then sign user in
     private fun loadDataSignIN() {
         try {
-            //add one more of these lines for the user callback, don't forget to add one more }
+            // Add one more of these lines for the user callback, don't forget to add one more }
             RetreiveData.LoadUserCategories(userId) { categoryCallback ->
                 RetreiveData.LoadActivities(userId) { activityCallback ->
                     RetreiveData.LoadUserProfile(userId) { userCallback ->

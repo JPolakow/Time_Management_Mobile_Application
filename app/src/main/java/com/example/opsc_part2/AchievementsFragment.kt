@@ -12,9 +12,13 @@ import androidx.fragment.app.Fragment
 
 class AchievementsFragment : Fragment() {
 
+    // lateInit to reference the imageView for user trophies
     private lateinit var trophyImg: ImageView
+    // lateInit to reference to store trophy name
     private lateinit var trophyName: TextView
+    // lateInit to store trophy amount
     private lateinit var trophyAmount: TextView
+    // Value to store trophy amount
     private var amount: Int = 0
 
     //============================================================================
@@ -24,17 +28,19 @@ class AchievementsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_achievements_settings, container, false)
 
-        //Front end vars
+        // Front end vars
         trophyName = view.findViewById(R.id.tvTrophyName)
         trophyImg = view.findViewById(R.id.imgTrophy)
         trophyAmount = view.findViewById(R.id.tvTrophyAmount)
 
-        //Default values
+        // Default values
         trophyName.text = "Max goals achieved"
+        // Setting image to trophy image
         trophyImg.setImageResource(R.drawable.trophygrey)
+        // Setting trophy amount
         trophyAmount.text = "Amount: $amount"
 
-        //Get lists for user
+        // Get lists for user
         val filteredActivity = ToolBox.ActivitiesList.filter { activity ->
             activity.ActivityUserID == ToolBox.ActiveUserID
         }
@@ -42,7 +48,7 @@ class AchievementsFragment : Fragment() {
             WE.WEUserID == ToolBox.ActiveUserID
         }
 
-        //Find activities with duration over max goal
+        // Find activities with duration over max goal
         for (activity in filteredActivity) {
             val totalDuration =
                 filteredWE.filter { it.WEActivityName == activity.ActivityName }
@@ -54,6 +60,7 @@ class AchievementsFragment : Fragment() {
             }
         }
 
+        // Setting trophy amount text
         trophyAmount.text = "Amount: $amount"
 
         return view

@@ -2,11 +2,10 @@ package com.example.opsc_part2
 
 import Classes.ActivityObject
 import Classes.ToolBox
-import Classes.WorkEntriesObject
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.graphics.Color
-import android.graphics.Paint
+import kotlin.random.Random
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -14,26 +13,22 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.formatter.PercentFormatter
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.math.roundToInt
 
 class Statistics : Fragment(R.layout.fragment_statistics) {
 
@@ -41,10 +36,8 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     private lateinit var pieChart: PieChart
     private lateinit var etEndDatePick: EditText
     private lateinit var etStartDatePick: EditText
-    private lateinit var btnClear: Button
+    private lateinit var btnClear: ImageButton
 
-//    private val startDate: Date? = null
-//    private val startDate: Date? = null
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -92,9 +85,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 datePickerDialog.show()
             }
 
+            // Clear Button Clicked
             btnClear = view.findViewById(R.id.btnClear)
             btnClear.setOnClickListener {
-                //Possibly revert back to original
                 etEndDatePick.text.clear()
                 etStartDatePick.text.clear()
                 loadPieChartData()
@@ -116,14 +109,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    // This method is called after the text has changed
-                    // We will check if both EditText fields are filled and call loadFilters() if true
 
                     val startDate = etStartDatePick.text.toString().trim()
                     val endDate = etEndDatePick.text.toString().trim()
 
                     if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
-                        // Both EditText fields are filled
+                        // When both EditText fields are filled
                         loadPieChartData()
                         populate()
                     }
@@ -150,12 +141,19 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
     // Method to initialise pie chart
     // All pie chart properties will go here
     private fun initPieChart() {
+
         pieChart.setUsePercentValues(true)
         // setting pie chart description visibility
         pieChart.description.isEnabled = false
         // setting legend visibility
         pieChart.legend.isEnabled = true
         pieChart.setDrawEntryLabels(false)
+
+        val legend = pieChart.legend
+        legend.textSize = 16f
+        legend.formSize = 14f
+
+        pieChart.setEntryLabelTextSize(12f)
         // setting rotation of pie chart = true
         pieChart.isRotationEnabled = true
         // Enabling pie chart hole
@@ -202,16 +200,37 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
         }
 
         val dataSet = PieDataSet(entries, "")
-        dataSet.colors = listOf(Color.CYAN, Color.BLUE, Color.MAGENTA)
+        val randomColors = generateRandomBrightColors(entries.size)
+        dataSet.colors = randomColors
+        //dataSet.colors = listOf(Color.CYAN, Color.GREEN, Color.MAGENTA)
         dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextSize = 12f
+        dataSet.valueTextSize = 16f
+        dataSet.setDrawValues(true)
+
+        dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
 
         val data = PieData(dataSet)
+        data.setValueFormatter(PercentFormatter(pieChart))
+
         pieChart.data = data
         // Refresh chart
         pieChart.invalidate()
     }
 
+    private fun generateRandomBrightColors(size: Int): List<Int> {
+        val random = Random.Default
+        val colors = mutableListOf<Int>()
+
+        for (i in 0 until size) {
+            val r = random.nextInt(128, 256)
+            val g = random.nextInt(128, 256)
+            val b = random.nextInt(128, 256)
+            val color = Color.rgb(r, g, b)
+            colors.add(color)
+        }
+
+        return colors
+    }
 
     //============================================================================
     @RequiresApi(Build.VERSION_CODES.O)
@@ -225,13 +244,15 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 category.CategoryUserID == ToolBox.ActiveUserID
             }
 
-            //catagory headings, main cards
+            // Category headings, main cards
             for (card in filteredCategories) {
 
+                // Creating a unique instance of the custom cards created for this context
                 val customCard = custom_stats_cards(requireContext())
                 customCard.setCategoryName("Category: ${card.CategoryName}")
 
                 val cardDisplay = customCard.findViewById<CardView>(R.id.cardView)
+                val imageExpand = customCard.findViewById<ImageButton>(R.id.btnCardExpansion)
                 var expanded = false
 
                 // Get the work entries for the current category
@@ -240,12 +261,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 }
 
                 if (etStartDatePick.text.isNotEmpty() && etEndDatePick.text.isNotEmpty()) {
-                    //get all dates in the same format
+                    // Get all dates in the same format
                     val dateFormat = SimpleDateFormat("dd-MM-yyyy")
                     val startDate = dateFormat.parse(etStartDatePick.text.toString())
                     val endDate = dateFormat.parse(etEndDatePick.text.toString())
 
-                    //get all work entried for the category with the same userid and within the date range
+                    // Get all work entries for the category with the same userid and within the date range
                     workEntriesForCategory = ToolBox.WorkEntriesList.filter { we ->
                         we.WEUserID == ToolBox.ActiveUserID && we.WEActivityCategory == card.CategoryName && dateFormat.parse(
                             we.WEDateEnded
@@ -259,7 +280,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                 val distinctActivityNames =
                     workEntriesForCategory.map { it.WEActivityName }.distinct()
 
-                // sub views
+                // Sub views
                 for (workEntry in distinctActivityNames) {
                     // Dynamically creating a TextView based on number of work entries
 
@@ -268,7 +289,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                         workEntriesForCategory.filter { it.WEActivityName == workEntry }
                             .sumBy { it.WEDuration.toInt() }
 
-                    //ACTIVITY NAME
+                    // ACTIVITY NAME
                     val entryTextView = TextView(requireContext())
 
                     entryTextView.text = workEntry
@@ -281,7 +302,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
                     val maxGoal = activityObject?.ActivityMaxGoal
 
-                    //Calculate then display duration left
+                    // Calculate then display duration left
                     durationTextView.text = "Duration Left: ${
                         calculateDurationLeft(
                             maxGoal!!, totalDuration.toDouble()
@@ -301,9 +322,9 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     )
 
                     if (overUnderMax) maxGoalString =
-                        "Max goal (${activityObject?.ActivityMaxGoal.toString()}) achieved"
+                        "Max goal (${activityObject?.ActivityMaxGoal}) achieved"
                     else maxGoalString =
-                        "Max goal (${activityObject?.ActivityMaxGoal.toString()}) not achieved"
+                        "Max goal (${activityObject?.ActivityMaxGoal}) not achieved"
 
                     maxGoalTextView.text = maxGoalString
 
@@ -316,45 +337,53 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                     )
 
                     if (overUnderMin) minGoalString =
-                        "Min goal (${activityObject?.ActivityMinGoal.toString()}) achieved"
+                        "Min goal (${activityObject?.ActivityMinGoal}) achieved"
                     else minGoalString =
-                        "Min goal (${activityObject?.ActivityMinGoal.toString()}) not achieved"
+                        "Min goal (${activityObject?.ActivityMinGoal}) not achieved"
 
                     minGoalTextView.text = minGoalString
+
+                    val maxGoalParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    maxGoalParams.marginStart =resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                    maxGoalParams.bottomMargin = resources.getDimensionPixelSize(R.dimen.entry_bottom_margin)
+                    maxGoalTextView.layoutParams = maxGoalParams
 
                     //-----GENERAL
                     val entryParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    entryParams.marginStart =
-                        resources.getDimensionPixelSize(R.dimen.entry_start_margin) + 15
+                    entryParams.marginStart =resources.getDimensionPixelSize(R.dimen.entry_start_margin)
 
                     val entryParamsActivityName = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
                     entryParamsActivityName.marginStart =
-                        resources.getDimensionPixelSize(R.dimen.entry_start_margin)
+                        resources.getDimensionPixelSize(R.dimen.entry_start_margin_ActHeading)
+                    entryParamsActivityName.bottomMargin = resources.getDimensionPixelSize(R.dimen.entry_bottom_margin)
 
                     entryTextView.layoutParams = entryParamsActivityName
                     durationTextView.layoutParams = entryParams
                     workedTextView.layoutParams = entryParams
-                    maxGoalTextView.layoutParams = entryParams
+                    //maxGoalTextView.layoutParams = entryParams
                     minGoalTextView.layoutParams = entryParams
 
                     entryTextView.textSize = 20F
                     entryTextView.setTypeface(null, Typeface.BOLD)
-                    maxGoalTextView.textSize = 15F
-                    minGoalTextView.textSize = 15F
+                    maxGoalTextView.textSize = 18F
+                    minGoalTextView.textSize = 18F
                     durationTextView.textSize = 18F
                     workedTextView.textSize = 18F
 
-                    entryTextView.paintFlags = entryTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+                    //entryTextView.paintFlags = entryTextView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
                     entryTextView.setTextColor(
                         ContextCompat.getColor(
-                            requireContext(), R.color.dark_grey
+                            requireContext(), R.color.black
                         )
                     )
                     maxGoalTextView.setTextColor(
@@ -401,6 +430,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                         for (i in 0 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
                             child.visibility = View.VISIBLE // Show the entryTextView
+                            imageExpand.setImageResource(R.drawable.expand_less_48px)
                         }
                     } else {
                         //shown
@@ -408,6 +438,7 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
                         for (i in 3 until linCard.childCount) {
                             val child = linCard.getChildAt(i)
                             child.visibility = View.GONE // Hide the entryTextView
+                            imageExpand.setImageResource(R.drawable.expand_more_48px)
                         }
                     }
                 }
@@ -481,8 +512,12 @@ class Statistics : Fragment(R.layout.fragment_statistics) {
 
     //============================================================================
     // Function to calculate user study minutes remaining
-    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double =
-        max - totalDuration
+    private fun calculateDurationLeft(max: Double, totalDuration: Double): Double {
+        return if(totalDuration < max) {
+            max - totalDuration
+        }else
+            0.0
+    }
 
     //============================================================================
     // Function to return whether or not the user has completed their minimum goal

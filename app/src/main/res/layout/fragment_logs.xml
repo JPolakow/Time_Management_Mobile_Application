@@ -3,64 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/fragment_background"
+    android:orientation="vertical"
     tools:context=".Logs">
 
     <TextView
         android:id="@+id/tvLogsHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/LogsHeading"
-        android:gravity="center"
         android:layout_marginTop="16dp"
-        android:textColor="@color/black"
         android:fontFamily="@font/inter_regular"
-        android:textSize="34sp"/>
+        android:gravity="center"
+        android:text="@string/LogsHeading"
+        android:textColor="@color/black"
+        android:textSize="34sp" />
 
-    <View style="@style/Divider"
+    <View
         android:id="@+id/lineLogs"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tvLogsHeading"/>
+        style="@style/Divider"
+        android:layout_below="@+id/tvLogsHeading"
+        android:layout_marginTop="10dp" />
 
     <LinearLayout
         android:id="@+id/linearDatePickers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLogsHeading"
-        android:orientation="horizontal"
+        android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:weightSum="2"
-        android:layout_centerVertical="true">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-    <EditText
-        android:id="@+id/etStartDate"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:hint="Select Start Date"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_height="48dp"
-        android:clickable="false"
-        android:focusable="false"
-        />
+        <EditText
+            android:id="@+id/etStartDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="Select Start Date"
+            android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/etEndDate"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:hint="Select End Date"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:clickable="false"
-        android:focusable="false"
-        />
-
-
+        <EditText
+            android:id="@+id/etEndDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="Select End Date"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -69,41 +66,41 @@
         android:id="@+id/linearButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
         android:layout_below="@+id/linearDatePickers"
-        >
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-    <Button
-        android:id="@+id/btnSelectCategory"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="Category" />
+        <Button
+            android:id="@+id/btnSelectCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Category"
+            android:textSize="12sp" />
 
         <Space
             android:layout_width="8dp"
             android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/btnFilter"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="Filter"/>
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Filter" />
 
         <Space
             android:layout_width="8dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/btnClear"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Clear"/>
+            android:layout_weight="1"
+            android:text="Clear" />
 
     </LinearLayout>
 
@@ -113,23 +110,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearButtonLayout"
         android:gravity="center"
-        android:text="College"
+        android:text="None"
         android:textSize="20sp"
 
         />
 
-    <View style="@style/Divider"
+    <View
         android:id="@+id/line"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/tvCategorySelected"/>
+        style="@style/Divider"
+        android:layout_below="@+id/tvCategorySelected"
+        android:layout_marginTop="10dp" />
 
     <!--Activity scroll view-->
     <ScrollView
         android:id="@+id/svCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_below="@+id/line"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/dashscrollview"
         android:paddingBottom="58dp">
 

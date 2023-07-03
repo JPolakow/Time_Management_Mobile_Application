@@ -1,6 +1,5 @@
 package com.example.opsc_part2
 
-import Classes.UserClass
 import Classes.PasswordHandler
 import Classes.ToolBox
 import android.content.ContentValues
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -21,14 +19,14 @@ import com.google.firebase.ktx.Firebase
 
 class UserSignUp : AppCompatActivity() {
 
-    //Inputs
+    // Inputs
     private lateinit var nameInput: EditText
     private lateinit var surnameInput: EditText
     private lateinit var usernameInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var confirmPasswordInput: EditText
 
-    //Press ables
+    // Press ables
     private lateinit var tvSignInClick: TextView
     private lateinit var btnSignUp: Button
 
@@ -39,13 +37,15 @@ class UserSignUp : AppCompatActivity() {
 
 
         try {
+            // Binding Views
             nameInput = findViewById(R.id.etName)
             surnameInput = findViewById(R.id.etSurname)
             usernameInput = findViewById(R.id.etUsername)
             passwordInput = findViewById(R.id.etPassword)
             confirmPasswordInput = findViewById(R.id.etConfirmPassword)
-
             btnSignUp = findViewById(R.id.btnSignUp)
+            tvSignInClick = findViewById(R.id.tvSignIn)
+
             btnSignUp.setOnClickListener() {
                 if (validateForm()) {
                     RegisterUser()
@@ -53,7 +53,6 @@ class UserSignUp : AppCompatActivity() {
                 }
             }
 
-            tvSignInClick = findViewById(R.id.tvSignIn)
             tvSignInClick.setOnClickListener() {
                 intentToSignIn()
             }
@@ -64,19 +63,12 @@ class UserSignUp : AppCompatActivity() {
     }
 
     //============================================================================
-    //take user inputs and create new user instance
-    // atraverso2001 Password1!
+    // Take user inputs and create new user instance
     private fun RegisterUser() {
         val db = Firebase.firestore
         try {
-//            val activeUserClass = UserClass(
-//                nameInput.text.toString().trim(),
-//                surnameInput.text.toString().trim(),
-//                usernameInput.text.toString().trim(),
-//                PasswordHandler.hashPassword(passwordInput.text.toString().trim())
-//            )
 
-            //hash map to sotre user data
+            // Hash map to store user data
             val user = hashMapOf(
                 "name" to nameInput.text.toString().trim(),
                 "surname" to surnameInput.text.toString().trim(),
@@ -84,7 +76,7 @@ class UserSignUp : AppCompatActivity() {
                 "password" to PasswordHandler.hashPassword(passwordInput.text.toString().trim())
             )
 
-            //add user to database
+            // Add user to database
             db.collection("users")
                 .add(user)
                 .addOnSuccessListener { documentReference ->
@@ -93,8 +85,6 @@ class UserSignUp : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
-
-            //ToolBox.UsersList.add(activeUserClass)
 
             val toast = Toast.makeText(this, "Account created", Toast.LENGTH_SHORT)
             toast.show()
@@ -194,29 +184,5 @@ class UserSignUp : AppCompatActivity() {
             ex.printStackTrace()
             return true
         }
-    }
-
-    private fun createAccount(email: String, password:String)
-    {
-        MainActivity.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(ContentValues.TAG, "createUserWithEmail:success")
-                    val user = MainActivity.auth.currentUser
-                    //updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                    //updateUI(null)
-                }
-            }
-
-
     }
 }
