@@ -94,39 +94,83 @@
                     android:textColorHint="#60000000"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="34dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginRight="34dp"
-                    android:autofillHints=""
-                    android:background="@drawable/rounded_input_signup"
-                    android:hint="@string/hintPassword"
-                    android:inputType="textPassword"
-                    android:minHeight="48dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:textColorHint="#60000000"
-                    android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/etConfirmPassword"
+                <!--TextInputLayout is making black line under password input-->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputPassword"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginLeft="34dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginRight="34dp"
-                    android:autofillHints=""
-                    android:background="@drawable/rounded_input_signup"
-                    android:hint="@string/hintConfirmPass"
-                    android:inputType="textPassword"
+                    android:backgroundTint="@android:color/transparent"
+                    android:gravity="center_vertical"
                     android:minHeight="48dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
                     android:textColorHint="#60000000"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:boxBackgroundMode="none"
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="false"
+                    app:passwordToggleDrawable="@drawable/visibility_offpx"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/black">
+
+                    <EditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="6dp"
+                        android:autofillHints=""
+                        android:background="@drawable/rounded_input_signup"
+                        android:gravity="center_vertical"
+                        android:hint="@string/hintPassword"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="16dp"
+                        android:textColorHint="#60000000"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="34dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:textColorHint="#60000000"
+                    android:textSize="14sp"
+                    app:boxBackgroundMode="none"
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="false"
+                    app:passwordToggleDrawable="@drawable/visibility_offpx"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/black">
+
+                    <EditText
+                        android:id="@+id/etConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="6dp"
+                        android:autofillHints=""
+                        android:background="@drawable/rounded_input_signup"
+                        android:hint="@string/hintConfirmPass"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="16dp"
+                        android:textColorHint="#60000000"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <Button
                     android:id="@+id/btnSignUp"
